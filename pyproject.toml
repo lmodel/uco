@@ -66,8 +66,11 @@ skip = [
   "project/*",
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
-  # UCO's ontology files and examples, copied as published.
+  # UCO's ontology files and examples, copied as published, the neighbours'
+  # adapt copies, and files the KTL sidecar sync copies in, not by hand.
   "src/uco/schema/upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -87,4 +90,6 @@ extend-exclude = [
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
   "src/uco/schema/upstream/*",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
 ]
