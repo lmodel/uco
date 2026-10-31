@@ -66,6 +66,8 @@ skip = [
   "project/*",
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
+  # UCO's ontology files and examples, copied as published.
+  "src/uco/schema/upstream/*",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -84,4 +86,5 @@ extend-exclude = [
   "project/*",
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
+  "src/uco/schema/upstream/*",
 ]
