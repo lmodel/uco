@@ -1,0 +1,92 @@
+Unified Cyber Ontology (UCO) LinkML Schema (uco)
+Copyright 2026 Noel McLoughlin
+
+The code in this repository is licensed under the Apache License,
+Version 2.0 (see LICENSE). Some of the content it carries is third-party
+work under its own terms, listed below.
+
+The Unified Cyber Ontology
+--------------------------
+
+src/uco/schema/uco*.yaml, src/uco/datamodel/ and project/ render the
+Unified Cyber Ontology (UCO) 1.5.0, which the UCO Community publishes at
+https://github.com/ucoProject/UCO. They are this project's rendering,
+written by scripts/uco_to_linkml.py from UCO's own files; they are not
+the UCO Community's, and their use does not imply endorsement by it.
+The description of each UCO class, property and vocabulary in them is
+UCO's rdfs:comment text for that term, and each class, property and
+vocabulary keeps its UCO IRI.
+
+src/uco/schema/upstream/ holds a copy of UCO's ontology files, the
+fifteen namespaces under ontology/uco/, the master ontology uco.ttl and
+ontology/co/co.ttl, retrieved from
+https://github.com/ucoProject/UCO/tree/7ebb3957e9e9a2e1bb9c66cd1ede8c912a726344
+(the 1.5.0 release), beside the LICENSE from the root of the same commit.
+Each file is identical to its counterpart there, and
+scripts/check_upstream_release.py checks that they stay so. UCO is
+licensed under the Apache License, Version 2.0; its LICENSE holds the
+licence text without a copyright line, and the repository carries no
+NOTICE file of its own (both read on 2026-10-31). The tests also derive
+example data from UCO's examples under tests/examples/ at that commit,
+which are under the same licence. Nothing in this repository changes the
+copied files.
+
+The Collections Ontology
+------------------------
+
+src/uco/schema/uco_co.yaml renders the classes and properties of the
+Collections Ontology (CO), http://purl.org/co/, that UCO's files use, with
+CO's own IRIs and the constraints UCO's co.ttl adds. CO 2.0 is the work
+of Paolo Ciccarese and Silvio Peroni. Its OWL file and repository
+(https://github.com/collections-ontology/collections-ontology) state no
+licence (read on 2026-10-31), so nothing of CO's text is copied here: the
+descriptions of its terms are this project's own.
+
+linkml-project-copier
+---------------------
+
+This project was generated from linkml-project-copier
+(https://github.com/linkml/linkml-project-copier), and its justfile,
+configuration and documentation scaffolding derive from that template:
+
+  The MIT License (MIT)
+  Copyright (c) 2025 David Linke
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to permit
+  persons to whom the Software is furnished to do so, subject to the
+  following conditions:
+
+  The above copyright notice and this permission notice shall be included
+  in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Knowledge bundle
+----------------
+
+This product maintains its documentation as a Linked Open Knowledge Format
+(LOKF) bundle under .lokf/: https://lokf.nolan-nichols.com/specification/
+
+LOKF is a semantic profile of the Open Knowledge Format (OKF) specification
+by Google Cloud Platform:
+https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+
+The scripts under .lokf/scripts/ and .lokf/m365/ and the
+knowledge-librarian, knowledge-registrar, knowledge-release and
+knowledge-sync workflows under .github/workflows/ are copies of the
+ktl-sidecar templates in knowledge-trust-ladder
+(https://github.com/noelmcloughlin/knowledge-trust-ladder). The site under
+website/ and the knowledge-website workflow derive from the ktl-website
+templates in the same repository, and website/NOTICE lists the part
+adapted from the LOKF toolkit's site. All of them are licensed under the
+Apache License, Version 2.0.
