@@ -2,7 +2,7 @@
 # Schema: uco
 #
 # id: https://w3id.org/lmodel/uco
-# description: A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module per UCO namespace and one for the Collections Ontology terms UCO uses, with every class, property and vocabulary keeping its UCO IRI.
+# description: A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module per UCO namespace, with every class, property and vocabulary keeping its UCO IRI, and lmodel/collections' schema for the Collections Ontology terms UCO uses.
 # license: Apache-2.0
 
 import dataclasses
@@ -1106,16 +1106,16 @@ class UcoDocument(YAMLRoot):
 
 
 @dataclass(repr=False)
-class Bag(YAMLRoot):
+class Collection(YAMLRoot):
     """
-    A collection that may hold one element more than once, in no order.
+    A group of things that is taken as a whole.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = COLL["Bag"]
-    class_class_curie: ClassVar[str] = "coll:Bag"
-    class_name: ClassVar[str] = "Bag"
-    class_model_uri: ClassVar[URIRef] = UCO_LINKML.Bag
+    class_class_uri: ClassVar[URIRef] = COLL["Collection"]
+    class_class_curie: ClassVar[str] = "coll:Collection"
+    class_name: ClassVar[str] = "Collection"
+    class_model_uri: ClassVar[URIRef] = UCO_LINKML.Collection
 
     co_size: Optional[int] = None
     element: Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]] = empty_list()
@@ -1132,22 +1132,43 @@ class Bag(YAMLRoot):
 
 
 @dataclass(repr=False)
-class CoItem(YAMLRoot):
+class Set(Collection):
     """
-    An entry of a collection, which wraps one element of the collection's content.
+    A collection that holds each of its elements once.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = COLL["Item"]
-    class_class_curie: ClassVar[str] = "coll:Item"
-    class_name: ClassVar[str] = "CoItem"
-    class_model_uri: ClassVar[URIRef] = UCO_LINKML.CoItem
+    class_class_uri: ClassVar[URIRef] = COLL["Set"]
+    class_class_curie: ClassVar[str] = "coll:Set"
+    class_name: ClassVar[str] = "Set"
+    class_model_uri: ClassVar[URIRef] = UCO_LINKML.Set
 
-    itemContent: Optional[Union[str, URIorCURIE]] = None
+    element: Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self.itemContent is not None and not isinstance(self.itemContent, URIorCURIE):
-            self.itemContent = URIorCURIE(self.itemContent)
+        if not isinstance(self.element, list):
+            self.element = [self.element] if self.element is not None else []
+        self.element = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.element]
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class Bag(Collection):
+    """
+    A collection that may hold one element more than once, in no order.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = COLL["Bag"]
+    class_class_curie: ClassVar[str] = "coll:Bag"
+    class_name: ClassVar[str] = "Bag"
+    class_model_uri: ClassVar[URIRef] = UCO_LINKML.Bag
+
+    item: Optional[Union[Union[dict, "CoItem"], list[Union[dict, "CoItem"]]]] = empty_list()
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        self._normalize_inlined_as_list(slot_name="item", slot_type=CoItem, key_name="itemContent", keyed=False)
 
         super().__post_init__(**kwargs)
 
@@ -1165,19 +1186,40 @@ class List(Bag):
     class_model_uri: ClassVar[URIRef] = UCO_LINKML.List
 
     firstItem: Optional[Union[dict, "ListItem"]] = None
-    item: Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]] = empty_list()
     lastItem: Optional[Union[dict, "ListItem"]] = None
+    item: Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self.firstItem is not None and not isinstance(self.firstItem, ListItem):
             self.firstItem = ListItem(**as_dict(self.firstItem))
 
-        if not isinstance(self.item, list):
-            self.item = [self.item] if self.item is not None else []
-        self.item = [v if isinstance(v, ListItem) else ListItem(**as_dict(v)) for v in self.item]
-
         if self.lastItem is not None and not isinstance(self.lastItem, ListItem):
             self.lastItem = ListItem(**as_dict(self.lastItem))
+
+        self._normalize_inlined_as_list(slot_name="item", slot_type=ListItem, key_name="itemContent", keyed=False)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class CoItem(YAMLRoot):
+    """
+    An entry of a bag, which wraps one of the bag's elements.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = COLL["Item"]
+    class_class_curie: ClassVar[str] = "coll:Item"
+    class_name: ClassVar[str] = "CoItem"
+    class_model_uri: ClassVar[URIRef] = UCO_LINKML.CoItem
+
+    itemContent: Union[str, URIorCURIE] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.itemContent):
+            self.MissingRequiredField("itemContent")
+        if not isinstance(self.itemContent, URIorCURIE):
+            self.itemContent = URIorCURIE(self.itemContent)
 
         super().__post_init__(**kwargs)
 
@@ -1194,16 +1236,28 @@ class ListItem(CoItem):
     class_name: ClassVar[str] = "ListItem"
     class_model_uri: ClassVar[URIRef] = UCO_LINKML.ListItem
 
-    followedBy: Optional[Union[Union[dict, CoItem], list[Union[dict, CoItem]]]] = empty_list()
-    index: Optional[int] = None
+    itemContent: Union[str, URIorCURIE] = None
+    co_index: int = None
+    nextItem: Optional[Union[dict, "ListItem"]] = None
+    previousItem: Optional[Union[dict, "ListItem"]] = None
+    followedBy: Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]] = empty_list()
+    precededBy: Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if not isinstance(self.followedBy, list):
-            self.followedBy = [self.followedBy] if self.followedBy is not None else []
-        self.followedBy = [v if isinstance(v, CoItem) else CoItem(**as_dict(v)) for v in self.followedBy]
+        if self._is_empty(self.co_index):
+            self.MissingRequiredField("co_index")
+        if not isinstance(self.co_index, int):
+            self.co_index = int(self.co_index)
 
-        if self.index is not None and not isinstance(self.index, int):
-            self.index = int(self.index)
+        if self.nextItem is not None and not isinstance(self.nextItem, ListItem):
+            self.nextItem = ListItem(**as_dict(self.nextItem))
+
+        if self.previousItem is not None and not isinstance(self.previousItem, ListItem):
+            self.previousItem = ListItem(**as_dict(self.previousItem))
+
+        self._normalize_inlined_as_list(slot_name="followedBy", slot_type=ListItem, key_name="itemContent", keyed=False)
+
+        self._normalize_inlined_as_list(slot_name="precededBy", slot_type=ListItem, key_name="itemContent", keyed=False)
 
         super().__post_init__(**kwargs)
 
@@ -3566,9 +3620,9 @@ class Thread(UcoThing):
     class_model_uri: ClassVar[URIRef] = UCO_LINKML.Thread
 
     id: Union[str, ThreadId] = None
-    item: Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]] = empty_list()
-    threadOriginItem: Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]] = empty_list()
-    threadTerminalItem: Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]] = empty_list()
+    item: Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]] = empty_dict()
+    threadOriginItem: Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]] = empty_dict()
+    threadTerminalItem: Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]] = empty_dict()
     co_size: Optional[int] = None
     element: Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]] = empty_list()
 
@@ -3578,17 +3632,11 @@ class Thread(UcoThing):
         if not isinstance(self.id, ThreadId):
             self.id = ThreadId(self.id)
 
-        if not isinstance(self.item, list):
-            self.item = [self.item] if self.item is not None else []
-        self.item = [v if isinstance(v, ThreadItemId) else ThreadItemId(v) for v in self.item]
+        self._normalize_inlined_as_list(slot_name="item", slot_type=ThreadItem, key_name="id", keyed=True)
 
-        if not isinstance(self.threadOriginItem, list):
-            self.threadOriginItem = [self.threadOriginItem] if self.threadOriginItem is not None else []
-        self.threadOriginItem = [v if isinstance(v, ThreadItemId) else ThreadItemId(v) for v in self.threadOriginItem]
+        self._normalize_inlined_as_list(slot_name="threadOriginItem", slot_type=ThreadItem, key_name="id", keyed=True)
 
-        if not isinstance(self.threadTerminalItem, list):
-            self.threadTerminalItem = [self.threadTerminalItem] if self.threadTerminalItem is not None else []
-        self.threadTerminalItem = [v if isinstance(v, ThreadItemId) else ThreadItemId(v) for v in self.threadTerminalItem]
+        self._normalize_inlined_as_list(slot_name="threadTerminalItem", slot_type=ThreadItem, key_name="id", keyed=True)
 
         if self.co_size is not None and not isinstance(self.co_size, int):
             self.co_size = int(self.co_size)
@@ -17033,38 +17081,53 @@ class slots:
 slots.graph = Slot(uri=UCO_LINKML.graph, name="graph", curie=UCO_LINKML.curie('graph'),
                    model_uri=UCO_LINKML.graph, domain=None, range=Optional[Union[Union[dict, UcoThing], list[Union[dict, UcoThing]]]])
 
-slots.co_size = Slot(uri=COLL.size, name="co_size", curie=COLL.curie('size'),
-                   model_uri=UCO_LINKML.co_size, domain=None, range=Optional[int])
-
 slots.element = Slot(uri=COLL.element, name="element", curie=COLL.curie('element'),
-                   model_uri=UCO_LINKML.element, domain=None, range=Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]])
+                   model_uri=UCO_LINKML.element, domain=Collection, range=Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]])
 
-slots.firstItem = Slot(uri=COLL.firstItem, name="firstItem", curie=COLL.curie('firstItem'),
-                   model_uri=UCO_LINKML.firstItem, domain=None, range=Optional[Union[dict, ListItem]])
+slots.elementOf = Slot(uri=COLL.elementOf, name="elementOf", curie=COLL.curie('elementOf'),
+                   model_uri=UCO_LINKML.elementOf, domain=None, range=Optional[Union[Union[dict, Collection], list[Union[dict, Collection]]]])
 
-slots.followedBy = Slot(uri=COLL.followedBy, name="followedBy", curie=COLL.curie('followedBy'),
-                   model_uri=UCO_LINKML.followedBy, domain=None, range=Optional[Union[Union[dict, CoItem], list[Union[dict, CoItem]]]])
-
-slots.index = Slot(uri=COLL.index, name="index", curie=COLL.curie('index'),
-                   model_uri=UCO_LINKML.index, domain=None, range=Optional[int])
+slots.co_size = Slot(uri=COLL.size, name="co_size", curie=COLL.curie('size'),
+                   model_uri=UCO_LINKML.co_size, domain=Collection, range=Optional[int])
 
 slots.item = Slot(uri=COLL.item, name="item", curie=COLL.curie('item'),
-                   model_uri=UCO_LINKML.item, domain=None, range=Optional[Union[str, list[str]]])
+                   model_uri=UCO_LINKML.item, domain=Bag, range=Optional[Union[Union[dict, "CoItem"], list[Union[dict, "CoItem"]]]])
+
+slots.itemOf = Slot(uri=COLL.itemOf, name="itemOf", curie=COLL.curie('itemOf'),
+                   model_uri=UCO_LINKML.itemOf, domain=CoItem, range=Optional[Union[Union[dict, Bag], list[Union[dict, Bag]]]])
 
 slots.itemContent = Slot(uri=COLL.itemContent, name="itemContent", curie=COLL.curie('itemContent'),
-                   model_uri=UCO_LINKML.itemContent, domain=None, range=Optional[Union[str, URIorCURIE]])
+                   model_uri=UCO_LINKML.itemContent, domain=CoItem, range=Optional[Union[str, URIorCURIE]])
+
+slots.itemContentOf = Slot(uri=COLL.itemContentOf, name="itemContentOf", curie=COLL.curie('itemContentOf'),
+                   model_uri=UCO_LINKML.itemContentOf, domain=None, range=Optional[Union[Union[dict, CoItem], list[Union[dict, CoItem]]]])
+
+slots.co_index = Slot(uri=COLL.index, name="co_index", curie=COLL.curie('index'),
+                   model_uri=UCO_LINKML.co_index, domain=ListItem, range=Optional[int])
+
+slots.firstItem = Slot(uri=COLL.firstItem, name="firstItem", curie=COLL.curie('firstItem'),
+                   model_uri=UCO_LINKML.firstItem, domain=List, range=Optional[Union[dict, "ListItem"]])
+
+slots.firstItemOf = Slot(uri=COLL.firstItemOf, name="firstItemOf", curie=COLL.curie('firstItemOf'),
+                   model_uri=UCO_LINKML.firstItemOf, domain=ListItem, range=Optional[Union[Union[dict, List], list[Union[dict, List]]]])
 
 slots.lastItem = Slot(uri=COLL.lastItem, name="lastItem", curie=COLL.curie('lastItem'),
-                   model_uri=UCO_LINKML.lastItem, domain=None, range=Optional[Union[dict, ListItem]])
+                   model_uri=UCO_LINKML.lastItem, domain=List, range=Optional[Union[dict, "ListItem"]])
+
+slots.lastItemOf = Slot(uri=COLL.lastItemOf, name="lastItemOf", curie=COLL.curie('lastItemOf'),
+                   model_uri=UCO_LINKML.lastItemOf, domain=ListItem, range=Optional[Union[Union[dict, List], list[Union[dict, List]]]])
 
 slots.nextItem = Slot(uri=COLL.nextItem, name="nextItem", curie=COLL.curie('nextItem'),
-                   model_uri=UCO_LINKML.nextItem, domain=None, range=Optional[Union[dict, CoItem]])
-
-slots.precededBy = Slot(uri=COLL.precededBy, name="precededBy", curie=COLL.curie('precededBy'),
-                   model_uri=UCO_LINKML.precededBy, domain=None, range=Optional[Union[dict, CoItem]])
+                   model_uri=UCO_LINKML.nextItem, domain=ListItem, range=Optional[Union[dict, "ListItem"]])
 
 slots.previousItem = Slot(uri=COLL.previousItem, name="previousItem", curie=COLL.curie('previousItem'),
-                   model_uri=UCO_LINKML.previousItem, domain=None, range=Optional[Union[dict, CoItem]])
+                   model_uri=UCO_LINKML.previousItem, domain=ListItem, range=Optional[Union[dict, "ListItem"]])
+
+slots.followedBy = Slot(uri=COLL.followedBy, name="followedBy", curie=COLL.curie('followedBy'),
+                   model_uri=UCO_LINKML.followedBy, domain=ListItem, range=Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]])
+
+slots.precededBy = Slot(uri=COLL.precededBy, name="precededBy", curie=COLL.curie('precededBy'),
+                   model_uri=UCO_LINKML.precededBy, domain=ListItem, range=Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]])
 
 slots.confidence = Slot(uri=UCO_CORE.confidence, name="confidence", curie=UCO_CORE.curie('confidence'),
                    model_uri=UCO_LINKML.confidence, domain=None, range=Union[int, UcoNonNegativeInteger])
@@ -17379,7 +17442,7 @@ slots.threadNextItem = Slot(uri=UCO_TYPES.threadNextItem, name="threadNextItem",
                    model_uri=UCO_LINKML.threadNextItem, domain=ThreadItem, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
 
 slots.threadOriginItem = Slot(uri=UCO_TYPES.threadOriginItem, name="threadOriginItem", curie=UCO_TYPES.curie('threadOriginItem'),
-                   model_uri=UCO_LINKML.threadOriginItem, domain=Thread, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
+                   model_uri=UCO_LINKML.threadOriginItem, domain=Thread, range=Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]])
 
 slots.threadPredecessor = Slot(uri=UCO_TYPES.threadPredecessor, name="threadPredecessor", curie=UCO_TYPES.curie('threadPredecessor'),
                    model_uri=UCO_LINKML.threadPredecessor, domain=ThreadItem, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
@@ -17391,7 +17454,7 @@ slots.threadSuccessor = Slot(uri=UCO_TYPES.threadSuccessor, name="threadSuccesso
                    model_uri=UCO_LINKML.threadSuccessor, domain=ThreadItem, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
 
 slots.threadTerminalItem = Slot(uri=UCO_TYPES.threadTerminalItem, name="threadTerminalItem", curie=UCO_TYPES.curie('threadTerminalItem'),
-                   model_uri=UCO_LINKML.threadTerminalItem, domain=Thread, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
+                   model_uri=UCO_LINKML.threadTerminalItem, domain=Thread, range=Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]])
 
 slots.action = Slot(uri=UCO_ACTION.action, name="action", curie=UCO_ACTION.curie('action'),
                    model_uri=UCO_LINKML.action, domain=None, range=Union[Union[str, ActionId], list[Union[str, ActionId]]])
@@ -19346,8 +19409,17 @@ slots.xMailer = Slot(uri=UCO_OBSERVABLE.xMailer, name="xMailer", curie=UCO_OBSER
 slots.xOriginatingIP = Slot(uri=UCO_OBSERVABLE.xOriginatingIP, name="xOriginatingIP", curie=UCO_OBSERVABLE.curie('xOriginatingIP'),
                    model_uri=UCO_LINKML.xOriginatingIP, domain=None, range=Optional[Union[str, ObservableObjectId]])
 
+slots.Set_element = Slot(uri=COLL.element, name="Set_element", curie=COLL.curie('element'),
+                   model_uri=UCO_LINKML.Set_element, domain=Set, range=Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]])
+
 slots.List_item = Slot(uri=COLL.item, name="List_item", curie=COLL.curie('item'),
                    model_uri=UCO_LINKML.List_item, domain=List, range=Optional[Union[Union[dict, "ListItem"], list[Union[dict, "ListItem"]]]])
+
+slots.CoItem_itemContent = Slot(uri=COLL.itemContent, name="CoItem_itemContent", curie=COLL.curie('itemContent'),
+                   model_uri=UCO_LINKML.CoItem_itemContent, domain=CoItem, range=Union[str, URIorCURIE])
+
+slots.ListItem_co_index = Slot(uri=COLL.index, name="ListItem_co_index", curie=COLL.curie('index'),
+                   model_uri=UCO_LINKML.ListItem_co_index, domain=ListItem, range=int)
 
 slots.Annotation_object = Slot(uri=UCO_CORE.object, name="Annotation_object", curie=UCO_CORE.curie('object'),
                    model_uri=UCO_LINKML.Annotation_object, domain=Annotation, range=Union[Union[str, UcoObjectId], list[Union[str, UcoObjectId]]])
@@ -19377,7 +19449,13 @@ slots.ControlledDictionary_entry = Slot(uri=UCO_TYPES.entry, name="ControlledDic
                    model_uri=UCO_LINKML.ControlledDictionary_entry, domain=ControlledDictionary, range=Optional[Union[Union[dict, "ControlledDictionaryEntry"], list[Union[dict, "ControlledDictionaryEntry"]]]])
 
 slots.Thread_item = Slot(uri=COLL.item, name="Thread_item", curie=COLL.curie('item'),
-                   model_uri=UCO_LINKML.Thread_item, domain=Thread, range=Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]])
+                   model_uri=UCO_LINKML.Thread_item, domain=Thread, range=Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]])
+
+slots.Thread_threadOriginItem = Slot(uri=UCO_TYPES.threadOriginItem, name="Thread_threadOriginItem", curie=UCO_TYPES.curie('threadOriginItem'),
+                   model_uri=UCO_LINKML.Thread_threadOriginItem, domain=Thread, range=Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]])
+
+slots.Thread_threadTerminalItem = Slot(uri=UCO_TYPES.threadTerminalItem, name="Thread_threadTerminalItem", curie=UCO_TYPES.curie('threadTerminalItem'),
+                   model_uri=UCO_LINKML.Thread_threadTerminalItem, domain=Thread, range=Optional[Union[dict[Union[str, ThreadItemId], Union[dict, "ThreadItem"]], list[Union[dict, "ThreadItem"]]]])
 
 slots.ThreadItem_itemContent = Slot(uri=COLL.itemContent, name="ThreadItem_itemContent", curie=COLL.curie('itemContent'),
                    model_uri=UCO_LINKML.ThreadItem_itemContent, domain=ThreadItem, range=Optional[Union[str, UcoObjectId]])

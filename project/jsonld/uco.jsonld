@@ -1,10 +1,11 @@
 {
   "name": "uco",
-  "description": "A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module per UCO namespace and one for the Collections Ontology terms UCO uses, with every class, property and vocabulary keeping its UCO IRI.",
+  "description": "A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module per UCO namespace, with every class, property and vocabulary keeping its UCO IRI, and lmodel/collections' schema for the Collections Ontology terms UCO uses.",
   "title": "Unified Cyber Ontology (UCO)",
   "comments": [
     "scripts/uco_to_linkml.py writes every YAML file in this folder from UCO's files in upstream/. Change the script or the copy, never the files.",
     "Each module imports the modules its UCO file imports, and this file imports them in that order, so an importer can import one module alone.",
+    "collections/collections.yaml is lmodel/collections' schema at its v0.1.0 release, copied unchanged. It renders the Collections Ontology (CO) 2.0 with CO's names and IRIs, and UCO's threads build on its Bag and CoItem.",
     "The descriptions are UCO's rdfs:comment texts, which the UCO Community publishes under the Apache License 2.0.",
     "Where UCO defines one local name in more than one namespace, the namespace that comes first in this file's imports keeps it, and each other takes its namespace as a prefix: action_endTime, action_object, action_startTime, action_value, marking_statement, observable_context, observable_cpeid, observable_creator, observable_endTime, observable_eventType, observable_key, observable_location, observable_modifiedTime, observable_participant, observable_references, observable_startTime, observable_swid, observable_value, observable_version, types_value.",
     "Declared in uco_core although their IRIs are in UCO's types namespace, since Event's eventAttribute ranges over them and uco-core imports no other UCO namespace: Dictionary (uco-types:Dictionary), entry (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry), key (uco-types:key), types_value (uco-types:value).",
@@ -19,7 +20,7 @@
   "version": "1.5.0",
   "imports": [
     "linkml:types",
-    "./uco_co",
+    "./collections/collections",
     "./uco_core",
     "./uco_configuration",
     "./uco_location",
@@ -3680,70 +3681,78 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "co_size",
-      "definition_uri": "https://w3id.org/lmodel/uco/co_size",
-      "description": "How many items the collection holds.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
-      "mappings": [
-        "http://purl.org/co/size"
-      ],
-      "slot_uri": "http://purl.org/co/size",
-      "owner": "Bag",
-      "domain_of": [
-        "Bag"
-      ],
-      "range": "integer",
-      "minimum_value": 0,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "element",
-      "definition_uri": "https://w3id.org/lmodel/uco/element",
-      "description": "A member of the collection, which one of its items wraps.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "definition_uri": "https://w3id.org/lmodel/collections/element",
+      "description": "A thing the collection holds, named by its IRI.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
         "http://purl.org/co/element"
       ],
+      "domain": "Collection",
       "slot_uri": "http://purl.org/co/element",
-      "owner": "Bag",
+      "owner": "Collection",
       "domain_of": [
-        "Bag"
+        "Collection"
       ],
       "range": "uriorcurie",
       "multivalued": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "firstItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/firstItem",
-      "description": "The first item of the list.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "name": "elementOf",
+      "definition_uri": "https://w3id.org/lmodel/collections/elementOf",
+      "description": "A collection that holds the thing as an element.",
+      "notes": [
+        "CO declares it the inverse of element. LinkML's Python generator states an inverse only between slots that range over classes, and element ranges over any thing named by its IRI, so the inverse is not stated here."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
-        "http://purl.org/co/firstItem"
+        "http://purl.org/co/elementOf"
       ],
-      "slot_uri": "http://purl.org/co/firstItem",
-      "owner": "List",
-      "domain_of": [
-        "List"
-      ],
-      "range": "ListItem",
+      "slot_uri": "http://purl.org/co/elementOf",
+      "range": "Collection",
+      "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "followedBy",
-      "definition_uri": "https://w3id.org/lmodel/uco/followedBy",
-      "description": "An item that comes somewhere after this one.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "name": "co_size",
+      "definition_uri": "https://w3id.org/lmodel/collections/co_size",
+      "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
+      "notes": [
+        "CO gives every collection exactly one size. The schema leaves it optional, since a reader can count; where it is given, the tests check that it equals the count."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
-        "http://purl.org/co/followedBy"
+        "http://purl.org/co/size"
       ],
-      "slot_uri": "http://purl.org/co/followedBy",
-      "owner": "ListItem",
+      "domain": "Collection",
+      "slot_uri": "http://purl.org/co/size",
+      "owner": "Collection",
       "domain_of": [
-        "ListItem"
+        "Collection"
       ],
+      "range": "integer",
+      "minimum_value": 0,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "item",
+      "definition_uri": "https://w3id.org/lmodel/collections/item",
+      "description": "An item of the bag, which holds one of its elements.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/item"
+      ],
+      "domain": "Bag",
+      "slot_uri": "http://purl.org/co/item",
+      "owner": "Thread",
+      "domain_of": [
+        "Bag",
+        "Thread"
+      ],
+      "inverse": "itemOf",
       "range": "CoItem",
       "multivalued": true,
       "inlined": true,
@@ -3751,48 +3760,38 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "index",
-      "definition_uri": "https://w3id.org/lmodel/uco/index",
-      "description": "The place of the item in its list, counting from 1.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "name": "itemOf",
+      "definition_uri": "https://w3id.org/lmodel/collections/itemOf",
+      "description": "A bag that holds the item.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
-        "http://purl.org/co/index"
+        "http://purl.org/co/itemOf"
       ],
-      "slot_uri": "http://purl.org/co/index",
-      "owner": "ListItem",
-      "domain_of": [
-        "ListItem"
-      ],
-      "range": "integer",
-      "minimum_value": 1,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "item",
-      "definition_uri": "https://w3id.org/lmodel/uco/item",
-      "description": "An item of the collection.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
-      "mappings": [
-        "http://purl.org/co/item"
-      ],
-      "slot_uri": "http://purl.org/co/item",
-      "owner": "Thread",
-      "domain_of": [
-        "List",
-        "Thread"
-      ],
-      "range": "string",
+      "domain": "CoItem",
+      "slot_uri": "http://purl.org/co/itemOf",
+      "owner": "itemOf",
+      "inverse": "item",
+      "range": "Bag",
       "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
       "name": "itemContent",
-      "definition_uri": "https://w3id.org/lmodel/uco/itemContent",
+      "definition_uri": "https://w3id.org/lmodel/collections/itemContent",
       "description": "The element that the item wraps.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "notes": [
+        "CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps at most one element, and CO's wiki page StructureBag says that an item links exactly one resource."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "see_also": [
+        "https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md"
+      ],
       "mappings": [
         "http://purl.org/co/itemContent"
       ],
+      "domain": "CoItem",
       "slot_uri": "http://purl.org/co/itemContent",
       "owner": "ThreadItem",
       "domain_of": [
@@ -3803,61 +3802,227 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "lastItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/lastItem",
-      "description": "The last item of the list.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
-      "mappings": [
-        "http://purl.org/co/lastItem"
+      "name": "itemContentOf",
+      "definition_uri": "https://w3id.org/lmodel/collections/itemContentOf",
+      "description": "An item that wraps the thing.",
+      "notes": [
+        "CO declares it the inverse of itemContent, which is not stated here for the reason given on elementOf."
       ],
-      "slot_uri": "http://purl.org/co/lastItem",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/itemContentOf"
+      ],
+      "slot_uri": "http://purl.org/co/itemContentOf",
+      "range": "CoItem",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "co_index",
+      "definition_uri": "https://w3id.org/lmodel/collections/co_index",
+      "description": "The place of the item in its list, counting from 1.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/index"
+      ],
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/index",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "range": "integer",
+      "minimum_value": 1,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "firstItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/firstItem",
+      "description": "The first item of the list.",
+      "notes": [
+        "CO makes it a narrower form of item, which is not stated here: a LinkML slot inherits its parent's multivalued, and this one is single."
+      ],
+      "comments": [
+        "It holds a copy of the item with index 1, which has no previous item."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/firstItem"
+      ],
+      "domain": "List",
+      "slot_uri": "http://purl.org/co/firstItem",
       "owner": "List",
       "domain_of": [
         "List"
       ],
+      "inverse": "firstItemOf",
       "range": "ListItem",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "nextItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/nextItem",
-      "description": "The item that comes straight after this one.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "name": "firstItemOf",
+      "definition_uri": "https://w3id.org/lmodel/collections/firstItemOf",
+      "description": "A list whose first item this is.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
-        "http://purl.org/co/nextItem"
+        "http://purl.org/co/firstItemOf"
       ],
-      "slot_uri": "http://purl.org/co/nextItem",
-      "range": "CoItem",
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/firstItemOf",
+      "owner": "firstItemOf",
+      "inverse": "firstItem",
+      "range": "List",
+      "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "precededBy",
-      "definition_uri": "https://w3id.org/lmodel/uco/precededBy",
-      "description": "An item that comes somewhere before this one.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
-      "mappings": [
-        "http://purl.org/co/precededBy"
+      "name": "lastItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/lastItem",
+      "description": "The last item of the list.",
+      "notes": [
+        "CO makes it a narrower form of item, which is not stated here for the reason given on firstItem."
       ],
-      "slot_uri": "http://purl.org/co/precededBy",
-      "range": "CoItem",
+      "comments": [
+        "It holds a copy of the item with the highest index, which has no next item."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/lastItem"
+      ],
+      "domain": "List",
+      "slot_uri": "http://purl.org/co/lastItem",
+      "owner": "List",
+      "domain_of": [
+        "List"
+      ],
+      "inverse": "lastItemOf",
+      "range": "ListItem",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "lastItemOf",
+      "definition_uri": "https://w3id.org/lmodel/collections/lastItemOf",
+      "description": "A list whose last item this is.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/lastItemOf"
+      ],
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/lastItemOf",
+      "owner": "lastItemOf",
+      "inverse": "lastItem",
+      "range": "List",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "nextItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/nextItem",
+      "description": "The item that comes straight after this one.",
+      "notes": [
+        "CO makes it a narrower form of followedBy, which is not stated here for the reason given on firstItem."
+      ],
+      "comments": [
+        "It holds a copy of the item whose index is one higher."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/nextItem"
+      ],
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/nextItem",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "inverse": "previousItem",
+      "range": "ListItem",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
       "name": "previousItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/previousItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/previousItem",
       "description": "The item that comes straight before this one.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "notes": [
+        "CO makes it a narrower form of precededBy, which is not stated here for the reason given on firstItem."
+      ],
+      "comments": [
+        "It holds a copy of the item whose index is one lower."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
         "http://purl.org/co/previousItem"
       ],
+      "domain": "ListItem",
       "slot_uri": "http://purl.org/co/previousItem",
-      "range": "CoItem",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "inverse": "nextItem",
+      "range": "ListItem",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "followedBy",
+      "definition_uri": "https://w3id.org/lmodel/collections/followedBy",
+      "description": "An item that comes somewhere after this one.",
+      "comments": [
+        "It holds copies of items whose index is higher."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/followedBy"
+      ],
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/followedBy",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "transitive": true,
+      "inverse": "precededBy",
+      "range": "ListItem",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "precededBy",
+      "definition_uri": "https://w3id.org/lmodel/collections/precededBy",
+      "description": "An item that comes somewhere before this one.",
+      "comments": [
+        "It holds copies of items whose index is lower."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/precededBy"
+      ],
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/precededBy",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "transitive": true,
+      "inverse": "followedBy",
+      "range": "ListItem",
+      "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
@@ -5681,6 +5846,8 @@
       ],
       "range": "ThreadItem",
       "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -5772,6 +5939,8 @@
       ],
       "range": "ThreadItem",
       "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -16876,10 +17045,33 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "Set_element",
+      "definition_uri": "https://w3id.org/lmodel/collections/element",
+      "description": "A thing the collection holds, named by its IRI.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/element"
+      ],
+      "is_a": "element",
+      "domain": "Set",
+      "slot_uri": "http://purl.org/co/element",
+      "list_elements_unique": true,
+      "alias": "element",
+      "owner": "Set",
+      "domain_of": [
+        "Set"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "element",
+      "range": "uriorcurie",
+      "multivalued": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "List_item",
-      "definition_uri": "https://w3id.org/lmodel/uco/item",
-      "description": "An item of the collection.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "definition_uri": "https://w3id.org/lmodel/collections/item",
+      "description": "An item of the bag, which holds one of its elements.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
         "http://purl.org/co/item"
       ],
@@ -16897,6 +17089,57 @@
       "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "CoItem_itemContent",
+      "definition_uri": "https://w3id.org/lmodel/collections/itemContent",
+      "description": "The element that the item wraps.",
+      "notes": [
+        "CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps at most one element, and CO's wiki page StructureBag says that an item links exactly one resource."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "see_also": [
+        "https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md"
+      ],
+      "mappings": [
+        "http://purl.org/co/itemContent"
+      ],
+      "is_a": "itemContent",
+      "domain": "CoItem",
+      "slot_uri": "http://purl.org/co/itemContent",
+      "alias": "itemContent",
+      "owner": "CoItem",
+      "domain_of": [
+        "CoItem"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "itemContent",
+      "range": "uriorcurie",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ListItem_co_index",
+      "definition_uri": "https://w3id.org/lmodel/collections/co_index",
+      "description": "The place of the item in its list, counting from 1.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "mappings": [
+        "http://purl.org/co/index"
+      ],
+      "is_a": "co_index",
+      "domain": "ListItem",
+      "slot_uri": "http://purl.org/co/index",
+      "alias": "co_index",
+      "owner": "ListItem",
+      "domain_of": [
+        "ListItem"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "co_index",
+      "range": "integer",
+      "required": true,
+      "minimum_value": 1,
       "@type": "SlotDefinition"
     },
     {
@@ -17119,9 +17362,9 @@
     },
     {
       "name": "Thread_item",
-      "definition_uri": "https://w3id.org/lmodel/uco/item",
-      "description": "An item of the collection.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "definition_uri": "https://w3id.org/lmodel/collections/item",
+      "description": "An item of the bag, which holds one of its elements.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "mappings": [
         "http://purl.org/co/item"
       ],
@@ -17137,17 +17380,79 @@
       "usage_slot_name": "item",
       "range": "ThreadItem",
       "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "Thread_threadOriginItem",
+      "definition_uri": "https://w3id.org/lmodel/uco/threadOriginItem",
+      "description": "A link to an item of the thread known to have no predecessor.",
+      "from_schema": "https://w3id.org/lmodel/uco-types",
+      "see_also": [
+        "coll:firstItem"
+      ],
+      "mappings": [
+        "https://ontology.unifiedcyberontology.org/uco/types/threadOriginItem"
+      ],
+      "is_a": "threadOriginItem",
+      "domain": "Thread",
+      "slot_uri": "https://ontology.unifiedcyberontology.org/uco/types/threadOriginItem",
+      "alias": "threadOriginItem",
+      "owner": "Thread",
+      "domain_of": [
+        "Thread"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "threadOriginItem",
+      "range": "ThreadItem",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "Thread_threadTerminalItem",
+      "definition_uri": "https://w3id.org/lmodel/uco/threadTerminalItem",
+      "description": "A link to an item of the thread known to have no successor.",
+      "from_schema": "https://w3id.org/lmodel/uco-types",
+      "see_also": [
+        "coll:lastItem"
+      ],
+      "mappings": [
+        "https://ontology.unifiedcyberontology.org/uco/types/threadTerminalItem"
+      ],
+      "is_a": "threadTerminalItem",
+      "domain": "Thread",
+      "slot_uri": "https://ontology.unifiedcyberontology.org/uco/types/threadTerminalItem",
+      "alias": "threadTerminalItem",
+      "owner": "Thread",
+      "domain_of": [
+        "Thread"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "threadTerminalItem",
+      "range": "ThreadItem",
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
       "name": "ThreadItem_itemContent",
-      "definition_uri": "https://w3id.org/lmodel/uco/itemContent",
+      "definition_uri": "https://w3id.org/lmodel/collections/itemContent",
       "description": "The element that the item wraps.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "notes": [
+        "CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps at most one element, and CO's wiki page StructureBag says that an item links exactly one resource."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "see_also": [
+        "https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md"
+      ],
       "mappings": [
         "http://purl.org/co/itemContent"
       ],
-      "is_a": "itemContent",
+      "is_a": "CoItem_itemContent",
       "domain": "ThreadItem",
       "slot_uri": "http://purl.org/co/itemContent",
       "alias": "itemContent",
@@ -17646,41 +17951,73 @@
       "@type": "ClassDefinition"
     },
     {
-      "name": "Bag",
-      "definition_uri": "https://w3id.org/lmodel/uco/Bag",
-      "description": "A collection that may hold one element more than once, in no order.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "name": "Collection",
+      "definition_uri": "https://w3id.org/lmodel/collections/Collection",
+      "description": "A group of things that is taken as a whole.",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "exact_mappings": [
-        "coll:Bag"
+        "coll:Collection"
       ],
       "slots": [
         "co_size",
         "element"
       ],
       "slot_usage": {},
-      "class_uri": "http://purl.org/co/Bag",
+      "class_uri": "http://purl.org/co/Collection",
+      "disjoint_with": [
+        "CoItem"
+      ],
       "@type": "ClassDefinition"
     },
     {
-      "name": "CoItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/CoItem",
-      "description": "An entry of a collection, which wraps one element of the collection's content.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
-      "exact_mappings": [
-        "coll:Item"
+      "name": "Set",
+      "definition_uri": "https://w3id.org/lmodel/collections/Set",
+      "description": "A collection that holds each of its elements once.",
+      "comments": [
+        "No validator checks that the elements differ: LinkML 1.12.1's generators drop list_elements_unique, so the tests check it."
       ],
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "exact_mappings": [
+        "coll:Set"
+      ],
+      "is_a": "Collection",
       "slots": [
-        "itemContent"
+        "co_size",
+        "Set_element"
       ],
       "slot_usage": {},
-      "class_uri": "http://purl.org/co/Item",
+      "class_uri": "http://purl.org/co/Set",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Bag",
+      "definition_uri": "https://w3id.org/lmodel/collections/Bag",
+      "description": "A collection that may hold one element more than once, in no order.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "exact_mappings": [
+        "coll:Bag"
+      ],
+      "is_a": "Collection",
+      "slots": [
+        "co_size",
+        "element",
+        "item"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://purl.org/co/Bag",
+      "disjoint_with": [
+        "Set"
+      ],
       "@type": "ClassDefinition"
     },
     {
       "name": "List",
-      "definition_uri": "https://w3id.org/lmodel/uco/List",
+      "definition_uri": "https://w3id.org/lmodel/collections/List",
       "description": "A collection whose items come in order, one after another.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "comments": [
+        "No validator checks the order: that the indexes count from 1 with no gap or repeat, and that firstItem, lastItem and each item's links agree with them. The tests check it."
+      ],
+      "from_schema": "https://w3id.org/lmodel/collections",
       "exact_mappings": [
         "coll:List"
       ],
@@ -17689,26 +18026,44 @@
         "co_size",
         "element",
         "firstItem",
-        "List_item",
-        "lastItem"
+        "lastItem",
+        "List_item"
       ],
       "slot_usage": {},
       "class_uri": "http://purl.org/co/List",
       "@type": "ClassDefinition"
     },
     {
+      "name": "CoItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/CoItem",
+      "description": "An entry of a bag, which wraps one of the bag's elements.",
+      "from_schema": "https://w3id.org/lmodel/collections",
+      "exact_mappings": [
+        "coll:Item"
+      ],
+      "slots": [
+        "CoItem_itemContent"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://purl.org/co/Item",
+      "@type": "ClassDefinition"
+    },
+    {
       "name": "ListItem",
-      "definition_uri": "https://w3id.org/lmodel/uco/ListItem",
+      "definition_uri": "https://w3id.org/lmodel/collections/ListItem",
       "description": "An item of a list, which has a place in the list's order.",
-      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "from_schema": "https://w3id.org/lmodel/collections",
       "exact_mappings": [
         "coll:ListItem"
       ],
       "is_a": "CoItem",
       "slots": [
-        "itemContent",
+        "CoItem_itemContent",
+        "ListItem_co_index",
+        "nextItem",
+        "previousItem",
         "followedBy",
-        "index"
+        "precededBy"
       ],
       "slot_usage": {},
       "class_uri": "http://purl.org/co/ListItem",
@@ -19613,8 +19968,8 @@
         "type",
         "id",
         "Thread_item",
-        "threadOriginItem",
-        "threadTerminalItem",
+        "Thread_threadOriginItem",
+        "Thread_threadTerminalItem",
         "co_size",
         "element"
       ],
@@ -28545,13 +28900,13 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "uco.yaml",
-  "source_file_date": "2026-10-31T10:36:57",
-  "source_file_size": 4296,
+  "source_file_date": "2026-10-31T22:56:19",
+  "source_file_size": 4576,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/uco.context.jsonld",
     "https://w3id.org/linkml/types.context.jsonld",
-    "./uco_co.context.jsonld",
+    "./collections/collections.context.jsonld",
     "./uco_core.context.jsonld",
     "./uco_configuration.context.jsonld",
     "./uco_location.context.jsonld",

@@ -241,6 +241,9 @@
    "CoItem": {
       "@id": "coll:Item"
    },
+   "Collection": {
+      "@id": "coll:Collection"
+   },
    "Compilation": {
       "@id": "uco-core:Compilation"
    },
@@ -933,6 +936,9 @@
    },
    "Server": {
       "@id": "uco-observable:Server"
+   },
+   "Set": {
+      "@id": "coll:Set"
    },
    "ShopListing": {
       "@id": "uco-observable:ShopListing"

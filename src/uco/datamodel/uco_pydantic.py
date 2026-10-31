@@ -72,6 +72,10 @@ linkml_meta = LinkMLMeta({'comments': ['scripts/uco_to_linkml.py writes every YA
                   'Each module imports the modules its UCO file imports, and this '
                   'file imports them in that order, so an importer can import one '
                   'module alone.',
+                  "collections/collections.yaml is lmodel/collections' schema at "
+                  'its v0.1.0 release, copied unchanged. It renders the '
+                  "Collections Ontology (CO) 2.0 with CO's names and IRIs, and "
+                  "UCO's threads build on its Bag and CoItem.",
                   "The descriptions are UCO's rdfs:comment texts, which the UCO "
                   'Community publishes under the Apache License 2.0.',
                   'Where UCO defines one local name in more than one namespace, '
@@ -98,12 +102,12 @@ linkml_meta = LinkMLMeta({'comments': ['scripts/uco_to_linkml.py writes every YA
      'default_prefix': 'uco_linkml',
      'default_range': 'string',
      'description': 'A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: '
-                    'one module per UCO namespace and one for the Collections '
-                    'Ontology terms UCO uses, with every class, property and '
-                    'vocabulary keeping its UCO IRI.',
+                    'one module per UCO namespace, with every class, property and '
+                    "vocabulary keeping its UCO IRI, and lmodel/collections' "
+                    'schema for the Collections Ontology terms UCO uses.',
      'id': 'https://w3id.org/lmodel/uco',
      'imports': ['linkml:types',
-                 './uco_co',
+                 './collections/collections',
                  './uco_core',
                  './uco_configuration',
                  './uco_location',
@@ -1337,23 +1341,65 @@ class WindowsServiceType(str, Enum):
 
 
 
-class Bag(ConfiguredBaseModel):
+class Collection(ConfiguredBaseModel):
+    """
+    A group of things that is taken as a whole.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Collection',
+         'disjoint_with': ['CoItem'],
+         'from_schema': 'https://w3id.org/lmodel/collections'})
+
+    co_size: Optional[int] = Field(default=None, description="""How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.""", ge=0, json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'notes': ['CO gives every collection exactly one size. The schema leaves it '
+                   'optional, since a reader can count; where it is given, the tests '
+                   'check that it equals the count.'],
+         'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A thing the collection holds, named by its IRI.""", json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'slot_uri': 'coll:element'} })
+
+
+class Set(Collection):
+    """
+    A collection that holds each of its elements once.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Set',
+         'comments': ["No validator checks that the elements differ: LinkML 1.12.1's "
+                      'generators drop list_elements_unique, so the tests check it.'],
+         'from_schema': 'https://w3id.org/lmodel/collections',
+         'slot_usage': {'element': {'list_elements_unique': True, 'name': 'element'}}})
+
+    co_size: Optional[int] = Field(default=None, description="""How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.""", ge=0, json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'notes': ['CO gives every collection exactly one size. The schema leaves it '
+                   'optional, since a reader can count; where it is given, the tests '
+                   'check that it equals the count.'],
+         'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A thing the collection holds, named by its IRI.""", json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'list_elements_unique': True,
+         'slot_uri': 'coll:element'} })
+
+
+class Bag(Collection):
     """
     A collection that may hold one element more than once, in no order.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Bag', 'from_schema': 'https://w3id.org/lmodel/uco-co'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Bag',
+         'disjoint_with': ['Set'],
+         'from_schema': 'https://w3id.org/lmodel/collections'})
 
-    co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
-    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
-
-
-class CoItem(ConfiguredBaseModel):
-    """
-    An entry of a collection, which wraps one element of the collection's content.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Item', 'from_schema': 'https://w3id.org/lmodel/uco-co'})
-
-    itemContent: Optional[str] = Field(default=None, description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CoItem', 'ThreadItem'], 'slot_uri': 'coll:itemContent'} })
+    item: Optional[list[CoItem]] = Field(default=None, description="""An item of the bag, which holds one of its elements.""", json_schema_extra = { "linkml_meta": {'domain': 'Bag', 'domain_of': ['Bag', 'Thread'], 'slot_uri': 'coll:item'} })
+    co_size: Optional[int] = Field(default=None, description="""How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.""", ge=0, json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'notes': ['CO gives every collection exactly one size. The schema leaves it '
+                   'optional, since a reader can count; where it is given, the tests '
+                   'check that it equals the count.'],
+         'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A thing the collection holds, named by its IRI.""", json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'slot_uri': 'coll:element'} })
 
 
 class List(Bag):
@@ -1361,28 +1407,96 @@ class List(Bag):
     A collection whose items come in order, one after another.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:List',
-         'from_schema': 'https://w3id.org/lmodel/uco-co',
-         'slot_usage': {'item': {'inlined': True,
-                                 'inlined_as_list': True,
-                                 'name': 'item',
-                                 'range': 'ListItem'}}})
+         'comments': ['No validator checks the order: that the indexes count from 1 '
+                      'with no gap or repeat, and that firstItem, lastItem and each '
+                      "item's links agree with them. The tests check it."],
+         'from_schema': 'https://w3id.org/lmodel/collections',
+         'slot_usage': {'item': {'name': 'item', 'range': 'ListItem'}}})
 
-    firstItem: Optional[ListItem] = Field(default=None, description="""The first item of the list.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List'], 'slot_uri': 'coll:firstItem'} })
-    item: Optional[list[ListItem]] = Field(default=None, description="""An item of the collection.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List', 'Thread'], 'slot_uri': 'coll:item'} })
-    lastItem: Optional[ListItem] = Field(default=None, description="""The last item of the list.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List'], 'slot_uri': 'coll:lastItem'} })
-    co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
-    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
+    firstItem: Optional[ListItem] = Field(default=None, description="""The first item of the list.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds a copy of the item with index 1, which has no previous '
+                      'item.'],
+         'domain': 'List',
+         'domain_of': ['List'],
+         'notes': ['CO makes it a narrower form of item, which is not stated here: a '
+                   "LinkML slot inherits its parent's multivalued, and this one is "
+                   'single.'],
+         'slot_uri': 'coll:firstItem'} })
+    lastItem: Optional[ListItem] = Field(default=None, description="""The last item of the list.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds a copy of the item with the highest index, which has '
+                      'no next item.'],
+         'domain': 'List',
+         'domain_of': ['List'],
+         'notes': ['CO makes it a narrower form of item, which is not stated here for '
+                   'the reason given on firstItem.'],
+         'slot_uri': 'coll:lastItem'} })
+    item: Optional[list[ListItem]] = Field(default=None, description="""An item of the bag, which holds one of its elements.""", json_schema_extra = { "linkml_meta": {'domain': 'Bag', 'domain_of': ['Bag', 'Thread'], 'slot_uri': 'coll:item'} })
+    co_size: Optional[int] = Field(default=None, description="""How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.""", ge=0, json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'notes': ['CO gives every collection exactly one size. The schema leaves it '
+                   'optional, since a reader can count; where it is given, the tests '
+                   'check that it equals the count.'],
+         'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A thing the collection holds, named by its IRI.""", json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'slot_uri': 'coll:element'} })
+
+
+class CoItem(ConfiguredBaseModel):
+    """
+    An entry of a bag, which wraps one of the bag's elements.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Item',
+         'from_schema': 'https://w3id.org/lmodel/collections',
+         'slot_usage': {'itemContent': {'name': 'itemContent', 'required': True}}})
+
+    itemContent: str = Field(default=..., description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain': 'CoItem',
+         'domain_of': ['CoItem', 'ThreadItem'],
+         'notes': ["CoItem requires it. CO's OWL file makes itemContent functional, so "
+                   "an item wraps at most one element, and CO's wiki page StructureBag "
+                   'says that an item links exactly one resource.'],
+         'see_also': ['https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md'],
+         'slot_uri': 'coll:itemContent'} })
 
 
 class ListItem(CoItem):
     """
     An item of a list, which has a place in the list's order.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:ListItem', 'from_schema': 'https://w3id.org/lmodel/uco-co'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:ListItem',
+         'from_schema': 'https://w3id.org/lmodel/collections',
+         'slot_usage': {'co_index': {'name': 'co_index', 'required': True}}})
 
-    followedBy: Optional[list[CoItem]] = Field(default=None, description="""An item that comes somewhere after this one.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ListItem'], 'slot_uri': 'coll:followedBy'} })
-    index: Optional[int] = Field(default=None, description="""The place of the item in its list, counting from 1.""", ge=1, json_schema_extra = { "linkml_meta": {'domain_of': ['ListItem'], 'slot_uri': 'coll:index'} })
-    itemContent: Optional[str] = Field(default=None, description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CoItem', 'ThreadItem'], 'slot_uri': 'coll:itemContent'} })
+    co_index: int = Field(default=..., description="""The place of the item in its list, counting from 1.""", ge=1, json_schema_extra = { "linkml_meta": {'domain': 'ListItem', 'domain_of': ['ListItem'], 'slot_uri': 'coll:index'} })
+    nextItem: Optional[ListItem] = Field(default=None, description="""The item that comes straight after this one.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds a copy of the item whose index is one higher.'],
+         'domain': 'ListItem',
+         'domain_of': ['ListItem'],
+         'notes': ['CO makes it a narrower form of followedBy, which is not stated '
+                   'here for the reason given on firstItem.'],
+         'slot_uri': 'coll:nextItem'} })
+    previousItem: Optional[ListItem] = Field(default=None, description="""The item that comes straight before this one.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds a copy of the item whose index is one lower.'],
+         'domain': 'ListItem',
+         'domain_of': ['ListItem'],
+         'inverse': 'nextItem',
+         'notes': ['CO makes it a narrower form of precededBy, which is not stated '
+                   'here for the reason given on firstItem.'],
+         'slot_uri': 'coll:previousItem'} })
+    followedBy: Optional[list[ListItem]] = Field(default=None, description="""An item that comes somewhere after this one.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds copies of items whose index is higher.'],
+         'domain': 'ListItem',
+         'domain_of': ['ListItem'],
+         'slot_uri': 'coll:followedBy',
+         'transitive': True} })
+    precededBy: Optional[list[ListItem]] = Field(default=None, description="""An item that comes somewhere before this one.""", json_schema_extra = { "linkml_meta": {'comments': ['It holds copies of items whose index is lower.'],
+         'domain': 'ListItem',
+         'domain_of': ['ListItem'],
+         'inverse': 'followedBy',
+         'slot_uri': 'coll:precededBy',
+         'transitive': True} })
+    itemContent: str = Field(default=..., description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain': 'CoItem',
+         'domain_of': ['CoItem', 'ThreadItem'],
+         'notes': ["CoItem requires it. CO's OWL file makes itemContent functional, so "
+                   "an item wraps at most one element, and CO's wiki page StructureBag "
+                   'says that an item links exactly one resource.'],
+         'see_also': ['https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md'],
+         'slot_uri': 'coll:itemContent'} })
 
 
 class UcoThing(ConfiguredBaseModel):
@@ -3545,13 +3659,20 @@ class Thread(UcoThing, Bag):
          'from_schema': 'https://w3id.org/lmodel/uco-types',
          'mixins': ['Bag'],
          'slot_usage': {'item': {'inlined': False,
+                                 'inlined_as_list': False,
                                  'name': 'item',
-                                 'range': 'ThreadItem'}}})
+                                 'range': 'ThreadItem'},
+                        'threadOriginItem': {'inlined': False,
+                                             'inlined_as_list': False,
+                                             'name': 'threadOriginItem'},
+                        'threadTerminalItem': {'inlined': False,
+                                               'inlined_as_list': False,
+                                               'name': 'threadTerminalItem'}}})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
          'domain_of': ['UcoObject', 'UcoType', 'Thread', 'ThreadItem']} })
-    item: Optional[list[str]] = Field(default=None, description="""An item of the collection.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List', 'Thread'], 'slot_uri': 'coll:item'} })
+    item: Optional[list[str]] = Field(default=None, description="""An item of the bag, which holds one of its elements.""", json_schema_extra = { "linkml_meta": {'domain': 'Bag', 'domain_of': ['Bag', 'Thread'], 'slot_uri': 'coll:item'} })
     threadOriginItem: Optional[list[str]] = Field(default=None, description="""A link to an item of the thread known to have no predecessor.""", json_schema_extra = { "linkml_meta": {'domain': 'Thread',
          'domain_of': ['Thread'],
          'is_a': 'item',
@@ -3562,13 +3683,20 @@ class Thread(UcoThing, Bag):
          'is_a': 'item',
          'see_also': ['coll:lastItem'],
          'slot_uri': 'uco-types:threadTerminalItem'} })
-    co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
-    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
     type: Literal["https://w3id.org/lmodel/uco/Thread","https://ontology.unifiedcyberontology.org/uco/types/Thread","uco_linkml:Thread","uco-types:Thread"] = Field(default="uco-types:Thread", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
          'designates_type': True,
          'domain_of': ['UcoThing', 'UcoType'],
          'slot_uri': 'rdf:type'} })
+    co_size: Optional[int] = Field(default=None, description="""How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.""", ge=0, json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'notes': ['CO gives every collection exactly one size. The schema leaves it '
+                   'optional, since a reader can count; where it is given, the tests '
+                   'check that it equals the count.'],
+         'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A thing the collection holds, named by its IRI.""", json_schema_extra = { "linkml_meta": {'domain': 'Collection',
+         'domain_of': ['Collection'],
+         'slot_uri': 'coll:element'} })
 
 
 class ThreadItem(UcoThing, CoItem):
@@ -3581,12 +3709,19 @@ class ThreadItem(UcoThing, CoItem):
          'mixins': ['CoItem'],
          'slot_usage': {'itemContent': {'inlined': False,
                                         'name': 'itemContent',
-                                        'range': 'UcoObject'}}})
+                                        'range': 'UcoObject',
+                                        'required': False}}})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
          'domain_of': ['UcoObject', 'UcoType', 'Thread', 'ThreadItem']} })
-    itemContent: Optional[str] = Field(default=None, description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CoItem', 'ThreadItem'], 'slot_uri': 'coll:itemContent'} })
+    itemContent: Optional[str] = Field(default=None, description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain': 'CoItem',
+         'domain_of': ['CoItem', 'ThreadItem'],
+         'notes': ["CoItem requires it. CO's OWL file makes itemContent functional, so "
+                   "an item wraps at most one element, and CO's wiki page StructureBag "
+                   'says that an item links exactly one resource.'],
+         'see_also': ['https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md'],
+         'slot_uri': 'coll:itemContent'} })
     threadNextItem: Optional[list[str]] = Field(default=None, description="""The link to a next item in a thread.""", json_schema_extra = { "linkml_meta": {'domain': 'ThreadItem',
          'domain_of': ['ThreadItem'],
          'is_a': 'threadSuccessor',
@@ -14903,9 +15038,11 @@ class UcoDocument(ConfiguredBaseModel):
 
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
+Collection.model_rebuild()
+Set.model_rebuild()
 Bag.model_rebuild()
-CoItem.model_rebuild()
 List.model_rebuild()
+CoItem.model_rebuild()
 ListItem.model_rebuild()
 UcoThing.model_rebuild()
 UcoInherentCharacterizationThing.model_rebuild()

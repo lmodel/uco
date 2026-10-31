@@ -14,10 +14,9 @@ import lombok.*;
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class Bag  {
+public class Bag extends Collection {
 
-  private Integer coSize;
-  private List<URI> element;
+  private List<CoItem> item;
 
 
 }

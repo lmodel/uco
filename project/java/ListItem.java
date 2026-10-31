@@ -16,8 +16,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class ListItem extends CoItem {
 
-  private List<CoItem> followedBy;
-  private Integer index;
+  private int coIndex;
+  private ListItem nextItem;
+  private ListItem previousItem;
+  private List<ListItem> followedBy;
+  private List<ListItem> precededBy;
 
 
 }

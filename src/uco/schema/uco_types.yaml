@@ -38,7 +38,7 @@ default_range: string
 
 imports:
   - linkml:types
-  - ./uco_co
+  - ./collections/collections
   - ./uco_core
   - ./uco_vocabulary
 
@@ -109,7 +109,6 @@ slots:
       - coll:firstItem
     range: ThreadItem
     multivalued: true
-    inlined: false
 
   threadPredecessor:
     description: The link to the preceding item in a thread.
@@ -155,7 +154,6 @@ slots:
       - coll:lastItem
     range: ThreadItem
     multivalued: true
-    inlined: false
 
 classes:
 
@@ -228,6 +226,13 @@ classes:
       item:
         range: ThreadItem
         inlined: false
+        inlined_as_list: false
+      threadOriginItem:
+        inlined: false
+        inlined_as_list: false
+      threadTerminalItem:
+        inlined: false
+        inlined_as_list: false
 
   ThreadItem:
     is_a: UcoThing
@@ -247,4 +252,5 @@ classes:
     slot_usage:
       itemContent:
         range: UcoObject
+        required: false
         inlined: false

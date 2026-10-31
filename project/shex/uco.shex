@@ -19,6 +19,7 @@ PREFIX uco-types: <https://ontology.unifiedcyberontology.org/uco/types/>
 PREFIX uco-victim: <https://ontology.unifiedcyberontology.org/uco/victim/>
 PREFIX coll: <http://purl.org/co/>
 PREFIX linkml: <https://w3id.org/linkml/>
+PREFIX collections: <https://w3id.org/lmodel/collections/>
 
 
 linkml:String xsd:string
@@ -541,14 +542,15 @@ linkml:Sparqlpath xsd:string
     )
 }
 
-<Bag>  (
+collections:Bag  (
     CLOSED {
-       (  $<Bag_tes> (  coll:size @linkml:Integer ? ;
-             coll:element @linkml:Uriorcurie *
+       (  $collections:Bag_tes (  &collections:Collection_tes ;
+             rdf:type [ coll:Collection ] ? ;
+             coll:item @collections:CoItem *
           ) ;
           rdf:type [ coll:Bag ] ?
        )
-    } OR @<List>
+    } OR @collections:List
 )
 
 <BenevolentRole> CLOSED {
@@ -832,12 +834,22 @@ linkml:Sparqlpath xsd:string
     )
 }
 
-<CoItem>  (
+collections:CoItem  (
     CLOSED {
-       (  $<CoItem_tes> coll:itemContent @linkml:Uriorcurie ? ;
+       (  $collections:CoItem_tes coll:itemContent @linkml:Uriorcurie ;
           rdf:type [ coll:Item ] ?
        )
-    } OR @<ListItem>
+    } OR @collections:ListItem
+)
+
+collections:Collection  (
+    CLOSED {
+       (  $collections:Collection_tes (  coll:size @linkml:Integer ? ;
+             coll:element @linkml:Uriorcurie *
+          ) ;
+          rdf:type [ coll:Collection ] ?
+       )
+    } OR @collections:Bag OR @collections:Set
 )
 
 <Compilation>  (
@@ -2289,22 +2301,25 @@ linkml:Sparqlpath xsd:string
     )
 }
 
-<List> CLOSED {
-    (  $<List_tes> (  &<Bag_tes> ;
+collections:List CLOSED {
+    (  $collections:List_tes (  &collections:Bag_tes ;
           rdf:type [ coll:Bag ] ? ;
-          coll:firstItem @<ListItem> ? ;
-          coll:item @<ListItem> * ;
-          coll:lastItem @<ListItem> ?
+          coll:firstItem @collections:ListItem ? ;
+          coll:lastItem @collections:ListItem ? ;
+          coll:item @collections:ListItem *
        ) ;
        rdf:type [ coll:List ] ?
     )
 }
 
-<ListItem> CLOSED {
-    (  $<ListItem_tes> (  &<CoItem_tes> ;
+collections:ListItem CLOSED {
+    (  $collections:ListItem_tes (  &collections:CoItem_tes ;
           rdf:type [ coll:Item ] ? ;
-          coll:followedBy @<CoItem> * ;
-          coll:index @linkml:Integer ?
+          coll:index @linkml:Integer ;
+          coll:nextItem @collections:ListItem ? ;
+          coll:previousItem @collections:ListItem ? ;
+          coll:followedBy @collections:ListItem * ;
+          coll:precededBy @collections:ListItem *
        ) ;
        rdf:type [ coll:ListItem ] ?
     )
@@ -3264,6 +3279,15 @@ linkml:Sparqlpath xsd:string
     )
 }
 
+collections:Set CLOSED {
+    (  $collections:Set_tes (  &collections:Collection_tes ;
+          rdf:type [ coll:Collection ] ? ;
+          coll:element @linkml:Uriorcurie *
+       ) ;
+       rdf:type [ coll:Set ] ?
+    )
+}
+
 <ShopListing> CLOSED {
     (  $<ShopListing_tes> (  &<ObservableObject_tes> ;
           rdf:type [ uco-observable:ObservableObject ] ?
@@ -3588,7 +3612,7 @@ linkml:Sparqlpath xsd:string
 <Thread> CLOSED {
     (  $<Thread_tes> (  &<UcoThing_tes> ;
           rdf:type [ uco-core:UcoThing ] ? ;
-          &<Bag_tes> ;
+          &collections:Bag_tes ;
           rdf:type [ coll:Bag ] ? ;
           coll:item @<ThreadItem> * ;
           uco-types:threadOriginItem @<ThreadItem> * ;
@@ -3603,7 +3627,7 @@ linkml:Sparqlpath xsd:string
 <ThreadItem> CLOSED {
     (  $<ThreadItem_tes> (  &<UcoThing_tes> ;
           rdf:type [ uco-core:UcoThing ] ? ;
-          &<CoItem_tes> ;
+          &collections:CoItem_tes ;
           rdf:type [ coll:Item ] ? ;
           coll:itemContent @<UcoObject> ? ;
           uco-types:threadNextItem @<ThreadItem> * ;
