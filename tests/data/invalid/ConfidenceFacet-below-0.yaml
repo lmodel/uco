@@ -1,0 +1,4 @@
+# Fails at: /confidence
+# Invalid: a confidence is at least 0 (the range of core:confidence).
+type: uco-core:ConfidenceFacet
+confidence: -1

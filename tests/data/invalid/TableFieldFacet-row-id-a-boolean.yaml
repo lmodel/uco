@@ -1,0 +1,4 @@
+# Fails at: /recordRowID
+# Invalid: a row's ID is an integer or a string (sh:or over xsd:integer and xsd:string).
+type: uco-observable:TableFieldFacet
+recordRowID: true

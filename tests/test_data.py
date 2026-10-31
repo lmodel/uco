@@ -114,9 +114,10 @@ def _generated() -> dict:
     return json.loads(GENERATED_JSON_SCHEMA.read_text())
 
 
-def _generated_errors(instance, target: str | None = None) -> list[str]:
-    """Errors from the committed project/jsonschema file itself, against the
-    class's definition there, or against its root, a UcoDocument."""
+def _generated_failures(instance, target: str | None = None) -> list[tuple[str, str]]:
+    """Each error from the committed project/jsonschema file itself, against
+    the class's definition there or against its root, a UcoDocument, as the
+    JSON pointer to where it is and its message."""
     schema = _generated()
     if target is not None:
         schema = {
@@ -126,9 +127,13 @@ def _generated_errors(instance, target: str | None = None) -> list[str]:
         }
     cls = jsonschema.validators.validator_for(schema)
     return [
-        e.message
+        ("/" + "/".join(str(p) for p in e.absolute_path), e.message)
         for e in cls(schema, format_checker=cls.FORMAT_CHECKER).iter_errors(instance)
     ]
+
+
+def _generated_errors(instance, target: str | None = None) -> list[str]:
+    return [message for _, message in _generated_failures(instance, target)]
 
 
 @pytest.mark.parametrize("filepath", VALID_EXAMPLE_FILES, ids=lambda p: p.name)
@@ -141,8 +146,12 @@ def test_valid_data_files_pass_the_generated_json_schema(filepath):
 
 @pytest.mark.parametrize("filepath", INVALID_EXAMPLE_FILES, ids=lambda p: p.name)
 def test_invalid_data_files_fail_the_generated_json_schema(filepath):
-    """Each counter-example fails the generated JSON Schema too."""
-    assert _generated_errors(yaml.safe_load(filepath.read_text()), _target(filepath))
+    """Each counter-example fails the generated JSON Schema too, at the place
+    its first line names."""
+    text = filepath.read_text()
+    pointer = text.splitlines()[0].removeprefix("# Fails at: ").strip()
+    failures = _generated_failures(yaml.safe_load(text), _target(filepath))
+    assert any(where == pointer for where, _ in failures), failures
 
 
 def test_a_document_of_the_examples_passes_the_generated_json_schema():
@@ -176,6 +185,8 @@ KINDS = {
     "closed vocabulary": ("enum", "UcoObject-unknown-status.yaml"),
     "pattern": ("pattern", "Hash-value-not-hex.yaml"),
     "slot bound": ("maximum_value", "ConfidenceFacet-over-100.yaml"),
+    "lower bound": ("minimum_value", "ConfidenceFacet-below-0.yaml"),
+    "union of datatypes": ("any_of", "TableFieldFacet-row-id-a-boolean.yaml"),
     "type bound": (
         "maximum_value",
         "WindowsPEOptionalHeader-version-over-unsigned-short.yaml",
@@ -222,8 +233,10 @@ def test_each_kind_of_constraint_has_a_counter_example():
         "equals_string",
         "has_member",
         "none_of",
+        "minimum_value",
         "maximum_value",
         "maximum_cardinality",
+        "any_of",
     }
     assert constraint_keys <= {key for key, _ in KINDS.values()}
     assert {f.name for f in INVALID_EXAMPLE_FILES} == {
