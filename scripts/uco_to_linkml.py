@@ -74,7 +74,7 @@ The rules, each applied the same way to every element:
   facet it is and RDF written from the data types each object.
 - Each module imports the modules its UCO file imports. An element a module
   needs from one it does not import is declared in it instead, keeping its
-  IRI, and a disjointness goes on the class whose module sees both.
+  IRI, and a disjoint_with goes on the class whose module sees both.
 - XSD datatypes become LinkML types: the built-in ones where they match,
   else a ``uco_`` type in the core module with XSD's bounds or pattern. The
   CO module, which imports no other, bounds its integers on the slot.
@@ -1447,7 +1447,7 @@ class Converter:
     def local_xsd(self, dt) -> str:
         return str(dt)[len(str(XSD)) :]
 
-    def _disjointness(self) -> dict[URIRef, set[str]]:
+    def _disjoint_pairs(self) -> dict[URIRef, set[str]]:
         g = self.g
         pairs = [
             (a, b)
@@ -1469,7 +1469,7 @@ class Converter:
                 )
             else:
                 self.report.append(
-                    f"left out, the disjointness of {self.class_name[a]} and {self.class_name[b]}"
+                    f"left out, that {self.class_name[a]} and {self.class_name[b]} are disjoint"
                 )
         return out
 
@@ -1492,7 +1492,7 @@ class Converter:
             self.home[("slot", self.slot_name[p])] = self.ns_of(p)
         for c in self.classes:
             self.home[("class", self.class_name[c])] = self.ns_of(c)
-        self.disjoint = self._disjointness()
+        self.disjoint = self._disjoint_pairs()
         self.hoisted: list[str] = []
         self.narrowed: list[str] = []
         while True:
