@@ -7,6 +7,7 @@ copy offline and hold it, and the schema header, to the pins.
 
 import importlib.util
 import subprocess
+import sys
 from pathlib import Path
 
 import yaml
@@ -111,6 +112,27 @@ def test_every_iri_names_a_term_in_ucos_files():
                 ("https://ontology.unifiedcyberontology.org/", "http://purl.org/co/")
             ):
                 assert iri in terms, (module.name, iri)
+
+
+def test_no_text_keeps_a_windows_1252_misreading():
+    """UCO's two comments that hold UTF-8 read as Windows-1252 reach the
+    schema as UCO meant them, and no module keeps such a misreading."""
+    spec = importlib.util.spec_from_file_location(
+        "converter", ROOT / "scripts" / "uco_to_linkml.py"
+    )
+    converter = importlib.util.module_from_spec(spec)
+    # The converter's dataclasses look their module up by name.
+    sys.modules[spec.name] = converter
+    spec.loader.exec_module(converter)
+    assert (
+        converter.repaired("the file\u00e2\u20ac\u2122s flags")
+        == "the file\u2019s flags"
+    )
+    assert converter.repaired("plain text") == "plain text"
+    for module in MODULES:
+        assert converter.MOJIBAKE not in module.read_text(encoding="utf-8"), module.name
+    observable = (SCHEMA_DIR / "uco_observable.yaml").read_text(encoding="utf-8")
+    assert "the file\u2019s characteristics" in observable
 
 
 def _slots_by_iri():

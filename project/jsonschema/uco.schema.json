@@ -133649,7 +133649,7 @@
             "description": "A Windows PE binary file facet is a grouping of characteristics unique to a Windows portable executable (PE) file.",
             "properties": {
                 "characteristics": {
-                    "description": "Specifies the flags that indicate the file\u00e2\u20ac\u2122s characteristics.",
+                    "description": "Specifies the flags that indicate the file\u2019s characteristics.",
                     "items": {
                         "maximum": 65535,
                         "minimum": 0,
@@ -133671,7 +133671,7 @@
                     ]
                 },
                 "impHash": {
-                    "description": "Specifies the special import hash, or \u00e2\u20ac\u02dcimphash\u00e2\u20ac\u2122, calculated for the PE Binary based on its imported libraries and functions.",
+                    "description": "Specifies the special import hash, or \u2018imphash\u2019, calculated for the PE Binary based on its imported libraries and functions.",
                     "type": [
                         "string",
                         "null"

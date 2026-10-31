@@ -9314,11 +9314,11 @@ message WindowsPEBinaryFile {
 message WindowsPEBinaryFileFacet {
   // The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
   string type = 1;
-  // Specifies the flags that indicate the fileâ€™s characteristics.
+  // Specifies the flags that indicate the file’s characteristics.
   repeated int32 characteristics = 2;
   // Specifies any hashes that were computed for the file header.
   repeated Hash fileHeaderHashes = 3;
-  // Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported libraries and functions.
+  // Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported libraries and functions.
   string impHash = 4;
   // Specifies the type of target machine.
   repeated string machine = 5;

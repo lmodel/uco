@@ -5715,11 +5715,11 @@ export interface WindowsPEBinaryFile extends File {
  * A Windows PE binary file facet is a grouping of characteristics unique to a Windows portable executable (PE) file.
  */
 export interface WindowsPEBinaryFileFacet extends Facet {
-    /** Specifies the flags that indicate the fileâ€™s characteristics. */
+    /** Specifies the flags that indicate the file’s characteristics. */
     characteristics?: number[],
     /** Specifies any hashes that were computed for the file header. */
     fileHeaderHashes?: Hash[],
-    /** Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported libraries and functions. */
+    /** Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported libraries and functions. */
     impHash?: string,
     /** Specifies the type of target machine. */
     machine?: string[],

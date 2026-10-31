@@ -702,7 +702,7 @@ slots:
     inlined: false
 
   characteristics:
-    description: Specifies the flags that indicate the fileâ€™s characteristics.
+    description: Specifies the flags that indicate the file’s characteristics.
     slot_uri: uco-observable:characteristics
     range: uco_unsigned_short
     multivalued: true
@@ -1774,7 +1774,7 @@ slots:
 
   impHash:
     description: >-
-      Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported
+      Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported
       libraries and functions.
     slot_uri: uco-observable:impHash
     range: string

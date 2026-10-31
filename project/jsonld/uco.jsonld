@@ -7778,7 +7778,7 @@
     {
       "name": "characteristics",
       "definition_uri": "https://w3id.org/lmodel/uco/characteristics",
-      "description": "Specifies the flags that indicate the file\u00e2\u20ac\u2122s characteristics.",
+      "description": "Specifies the flags that indicate the file\u2019s characteristics.",
       "from_schema": "https://w3id.org/lmodel/uco-observable",
       "mappings": [
         "https://ontology.unifiedcyberontology.org/uco/observable/characteristics"
@@ -10733,7 +10733,7 @@
     {
       "name": "impHash",
       "definition_uri": "https://w3id.org/lmodel/uco/impHash",
-      "description": "Specifies the special import hash, or \u00e2\u20ac\u02dcimphash\u00e2\u20ac\u2122, calculated for the PE Binary based on its imported libraries and functions.",
+      "description": "Specifies the special import hash, or \u2018imphash\u2019, calculated for the PE Binary based on its imported libraries and functions.",
       "from_schema": "https://w3id.org/lmodel/uco-observable",
       "mappings": [
         "https://ontology.unifiedcyberontology.org/uco/observable/impHash"
@@ -28545,7 +28545,7 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "uco.yaml",
-  "source_file_date": "2026-10-31T10:32:09",
+  "source_file_date": "2026-10-31T10:36:57",
   "source_file_size": 4296,
   "@type": "SchemaDefinition",
   "@context": [

@@ -5953,7 +5953,7 @@ slots:
   characteristics:
     name: characteristics
     definition_uri: https://w3id.org/lmodel/uco/characteristics
-    description: "Specifies the flags that indicate the file\xE2\u20AC\u2122s characteristics."
+    description: "Specifies the flags that indicate the file\u2019s characteristics."
     from_schema: https://w3id.org/lmodel/uco-observable
     mappings:
     - uco-observable:characteristics
@@ -8272,9 +8272,8 @@ slots:
   impHash:
     name: impHash
     definition_uri: https://w3id.org/lmodel/uco/impHash
-    description: "Specifies the special import hash, or \xE2\u20AC\u02DCimphash\xE2\
-      \u20AC\u2122, calculated for the PE Binary based on its imported libraries and\
-      \ functions."
+    description: "Specifies the special import hash, or \u2018imphash\u2019, calculated\
+      \ for the PE Binary based on its imported libraries and functions."
     from_schema: https://w3id.org/lmodel/uco-observable
     mappings:
     - uco-observable:impHash
@@ -23364,6 +23363,6 @@ classes:
     class_uri: uco-observable:X509V3ExtensionsFacet
 metamodel_version: 1.12.0
 source_file: uco.yaml
-source_file_date: '2026-10-31T10:32:09'
+source_file_date: '2026-10-31T10:36:57'
 source_file_size: 4296
 

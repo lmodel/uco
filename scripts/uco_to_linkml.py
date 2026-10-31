@@ -85,6 +85,8 @@ The rules, each applied the same way to every element:
 - Each module imports the modules its UCO file imports. An element a module
   needs from one it does not import is declared in it instead, keeping its
   IRI, and a disjoint_with goes on the class whose module sees both.
+- Descriptions are UCO's ``rdfs:comment`` texts, with a Windows-1252
+  misreading of their UTF-8 undone (``file’s`` for ``fileâ€™s``).
 - XSD datatypes become LinkML types: the built-in ones where they match,
   else a ``uco_`` type in the core module with XSD's bounds or pattern. The
   CO module, which imports no other, bounds its integers on the slot.
@@ -404,9 +406,29 @@ def text(value) -> str:
     return " ".join(str(value).split())
 
 
+# The two characters UTF-8's bytes for a curly quote or a dash (E2 80) give
+# when read as Windows-1252. Two of UCO 1.5.0's rdfs:comment texts hold such
+# a misreading ("fileâ€™s"); see repaired().
+MOJIBAKE = "\u00e2\u20ac"
+
+
+def repaired(value: str) -> str:
+    """The text with a Windows-1252 misreading of UTF-8 undone: encoded back
+    to the bytes it was read from and decoded as UTF-8, which gives the
+    characters UCO meant ("file’s"). A text without the misreading, or one
+    that does not survive the round trip, is returned as it is."""
+    if MOJIBAKE not in value:
+        return value
+    try:
+        return value.encode("cp1252").decode("utf-8")
+    except UnicodeError:
+        return value
+
+
 class Converter:
     def __init__(self, upstream: Path) -> None:
         self.report: list[str] = []
+        self.repairs: set[str] = set()
         self.literal_classes: set[URIRef] = set()
         onto = upstream / "ontology"
         self.files: dict[str, Graph] = {}
@@ -1153,7 +1175,10 @@ class Converter:
             return f"UCO {self.version} names the property {self.curie(iri)} in a shape without declaring it."
         comment = self.g.value(iri, RDFS.comment)
         if comment is not None and text(comment):
-            return text(comment)
+            fixed = repaired(text(comment))
+            if fixed != text(comment):
+                self.repairs.add(self.curie(iri))
+            return fixed
         return f"UCO {self.version} declares the {kind} {self.curie(iri)} without a definition."
 
     def title(self, iri, name: str) -> dict:
@@ -1579,6 +1604,10 @@ class Converter:
             elements = self._elements()
             if not self._hoist(elements):
                 break
+        for curie in sorted(self.repairs):
+            self.report.append(
+                f"repaired, {curie}'s rdfs:comment: its curly quotes were UTF-8 read as Windows-1252"
+            )
         for name in self.narrowed:
             self.report.append(
                 f"{name} holds a list of at most one: its parent's slot is multivalued"

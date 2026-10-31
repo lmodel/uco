@@ -3698,7 +3698,7 @@
 --     * Slot: type Description: The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
 -- # Class: WindowsPEBinaryFileFacet Description: A Windows PE binary file facet is a grouping of characteristics unique to a Windows portable executable (PE) file.
 --     * Slot: id
---     * Slot: impHash Description: Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported libraries and functions.
+--     * Slot: impHash Description: Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported libraries and functions.
 --     * Slot: numberOfSections Description: Specifies the number of sections in the PE binary, as a non-negative integer.
 --     * Slot: numberOfSymbols Description: Specifies the number of entries in the symbol table of the PE binary, as a non-negative integer.
 --     * Slot: peType Description: Specifies the type of the PE binary.
@@ -6899,7 +6899,7 @@
 --     * Slot: tag Description: A generic tag/label.
 -- # Class: WindowsPEBinaryFileFacet_characteristics
 --     * Slot: WindowsPEBinaryFileFacet_id Description: Autocreated FK slot
---     * Slot: characteristics Description: Specifies the flags that indicate the fileâ€™s characteristics.
+--     * Slot: characteristics Description: Specifies the flags that indicate the file’s characteristics.
 -- # Class: WindowsPEBinaryFileFacet_machine
 --     * Slot: WindowsPEBinaryFileFacet_id Description: Autocreated FK slot
 --     * Slot: machine Description: Specifies the type of target machine.
@@ -14695,8 +14695,8 @@ CREATE TABLE "AutonomousSystem_objectMarking" (
 	FOREIGN KEY("AutonomousSystem_id") REFERENCES "AutonomousSystem" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AutonomousSystem_objectMarking_objectMarking_id" ON "AutonomousSystem_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_AutonomousSystem_objectMarking_AutonomousSystem_id" ON "AutonomousSystem_objectMarking" ("AutonomousSystem_id");
+CREATE INDEX "ix_AutonomousSystem_objectMarking_objectMarking_id" ON "AutonomousSystem_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "AutonomousSystem_tag" (
 	"AutonomousSystem_id" TEXT,
@@ -15815,8 +15815,8 @@ CREATE TABLE "Disk_objectMarking" (
 	FOREIGN KEY("Disk_id") REFERENCES "Disk" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Disk_objectMarking_Disk_id" ON "Disk_objectMarking" ("Disk_id");
 CREATE INDEX "ix_Disk_objectMarking_objectMarking_id" ON "Disk_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Disk_objectMarking_Disk_id" ON "Disk_objectMarking" ("Disk_id");
 
 CREATE TABLE "Disk_tag" (
 	"Disk_id" TEXT,
@@ -16916,8 +16916,8 @@ CREATE TABLE "InstantMessagingAddress_description" (
 	PRIMARY KEY ("InstantMessagingAddress_id", description),
 	FOREIGN KEY("InstantMessagingAddress_id") REFERENCES "InstantMessagingAddress" (id)
 );
-CREATE INDEX "ix_InstantMessagingAddress_description_InstantMessagingAddress_id" ON "InstantMessagingAddress_description" ("InstantMessagingAddress_id");
 CREATE INDEX "ix_InstantMessagingAddress_description_description" ON "InstantMessagingAddress_description" (description);
+CREATE INDEX "ix_InstantMessagingAddress_description_InstantMessagingAddress_id" ON "InstantMessagingAddress_description" ("InstantMessagingAddress_id");
 
 CREATE TABLE "InstantMessagingAddress_modifiedTime" (
 	"InstantMessagingAddress_id" TEXT,
@@ -16925,8 +16925,8 @@ CREATE TABLE "InstantMessagingAddress_modifiedTime" (
 	PRIMARY KEY ("InstantMessagingAddress_id", "modifiedTime"),
 	FOREIGN KEY("InstantMessagingAddress_id") REFERENCES "InstantMessagingAddress" (id)
 );
-CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_InstantMessagingAddress_id" ON "InstantMessagingAddress_modifiedTime" ("InstantMessagingAddress_id");
 CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_modifiedTime" ON "InstantMessagingAddress_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_InstantMessagingAddress_id" ON "InstantMessagingAddress_modifiedTime" ("InstantMessagingAddress_id");
 
 CREATE TABLE "InstantMessagingAddress_objectMarking" (
 	"InstantMessagingAddress_id" TEXT,
@@ -19084,8 +19084,8 @@ CREATE TABLE "Tablet_objectMarking" (
 	FOREIGN KEY("Tablet_id") REFERENCES "Tablet" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Tablet_objectMarking_Tablet_id" ON "Tablet_objectMarking" ("Tablet_id");
 CREATE INDEX "ix_Tablet_objectMarking_objectMarking_id" ON "Tablet_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Tablet_objectMarking_Tablet_id" ON "Tablet_objectMarking" ("Tablet_id");
 
 CREATE TABLE "Tablet_tag" (
 	"Tablet_id" TEXT,
@@ -20369,8 +20369,8 @@ CREATE TABLE "WindowsTask_objectMarking" (
 	FOREIGN KEY("WindowsTask_id") REFERENCES "WindowsTask" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsTask_objectMarking_WindowsTask_id" ON "WindowsTask_objectMarking" ("WindowsTask_id");
 CREATE INDEX "ix_WindowsTask_objectMarking_objectMarking_id" ON "WindowsTask_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WindowsTask_objectMarking_WindowsTask_id" ON "WindowsTask_objectMarking" ("WindowsTask_id");
 
 CREATE TABLE "WindowsTask_tag" (
 	"WindowsTask_id" TEXT,
@@ -21544,8 +21544,8 @@ CREATE TABLE "ActionLifecycle_objectMarking" (
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_objectMarking_ActionLifecycle_id" ON "ActionLifecycle_objectMarking" ("ActionLifecycle_id");
 CREATE INDEX "ix_ActionLifecycle_objectMarking_objectMarking_id" ON "ActionLifecycle_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ActionLifecycle_objectMarking_ActionLifecycle_id" ON "ActionLifecycle_objectMarking" ("ActionLifecycle_id");
 
 CREATE TABLE "ActionLifecycle_tag" (
 	"ActionLifecycle_id" TEXT,

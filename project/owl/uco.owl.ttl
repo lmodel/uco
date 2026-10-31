@@ -6091,7 +6091,7 @@ uco_linkml:certificateSubject a owl:ObjectProperty ;
 uco_linkml:characteristics a owl:DatatypeProperty ;
 	rdfs:label "characteristics" ;
 	rdfs:range xsd:unsignedShort ;
-	skos:definition "Specifies the flags that indicate the fileâ€™s characteristics." ;
+	skos:definition "Specifies the flags that indicate the file’s characteristics." ;
 	skos:inScheme <https://w3id.org/lmodel/uco-observable> .
 uco_linkml:checksum a owl:DatatypeProperty ;
 	rdfs:label "checksum" ;
@@ -7225,7 +7225,7 @@ uco_linkml:imageType a owl:DatatypeProperty ;
 uco_linkml:impHash a owl:DatatypeProperty ;
 	rdfs:label "impHash" ;
 	rdfs:range xsd:string ;
-	skos:definition "Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported libraries and functions." ;
+	skos:definition "Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported libraries and functions." ;
 	skos:inScheme <https://w3id.org/lmodel/uco-observable> .
 uco_linkml:inReplyTo a owl:DatatypeProperty ;
 	rdfs:label "inReplyTo" ;

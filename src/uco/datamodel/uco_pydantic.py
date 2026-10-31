@@ -13812,11 +13812,11 @@ class WindowsPEBinaryFileFacet(Facet):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPEBinaryFileFacet',
          'from_schema': 'https://w3id.org/lmodel/uco-observable'})
 
-    characteristics: Optional[list[int]] = Field(default=None, description="""Specifies the flags that indicate the fileâ€™s characteristics.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
+    characteristics: Optional[list[int]] = Field(default=None, description="""Specifies the flags that indicate the file’s characteristics.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
          'slot_uri': 'uco-observable:characteristics'} })
     fileHeaderHashes: Optional[list[Hash]] = Field(default=None, description="""Specifies any hashes that were computed for the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
          'slot_uri': 'uco-observable:fileHeaderHashes'} })
-    impHash: Optional[str] = Field(default=None, description="""Specifies the special import hash, or â€˜imphashâ€™, calculated for the PE Binary based on its imported libraries and functions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
+    impHash: Optional[str] = Field(default=None, description="""Specifies the special import hash, or ‘imphash’, calculated for the PE Binary based on its imported libraries and functions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
          'slot_uri': 'uco-observable:impHash'} })
     machine: Optional[list[str]] = Field(default=None, description="""Specifies the type of target machine.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
          'slot_uri': 'uco-observable:machine'} })
