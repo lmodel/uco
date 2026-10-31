@@ -67373,7 +67373,17 @@
                 "followedBy": {
                     "description": "An item that comes somewhere after this one.",
                     "items": {
-                        "$ref": "#/$defs/CoItem"
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/CoItem"
+                            },
+                            {
+                                "$ref": "#/$defs/ListItem"
+                            },
+                            {
+                                "$ref": "#/$defs/ThreadItem"
+                            }
+                        ]
                     },
                     "type": [
                         "array",

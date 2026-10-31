@@ -37,6 +37,9 @@ generator_args:
     mergeimports: true
   jsonschema:
     mergeimports: true
+    # A slot such as hasFacet ranges over a closed base class; without its
+    # subclasses, no facet of a real class validates against the file.
+    include_range_class_descendants: true
   jsonldcontext:
     mergeimports: true
   # gen-pydantic is not yet supported by gen-project.

@@ -16,9 +16,11 @@ again for every instance it checks, which takes seconds with sixteen modules.
 
 import functools
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
+import jsonschema
 import pytest
 import yaml
 from linkml.validator import Validator
@@ -32,6 +34,7 @@ import uco.datamodel.uco
 
 ROOT = Path(__file__).parent.parent
 SCHEMA = ROOT / "src" / "uco" / "schema" / "uco.yaml"
+GENERATED_JSON_SCHEMA = ROOT / "project" / "jsonschema" / "uco.schema.json"
 DATA_DIR_VALID = Path(__file__).parent / "data" / "valid"
 DATA_DIR_INVALID = Path(__file__).parent / "data" / "invalid"
 VALID_EXAMPLE_FILES = sorted(DATA_DIR_VALID.glob("*.yaml"))
@@ -103,6 +106,55 @@ def test_invalid_data_files_fail(filepath):
     pointer = first.removeprefix("# Fails at: ").strip()
     messages = _messages(yaml.safe_load(text), _target(filepath))
     assert any(m.endswith(f" in {pointer}") for m in messages), messages
+
+
+@functools.cache
+def _generated() -> dict:
+    return json.loads(GENERATED_JSON_SCHEMA.read_text())
+
+
+def _generated_errors(instance, target: str | None = None) -> list[str]:
+    """Errors from the committed project/jsonschema file itself, against the
+    class's definition there, or against its root, a UcoDocument."""
+    schema = _generated()
+    if target is not None:
+        schema = {
+            "$schema": schema["$schema"],
+            "$defs": schema["$defs"],
+            "$ref": f"#/$defs/{target}",
+        }
+    cls = jsonschema.validators.validator_for(schema)
+    return [
+        e.message
+        for e in cls(schema, format_checker=cls.FORMAT_CHECKER).iter_errors(instance)
+    ]
+
+
+@pytest.mark.parametrize("filepath", VALID_EXAMPLE_FILES, ids=lambda p: p.name)
+def test_valid_data_files_pass_the_generated_json_schema(filepath):
+    """Each valid example passes the JSON Schema gen-project writes, which a
+    user validates against without LinkML."""
+    errors = _generated_errors(yaml.safe_load(filepath.read_text()), _target(filepath))
+    assert not errors, errors
+
+
+@pytest.mark.parametrize("filepath", INVALID_EXAMPLE_FILES, ids=lambda p: p.name)
+def test_invalid_data_files_fail_the_generated_json_schema(filepath):
+    """Each counter-example fails the generated JSON Schema too."""
+    assert _generated_errors(yaml.safe_load(filepath.read_text()), _target(filepath))
+
+
+def test_a_document_of_the_examples_passes_the_generated_json_schema():
+    """The valid examples of UcoThing's classes, in one UcoDocument's graph,
+    pass the generated JSON Schema at its root."""
+    things = [
+        yaml.safe_load(f.read_text())
+        for f in VALID_EXAMPLE_FILES
+        if "UcoThing" in _reader().ancestors(_target(f))
+    ]
+    assert things
+    errors = _generated_errors({"graph": things})
+    assert not errors, errors[:5]
 
 
 def test_every_concept_type_has_an_example():
