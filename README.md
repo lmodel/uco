@@ -56,6 +56,7 @@ The converter leaves out what LinkML cannot state, and prints a note for each:
 * SHACL shapes of severity Info or Warning, which are advice;
 * SPARQL constraints, `sh:not` and `sh:xone`;
 * shapes over a path of more than one property;
+* a CO list item's links to the next and previous item, since a list item here sits inside its list without an IRI;
 * UCO's rule that a UcoThing is never a blank node, since a facet here is a value inside its object.
 
 UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/test_data.py` holds each fault of UCO's own failing examples to the validator, and lists the faults LinkML cannot state with the reason. [docs/about.md](docs/about.md) says where the schema's form differs from UCO's JSON-LD.
@@ -88,7 +89,7 @@ In the copy, LOKF's `id` and `type` replace the schema's own, so an inlined face
 
 A host imports the copy beside `lokf.yaml`, and LinkML merges the two into one namespace, where the last definition of a name wins silently. So the copy renames each name LOKF also defines and keeps its UCO IRI: the classes `Organization`, `Person` and `Role` become `UcoOrganization`, `UcoPerson` and `UcoRole`, and 17 keys take a `uco_` prefix, such as `uco_name` and `uco_description`.
 
-Other names are UCO's and also a neighbour copy's, under another IRI there. The classes `Action`, `Address`, `Facet`, `Hash`, `Location`, `Observation` and `Profile` are oscal's too, and `Annotation`, `Bundle`, `DictionaryEntry`, `File`, `Hash`, `Relationship` and `Tool` are spdx's, so a host cannot import this copy beside oscal's or spdx's until one copy renames them. Sixteen keys are oscal's too, sixteen spdx's, three slsa's (`dependencies`, `subject`, `value`) and two in-toto's (`subject`, `value`). [lokf #169](https://github.com/nicholsn/lokf/issues/169) asks `adapt` for a `--beside` option to rename them. `tests/test_schema_rules.py` lists every shared name, checks the copy against LOKF and nine released neighbours, and fails on a new one.
+Other names are UCO's and also a neighbour copy's, under another IRI there. The classes `Action`, `Address`, `Facet`, `Hash`, `Location`, `Observation` and `Profile` are oscal's too, and `Annotation`, `Bundle`, `DictionaryEntry`, `File`, `Hash`, `Relationship` and `Tool` are spdx's, so a host cannot import this copy beside oscal's or spdx's until one copy renames them. Sixteen keys are oscal's too, seventeen spdx's, three slsa's (`dependencies`, `subject`, `value`) and two in-toto's (`subject`, `value`). [lokf #169](https://github.com/nicholsn/lokf/issues/169) asks `adapt` for a `--beside` option to rename them. `tests/test_schema_rules.py` lists every shared name, checks the copy against LOKF and nine released neighbours, and fails on a new one.
 
 ## License
 

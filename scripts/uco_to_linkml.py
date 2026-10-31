@@ -31,11 +31,13 @@ The rules, each applied the same way to every element:
   the namespace that comes first in the modules' import order (the umbrella
   imports them in that order); each other one takes its namespace and an
   underscore as a prefix (``observable_endTime``).
-- The Collections Ontology (CO) terms UCO's files name keep CO's IRIs, under
-  Bioregistry's prefix ``coll``. One whose local name UCO also defines takes
-  ``Co`` or ``co_`` (``CoItem``). CO states no licence, so their descriptions
-  are this project's own, and each CO property with a domain in CO's own
-  ontology is a slot of that class.
+- The Collections Ontology (CO) terms UCO's files name, in a shape's path or
+  elsewhere, keep CO's IRIs, under Bioregistry's prefix ``coll``. One whose
+  local name UCO also defines takes ``Co`` or ``co_`` (``CoItem``). CO states
+  no licence, so their descriptions are this project's own. CO's own
+  ontology gives what UCO's files leave out: that a list is a bag, the class
+  each CO property belongs to, and an IRI as the range of the two that name
+  any thing.
 - ``rdfs:subClassOf`` gives ``is_a``. Where a class has more than one parent,
   a parent that is an ancestor of another is dropped; ``is_a`` is the UCO
   parent with the most ancestors, a tie going to the class's own namespace,
@@ -230,6 +232,7 @@ CO_DESCRIPTIONS = {
     "Item": "An entry of a collection, which wraps one element of the collection's content.",
     "List": "A collection whose items come in order, one after another.",
     "ListItem": "An item of a list, which has a place in the list's order.",
+    "element": "A member of the collection, which one of its items wraps.",
     "item": "An item of the collection.",
     "itemContent": "The element that the item wraps.",
     "index": "The place of the item in its list, counting from 1.",
@@ -242,21 +245,34 @@ CO_DESCRIPTIONS = {
     "precededBy": "An item that comes somewhere before this one.",
 }
 
+# The parents CO 2.0's own ontology gives the CO classes UCO's files name and
+# do not place: a list is a bag whose items are list items.
+CO_PARENTS = {"List": "Bag"}
+
 # The domains CO 2.0's own ontology gives the CO properties UCO's files use,
 # as the CO classes rendered here: CO's Collection, which UCO's files do not
 # name, is Bag. Each is a slot of its domain, beside any class a UCO shape
-# gives it to. CO gives nextItem, previousItem and precededBy no domain.
-# item stays on the classes UCO's shapes give it to, List and Thread: a list
-# holds its items inline and a thread names them by IRI, and LinkML cannot
-# undo on Thread an inlining its parent Bag states.
+# gives it to. item stays on the classes UCO's shapes give it to, List and
+# Thread: a list holds its items inline and a thread names them by IRI, and
+# LinkML cannot undo on Thread an inlining its parent Bag states. CO states
+# no domain for nextItem, previousItem and precededBy, which hold on a list
+# item through followedBy, and they stay on no class: a list item here has no
+# IRI, so an item that names the next and is named back by it would nest
+# without end.
 CO_DOMAINS = {
     "size": "Bag",
+    "element": "Bag",
     "itemContent": "Item",
     "index": "ListItem",
     "firstItem": "List",
     "lastItem": "List",
     "followedBy": "ListItem",
 }
+
+# The CO properties whose range in CO 2.0 is any thing (owl:Thing, or what is
+# not an item), and which UCO's shapes leave without a class: each holds the
+# thing's IRI, so RDF written from the data names the thing, not a string.
+CO_RANGES = {"element": "uriorcurie", "itemContent": "uriorcurie"}
 
 # What a property shape may say that the converter reads, or knows to pass.
 SHAPE_KEYS = {
@@ -494,10 +510,14 @@ class Converter:
             for p in g.subjects(RDF.type, kind)
             if isinstance(p, URIRef) and self.ns_of(p) not in (None, CO)
         }
+        # A CO property is a slot when a shape names it, alone or inside a
+        # path of more than one property, as uco-observable's
+        # MessageThreadFacet names co:element.
         self.properties |= {
             p
-            for p in g.objects(None, SH.path)
-            if isinstance(p, URIRef) and self.ns_of(p) == CO
+            for path in g.objects(None, SH.path)
+            for p in ({path} if isinstance(path, URIRef) else self._path_members(path))
+            if self.ns_of(p) == CO
         }
         # A property a shape names but no file declares, such as
         # uco-observable:eventID, is a slot too.
@@ -622,7 +642,12 @@ class Converter:
         return URIRef(f"{UCO_NS}core/{local}")
 
     def _raw_parents(self, c) -> list[URIRef]:
-        return [p for p in self.g.objects(c, RDFS.subClassOf) if p in self.classes]
+        parents = [p for p in self.g.objects(c, RDFS.subClassOf) if p in self.classes]
+        if self.ns_of(c) == CO and self.local(c) in CO_PARENTS:
+            parent = URIRef(CO_NS + CO_PARENTS[self.local(c)])
+            if parent in self.classes and parent not in parents:
+                parents.append(parent)
+        return parents
 
     def _raw_ancestors(self, c) -> set[URIRef]:
         out: set[URIRef] = set()
@@ -936,6 +961,8 @@ class Converter:
     def _declared_range(self, p, module: str) -> tuple[tuple[str, ...] | None, tuple]:
         """The property's rdfs:range as a LinkML range and bounds."""
         g = self.g
+        if self.ns_of(p) == CO and self.local(p) in CO_RANGES:
+            return (CO_RANGES[self.local(p)],), ()
         r = g.value(p, RDFS.range)
         if r is None:
             return None, ()

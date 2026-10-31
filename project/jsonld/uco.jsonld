@@ -3697,6 +3697,23 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "element",
+      "definition_uri": "https://w3id.org/lmodel/uco/element",
+      "description": "A member of the collection, which one of its items wraps.",
+      "from_schema": "https://w3id.org/lmodel/uco-co",
+      "mappings": [
+        "http://purl.org/co/element"
+      ],
+      "slot_uri": "http://purl.org/co/element",
+      "owner": "Bag",
+      "domain_of": [
+        "Bag"
+      ],
+      "range": "uriorcurie",
+      "multivalued": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "firstItem",
       "definition_uri": "https://w3id.org/lmodel/uco/firstItem",
       "description": "The first item of the list.",
@@ -3782,7 +3799,7 @@
         "CoItem",
         "ThreadItem"
       ],
-      "range": "string",
+      "range": "uriorcurie",
       "@type": "SlotDefinition"
     },
     {
@@ -17633,7 +17650,8 @@
         "coll:Bag"
       ],
       "slots": [
-        "co_size"
+        "co_size",
+        "element"
       ],
       "slot_usage": {},
       "class_uri": "http://purl.org/co/Bag",
@@ -17662,7 +17680,10 @@
       "exact_mappings": [
         "coll:List"
       ],
+      "is_a": "Bag",
       "slots": [
+        "co_size",
+        "element",
         "firstItem",
         "List_item",
         "lastItem"
@@ -19590,7 +19611,8 @@
         "Thread_item",
         "threadOriginItem",
         "threadTerminalItem",
-        "co_size"
+        "co_size",
+        "element"
       ],
       "slot_usage": {},
       "class_uri": "https://ontology.unifiedcyberontology.org/uco/types/Thread",
@@ -28519,7 +28541,7 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "uco.yaml",
-  "source_file_date": "2026-10-31T01:38:23",
+  "source_file_date": "2026-10-31T10:19:22",
   "source_file_size": 4227,
   "@type": "SchemaDefinition",
   "@context": [

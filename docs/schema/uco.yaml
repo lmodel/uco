@@ -2695,6 +2695,19 @@ slots:
     - Bag
     range: integer
     minimum_value: 0
+  element:
+    name: element
+    definition_uri: https://w3id.org/lmodel/uco/element
+    description: A member of the collection, which one of its items wraps.
+    from_schema: https://w3id.org/lmodel/uco-co
+    mappings:
+    - coll:element
+    slot_uri: coll:element
+    owner: Bag
+    domain_of:
+    - Bag
+    range: uriorcurie
+    multivalued: true
   firstItem:
     name: firstItem
     definition_uri: https://w3id.org/lmodel/uco/firstItem
@@ -2763,7 +2776,7 @@ slots:
     domain_of:
     - CoItem
     - ThreadItem
-    range: string
+    range: uriorcurie
   lastItem:
     name: lastItem
     definition_uri: https://w3id.org/lmodel/uco/lastItem
@@ -13759,6 +13772,7 @@ classes:
     - coll:Bag
     slots:
     - co_size
+    - element
     class_uri: coll:Bag
   CoItem:
     name: CoItem
@@ -13778,7 +13792,10 @@ classes:
     from_schema: https://w3id.org/lmodel/uco-co
     exact_mappings:
     - coll:List
+    is_a: Bag
     slots:
+    - co_size
+    - element
     - firstItem
     - List_item
     - lastItem
@@ -15456,6 +15473,7 @@ classes:
     - threadOriginItem
     - threadTerminalItem
     - co_size
+    - element
     slot_usage:
       item:
         name: item
@@ -23340,6 +23358,6 @@ classes:
     class_uri: uco-observable:X509V3ExtensionsFacet
 metamodel_version: 1.12.0
 source_file: uco.yaml
-source_file_date: '2026-10-31T01:38:23'
+source_file_date: '2026-10-31T10:19:22'
 source_file_size: 4227
 

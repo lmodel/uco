@@ -1118,10 +1118,15 @@ class Bag(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = UCO_LINKML.Bag
 
     co_size: Optional[int] = None
+    element: Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self.co_size is not None and not isinstance(self.co_size, int):
             self.co_size = int(self.co_size)
+
+        if not isinstance(self.element, list):
+            self.element = [self.element] if self.element is not None else []
+        self.element = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.element]
 
         super().__post_init__(**kwargs)
 
@@ -1138,17 +1143,17 @@ class CoItem(YAMLRoot):
     class_name: ClassVar[str] = "CoItem"
     class_model_uri: ClassVar[URIRef] = UCO_LINKML.CoItem
 
-    itemContent: Optional[str] = None
+    itemContent: Optional[Union[str, URIorCURIE]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self.itemContent is not None and not isinstance(self.itemContent, str):
-            self.itemContent = str(self.itemContent)
+        if self.itemContent is not None and not isinstance(self.itemContent, URIorCURIE):
+            self.itemContent = URIorCURIE(self.itemContent)
 
         super().__post_init__(**kwargs)
 
 
 @dataclass(repr=False)
-class List(YAMLRoot):
+class List(Bag):
     """
     A collection whose items come in order, one after another.
     """
@@ -3565,6 +3570,7 @@ class Thread(UcoThing):
     threadOriginItem: Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]] = empty_list()
     threadTerminalItem: Optional[Union[Union[str, ThreadItemId], list[Union[str, ThreadItemId]]]] = empty_list()
     co_size: Optional[int] = None
+    element: Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.id):
@@ -3586,6 +3592,10 @@ class Thread(UcoThing):
 
         if self.co_size is not None and not isinstance(self.co_size, int):
             self.co_size = int(self.co_size)
+
+        if not isinstance(self.element, list):
+            self.element = [self.element] if self.element is not None else []
+        self.element = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.element]
 
         super().__post_init__(**kwargs)
         self.type = str(self.class_class_curie if self.class_class_curie is not None else self.class_class_uri)
@@ -17026,6 +17036,9 @@ slots.graph = Slot(uri=UCO_LINKML.graph, name="graph", curie=UCO_LINKML.curie('g
 slots.co_size = Slot(uri=COLL.size, name="co_size", curie=COLL.curie('size'),
                    model_uri=UCO_LINKML.co_size, domain=None, range=Optional[int])
 
+slots.element = Slot(uri=COLL.element, name="element", curie=COLL.curie('element'),
+                   model_uri=UCO_LINKML.element, domain=None, range=Optional[Union[Union[str, URIorCURIE], list[Union[str, URIorCURIE]]]])
+
 slots.firstItem = Slot(uri=COLL.firstItem, name="firstItem", curie=COLL.curie('firstItem'),
                    model_uri=UCO_LINKML.firstItem, domain=None, range=Optional[Union[dict, ListItem]])
 
@@ -17039,7 +17052,7 @@ slots.item = Slot(uri=COLL.item, name="item", curie=COLL.curie('item'),
                    model_uri=UCO_LINKML.item, domain=None, range=Optional[Union[str, list[str]]])
 
 slots.itemContent = Slot(uri=COLL.itemContent, name="itemContent", curie=COLL.curie('itemContent'),
-                   model_uri=UCO_LINKML.itemContent, domain=None, range=Optional[str])
+                   model_uri=UCO_LINKML.itemContent, domain=None, range=Optional[Union[str, URIorCURIE]])
 
 slots.lastItem = Slot(uri=COLL.lastItem, name="lastItem", curie=COLL.curie('lastItem'),
                    model_uri=UCO_LINKML.lastItem, domain=None, range=Optional[Union[dict, ListItem]])

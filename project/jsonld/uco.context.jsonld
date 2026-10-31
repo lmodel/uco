@@ -734,6 +734,10 @@
          "@type": "@id",
          "@id": "uco-observable:effectiveUser"
       },
+      "element": {
+         "@type": "xsd:anyURI",
+         "@id": "coll:element"
+      },
       "elevation": {
          "@type": "xsd:decimal",
          "@id": "uco-observable:elevation"
@@ -1326,6 +1330,7 @@
          "@id": "coll:item"
       },
       "itemContent": {
+         "@type": "xsd:anyURI",
          "@id": "coll:itemContent"
       },
       "itemDescription": {

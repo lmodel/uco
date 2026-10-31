@@ -14,7 +14,7 @@ import lombok.*;
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class List  {
+public class List extends Bag {
 
   private ListItem firstItem;
   private List<ListItem> item;

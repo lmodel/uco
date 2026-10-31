@@ -2,6 +2,13 @@
 id: http://example.org/kb/thread-f5c6285f-70ee-405d-9acd-0d74c005fecc
 type: uco-types:Thread
 co_size: 6
+element:
+  - http://example.org/kb/message-1-01a38f9a-d91b-4f7a-b446-308829b0b6c3
+  - http://example.org/kb/message-2-2e770ebe-cc83-46cd-b340-9c2ba081c002
+  - http://example.org/kb/message-3-3ec6dff5-edcc-4b64-ad51-aa8a262dcef1
+  - http://example.org/kb/message-4-51392250-533d-4a04-89d7-6db6340d09c3
+  - http://example.org/kb/message-5-53d04ec1-ce54-407f-93ef-95730c88a09a
+  - http://example.org/kb/message-6-7e4f6696-13cb-443b-bccf-ac1bd1c90300
 item:
   - http://example.org/kb/message-thread-item-9707179c-3a1a-49e8-838e-0ec95cb8b8b2
   - http://example.org/kb/message-thread-item-a6ad1873-c843-4f29-bc79-7d881c3261c5

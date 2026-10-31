@@ -1396,6 +1396,8 @@ export enum WindowsServiceType {
 export interface Bag {
     /** How many items the collection holds. */
     co_size?: number,
+    /** A member of the collection, which one of its items wraps. */
+    element?: string[],
 }
 
 
@@ -1411,7 +1413,7 @@ export interface CoItem {
 /**
  * A collection whose items come in order, one after another.
  */
-export interface List {
+export interface List extends Bag {
     /** The first item of the list. */
     firstItem?: ListItem,
     /** An item of the collection. */

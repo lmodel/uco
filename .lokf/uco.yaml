@@ -63,6 +63,11 @@ slots:
     slot_uri: coll:size
     range: integer
     minimum_value: 0
+  element:
+    description: A member of the collection, which one of its items wraps.
+    slot_uri: coll:element
+    range: uriorcurie
+    multivalued: true
   firstItem:
     description: The first item of the list.
     slot_uri: coll:firstItem
@@ -87,6 +92,7 @@ slots:
   itemContent:
     description: The element that the item wraps.
     slot_uri: coll:itemContent
+    range: uriorcurie
   lastItem:
     description: The last item of the list.
     slot_uri: coll:lastItem
@@ -3903,12 +3909,14 @@ classes:
     description: A collection that may hold one element more than once, in no order.
     slots:
     - co_size
+    - element
   CoItem:
     class_uri: coll:Item
     description: An entry of a collection, which wraps one element of the collection's content.
     slots:
     - itemContent
   List:
+    is_a: Bag
     class_uri: coll:List
     description: A collection whose items come in order, one after another.
     slots:

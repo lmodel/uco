@@ -1343,6 +1343,7 @@ class Bag(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'coll:Bag', 'from_schema': 'https://w3id.org/lmodel/uco-co'})
 
     co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
 
 
 class CoItem(ConfiguredBaseModel):
@@ -1354,7 +1355,7 @@ class CoItem(ConfiguredBaseModel):
     itemContent: Optional[str] = Field(default=None, description="""The element that the item wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CoItem', 'ThreadItem'], 'slot_uri': 'coll:itemContent'} })
 
 
-class List(ConfiguredBaseModel):
+class List(Bag):
     """
     A collection whose items come in order, one after another.
     """
@@ -1368,6 +1369,8 @@ class List(ConfiguredBaseModel):
     firstItem: Optional[ListItem] = Field(default=None, description="""The first item of the list.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List'], 'slot_uri': 'coll:firstItem'} })
     item: Optional[list[ListItem]] = Field(default=None, description="""An item of the collection.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List', 'Thread'], 'slot_uri': 'coll:item'} })
     lastItem: Optional[ListItem] = Field(default=None, description="""The last item of the list.""", json_schema_extra = { "linkml_meta": {'domain_of': ['List'], 'slot_uri': 'coll:lastItem'} })
+    co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
 
 
 class ListItem(CoItem):
@@ -3558,6 +3561,7 @@ class Thread(UcoThing, Bag):
          'see_also': ['coll:lastItem'],
          'slot_uri': 'uco-types:threadTerminalItem'} })
     co_size: Optional[int] = Field(default=None, description="""How many items the collection holds.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:size'} })
+    element: Optional[list[str]] = Field(default=None, description="""A member of the collection, which one of its items wraps.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Bag'], 'slot_uri': 'coll:element'} })
     type: Literal["https://w3id.org/lmodel/uco/Thread","https://ontology.unifiedcyberontology.org/uco/types/Thread","uco_linkml:Thread","uco-types:Thread"] = Field(default="uco-types:Thread", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
          'designates_type': True,

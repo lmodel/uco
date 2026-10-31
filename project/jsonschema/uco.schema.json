@@ -16566,6 +16566,16 @@
                         "integer",
                         "null"
                     ]
+                },
+                "element": {
+                    "description": "A member of the collection, which one of its items wraps.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
                 }
             },
             "title": "Bag",
@@ -67330,6 +67340,24 @@
             "additionalProperties": false,
             "description": "A collection whose items come in order, one after another.",
             "properties": {
+                "co_size": {
+                    "description": "How many items the collection holds.",
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "element": {
+                    "description": "A member of the collection, which one of its items wraps.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "firstItem": {
                     "anyOf": [
                         {
@@ -112120,6 +112148,16 @@
                     "minimum": 0,
                     "type": [
                         "integer",
+                        "null"
+                    ]
+                },
+                "element": {
+                    "description": "A member of the collection, which one of its items wraps.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
                         "null"
                     ]
                 },

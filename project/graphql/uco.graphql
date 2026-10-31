@@ -1747,6 +1747,7 @@ type AutonomousSystemFacet
 type Bag
   {
     coSize: Int
+    element: [String]
   }
 
 type BenevolentRole
@@ -4012,6 +4013,8 @@ type LicenseMarking
 
 type List
   {
+    coSize: Int
+    element: [String]
     firstItem: ListItem
     item: [ListItem]
     lastItem: ListItem
@@ -5836,6 +5839,7 @@ type Thread implements Bag
     threadOriginItem: [ThreadItem]
     threadTerminalItem: [ThreadItem]
     coSize: Int
+    element: [String]
   }
 
 type ThreadItem implements CoItem

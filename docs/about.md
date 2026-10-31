@@ -18,7 +18,7 @@ The schema is written by `scripts/uco_to_linkml.py` from UCO 1.5.0's Turtle file
 - **Several parents.** A class with two parents takes one as `is_a` and the other as a mixin. `ObservableObject` is an `Observable` with `Item` mixed in.
 - **Inherited constraints.** SHACL applies a class's shapes to its subclasses, so each class's slot is the conjunction of its own shapes and its parents'. Where a class holds one value of a slot its parent holds many of, it keeps the list form and holds one item at most, since LinkML cannot turn a parent's multivalued slot back.
 - **Forbidden slots.** `sh:maxCount 0` becomes `none_of` on the class: `ActionLifecycle` has no status, start or end time of its own.
-- **Collections Ontology.** CO states no licence, so the `uco_co` module's descriptions are this project's own. Its properties sit on the classes CO's own ontology gives as their domains.
+- **Collections Ontology.** CO states no licence, so the `uco_co` module's descriptions are this project's own. Its properties sit on the classes CO's own ontology gives as their domains, and a list is a bag, as CO says. An item's content and a collection's elements are IRIs. A list's items sit inside the list without an IRI, so an item's links to the next and previous item are left out; UCO's threads, whose items have IRIs, keep theirs.
 
 ## Left out
 

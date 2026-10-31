@@ -21,6 +21,7 @@ public class Thread extends UcoThing {
   private List<ThreadItem> threadOriginItem;
   private List<ThreadItem> threadTerminalItem;
   private Integer coSize;
+  private List<URI> element;
 
 
 }

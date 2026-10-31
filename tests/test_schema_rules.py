@@ -59,9 +59,9 @@ SHARED_KEYS["oscal.yaml"] = {
     "subject", "text", "value", "values",
 }  # fmt: skip
 SHARED_KEYS["spdx.yaml"] = {
-    "comment", "contentType", "createdBy", "domain", "endTime", "environment",
-    "extension", "externalIdentifier", "hashValue", "key", "modifiedTime",
-    "specVersion", "startTime", "statement", "subject", "value",
+    "comment", "contentType", "createdBy", "domain", "element", "endTime",
+    "environment", "extension", "externalIdentifier", "hashValue", "key",
+    "modifiedTime", "specVersion", "startTime", "statement", "subject", "value",
 }  # fmt: skip
 
 # Classes the copy and a neighbour both define, under UCO's names. The merged

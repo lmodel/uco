@@ -541,11 +541,15 @@ linkml:Sparqlpath xsd:string
     )
 }
 
-<Bag> CLOSED {
-    (  $<Bag_tes> coll:size @linkml:Integer ? ;
-       rdf:type [ coll:Bag ] ?
-    )
-}
+<Bag>  (
+    CLOSED {
+       (  $<Bag_tes> (  coll:size @linkml:Integer ? ;
+             coll:element @linkml:Uriorcurie *
+          ) ;
+          rdf:type [ coll:Bag ] ?
+       )
+    } OR @<List>
+)
 
 <BenevolentRole> CLOSED {
     (  $<BenevolentRole_tes> (  &<Role_tes> ;
@@ -830,7 +834,7 @@ linkml:Sparqlpath xsd:string
 
 <CoItem>  (
     CLOSED {
-       (  $<CoItem_tes> coll:itemContent @linkml:String ? ;
+       (  $<CoItem_tes> coll:itemContent @linkml:Uriorcurie ? ;
           rdf:type [ coll:Item ] ?
        )
     } OR @<ListItem>
@@ -2286,7 +2290,9 @@ linkml:Sparqlpath xsd:string
 }
 
 <List> CLOSED {
-    (  $<List_tes> (  coll:firstItem @<ListItem> ? ;
+    (  $<List_tes> (  &<Bag_tes> ;
+          rdf:type [ coll:Bag ] ? ;
+          coll:firstItem @<ListItem> ? ;
           coll:item @<ListItem> * ;
           coll:lastItem @<ListItem> ?
        ) ;
@@ -3587,7 +3593,8 @@ linkml:Sparqlpath xsd:string
           coll:item @<ThreadItem> * ;
           uco-types:threadOriginItem @<ThreadItem> * ;
           uco-types:threadTerminalItem @<ThreadItem> * ;
-          coll:size @linkml:Integer ?
+          coll:size @linkml:Integer ? ;
+          coll:element @linkml:Uriorcurie *
        ) ;
        rdf:type [ uco-types:Thread ]
     )

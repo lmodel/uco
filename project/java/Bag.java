@@ -17,6 +17,7 @@ import lombok.*;
 public class Bag  {
 
   private Integer coSize;
+  private List<URI> element;
 
 
 }

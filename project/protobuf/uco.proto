@@ -1143,6 +1143,8 @@ message AutonomousSystemFacet {
 message Bag {
   // How many items the collection holds.
   int32 co_size = 1;
+  // A member of the collection, which one of its items wraps.
+  repeated string element = 2;
 }
 // A benevolent role is a role with positive and/or beneficial intent.
 message BenevolentRole {
@@ -4843,12 +4845,16 @@ message LicenseMarking {
 }
 // A collection whose items come in order, one after another.
 message List {
+  // How many items the collection holds.
+  int32 co_size = 1;
+  // A member of the collection, which one of its items wraps.
+  repeated string element = 2;
   // The first item of the list.
-  ListItem firstItem = 1;
+  ListItem firstItem = 3;
   // An item of the collection.
-  repeated ListItem item = 2;
+  repeated ListItem item = 4;
   // The last item of the list.
-  ListItem lastItem = 3;
+  ListItem lastItem = 5;
 }
 // An item of a list, which has a place in the list's order.
 message ListItem {
@@ -7861,6 +7867,8 @@ message Thread {
   repeated ThreadItem threadTerminalItem = 5;
   // How many items the collection holds.
   int32 co_size = 6;
+  // A member of the collection, which one of its items wraps.
+  repeated string element = 7;
 }
 // A ThreadItem is a member of a thread.
 message ThreadItem {

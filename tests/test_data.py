@@ -17,6 +17,7 @@ again for every instance it checks, which takes seconds with sixteen modules.
 import functools
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -28,7 +29,7 @@ from linkml.validator.plugins import JsonschemaValidationPlugin
 from linkml_runtime.loaders import yaml_loader
 from linkml_runtime.utils.schemaview import SchemaView
 from rdflib import BNode, Graph, URIRef
-from rdflib.namespace import SH
+from rdflib.namespace import RDF, SH
 
 import uco.datamodel.uco
 
@@ -273,6 +274,12 @@ UNSTATED = {
     ): PATH,
     (
         "co_XFAIL.json",
+        "list-02de67a8-bfb9-4e00-a305-bae3daf6384b",
+        "co:size",
+        "DatatypeConstraintComponent",
+    ): LITERAL_TYPE,
+    (
+        "co_XFAIL.json",
         "list-item-4361eb9c-a1c2-40e7-ba83-92802554392a",
         "-",
         "NotConstraintComponent",
@@ -442,3 +449,33 @@ def test_uco_xfail_fault_fails_here(key):
     if path is not None and isinstance(path, URIRef):
         slot = reader.slot_by_iri[str(path)]
         assert any(f" in /{slot}" in m or f"'{slot}'" in m for m in messages), messages
+
+
+# Where UCO's co_PASS.json lists, in the schema's form, fail the schema: each
+# list's first item has the index 0, written as an xsd:positiveInteger,
+# which pySHACL does not check (UCO's co_XFAIL.json says so) and the schema's
+# minimum of 1 does; and an item names the next by co:nextItem, a link the
+# schema leaves out.
+CO_PASS_DIFFERENCES = (
+    r"0 is less than the minimum of 1 in /(firstItem|item/\d+)/index",
+    r"Additional properties are not allowed \('nextItem' was unexpected\) in /.*",
+)
+
+
+def test_ucos_lists_differ_only_where_known():
+    """UCO's two co_PASS lists, each a bag with a size and elements as CO
+    has it, fail the validator only where CO_PASS_DIFFERENCES says."""
+    reader = _reader()
+    graph = EXAMPLES.read(EXAMPLES.EXAMPLES / "co_PASS.json")
+    lists = sorted(graph.subjects(RDF.type, URIRef("http://purl.org/co/List")))
+    assert len(lists) == 2
+    for node in lists:
+        instance = reader.instance(graph, node, strict=False)
+        assert {"co_size", "element", "item"} <= set(instance), node
+        messages = _messages(instance, "List")
+        unexplained = [
+            m
+            for m in messages
+            if not any(re.fullmatch(d, m) for d in CO_PASS_DIFFERENCES)
+        ]
+        assert not unexplained, unexplained
