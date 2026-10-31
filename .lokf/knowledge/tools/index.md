@@ -1,0 +1,5 @@
+# Tools
+
+* [The UCO converter (uco_to_linkml.py)](uco-to-linkml.md) - `scripts/uco_to_linkml.py`, the converter that writes every module of the schema from UCO's Turtle files: classes from OWL classes, slots from SHACL shapes and properties, enums from UCO's vocabularies, each keeping its UCO name and IRI. `--check` fails on a hand edit.
+* [The examples writer (uco_examples.py)](uco-examples.md) - `scripts/uco_examples.py`, which writes a valid example for each class a concept may name as its type: from nodes of UCO's own passing examples, turned from JSON-LD into the schema's form, and from the schema where no example holds the class. Its `Reader` also reads UCO's failing examples for the tests.
+* [The upstream watch script (check_upstream_release.py)](check-upstream-release.md) - `scripts/check_upstream_release.py`, the standard-library script the upstream watch runs: it asks the GitHub API about ucoProject/UCO and reports a newer release or tag, a moved tag, a changed or dropped copied file, a changed licence and a check that could not finish.

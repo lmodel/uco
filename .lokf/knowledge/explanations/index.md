@@ -1,0 +1,5 @@
+# Explanations
+
+* [Scope, influences and mappings](scope-and-influences.md) - What the schema renders and what it leaves out: UCO 1.5.0's fifteen namespaces and the CO terms it uses, as a converter writes them, with lmodel/spdx's converter and lmodel/slsa's release and governance files as its influences. It maps to no other vocabulary, and leaves out SHACL advice, SPARQL constraints and what LinkML cannot state.
+* [Element names and the shared namespace](element-names.md) - How the schema names its elements: UCO's own names and IRIs under UCO's prefixes, a namespace prefix on 20 properties UCO defines in two namespaces, `CoItem` and `co_size` for CO terms UCO also names, and the renames `lokf adapt` makes beside LOKF. It also lists the class and key names the adapt copy shares with lmodel/oscal, spdx, slsa and in-toto.
+* [The schema's form and UCO's JSON-LD](data-form.md) - Where data in the schema's form differs from UCO's JSON-LD: keys are slot names, `type` names one class, facets and other value objects sit inside their object without an IRI, a reference is an IRI, vocabularies are open, and a literal carries no datatype.
