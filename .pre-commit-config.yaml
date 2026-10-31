@@ -1,5 +1,25 @@
 ---
 # https://pre-commit.com/
+# No hook may rewrite a file this repository does not write by hand: UCO's
+# files under upstream/, kept byte for byte so scripts/check_upstream_release.py
+# can match them by git object hash; what scripts/uco_to_linkml.py,
+# scripts/uco_examples.py, the LinkML generators and `lokf adapt` write, which
+# the next run would rewrite back; the neighbours' released copies, which
+# tests hold to their checksums; npm's lockfile for the release tools; and the
+# KTL sidecar's scripts, which the weekly sync replaces.
+exclude: >-
+  (?x)^(
+    src/uco/schema/upstream/|
+    src/uco/schema/uco(_[a-z]+)?\.yaml$|
+    src/uco/datamodel/|
+    tests/data/valid/|
+    project/|
+    docs/schema/|
+    \.lokf/(scripts|m365)/|
+    \.lokf/(lokf|uco)\.yaml$|
+    \.github/release/package-lock\.json$|
+    tests/neighbours/
+  )
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
