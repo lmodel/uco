@@ -2,6 +2,17 @@
 
 ## 2026-10-31
 
+* **Changed**: Element names now cites lmodel/collections' module for CO's names.
+* **Added**: lmodel/collections module, from `src/uco/schema/collections/collections.yaml` and `tests/test_collections_import.py`.
+* **Changed**: the Collections Ontology concept now says the schema imports lmodel/collections' module, and gives CO's licence position as NOTICE states it.
+* **Changed**: UCO LinkML schema now names fifteen modules and lmodel/collections' module in place of `uco_co`, with the converter's new counts.
+* **Changed**: Element names now gives lmodel/collections' names for CO's terms, `co_index` among them.
+* **Changed**: Scope and influences now says the schema imports lmodel/collections for CO's terms.
+* **Changed**: License and attribution now names the lmodel/collections module and CO's licence position, as NOTICE gives them.
+* **Changed**: Test data and tests now names `tests/test_collections_import.py` and the check against lmodel/collections' copy.
+* **Changed**: The UCO converter now writes fifteen modules and reads lmodel/collections' module for CO's terms.
+* **Changed**: Generated artefacts now counts 427 Java classes, with lmodel/collections' classes.
+* **Changed**: the source map now names the vendored lmodel/collections module and its test.
 * **Changed**: the test data holds 19 counter-examples, with a lower bound and a union of datatypes added.
 * **Changed**: the security policy names the three assets a release carries, as SECURITY.md now does.
 * **Prose**: reworded 10 concept bodies in plain English. No fact, link, number or frontmatter changed.

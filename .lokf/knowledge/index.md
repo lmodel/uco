@@ -30,10 +30,11 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for uco. Every Markdown 
 
 # Datasets
 
-* [UCO LinkML schema](datasets/uco-linkml-schema.md) - The LinkML schema of the Unified Cyber Ontology (UCO) 1.5.0, `src/uco/schema/uco.yaml` (schema id `https://w3id.org/lmodel/uco`) with sixteen modules, one per UCO namespace and one for the Collections Ontology terms UCO uses: 425 classes, 771 slots, 53 enums and 14 types, all written by a converter. Its `lokf adapt` copy `.lokf/uco.yaml` is the bundle's domain schema.
+* [UCO LinkML schema](datasets/uco-linkml-schema.md) - The LinkML schema of the Unified Cyber Ontology (UCO) 1.5.0, `src/uco/schema/uco.yaml` (schema id `https://w3id.org/lmodel/uco`) with fifteen modules, one per UCO namespace, written by a converter, and lmodel/collections' module for the Collections Ontology terms UCO uses. Its `lokf adapt` copy `.lokf/uco.yaml` is the bundle's domain schema.
 * [The UCO 1.5.0 copy](datasets/uco-copy.md) - UCO's own files at release 1.5.0, 79 files copied into `src/uco/schema/upstream/` under UCO's paths: the seventeen Turtle files of the ontology, UCO's LICENSE, and the passing and failing examples with the SHACL reports on the failing ones. Each is matched to commit `7ebb3957e9e9` by git object hash.
-* [Generated artefacts](datasets/generated-artefacts.md) - What the LinkML generators and `lokf adapt` write from the schema: `project/` (JSON Schema, OWL, SHACL, ShEx, JSON-LD, GraphQL, protobuf, SQL, TypeScript, Excel and 425 Java classes), the Python dataclasses and Pydantic models in `src/uco/datamodel/`, `docs/schema/`, and `.lokf/uco.yaml`. None is edited by hand.
+* [Generated artefacts](datasets/generated-artefacts.md) - What the LinkML generators and `lokf adapt` write from the schema: `project/` (JSON Schema, OWL, SHACL, ShEx, JSON-LD, GraphQL, protobuf, SQL, TypeScript, Excel and 427 Java classes), the Python dataclasses and Pydantic models in `src/uco/datamodel/`, `docs/schema/`, and `.lokf/uco.yaml`. None is edited by hand.
 * [Test data and tests](datasets/test-data.md) - The schema's tests: 228 valid examples under `tests/data/valid/`, 28 of them from UCO's own examples and 200 minimal ones written from the schema, 19 counter-examples, one per kind of constraint, the check that holds each fault of UCO's failing examples to the validator, and the tests of the watch, the copy and the adapt copy against nine released neighbours.
+* [lmodel/collections module](datasets/collections-module.md) - The schema module of lmodel/collections that renders the Collections Ontology (CO) 2.0, copied unchanged into `src/uco/schema/collections/` from collections v0.1.0, held to its git object hash by `tests/test_collections_import.py`, and imported by `uco_types` and the umbrella for the CO terms UCO's threads build on.
 
 # Tools
 
@@ -44,12 +45,12 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for uco. Every Markdown 
 # References
 
 * [The Unified Cyber Ontology (UCO)](references/unified-cyber-ontology.md) - The Unified Cyber Ontology (UCO), release 1.5.0 of July 24, 2026, at <https://github.com/ucoProject/UCO>: a community ontology for cyber-domain information in OWL and SHACL, in fifteen namespaces, which the schema renders.
-* [The Collections Ontology (CO)](references/collections-ontology.md) - The Collections Ontology (CO) 2.0, <http://purl.org/co/>, whose bag, list and item classes UCO's threads build on. Its files state no licence, so the schema's `uco_co` module renders the terms UCO's files use with descriptions of its own.
+* [The Collections Ontology (CO)](references/collections-ontology.md) - The Collections Ontology (CO) 2.0, <http://purl.org/co/>, whose bag, list and item classes UCO's threads build on. The schema imports lmodel/collections' rendering of it, which keeps CO's IRIs, and NOTICE gives CO's licence position.
 
 # Explanations
 
-* [Scope, influences and mappings](explanations/scope-and-influences.md) - What the schema renders and what it leaves out: UCO 1.5.0's fifteen namespaces and the CO terms it uses, as a converter writes them, with lmodel/spdx's converter and lmodel/slsa's release and governance files as its influences. It maps to no other vocabulary, and leaves out SHACL advice, SPARQL constraints and what LinkML cannot state.
-* [Element names and the shared namespace](explanations/element-names.md) - How the schema names its elements: UCO's own names and IRIs under UCO's prefixes, a namespace prefix on 20 properties UCO defines in two namespaces, `CoItem` and `co_size` for CO terms UCO also names, and the renames `lokf adapt` makes beside LOKF. It also lists the class and key names the adapt copy shares with lmodel/oscal, spdx, slsa and in-toto.
+* [Scope, influences and mappings](explanations/scope-and-influences.md) - What the schema renders and what it leaves out: UCO 1.5.0's fifteen namespaces, as a converter writes them, with lmodel/collections' schema imported for the CO terms, and lmodel/spdx's converter and lmodel/slsa's release and governance files as its influences. It maps to no other vocabulary, and leaves out SHACL advice, SPARQL constraints and what LinkML cannot state.
+* [Element names and the shared namespace](explanations/element-names.md) - How the schema names its elements: UCO's own names and IRIs under UCO's prefixes, a namespace prefix on 20 properties UCO defines in two namespaces, lmodel/collections' `CoItem`, `co_size` and `co_index` for CO terms, and the renames `lokf adapt` makes beside LOKF. It also lists the class and key names the adapt copy shares with lmodel/oscal, spdx, slsa and in-toto.
 * [The schema's form and UCO's JSON-LD](explanations/data-form.md) - Where data in the schema's form differs from UCO's JSON-LD: keys are slot names, `type` names one class, facets and other value objects sit inside their object without an IRI, a reference is an IRI, vocabularies are open, and a literal carries no datatype.
 
 # Glossary
@@ -64,7 +65,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for uco. Every Markdown 
 
 * [Security policy](policies/security-policy.md) - How to report a vulnerability (GitHub's private vulnerability reporting), which release receives fixes (the latest), what executes in the repository and what holds each surface, the ruleset on `main`, and the two repository settings that are not yet in force.
 * [AI covenant](policies/ai-covenant.md) - The repository's rules for work done with artificial intelligence (AI): you own what you submit, the schema is the converter's output and a rule cites the part of UCO's files it reads, the copy of UCO's files is never edited, and every element keeps UCO's IRI.
-* [License and attribution](policies/license-and-attribution.md) - The repository's licences: Apache 2.0 for the schema and the code, the UCO Community's Apache 2.0 for the copy of UCO's files and the descriptions taken from it, no licence from the Collections Ontology and so descriptions of the project's own, MIT for the copier template's scaffolding, Apache 2.0 for the KTL templates, and CC BY 4.0 for the knowledge bundle.
+* [License and attribution](policies/license-and-attribution.md) - The repository's licences: Apache 2.0 for the schema and the code, the UCO Community's Apache 2.0 for the copy of UCO's files and the descriptions taken from it, Apache 2.0 for the copy of lmodel/collections' module, MIT for the copier template's scaffolding, Apache 2.0 for the KTL templates, and CC BY 4.0 for the knowledge bundle.
 
 # Workflows
 

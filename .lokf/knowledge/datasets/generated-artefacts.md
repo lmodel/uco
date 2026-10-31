@@ -3,7 +3,7 @@ type: Dataset
 id: https://w3id.org/lmodel/uco/knowledge/datasets/generated-artefacts
 genre: reference
 title: Generated artefacts
-description: "What the LinkML generators and `lokf adapt` write from the schema: `project/` (JSON Schema, OWL, SHACL, ShEx, JSON-LD, GraphQL, protobuf, SQL, TypeScript, Excel and 425 Java classes), the Python dataclasses and Pydantic models in `src/uco/datamodel/`, `docs/schema/`, and `.lokf/uco.yaml`. None is edited by hand."
+description: "What the LinkML generators and `lokf adapt` write from the schema: `project/` (JSON Schema, OWL, SHACL, ShEx, JSON-LD, GraphQL, protobuf, SQL, TypeScript, Excel and 427 Java classes), the Python dataclasses and Pydantic models in `src/uco/datamodel/`, `docs/schema/`, and `.lokf/uco.yaml`. None is edited by hand."
 resource: project
 derivedFrom:
   - https://w3id.org/lmodel/uco/knowledge/datasets/uco-linkml-schema
@@ -19,7 +19,7 @@ sources:
     title: the folders
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 

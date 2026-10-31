@@ -105,7 +105,7 @@ exclusions:
     reason: The sidecar's git settings.
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 
@@ -118,6 +118,7 @@ Each refresh run after the first re-verifies these sources instead of discoverin
 | `src/uco/schema/uco*.yaml`, `scripts/uco_to_linkml.py` | `datasets/uco-linkml-schema`, `tools/uco-to-linkml`, the `glossary/` terms | rerun the converter with `--check`; re-read the umbrella's comments and the counts it prints |
 | `project.justfile`, `.lokf/uco.yaml`, `.lokf/justfile`, `.lokf/pyproject.toml`, the README's Knowledge Trust Ladder (KTL) section | the domain-schema section of `datasets/uco-linkml-schema`, `explanations/element-names` | re-read the `--root` list, the copy's notes, the `schema :=` line and the `[tool.lokf]` table |
 | `src/uco/schema/upstream/`, the UCO section of `NOTICE` | `datasets/uco-copy`, `references/unified-cyber-ontology`, `references/collections-ontology` | the upstream watch compares the blobs weekly; re-read the pins |
+| `src/uco/schema/collections/`, `tests/test_collections_import.py`, the lmodel/collections section of `NOTICE` | `datasets/collections-module`, `references/collections-ontology` | re-read the pinned commit and hash, and compare the file with lmodel/collections' release |
 | `scripts/check_upstream_release.py`, `.github/scripts/` | `tools/check-upstream-release`, `playbooks/update-upstream-pins`, `workflows/upstream-watch` | re-read the pins, the docstring and the left-out pattern |
 | `scripts/uco_examples.py`, `tests/` | `tools/uco-examples`, `datasets/test-data` | rerun the script with `--check`; re-count `valid/` and `invalid/`; re-read `UNSTATED` in `tests/test_data.py` |
 | `README.md`, `docs/about.md`, `docs/index.md`, `.linkmllint.yaml`, `CHANGELOG.md` | `explanations/scope-and-influences`, `explanations/data-form`, `playbooks/validate-data` | re-read each section and the lint comment |

@@ -3,7 +3,7 @@ type: Explanation
 id: https://w3id.org/lmodel/uco/knowledge/explanations/scope-and-influences
 genre: explanation
 title: Scope, influences and mappings
-description: "What the schema renders and what it leaves out: UCO 1.5.0's fifteen namespaces and the CO terms it uses, as a converter writes them, with lmodel/spdx's converter and lmodel/slsa's release and governance files as its influences. It maps to no other vocabulary, and leaves out SHACL advice, SPARQL constraints and what LinkML cannot state."
+description: "What the schema renders and what it leaves out: UCO 1.5.0's fifteen namespaces, as a converter writes them, with lmodel/collections' schema imported for the CO terms, and lmodel/spdx's converter and lmodel/slsa's release and governance files as its influences. It maps to no other vocabulary, and leaves out SHACL advice, SPARQL constraints and what LinkML cannot state."
 resource: README.md
 about:
   - https://w3id.org/lmodel/uco/knowledge/datasets/uco-linkml-schema
@@ -16,15 +16,15 @@ sources:
     title: Unreleased
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 
 # Scope, influences and mappings
 
-The schema renders the Unified Cyber Ontology at release 1.5.0: its fifteen namespaces, as one module each, and the Collections Ontology terms UCO's files use. It replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand.[^readme.md][^changelog.md]
+The schema renders the Unified Cyber Ontology at release 1.5.0: its fifteen namespaces, as one module each. It imports lmodel/collections' schema for the Collections Ontology terms UCO's files use. It replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand.[^readme.md][^changelog.md]
 
-Its converter follows lmodel/spdx's, and the release asset and governance files follow lmodel/slsa. It names no term of another vocabulary, so it has no mappings.
+Its influences beyond UCO are lmodel/collections, whose schema it imports. Its converter follows lmodel/spdx's, and the release asset and governance files follow lmodel/slsa. It names no term of another vocabulary, so it has no mappings.
 
 It leaves out what LinkML cannot state: SHACL shapes of severity Info or Warning, SPARQL constraints, `sh:not` and `sh:xone`, shapes over a path of more than one property, and UCO's rule that a UcoThing is never a blank node. It does not render UCO's `owl.ttl`, which holds shapes over OWL itself.
 
