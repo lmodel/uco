@@ -54,7 +54,8 @@ None: each element is UCO's or CO's own term under its own IRI, and no element n
 The converter leaves out what LinkML cannot state, and prints a note for each:
 
 * SHACL shapes of severity Info or Warning, which are advice;
-* SPARQL constraints, `sh:not` and `sh:xone`;
+* SPARQL constraints, `sh:not` and `sh:xone`, and shapes on a property's objects;
+* that `hasFacet` is inverse functional, a facet belonging to one object only;
 * shapes over a path of more than one property;
 * a CO list item's links to the next and previous item, since a list item here sits inside its list without an IRI;
 * UCO's rule that a UcoThing is never a blank node, since a facet here is a value inside its object.

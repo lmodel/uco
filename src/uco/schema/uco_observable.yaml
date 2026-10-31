@@ -986,6 +986,9 @@ slots:
   creationTime:
     description: >-
       UCO 1.5.0 declares the property uco-observable:creationTime without a definition.
+    deprecated: >-
+      observable:creationTime is deprecated, and will be an error to use in UCO 2.0.0. observable:observableCreatedTime
+      should be used instead.
     slot_uri: uco-observable:creationTime
     range: datetime
 

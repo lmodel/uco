@@ -11,6 +11,7 @@ from pathlib import Path
 
 import yaml
 from rdflib import Graph, URIRef
+from rdflib.namespace import OWL, RDF
 
 ROOT = Path(__file__).parent.parent
 SCHEMA_DIR = ROOT / "src" / "uco" / "schema"
@@ -110,6 +111,38 @@ def test_every_iri_names_a_term_in_ucos_files():
                 ("https://ontology.unifiedcyberontology.org/", "http://purl.org/co/")
             ):
                 assert iri in terms, (module.name, iri)
+
+
+def _slots_by_iri():
+    slots = {}
+    for module in MODULES:
+        doc = yaml.safe_load(module.read_text())
+        for name, slot in (doc.get("slots") or {}).items():
+            if "slot_uri" in slot:
+                prefix, _, local = slot["slot_uri"].partition(":")
+                slots[doc["prefixes"][prefix] + local] = slot
+    return slots
+
+
+def test_owl_characteristics_and_deprecations_carry_over():
+    """Each property UCO types transitive or irreflexive says so on its slot,
+    and each one UCO deprecates is deprecated with UCO's message."""
+    graph = Graph()
+    for path in sorted((COPY / "ontology").glob("*/*/*.ttl")):
+        graph.parse(path)
+    slots = _slots_by_iri()
+    found = 0
+    for kind, key in (
+        (OWL.TransitiveProperty, "transitive"),
+        (OWL.IrreflexiveProperty, "irreflexive"),
+    ):
+        for prop in graph.subjects(RDF.type, kind):
+            assert slots[str(prop)].get(key) is True, (str(prop), key)
+            found += 1
+    for prop in graph.subjects(RDF.type, OWL.DeprecatedProperty):
+        assert "deprecated" in slots[str(prop)]["deprecated"], str(prop)
+        found += 1
+    assert found
 
 
 def _keys(node):

@@ -8,7 +8,7 @@
     "The descriptions are UCO's rdfs:comment texts, which the UCO Community publishes under the Apache License 2.0.",
     "Where UCO defines one local name in more than one namespace, the namespace that comes first in this file's imports keeps it, and each other takes its namespace as a prefix: action_endTime, action_object, action_startTime, action_value, marking_statement, observable_context, observable_cpeid, observable_creator, observable_endTime, observable_eventType, observable_key, observable_location, observable_modifiedTime, observable_participant, observable_references, observable_startTime, observable_swid, observable_value, observable_version, types_value.",
     "Declared in uco_core although their IRIs are in UCO's types namespace, since Event's eventAttribute ranges over them and uco-core imports no other UCO namespace: Dictionary (uco-types:Dictionary), entry (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry), key (uco-types:key), types_value (uco-types:value).",
-    "Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, paths of more than one property, and UCO's rule that a UcoThing is never a blank node, which a facet inlined here is when written as RDF."
+    "Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, paths of more than one property, shapes on a property's objects, that hasFacet is inverse functional, and UCO's rule that a UcoThing is never a blank node, which a facet inlined here is when written as RDF."
   ],
   "source": "https://github.com/ucoProject/UCO/releases/tag/1.5.0",
   "see_also": [
@@ -4597,6 +4597,7 @@
         "ConfiguredTool",
         "ConfiguredSoftware"
       ],
+      "irreflexive": true,
       "range": "UcoObject",
       "@type": "SlotDefinition"
     },
@@ -8549,6 +8550,7 @@
       "name": "creationTime",
       "definition_uri": "https://w3id.org/lmodel/uco/creationTime",
       "description": "UCO 1.5.0 declares the property uco-observable:creationTime without a definition.",
+      "deprecated": "observable:creationTime is deprecated, and will be an error to use in UCO 2.0.0. observable:observableCreatedTime should be used instead.",
       "from_schema": "https://w3id.org/lmodel/uco-observable",
       "mappings": [
         "https://ontology.unifiedcyberontology.org/uco/observable/creationTime"
@@ -17085,6 +17087,7 @@
       "domain_of": [
         "ConfiguredTool"
       ],
+      "irreflexive": true,
       "is_usage_slot": true,
       "usage_slot_name": "isConfigurationOf",
       "range": "Tool",
@@ -17199,6 +17202,7 @@
       "domain_of": [
         "ConfiguredSoftware"
       ],
+      "irreflexive": true,
       "is_usage_slot": true,
       "usage_slot_name": "isConfigurationOf",
       "range": "Software",
@@ -28541,8 +28545,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "uco.yaml",
-  "source_file_date": "2026-10-31T10:19:22",
-  "source_file_size": 4227,
+  "source_file_date": "2026-10-31T10:32:09",
+  "source_file_size": 4296,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/uco.context.jsonld",

@@ -29,8 +29,8 @@ comments:
   ranges over them and uco-core imports no other UCO namespace: Dictionary (uco-types:Dictionary), entry
   (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry), key (uco-types:key), types_value (uco-types:value).'
 - 'Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, paths
-  of more than one property, and UCO''s rule that a UcoThing is never a blank node, which a facet inlined
-  here is when written as RDF.'
+  of more than one property, shapes on a property''s objects, that hasFacet is inverse functional, and
+  UCO''s rule that a UcoThing is never a blank node, which a facet inlined here is when written as RDF.'
 prefixes:
   uco_linkml: https://w3id.org/lmodel/uco/
   uco-action: https://ontology.unifiedcyberontology.org/uco/action/
@@ -357,6 +357,7 @@ slots:
       This property is expected to have a more specific range when associated with a class, such as a
       configured Tool having this property have a range of a Tool.
     slot_uri: uco-configuration:isConfigurationOf
+    irreflexive: true
     range: UcoObject
     inlined: false
   itemDescription:
@@ -1546,6 +1547,8 @@ slots:
     multivalued: true
   creationTime:
     description: UCO 1.5.0 declares the property uco-observable:creationTime without a definition.
+    deprecated: observable:creationTime is deprecated, and will be an error to use in UCO 2.0.0. observable:observableCreatedTime
+      should be used instead.
     slot_uri: uco-observable:creationTime
     range: datetime
   creatorUser:

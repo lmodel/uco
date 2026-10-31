@@ -92,8 +92,9 @@ linkml_meta = LinkMLMeta({'comments': ['scripts/uco_to_linkml.py writes every YA
                   '(uco-types:key), types_value (uco-types:value).',
                   'Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL '
                   'constraints, sh:not, sh:xone, paths of more than one property, '
-                  "and UCO's rule that a UcoThing is never a blank node, which a "
-                  'facet inlined here is when written as RDF.'],
+                  "shapes on a property's objects, that hasFacet is inverse "
+                  "functional, and UCO's rule that a UcoThing is never a blank "
+                  'node, which a facet inlined here is when written as RDF.'],
      'default_prefix': 'uco_linkml',
      'default_range': 'string',
      'description': 'A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: '
@@ -3254,6 +3255,7 @@ class ConfiguredTool(Tool):
                                               'range': 'Tool'}}})
 
     isConfigurationOf: Optional[str] = Field(default=None, description="""The object which has been configured to run in a more specified manner than another object. This property is expected to have a more specific range when associated with a class, such as a configured Tool having this property have a range of a Tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ConfiguredTool', 'ConfiguredSoftware'],
+         'irreflexive': True,
          'slot_uri': 'uco-configuration:isConfigurationOf'} })
     usesConfiguration: Optional[str] = Field(default=None, description="""A configuration used by an object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ConfiguredTool', 'ConfiguredSoftware'],
          'slot_uri': 'uco-configuration:usesConfiguration'} })
@@ -11868,6 +11870,7 @@ class ConfiguredSoftware(Software):
                                               'range': 'Software'}}})
 
     isConfigurationOf: Optional[str] = Field(default=None, description="""The object which has been configured to run in a more specified manner than another object. This property is expected to have a more specific range when associated with a class, such as a configured Tool having this property have a range of a Tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ConfiguredTool', 'ConfiguredSoftware'],
+         'irreflexive': True,
          'slot_uri': 'uco-configuration:isConfigurationOf'} })
     usesConfiguration: Optional[str] = Field(default=None, description="""A configuration used by an object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ConfiguredTool', 'ConfiguredSoftware'],
          'slot_uri': 'uco-configuration:usesConfiguration'} })
@@ -14513,7 +14516,11 @@ class WindowsThreadFacet(Facet):
 
     creationFlags: Optional[list[int]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:creationFlags without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsThreadFacet'],
          'slot_uri': 'uco-observable:creationFlags'} })
-    creationTime: Optional[datetime ] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:creationTime without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsThreadFacet'], 'slot_uri': 'uco-observable:creationTime'} })
+    creationTime: Optional[datetime ] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:creationTime without a definition.""", json_schema_extra = { "linkml_meta": {'deprecated': 'observable:creationTime is deprecated, and will be an error to '
+                       'use in UCO 2.0.0. observable:observableCreatedTime should be '
+                       'used instead.',
+         'domain_of': ['WindowsThreadFacet'],
+         'slot_uri': 'uco-observable:creationTime'} })
     observableCreatedTime: Optional[datetime ] = Field(default=None, description="""The date and time at which the observable object being characterized was created. This time pertains to an intrinsic characteristic of the observable object, and would be consistent across independent characterizations or observations of the observable object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AccountFacet',
                        'BrowserBookmarkFacet',
                        'BrowserCookieFacet',

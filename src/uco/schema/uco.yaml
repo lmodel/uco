@@ -34,8 +34,8 @@ comments:
     (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry), key (uco-types:key), types_value (uco-types:value).
   - >-
     Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, paths
-    of more than one property, and UCO's rule that a UcoThing is never a blank node, which a facet inlined
-    here is when written as RDF.
+    of more than one property, shapes on a property's objects, that hasFacet is inverse functional, and
+    UCO's rule that a UcoThing is never a blank node, which a facet inlined here is when written as RDF.
 
 prefixes:
   uco_linkml: https://w3id.org/lmodel/uco/

@@ -22,8 +22,9 @@ comments:
   (uco-types:Dictionary), entry (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry),
   key (uco-types:key), types_value (uco-types:value).'
 - 'Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not,
-  sh:xone, paths of more than one property, and UCO''s rule that a UcoThing is never
-  a blank node, which a facet inlined here is when written as RDF.'
+  sh:xone, paths of more than one property, shapes on a property''s objects, that
+  hasFacet is inverse functional, and UCO''s rule that a UcoThing is never a blank
+  node, which a facet inlined here is when written as RDF.'
 source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
 see_also:
 - https://lmodel.github.io/uco
@@ -3439,6 +3440,7 @@ slots:
     domain_of:
     - ConfiguredTool
     - ConfiguredSoftware
+    irreflexive: true
     range: UcoObject
     inlined: false
   itemDescription:
@@ -6547,6 +6549,8 @@ slots:
     definition_uri: https://w3id.org/lmodel/uco/creationTime
     description: UCO 1.5.0 declares the property uco-observable:creationTime without
       a definition.
+    deprecated: observable:creationTime is deprecated, and will be an error to use
+      in UCO 2.0.0. observable:observableCreatedTime should be used instead.
     from_schema: https://w3id.org/lmodel/uco-observable
     mappings:
     - uco-observable:creationTime
@@ -13305,6 +13309,7 @@ slots:
     owner: ConfiguredTool
     domain_of:
     - ConfiguredTool
+    irreflexive: true
     is_usage_slot: true
     usage_slot_name: isConfigurationOf
     range: Tool
@@ -13406,6 +13411,7 @@ slots:
     owner: ConfiguredSoftware
     domain_of:
     - ConfiguredSoftware
+    irreflexive: true
     is_usage_slot: true
     usage_slot_name: isConfigurationOf
     range: Software
@@ -23358,6 +23364,6 @@ classes:
     class_uri: uco-observable:X509V3ExtensionsFacet
 metamodel_version: 1.12.0
 source_file: uco.yaml
-source_file_date: '2026-10-31T10:19:22'
-source_file_size: 4227
+source_file_date: '2026-10-31T10:32:09'
+source_file_size: 4296
 

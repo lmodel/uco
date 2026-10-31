@@ -22,4 +22,4 @@ The schema is written by `scripts/uco_to_linkml.py` from UCO 1.5.0's Turtle file
 
 ## Left out
 
-The schema leaves out SHACL advice (severity Info or Warning), SPARQL constraints, `sh:not` and `sh:xone`, shapes over a path of more than one property, and the shapes in UCO's `owl.ttl`. `tests/test_data.py` lists each fault of UCO's failing examples that the schema does not state, with the reason.
+The schema leaves out SHACL advice (severity Info or Warning), SPARQL constraints, `sh:not` and `sh:xone`, shapes over a path of more than one property or on a property's objects, that `hasFacet` is inverse functional, and the shapes in UCO's `owl.ttl`. A property UCO deprecates, `creationTime`, is `deprecated` with UCO's message. `tests/test_data.py` lists each fault of UCO's failing examples that the schema does not state, with the reason.

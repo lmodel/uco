@@ -64,7 +64,15 @@ The rules, each applied the same way to every element:
   super-property's; with neither, it is a slot no class lists.
 - A shape of severity ``sh:Info`` or ``sh:Warning`` is advice, not a
   constraint, and is left out; so are SPARQL constraints, ``sh:not``,
-  ``sh:xone``, paths of more than one property, and deactivated shapes.
+  ``sh:xone``, paths of more than one property, shapes on a property's
+  objects, and deactivated shapes. ``sh:nodeKind`` is read through the
+  identifier rule below: a value with an IRI is a reference, and one without
+  is inlined.
+- A transitive, irreflexive, symmetric, asymmetric or reflexive property
+  says so on its slot; LinkML has no key for an inverse functional one
+  (``hasFacet``). A term UCO types ``owl:DeprecatedProperty`` or
+  ``owl:DeprecatedClass`` is ``deprecated``, with the message of UCO's shape
+  that warns of it.
 - Every UcoThing has an IRI. The identifier ``id`` is a slot of
   ``UcoObject``, of each other class directly under ``UcoThing`` except
   ``UcoInherentCharacterizationThing`` (``Thread`` and ``ThreadItem``), and of
@@ -222,6 +230,16 @@ XSD_TYPES = {
 # Integer datatypes the CO module renders as bounds on a slot, since it
 # imports no module that declares the types above.
 CO_BOUNDS = {XSD.positiveInteger: 1, XSD.nonNegativeInteger: 0}
+
+# The OWL property characteristics LinkML has a key for. A slot whose
+# property is owl:InverseFunctionalProperty, such as hasFacet, has none.
+CHARACTERISTICS = {
+    OWL.TransitiveProperty: "transitive",
+    OWL.IrreflexiveProperty: "irreflexive",
+    OWL.SymmetricProperty: "symmetric",
+    OWL.AsymmetricProperty: "asymmetric",
+    OWL.ReflexiveProperty: "reflexive",
+}
 
 # The datatype facets a restriction may carry, as LinkML's bound keys.
 FACETS = {XSD.minInclusive: "minimum_value", XSD.maxInclusive: "maximum_value"}
@@ -533,6 +551,11 @@ class Converter:
                 f"{self.curie(p)} is a slot, although UCO names it in a shape without declaring it"
             )
         self.properties |= self.undeclared
+        for p in sorted(g.subjects(RDF.type, OWL.InverseFunctionalProperty), key=str):
+            if p in self.properties:
+                self.report.append(
+                    f"left out, that {self.curie(p)} is inverse functional: LinkML has no key for it"
+                )
         self.enums: dict[URIRef, list[str]] = {}
         self.datatypes: set[URIRef] = set()
         for d in g.subjects(RDF.type, RDFS.Datatype):
@@ -829,6 +852,13 @@ class Converter:
                 self.report.append(
                     f"left out, the shape {self.local(shape)} on the subjects of {self.curie(target)}"
                 )
+        # A shape on the objects of a property, such as the SPARQL check that
+        # a facet belongs to one object, constrains what holds a value, which
+        # no slot states.
+        for shape, target in sorted(g.subject_objects(SH.targetObjectsOf), key=str):
+            self.report.append(
+                f"left out, the shape {self.local(shape)} on the objects of {self.curie(target)}"
+            )
         # Each class's own shapes.
         self.own: dict[URIRef, dict[URIRef, dict]] = {}
         for c in sorted(self.classes, key=str):
@@ -1140,6 +1170,25 @@ class Converter:
         )
         return {"see_also": refs} if refs else {}
 
+    def deprecation(self, iri) -> dict:
+        """``deprecated`` for a term UCO types owl:DeprecatedProperty or
+        owl:DeprecatedClass, with the message of the shape that forbids it,
+        which says what replaces it."""
+        if not (
+            (iri, RDF.type, OWL.DeprecatedProperty) in self.g
+            or (iri, RDF.type, OWL.DeprecatedClass) in self.g
+        ):
+            return {}
+        messages = sorted(
+            text(message)
+            for shape in self.g.subjects(SH.targetSubjectsOf, iri)
+            for inner in self.g.objects(shape, SH.property)
+            if self.g.value(inner, SH.path) == iri
+            for message in self.g.objects(inner, SH.message)
+        )
+        reason = messages[0] if messages else f"UCO {self.version} marks it deprecated."
+        return {"deprecated": reason}
+
     def declared(self, p) -> tuple[tuple[str, ...] | None, tuple]:
         """The property's rdfs:range, read once."""
         if p not in self._declared:
@@ -1329,6 +1378,7 @@ class Converter:
             data = {
                 **self.title(p, self.slot_name[p]),
                 "description": self.description(p, "property"),
+                **self.deprecation(p),
                 "slot_uri": self.curie(p),
             }
             parent = self.g.value(p, RDFS.subPropertyOf)
@@ -1340,8 +1390,9 @@ class Converter:
             inverse = self.g.value(p, OWL.inverseOf)
             if inverse is not None and inverse in self.properties:
                 data["inverse"] = self.slot_name[inverse]
-            if (p, RDF.type, OWL.TransitiveProperty) in self.g:
-                data["transitive"] = True
+            for kind, key in CHARACTERISTICS.items():
+                if (p, RDF.type, kind) in self.g:
+                    data[key] = True
             data.update(self.see_also(p))
             data.update(ordered(self.written[p]))
             add("slot", self.slot_name[p], p, data)
@@ -1364,6 +1415,7 @@ class Converter:
             data["class_uri"] = self.curie(c)
             data.update(self.title(c, name))
             data["description"] = self.description(c, "class")
+            data.update(self.deprecation(c))
             data.update(self.see_also(c))
             if self.disjoint.get(c):
                 data["disjoint_with"] = sorted(self.disjoint[c])
@@ -1751,8 +1803,9 @@ class Converter:
                 + ", ".join(self.hoisted)
                 + ".",
                 "Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, "
-                "paths of more than one property, and UCO's rule that a UcoThing is never a blank node, "
-                "which a facet inlined here is when written as RDF.",
+                "paths of more than one property, shapes on a property's objects, that hasFacet is inverse "
+                "functional, and UCO's rule that a UcoThing is never a blank node, which a facet inlined here "
+                "is when written as RDF.",
             ],
         )
         umbrella["slots"] = {
