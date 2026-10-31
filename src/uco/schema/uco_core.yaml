@@ -1,0 +1,612 @@
+---
+id: https://w3id.org/lmodel/uco-core
+name: uco_core
+title: UCO Core
+description: >-
+  This ontology defines classes and properties that are shared across the various UCO ontologies. At a
+  high-level, the UCO core ontology provides base classes, relationship-oriented classes, content-aggregation
+  classes, and shared classes.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+
+types:
+
+  uco_base64_binary:
+    typeof: string
+    base: str
+    uri: xsd:base64Binary
+    description: 'XSD''s base64Binary: binary data in the Base64 alphabet, padded with =.'
+    pattern: ^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+
+  uco_byte:
+    typeof: integer
+    base: int
+    uri: xsd:byte
+    description: 'XSD''s byte: an integer from -128 to 127.'
+    minimum_value: -128
+    maximum_value: 127
+
+  uco_duration:
+    typeof: string
+    base: str
+    uri: xsd:duration
+    description: 'XSD''s duration: a length of time such as P1DT2H, in ISO 8601''s form.'
+    pattern: ^-?P(?!$)(\d+Y)?(\d+M)?(\d+D)?(T(?!$)(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$
+
+  uco_hex_binary:
+    typeof: string
+    base: str
+    uri: xsd:hexBinary
+    description: 'XSD''s hexBinary: binary data as pairs of hexadecimal digits.'
+    pattern: ^([0-9a-fA-F]{2})*$
+
+  uco_non_negative_integer:
+    typeof: integer
+    base: int
+    uri: xsd:nonNegativeInteger
+    description: 'XSD''s nonNegativeInteger: an integer of zero or more.'
+    minimum_value: 0
+
+  uco_positive_integer:
+    typeof: integer
+    base: int
+    uri: xsd:positiveInteger
+    description: 'XSD''s positiveInteger: an integer of one or more.'
+    minimum_value: 1
+
+  uco_unsigned_int:
+    typeof: integer
+    base: int
+    uri: xsd:unsignedInt
+    description: 'XSD''s unsignedInt: an integer from 0 to 4294967295.'
+    minimum_value: 0
+    maximum_value: 4294967295
+
+  uco_unsigned_short:
+    typeof: integer
+    base: int
+    uri: xsd:unsignedShort
+    description: 'XSD''s unsignedShort: an integer from 0 to 65535.'
+    minimum_value: 0
+    maximum_value: 65535
+
+enums:
+
+  ObjectStatusVocab:
+    enum_uri: uco-core:ObjectStatusVocab
+    title: Object Status Vocabulary
+    description: >-
+      UCO 1.5.0 declares the vocabulary uco-core:ObjectStatusVocab without a definition.
+    permissible_values:
+      Draft: {}
+      Final: {}
+      Deprecated: {}
+
+slots:
+
+  confidence:
+    description: An asserted level of certainty in the accuracy of some information.
+    slot_uri: uco-core:confidence
+    range: uco_non_negative_integer
+    required: true
+    maximum_value: 100
+
+  constrainingVocabularyName:
+    description: The name of an explicitly constrained set of string values.
+    slot_uri: uco-core:constrainingVocabularyName
+    range: string
+
+  constrainingVocabularyReference:
+    description: >-
+      A reference to a specification for an explicitly constrained set of string values. The specification
+      may be unstructured (e.g., web page listing string values) or structured (e.g. RDF/OWL enumeration).
+    slot_uri: uco-core:constrainingVocabularyReference
+    range: uri
+
+  context:
+    description: A description of particular contextual affinity.
+    slot_uri: uco-core:context
+    range: string
+    multivalued: true
+
+  createdBy:
+    description: The identity that created a characterization of a concept.
+    slot_uri: uco-core:createdBy
+    range: IdentityAbstraction
+    inlined: false
+
+  definingContext:
+    description: >-
+      A description of the context relevant to the definition of a particular external reference identifier.
+    slot_uri: uco-core:definingContext
+    range: string
+
+  description:
+    description: A description of a particular concept characterization.
+    slot_uri: uco-core:description
+    range: string
+    multivalued: true
+
+  endTime:
+    description: The ending time of a time range.
+    slot_uri: uco-core:endTime
+    range: datetime
+    multivalued: true
+
+  entry:
+    description: A dictionary entry.
+    slot_uri: uco-types:entry
+    range: DictionaryEntry
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  eventAttribute:
+    title: Event Attribute
+    description: An event attribute specifies an ad-hoc attribute/value for an event.
+    slot_uri: uco-core:eventAttribute
+    range: Dictionary
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  eventContext:
+    title: Event Context
+    description: >-
+      An event context describes the association of actions and objects relating to an event.
+    slot_uri: uco-core:eventContext
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  eventType:
+    title: Event Type
+    description: An event type specifies a classification type for the event.
+    slot_uri: uco-core:eventType
+    is_a: informalType
+    range: string
+    multivalued: true
+
+  externalIdentifier:
+    description: An identifier for some information defined external to the UCO context.
+    slot_uri: uco-core:externalIdentifier
+    range: string
+
+  externalReference:
+    title: External Reference
+    description: Specifies a reference to a resource outside of the UCO.
+    slot_uri: uco-core:externalReference
+    range: ExternalReference
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  hasFacet:
+    description: >-
+      Further sets of properties characterizing a concept based on the particular context of the class
+      and of the particular instance of the concept being characterized.
+    slot_uri: uco-core:hasFacet
+    range: Facet
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  id:
+    description: >-
+      The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.
+    identifier: true
+    range: uriorcurie
+    comments:
+      - >-
+        UCO's JSON-LD writes the IRI as @id; UCO has no property for it, so the key lives in this schema's
+        own namespace.
+
+  informalType:
+    description: >-
+      Informal Type serves as a parent property for string-valued properties meant to describe a type
+      without implementing a class design. This property hierarchy supports a balancing point between
+      semantic specificity and operational agility. The known benefits of describing types rather than
+      implementing them include swift extensibility of some existing, or possibly non-existing, subclass
+      hierarchy in UCO without requiring training in ontological development, taxonomic specification,
+      or OWL, SHACL, or RDF maintenance logistics. The known detractions of using string-literals for
+      type descriptions include that used vocabularies may require careful maintenance among data-sharing
+      parties; that vocabularies require independent logistics (external to UCO) for providing definitions
+      (i.e., dictionary-style semantics) to string-literals chosen; and that string-literals cannot by
+      themselves encode hierarchical structure or entailments, such as the informal device type string
+      'ExamplePhone 8 P4321' entailing 'ExamplePhone 8', 'ExamplePhone', or 'ExamplePhone models discontinued
+      in 2020'. Usage of Informal Type to house strings should be weighed against usage of classes when
+      classes are available, and should periodically be reviewed for potential additions to UCO's class
+      hierarchy or downstream extensions thereof.
+    slot_uri: uco-core:informalType
+
+  isDirectional:
+    description: >-
+      A specification whether or not a relationship assertion is limited to the context FROM a source
+      object(s) TO a target object.
+    slot_uri: uco-core:isDirectional
+    range: boolean
+    required: true
+
+  key:
+    description: A key property of a single dictionary entry.
+    slot_uri: uco-types:key
+    range: string
+    required: true
+
+  kindOfRelationship:
+    description: A characterization of the nature of a relationship between objects.
+    slot_uri: uco-core:kindOfRelationship
+    range: string
+
+  modifiedTime:
+    description: >-
+      Specifies the time that this particular version of the object was modified. The object creator can
+      use the time it deems most appropriate as the time this version of the object was modified. The
+      value of the modified property for a given object version MUST be later than or equal to the value
+      of the created property. Object creators MUST update the modified property when creating a new version
+      of an object. The modified timestamp MUST be precise to the nearest millisecond (exactly three digits
+      after the decimal place in seconds).
+    slot_uri: uco-core:modifiedTime
+    range: datetime
+    multivalued: true
+
+  name:
+    description: The name of a particular concept characterization.
+    slot_uri: uco-core:name
+    range: string
+
+  namingAuthority:
+    description: Specifies the naming authority that issued the name of the entity.
+    slot_uri: uco-core:namingAuthority
+    range: string
+
+  object:
+    description: Specifies one or more UcoObjects.
+    slot_uri: uco-core:object
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  objectCreatedTime:
+    description: >-
+      The time at which a characterization of a concept is created. This time pertains to the time of
+      creating the record object, and is not an intrinsic characteristic of the concept.
+    slot_uri: uco-core:objectCreatedTime
+    range: datetime
+
+  objectMarking:
+    description: >-
+      Marking definitions to be applied to a particular concept characterization in its entirety.
+    slot_uri: uco-core:objectMarking
+    range: MarkingDefinitionAbstraction
+    multivalued: true
+    inlined: false
+
+  objectStatus:
+    description: The current state of formality and acceptance for a UCO object.
+    slot_uri: uco-core:objectStatus
+    range: ObjectStatusVocab
+
+  referenceURL:
+    description: A URL for some information defined external to the UCO context.
+    slot_uri: uco-core:referenceURL
+    range: uri
+
+  source:
+    description: The originating node of a specified relationship.
+    slot_uri: uco-core:source
+    range: UcoObject
+    required: true
+    multivalued: true
+    inlined: false
+
+  specVersion:
+    description: >-
+      The version of UCO ontology or subontology specification used to characterize a concept.
+    slot_uri: uco-core:specVersion
+    range: string
+
+  startTime:
+    description: The initial time of a time range.
+    slot_uri: uco-core:startTime
+    range: datetime
+    multivalued: true
+
+  statement:
+    description: A textual statement of an assertion.
+    slot_uri: uco-core:statement
+    range: string
+    multivalued: true
+
+  tag:
+    description: A generic tag/label.
+    slot_uri: uco-core:tag
+    range: string
+    multivalued: true
+
+  target:
+    description: The terminating node of a specified relationship.
+    slot_uri: uco-core:target
+    range: UcoObject
+    required: true
+    inlined: false
+
+  type:
+    description: >-
+      The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
+    slot_uri: rdf:type
+    designates_type: true
+    range: uriorcurie
+    comments:
+      - >-
+        UCO's JSON-LD writes the same key as @type. The value names one class; a class's ancestors follow
+        from the schema.
+
+  types_value:
+    description: A specific property value.
+    slot_uri: uco-types:value
+    range: string
+    required: true
+
+  value:
+    description: A string value.
+    slot_uri: uco-core:value
+    range: string
+    required: true
+
+classes:
+
+  Annotation:
+    is_a: Assertion
+    class_uri: uco-core:Annotation
+    description: An annotation is an assertion made in relation to one or more objects.
+    slots:
+      - object
+    slot_usage:
+      object:
+        required: true
+
+  Assertion:
+    is_a: UcoObject
+    class_uri: uco-core:Assertion
+    description: An assertion is a statement declared to be true.
+    slots:
+      - statement
+
+  AttributedName:
+    is_a: UcoObject
+    class_uri: uco-core:AttributedName
+    description: >-
+      An attributed name is a name of an entity issued by some attributed naming authority.
+    slots:
+      - namingAuthority
+
+  Bundle:
+    is_a: EnclosingCompilation
+    class_uri: uco-core:Bundle
+    description: >-
+      A bundle is a container for a grouping of UCO content with no presumption of shared context.
+
+  Compilation:
+    is_a: UcoObject
+    class_uri: uco-core:Compilation
+    description: A compilation is a grouping of things.
+
+  ConfidenceFacet:
+    is_a: Facet
+    class_uri: uco-core:ConfidenceFacet
+    description: >-
+      A confidence is a grouping of characteristics unique to an asserted level of certainty in the accuracy
+      of some information.
+    slots:
+      - confidence
+
+  ContextualCompilation:
+    is_a: Compilation
+    class_uri: uco-core:ContextualCompilation
+    description: >-
+      A contextual compilation is a grouping of things sharing some context (e.g., a set of network connections
+      observed on a given day, all accounts associated with a given person).
+    slots:
+      - object
+
+  ControlledVocabulary:
+    is_a: UcoObject
+    class_uri: uco-core:ControlledVocabulary
+    description: A controlled vocabulary is an explicitly constrained set of string values.
+    slots:
+      - constrainingVocabularyName
+      - constrainingVocabularyReference
+      - value
+
+  Dictionary:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-types:Dictionary
+    description: >-
+      A dictionary is list of (term/key, value) pairs with each term/key having an expectation to exist
+      no more than once. types:Dictionary alone does not validate this expectation, but validation is
+      available. For use cases where this expectation must be validated, the subclass types:ProperDictionary
+      should be used instead of types:Dictionary. For instances where this expectation has been found
+      to be violated, the subclass types:ImproperDictionary should be used instead of types:Dictionary.
+    slots:
+      - entry
+
+  DictionaryEntry:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-types:DictionaryEntry
+    description: A dictionary entry is a single (term/key, value) pair.
+    slots:
+      - key
+      - types_value
+
+  EnclosingCompilation:
+    is_a: Compilation
+    class_uri: uco-core:EnclosingCompilation
+    description: An enclosing compilation is a container for a grouping of things.
+    slots:
+      - object
+    slot_usage:
+      object:
+        required: true
+
+  Event:
+    is_a: UcoObject
+    class_uri: uco-core:Event
+    description: An Event is a noteworthy occurrence (something that happens or might happen).
+    slots:
+      - endTime
+      - eventAttribute
+      - eventContext
+      - eventType
+      - startTime
+
+  ExternalReference:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-core:ExternalReference
+    description: Characteristics of a reference to a resource outside of the UCO.
+    slots:
+      - definingContext
+      - externalIdentifier
+      - referenceURL
+
+  Facet:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-core:Facet
+    description: >-
+      A facet is a grouping of characteristics singularly unique to a particular inherent aspect of a
+      UCO domain object.
+
+  Grouping:
+    is_a: ContextualCompilation
+    class_uri: uco-core:Grouping
+    description: A grouping is a compilation of referenced UCO content with a shared context.
+    slots:
+      - context
+
+  IdentityAbstraction:
+    is_a: UcoObject
+    class_uri: uco-core:IdentityAbstraction
+    description: >-
+      An identity abstraction is a grouping of identifying characteristics unique to an individual or
+      organization. This class is an ontological structural abstraction for this concept. Implementations
+      of this concept should utilize the identity:Identity class.
+
+  Item:
+    is_a: UcoObject
+    class_uri: uco-core:Item
+    description: An item is a distinct article or unit.
+
+  MarkingDefinitionAbstraction:
+    is_a: UcoObject
+    class_uri: uco-core:MarkingDefinitionAbstraction
+    description: >-
+      A marking definition abstraction is a grouping of characteristics unique to the expression of a
+      specific data marking conveying restrictions, permissions, and other guidance for how marked data
+      can be used and shared. This class is an ontological structural abstraction for this concept. Implementations
+      of this concept should utilize the marking:MarkingDefinition class.
+
+  ModusOperandi:
+    is_a: UcoObject
+    class_uri: uco-core:ModusOperandi
+    description: >-
+      A modus operandi is a particular method of operation (how a particular entity behaves or the resources
+      they use).
+
+  Relationship:
+    is_a: UcoObject
+    class_uri: uco-core:Relationship
+    description: >-
+      A relationship is a grouping of characteristics unique to an assertion that one or more objects
+      are related to another object in some way.
+    slots:
+      - endTime
+      - isDirectional
+      - kindOfRelationship
+      - source
+      - startTime
+      - target
+
+  UcoInherentCharacterizationThing:
+    is_a: UcoThing
+    class_uri: uco-core:UcoInherentCharacterizationThing
+    description: >-
+      A UCO inherent characterization thing is a grouping of characteristics unique to a particular inherent
+      aspect of a UCO domain object.
+    disjoint_with:
+      - UcoObject
+
+  UcoObject:
+    is_a: UcoThing
+    class_uri: uco-core:UcoObject
+    description: >-
+      A UCO object is a representation of a fundamental concept either directly inherent to the cyber
+      domain or indirectly related to the cyber domain and necessary for contextually characterizing cyber
+      domain concepts and relationships. Within the Unified Cyber Ontology (UCO) structure this is the
+      base class acting as a consistent, unifying and interoperable foundation for all explicit and inter-relatable
+      content objects.
+    disjoint_with:
+      - UcoInherentCharacterizationThing
+    slots:
+      - id
+      - createdBy
+      - description
+      - externalReference
+      - hasFacet
+      - modifiedTime
+      - name
+      - objectCreatedTime
+      - objectMarking
+      - objectStatus
+      - specVersion
+      - tag
+
+  UcoThing:
+    class_uri: uco-core:UcoThing
+    description: UcoThing is the top-level class for individuals within UCO.
+    see_also:
+      - uco-core:UcoThing-identifier-regex-shape
+    slots:
+      - type
+
+  UcoType:
+    class_uri: uco-core:UcoType
+    description: >-
+      UcoType is the top-level class for metaclasses within UCO. An instance of core:UcoType is also an
+      instance of owl:Class, and is or specializes core:UcoThing.
+    disjoint_with:
+      - UcoThing
+    slots:
+      - id
+      - type

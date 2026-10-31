@@ -1,0 +1,7178 @@
+# metamodel_version: 1.12.0
+# version: 1.5.0
+enum AccountTypeVocab
+  {
+    ldap
+    nis
+    openid
+    radius
+    tacacs
+    unix
+    windows_domain
+    windows_local
+  }
+
+enum ActionArgumentNameVocab
+  {
+    APC_Address
+    APC_Mode
+    API
+    Access_Mode
+    Application_Name
+    Base_Address
+    Callback_Address
+    Code_Address
+    Command
+    Control_Code
+    Control_Parameter
+    Creation_Flags
+    Database_Name
+    Delay_Time___LEFT_PARENTHESIS__ms__RIGHT_PARENTHESIS__
+    Destination_Address
+    Error_Control
+    File_Information_Class
+    Flags
+    Function_Address
+    Function_Name
+    Function_Ordinal
+    Hook_Type
+    Host_Name
+    Hostname
+    Initial_Owner
+    Mapping_Offset
+    Number_of_Bytes_Per_Send
+    Options
+    Parameter_Address
+    Password
+    Privilege_Name
+    Protection
+    Proxy_Bypass
+    Proxy_Name
+    Reason
+    Request_Size
+    Requested_Version
+    Server
+    Service_Name
+    Service_State
+    Service_Type
+    Share_Mode
+    Shutdown_Flag
+    Size___LEFT_PARENTHESIS__bytes__RIGHT_PARENTHESIS__
+    Sleep_Time___LEFT_PARENTHESIS__ms__RIGHT_PARENTHESIS__
+    Source_Address
+    Starting_Address
+    System_Metric_Index
+    Target_PID
+    Transfer_Flags
+    Username
+  }
+
+enum ActionNameVocab
+  {
+    Accept_Socket_Connection
+    Add_Connection_to_Network_Share
+    Add_Network_Share
+    Add_Scheduled_Task
+    Add_System_Call_Hook
+    Add_User
+    Add_Windows_Hook
+    Allocate_Virtual_Memory_in_Process
+    Bind_Address_to_Socket
+    Change_Service_Configuration
+    Check_for_Remote_Debugger
+    Close_Port
+    Close_Registry_Key
+    Close_Socket
+    Configure_Service
+    Connect_to_IP
+    Connect_to_Named_Pipe
+    Connect_to_Network_Share
+    Connect_to_Socket
+    Connect_to_URL
+    Control_Driver
+    Control_Service
+    Copy_File
+    Create_Dialog_Box
+    Create_Directory
+    Create_Event
+    Create_File
+    Create_File_Alternate_Data_Stream
+    Create_File_Mapping
+    Create_File_Symbolic_Link
+    Create_Hidden_File
+    Create_Mailslot
+    Create_Module
+    Create_Mutex
+    Create_Named_Pipe
+    Create_Process
+    Create_Process_as_User
+    Create_Registry_Key
+    Create_Registry_Key_Value
+    Create_Remote_Thread_in_Process
+    Create_Service
+    Create_Socket
+    Create_Symbolic_Link
+    Create_Thread
+    Create_Window
+    Delete_Directory
+    Delete_File
+    Delete_Named_Pipe
+    Delete_Network_Share
+    Delete_Registry_Key
+    Delete_Registry_Key_Value
+    Delete_Service
+    Delete_User
+    Disconnect_from_Named_Pipe
+    Disconnect_from_Network_Share
+    Disconnect_from_Socket
+    Download_File
+    Enumerate_DLLs
+    Enumerate_Network_Shares
+    Enumerate_Processes
+    Enumerate_Protocols
+    Enumerate_Registry_Key_Subkeys
+    Enumerate_Registry_Key_Values
+    Enumerate_Services
+    Enumerate_System_Handles
+    Enumerate_Threads
+    Enumerate_Threads_in_Process
+    Enumerate_Users
+    Enumerate_Windows
+    Find_File
+    Find_Window
+    Flush_Process_Instruction_Cache
+    Free_Library
+    Free_Process_Virtual_Memory
+    Get_Disk_Free_Space
+    Get_Disk_Type
+    Get_Elapsed_System_Up_Time
+    Get_File_Attributes
+    Get_Function_Address
+    Get_Host_By_Address
+    Get_Host_By_Name
+    Get_Host_Name
+    Get_Library_File_Name
+    Get_Library_Handle
+    Get_NetBIOS_Name
+    Get_Process_Current_Directory
+    Get_Process_Environment_Variable
+    Get_Process_Startup_Information
+    Get_Processes_Snapshot
+    Get_Registry_Key_Attributes
+    Get_Service_Status
+    Get_System_Global_Flags
+    Get_System_Host_Name
+    Get_System_Local_Time
+    Get_System_NetBIOS_Name
+    Get_System_Network_Parameters
+    Get_System_Time
+    Get_Thread_Context
+    Get_Thread_Username
+    Get_User_Attributes
+    Get_Username
+    Get_Windows_Directory
+    Get_Windows_System_Directory
+    Get_Windows_Temporary_Files_Directory
+    Hide_Window
+    Impersonate_Process
+    Impersonate_Thread
+    Inject_Memory_Page
+    Kill_Process
+    Kill_Thread
+    Kill_Window
+    Listen_on_Port
+    Listen_on_Socket
+    Load_Driver
+    Load_Library
+    Load_Module
+    Load_and_Call_Driver
+    Lock_File
+    Logon_as_User
+    Map_File
+    Map_Library
+    Map_View_of_File
+    Modify_File
+    Modify_Named_Pipe
+    Modify_Process
+    Modify_Registry_Key
+    Modify_Registry_Key_Value
+    Modify_Service
+    Monitor_Registry_Key
+    Move_File
+    Open_File
+    Open_File_Mapping
+    Open_Mutex
+    Open_Port
+    Open_Process
+    Open_Registry_Key
+    Open_Service
+    Open_Service_Control_Manager
+    Protect_Virtual_Memory
+    Query_DNS
+    Query_Disk_Attributes
+    Query_Process_Virtual_Memory
+    Queue_APC_in_Thread
+    Read_File
+    Read_From_Named_Pipe
+    Read_From_Process_Memory
+    Read_Registry_Key_Value
+    Receive_Data_on_Socket
+    Receive_Email_Message
+    Release_Mutex
+    Rename_File
+    Revert_Thread_to_Self
+    Send_Control_Code_to_File
+    Send_Control_Code_to_Pipe
+    Send_Control_Code_to_Service
+    Send_DNS_Query
+    Send_Data_on_Socket
+    Send_Data_to_Address_on_Socket
+    Send_Email_Message
+    Send_ICMP_Request
+    Send_Reverse_DNS_Query
+    Set_File_Attributes
+    Set_NetBIOS_Name
+    Set_Process_Current_Directory
+    Set_Process_Environment_Variable
+    Set_System_Global_Flags
+    Set_System_Host_Name
+    Set_System_Time
+    Set_Thread_Context
+    Show_Window
+    Shutdown_System
+    Sleep_Process
+    Sleep_System
+    Start_Service
+    Unload_Driver
+    Unload_Module
+    Unlock_File
+    Unmap_File
+    Upload_File
+    Write_to_File
+    Write_to_Process_Virtual_Memory
+  }
+
+enum ActionRelationshipTypeVocab
+  {
+    Dependent_On
+    Equivalent_To
+    Followed_By
+    Initiated
+    Initiated_By
+    Preceded_By
+    Related_To
+  }
+
+enum ActionStatusTypeVocab
+  {
+    Complete__SOLIDUS__Finish
+    Error
+    Fail
+    Ongoing
+    Pending
+    Success
+    Unknown
+  }
+
+enum ActionTypeVocab
+  {
+    Accept
+    Access
+    Add
+    Alert
+    Allocate
+    Archive
+    Assign
+    Audit
+    Backup
+    Bind
+    Block
+    Call
+    Change
+    Check
+    Clean
+    Click
+    Close
+    Compare
+    Compress
+    Configure
+    Connect
+    Control
+    Copy__SOLIDUS__Duplicate
+    Create
+    Decode
+    Decompress
+    Decrypt
+    Deny
+    Depress
+    Detect
+    Disconnect
+    Download
+    Draw
+    Drop
+    Encode
+    Encrypt
+    Enumerate
+    Execute
+    Extract
+    Filter
+    Find
+    Flush
+    Fork
+    Free
+    Get
+    Hide
+    Hook
+    Impersonate
+    Initialize
+    Inject
+    Install
+    Interleave
+    Join
+    Kill
+    Listen
+    Load
+    Lock
+    Login__SOLIDUS__Logon
+    Logout__SOLIDUS__Logoff
+    Map
+    Merge
+    Modify
+    Monitor
+    Move
+    Open
+    Pack
+    Pause
+    Press
+    Protect
+    Quarantine
+    Query
+    Queue
+    Raise
+    Read
+    Receive
+    Release
+    Remove__SOLIDUS__Delete
+    Rename
+    Replicate
+    Restore
+    Resume
+    Revert
+    Run
+    Save
+    Scan
+    Schedule
+    Search
+    Send
+    Set
+    Shutdown
+    Sleep
+    Snapshot
+    Start
+    Stop
+    Suspend
+    Synchronize
+    Throw
+    Transmit
+    Unblock
+    Unhide
+    Unhook
+    Uninstall
+    Unload
+    Unlock
+    Unmap
+    Unpack
+    Update
+    Upgrade
+    Upload
+    Wipe__SOLIDUS__Destroy__SOLIDUS__Purge
+    Write
+  }
+
+enum BitnessVocab
+  {
+    __32
+    __64
+  }
+
+enum CharacterEncodingVocab
+  {
+    ASCII
+    UTF__HYPHEN_MINUS__16
+    UTF__HYPHEN_MINUS__32
+    UTF__HYPHEN_MINUS__8
+    Windows__HYPHEN_MINUS__1250
+    Windows__HYPHEN_MINUS__1251
+    Windows__HYPHEN_MINUS__1252
+    Windows__HYPHEN_MINUS__1253
+    Windows__HYPHEN_MINUS__1254
+    Windows__HYPHEN_MINUS__1255
+    Windows__HYPHEN_MINUS__1256
+    Windows__HYPHEN_MINUS__1257
+    Windows__HYPHEN_MINUS__1258
+  }
+
+enum ContactAddressScopeVocab
+  {
+    home
+    work
+    school
+  }
+
+enum ContactEmailScopeVocab
+  {
+    home
+    work
+    school
+    cloud
+  }
+
+enum ContactPhoneScopeVocab
+  {
+    home
+    work
+    school
+    mobile
+    main
+    home_fax
+    work_fax
+    pager
+  }
+
+enum ContactSIPScopeVocab
+  {
+    home
+    work
+    school
+  }
+
+enum ContactURLScopeVocab
+  {
+    home
+    work
+    school
+    homepage
+  }
+
+enum DiskTypeVocab
+  {
+    CDRom
+    Fixed
+    RAMDisk
+    Remote
+    Removable
+  }
+
+enum EndiannessTypeVocab
+  {
+    Big__HYPHEN_MINUS__endian
+    Little__HYPHEN_MINUS__endian
+    Middle__HYPHEN_MINUS__endian
+  }
+
+enum HashNameVocab
+  {
+    MD5
+    MD6
+    SHA1
+    SHA224
+    SHA256
+    SHA3__HYPHEN_MINUS__224
+    SHA3__HYPHEN_MINUS__256
+    SHA3__HYPHEN_MINUS__384
+    SHA3__HYPHEN_MINUS__512
+    SHA384
+    SHA512
+    SSDEEP
+  }
+
+enum LibraryTypeVocab
+  {
+    Dynamic
+    Other
+    Remote
+    Shared
+    Static
+  }
+
+enum MemoryBlockTypeVocab
+  {
+    Bit__HYPHEN_MINUS__mapped
+    Byte__HYPHEN_MINUS__mapped
+    Initialized
+    Overlay
+    Uninitialized
+  }
+
+enum NetworkSocketAddressFamily
+  {
+    af_appletalk
+    af_bth
+    af_inet
+    af_inet6
+    af_ipx
+    af_irda
+    af_netbios
+    af_unspec
+  }
+
+enum NetworkSocketProtocolFamily
+  {
+    pf_appletalk
+    pf_ash
+    pf_atmpvc
+    pf_atmsvc
+    pf_ax25
+    pf_bluetooth
+    pf_bridge
+    pf_decnet
+    pf_econet
+    pf_inet
+    pf_inet6
+    pf_ipx
+    pf_irda
+    pf_key
+    pf_netbeui
+    pf_netlink
+    pf_netrom
+    pf_packet
+    pf_pppox
+    pf_rose
+    pf_route
+    pf_security
+    pf_sna
+    pf_wanpipe
+    pf_x25
+  }
+
+enum NetworkSocketType
+  {
+    sock_dgram
+    sock_raw
+    sock_rdm
+    sock_seqpacket
+    sock_stream
+  }
+
+enum ObjectStatusVocab
+  {
+    Draft
+    Final
+    Deprecated
+  }
+
+enum ObservableObjectRelationshipVocab
+  {
+    Allocated
+    Allocated_By
+    Attachment_Of
+    Bound
+    Bound_By
+    Characterized_By
+    Characterizes
+    Child_Of
+    Closed
+    Closed_By
+    Compressed
+    Compressed_By
+    Compressed_From
+    Compressed_Into
+    Connected_From
+    Connected_To
+    Contained_Within
+    Contains
+    Copied
+    Copied_By
+    Copied_From
+    Copied_To
+    Created
+    Created_By
+    Decoded
+    Decoded_By
+    Decompressed
+    Decompressed_By
+    Decrypted
+    Decrypted_By
+    Deleted
+    Deleted_By
+    Deleted_From
+    Downloaded
+    Downloaded_By
+    Downloaded_From
+    Downloaded_To
+    Dropped
+    Dropped_By
+    Encoded
+    Encoded_By
+    Encrypted
+    Encrypted_By
+    Encrypted_From
+    Encrypted_To
+    Extracted_From
+    FQDN_Of
+    Freed
+    Freed_By
+    Had_Attachment
+    Hooked
+    Hooked_By
+    Initialized_By
+    Initialized_To
+    Injected
+    Injected_As
+    Injected_By
+    Injected_Into
+    Installed
+    Installed_By
+    Joined
+    Joined_By
+    Killed
+    Killed_By
+    Listened_On
+    Listened_On_By
+    Loaded_From
+    Loaded_Into
+    Locked
+    Locked_By
+    Mapped_By
+    Mapped_Into
+    Merged
+    Merged_By
+    Modified_Properties_Of
+    Monitored
+    Monitored_By
+    Moved
+    Moved_By
+    Moved_From
+    Moved_To
+    Opened
+    Opened_By
+    Packed
+    Packed_By
+    Packed_From
+    Packed_Into
+    Parent_Of
+    Paused
+    Paused_By
+    Previously_Contained
+    Properties_Modified_By
+    Properties_Queried
+    Properties_Queried_By
+    Read_From
+    Read_From_By
+    Received
+    Received_By
+    Received_From
+    Received_Via_Upload
+    Redirects_To
+    Related_To
+    Renamed
+    Renamed_By
+    Renamed_From
+    Renamed_To
+    Resolved_To
+    Resumed
+    Resumed_By
+    Root_Domain_Of
+    Searched_For
+    Searched_For_By
+    Sent
+    Sent_By
+    Sent_To
+    Sent_Via_Upload
+    Set_From
+    Set_To
+    Signed_By
+    Sub__HYPHEN_MINUS__domain_Of
+    Supra__HYPHEN_MINUS__domain_Of
+    Suspended
+    Suspended_By
+    Unhooked
+    Unhooked_By
+    Unlocked
+    Unlocked_By
+    Unpacked
+    Unpacked_By
+    Uploaded
+    Uploaded_By
+    Uploaded_From
+    Uploaded_To
+    Used
+    Used_By
+    Values_Enumerated
+    Values_Enumerated_By
+    Written_To_By
+    Wrote_To
+  }
+
+enum ObservableObjectStateVocab
+  {
+    Active
+    Closed
+    Does_Not_Exist
+    Exists
+    Inactive
+    Locked
+    Open
+    Started
+    Stopped
+    Unlocked
+  }
+
+enum PartitionTypeVocab
+  {
+    PARTITION_ENTRY_UNUSED
+    PARTITION_EXTENDED
+    PARTITION_FAT32
+    PARTITION_FAT32_XINT13
+    PARTITION_FAT_12
+    PARTITION_FAT_16
+    PARTITION_HUGE
+    PARTITION_IFS
+    PARTITION_LDM
+    PARTITION_NTFT
+    PARTITION_OS2BOOTMGR
+    PARTITION_PREP
+    PARTITION_UNIX
+    PARTITION_XENIX_1
+    PARTITION_XENIX_2
+    PARTITION_XINT13
+    PARTITION_XINT13_EXTENDED
+    UNKNOWN
+    VALID_NTFT
+  }
+
+enum ProcessorArchVocab
+  {
+    ARM
+    Alpha
+    IA__HYPHEN_MINUS__64
+    MIPS
+    Motorola_68k
+    Other
+    PowerPC
+    SPARC
+    eSi__HYPHEN_MINUS__RISC
+    x86__HYPHEN_MINUS__32
+    x86__HYPHEN_MINUS__64
+    z__SOLIDUS__Architecture
+  }
+
+enum RecoveredObjectStatusVocab
+  {
+    recovered
+    partially_recovered
+    overwritten
+    unknown
+  }
+
+enum RegionalRegistryTypeVocab
+  {
+    APNIC
+    ARIN
+    AfriNIC
+    LACNIC
+    RIPE_NCC
+  }
+
+enum RegistryDatatype
+  {
+    reg_binary
+    reg_dword
+    reg_dword_big_endian
+    reg_expand_sz
+    reg_full_resource_descriptor
+    reg_invalid_type
+    reg_link
+    reg_multi_sz
+    reg_none
+    reg_qword
+    reg_resource_list
+    reg_resource_requirements_list
+    reg_sz
+  }
+
+enum RegistryDatatypeVocab
+  {
+    reg_binary
+    reg_dword
+    reg_dword_big_endian
+    reg_expand_sz
+    reg_full_resource_descriptor
+    reg_invalid_type
+    reg_link
+    reg_multi_sz
+    reg_none
+    reg_qword
+    reg_resource_list
+    reg_resource_requirements_list
+    reg_sz
+  }
+
+enum SIMFormVocab
+  {
+    Full__HYPHEN_MINUS__size_SIM
+    Micro_SIM
+    Nano_SIM
+  }
+
+enum SIMTypeVocab
+  {
+    SIM
+    UICC
+    USIM
+  }
+
+enum TaskActionTypeVocab
+  {
+    TASK_ACTION_COM_HANDLER
+    TASK_ACTION_EXEC
+    TASK_ACTION_SEND_EMAIL
+    TASK_ACTION_SHOW_MESSAGE
+  }
+
+enum TaskFlagVocab
+  {
+    TASK_FLAG_DELETE_WHEN_DONE
+    TASK_FLAG_DISABLED
+    TASK_FLAG_DONT_START_IF_ON_BATTERIES
+    TASK_FLAG_HIDDEN
+    TASK_FLAG_INTERACTIVE
+    TASK_FLAG_KILL_IF_GOING_ON_BATTERIES
+    TASK_FLAG_KILL_ON_IDLE_END
+    TASK_FLAG_RESTART_ON_IDLE_RESUME
+    TASK_FLAG_RUN_IF_CONNECTED_TO_INTERNET
+    TASK_FLAG_RUN_ONLY_IF_LOGGED_ON
+    TASK_FLAG_START_ONLY_IF_IDLE
+    TASK_FLAG_SYSTEM_REQUIRED
+    TASK_FLAG_ZERO
+  }
+
+enum TaskPriorityVocab
+  {
+    ABOVE_NORMAL_PRIORITY_CLASS
+    BELOW_NORMAL_PRIORITY_CLASS
+    HIGH_PRIORITY_CLASS
+    IDLE_PRIORITY_CLASS
+    NORMAL_PRIORITY_CLASS
+    REALTIME_PRIORITY_CLASS
+  }
+
+enum TaskStatusVocab
+  {
+    SCHED_E_ACCOUNT_DBASE_CORRUPT
+    SCHED_E_ACCOUNT_INFORMATION_NOT_SET
+    SCHED_E_ACCOUNT_NAME_NOT_FOUND
+    SCHED_E_CANNOT_OPEN_TASK
+    SCHED_E_INVALID_TASK
+    SCHED_E_NO_SECURITY_SERVICES
+    SCHED_E_SERVICE_NOT_INSTALLED
+    SCHED_E_SERVICE_NOT_RUNNING
+    SCHED_E_TASK_NOT_READY
+    SCHED_E_TASK_NOT_RUNNING
+    SCHED_E_TRIGGER_NOT_FOUND
+    SCHED_E_UNKNOWN_OBJECT_VERSION
+    SCHED_E_UNSUPPORTED_ACCOUNT_OPTION
+    SCHED_S_EVENT_TRIGGER
+    SCHED_S_TASK_DISABLED
+    SCHED_S_TASK_HAS_NOT_RUN
+    SCHED_S_TASK_NOT_SCHEDULED
+    SCHED_S_TASK_NO_MORE_RUNS
+    SCHED_S_TASK_NO_VALID_TRIGGERS
+    SCHED_S_TASK_READY
+    SCHED_S_TASK_RUNNING
+    SCHED_S_TASK_TERMINATED
+    TASK_STATE_QUEUED
+    TASK_STATE_UNKNOWN
+  }
+
+enum ThreadRunningStatusVocab
+  {
+    Initialized
+    Ready
+    Running
+    Standby
+    Terminated
+    Transition
+    Unknown
+    Waiting
+  }
+
+enum TimestampPrecisionVocab
+  {
+    day
+    hour
+    minute
+    month
+    second
+    year
+  }
+
+enum TrendVocab
+  {
+    Decreasing
+    Increasing
+  }
+
+enum TriggerFrequencyVocab
+  {
+    TASK_EVENT_TRIGGER_AT_LOGON
+    TASK_EVENT_TRIGGER_AT_SYSTEMSTART
+    TASK_EVENT_TRIGGER_ON_IDLE
+    TASK_TIME_TRIGGER_DAILY
+    TASK_TIME_TRIGGER_MONTHLYDATE
+    TASK_TIME_TRIGGER_MONTHLYDOW
+    TASK_TIME_TRIGGER_ONCE
+    TASK_TIME_TRIGGER_WEEKLY
+  }
+
+enum TriggerTypeVocab
+  {
+    TASK_TRIGGER_BOOT
+    TASK_TRIGGER_EVENT
+    TASK_TRIGGER_IDLE
+    TASK_TRIGGER_LOGON
+    TASK_TRIGGER_REGISTRATION
+    TASK_TRIGGER_SESSION_STATE_CHANGE
+    TASK_TRIGGER_TIME
+  }
+
+enum UnixProcessStateVocab
+  {
+    Dead
+    InterruptibleSleep
+    Paging
+    Running
+    Stopped
+    UninterruptibleSleep
+    Zombie
+  }
+
+enum URLTransitionTypeVocab
+  {
+    link
+    typed
+    auto_bookmark
+    auto_subframe
+    manual_subframe
+    generated
+    auto_toplevel
+    form_submit
+    reload
+    keyword
+    keyword_generated
+  }
+
+enum WhoisContactTypeVocab
+  {
+    ADMIN
+    BILLING
+    TECHNICAL
+  }
+
+enum WhoisDNSSECTypeVocab
+  {
+    Signed
+    Unsigned
+  }
+
+enum WhoisStatusTypeVocab
+  {
+    ADD_PERIOD
+    AUTO_RENEW_PERIOD
+    CLIENT_DELETE_PROHIBITED
+    CLIENT_HOLD
+    CLIENT_RENEW_PROHIBITED
+    CLIENT_TRANSFER_PROHIBITED
+    CLIENT_UPDATE_PROHIBITED
+    DELETE_PROHIBITED
+    HOLD
+    INACTIVE
+    OK
+    PENDING_DELETE_RESTORABLE
+    PENDING_DELETE_SCHEDULED_FOR_RELEASE
+    PENDING_RESTORE
+    RENEW_PERIOD
+    RENEW_PROHIBITED
+    TRANSFER_PERIOD
+    TRANSFER_PROHIBITED
+    UPDATE_PROHIBITED
+  }
+
+enum WindowsDriveTypeVocab
+  {
+    DRIVE_CDROM
+    DRIVE_FIXED
+    DRIVE_NO_ROOT_DIR
+    DRIVE_RAMDISK
+    DRIVE_REMOTE
+    DRIVE_REMOVABLE
+    DRIVE_UNKNOWN
+  }
+
+enum WindowsPEBinaryType
+  {
+    dll
+    exe
+    sys
+  }
+
+enum WindowsServiceStartType
+  {
+    service_auto_start
+    service_boot_start
+    service_demand_start
+    service_disabled
+    service_system_alert
+  }
+
+enum WindowsServiceStatus
+  {
+    service_continue_pending
+    service_pause_pending
+    service_paused
+    service_running
+    service_start_pending
+    service_stop_pending
+    service_stopped
+  }
+
+enum WindowsServiceType
+  {
+    service_file_system_driver
+    service_kernel_driver
+    service_win32_own_process
+    service_win32_share_process
+  }
+
+enum WindowsVolumeAttributeVocab
+  {
+    Hidden
+    NoDefaultDriveLetter
+    ReadOnly
+    ShadowCopy
+  }
+
+enum WirelessNetworkSecurityModeVocab
+  {
+    None
+    WEP
+    WPA
+    WPA2__HYPHEN_MINUS__PSK
+    WPA2__HYPHEN_MINUS__Enterprise
+    WPA3__HYPHEN_MINUS__PSK
+    WPA3__HYPHEN_MINUS__Enterprise
+  }
+
+type Account
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AccountAuthenticationFacet
+  {
+    type: String
+    password: String
+    passwordLastChanged: String
+    passwordType: String
+  }
+
+type AccountFacet
+  {
+    type: String
+    accountIdentifier: String
+    accountIssuer: UcoObject
+    accountType: String
+    expirationTime: String
+    isActive: Boolean
+    observableCreatedTime: String
+    observableModifiedTime: String
+    owner: UcoObject
+  }
+
+type Action
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionObject: [UcoObject]
+    actionStartTime: String
+    environment: UcoObject
+    error: [UcoObject]
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+  }
+
+type ActionArgumentFacet
+  {
+    type: String
+    actionValue: String!
+    argumentName: String!
+  }
+
+type ActionEstimationFacet
+  {
+    type: String
+    estimatedCost: String
+    estimatedEfficacy: String
+    estimatedImpact: String
+    objective: String
+  }
+
+type ActionFrequencyFacet
+  {
+    type: String
+    rate: Float!
+    scale: String!
+    trend: String!
+    units: String!
+  }
+
+type ActionLifecycle
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionObject: [UcoObject]
+    environment: UcoObject
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionStartTime: String
+    error: [UcoObject]
+    phase: [ArrayOfAction]!
+  }
+
+type ActionPattern implements Pattern
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionObject: [UcoObject]
+    actionStartTime: String
+    environment: UcoObject
+    error: [UcoObject]
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+  }
+
+type Adaptor
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Address
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AddressFacet
+  {
+    type: String
+    address: Location
+  }
+
+type AffiliationFacet
+  {
+    type: String
+  }
+
+type AlternateDataStream
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AlternateDataStreamFacet
+  {
+    type: String
+    hashes: Hash
+    name: String
+    size: Int
+  }
+
+type Analysis
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionObject: [UcoObject]
+    actionStartTime: String
+    environment: UcoObject
+    error: [UcoObject]
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+  }
+
+type AnalyticResult
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    statement: [String]
+    originatingAnalysis: Analysis
+    resultContent: [UcoObject]
+  }
+
+type AnalyticResultFacet
+  {
+    type: String
+  }
+
+type AnalyticTool
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    creator: Identity
+    references: [String]
+    servicePack: String
+    toolType: String
+    version: String
+  }
+
+type AndroidDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AndroidDeviceFacet
+  {
+    type: String
+    androidFingerprint: String
+    androidID: UcoHexBinary
+    androidVersion: String
+    isADBRootEnabled: Boolean
+    isSURootEnabled: Boolean
+  }
+
+type AndroidPhone implements AndroidDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Annotation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    statement: [String]
+    object: [UcoObject]!
+  }
+
+type AntennaFacet
+  {
+    type: String
+    antennaHeight: Float
+    azimuth: Float
+    elevation: Float
+    horizontalBeamWidth: Float
+    signalStrength: Float
+    skew: Float
+  }
+
+type API
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AppleDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Appliance
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Application
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ApplicationAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ApplicationAccountFacet
+  {
+    type: String
+    application: ObservableObject
+  }
+
+type ApplicationFacet
+  {
+    type: String
+    applicationIdentifier: String
+    installedVersionHistory: [ApplicationVersion]
+    numberOfLaunches: Int
+    observableVersion: String
+    operatingSystem: ObservableObject
+  }
+
+type ApplicationVersion
+  {
+    type: String
+    installDate: String
+    observableVersion: String
+    uninstallDate: String
+  }
+
+type ArchiveFile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ArchiveFileFacet
+  {
+    type: String
+    archiveType: String
+    comment: String
+    observableVersion: String
+  }
+
+type ARPCache
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ARPCacheEntry
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ArrayOfAction
+  {
+    type: String
+    action: [Action]!
+  }
+
+type ArtifactClassification
+  {
+    type: String
+    class: [String]!
+    classificationConfidence: Float
+  }
+
+type ArtifactClassificationResultFacet
+  {
+    type: String
+    classification: [ArtifactClassification]
+  }
+
+type Assertion
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    statement: [String]
+  }
+
+type AttributedName
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    namingAuthority: String
+  }
+
+type Audio
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AudioFacet
+  {
+    type: String
+    audioType: String
+    bitRate: Int
+    duration: Int
+    format: String
+  }
+
+type AutonomousSystem
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type AutonomousSystemFacet
+  {
+    type: String
+    asHandle: String
+    number: Int
+    regionalInternetRegistry: String
+  }
+
+type Bag
+  {
+    coSize: Int
+  }
+
+type BenevolentRole
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type BirthInformationFacet
+  {
+    type: String
+    birthdate: String
+  }
+
+type BlackberryPhone
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BlockDeviceNode
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BluetoothAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BluetoothAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type BotConfiguration
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BrowserBookmark
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BrowserBookmarkFacet
+  {
+    type: String
+    accessedTime: String
+    application: ObservableObject
+    bookmarkPath: String
+    observableCreatedTime: String
+    observableModifiedTime: String
+    urlTargeted: [String]
+    visitCount: Int
+  }
+
+type BrowserCookie
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type BrowserCookieFacet
+  {
+    type: String
+    accessedTime: String
+    application: ObservableObject
+    cookieDomain: ObservableObject
+    cookieName: String
+    cookiePath: String
+    expirationTime: String
+    isSecure: Boolean
+    observableCreatedTime: String
+  }
+
+type BuildFacet
+  {
+    type: String
+    buildInformation: BuildInformationType
+  }
+
+type BuildInformationType
+  {
+    type: String
+    buildConfiguration: Configuration
+    buildID: String
+    buildLabel: String
+    buildOutputLog: String
+    buildProject: String
+    buildScript: String
+    buildUtility: BuildUtilityType
+    buildVersion: String
+    compilationDate: String
+    compilers: [CompilerType]
+    libraries: [LibraryType]
+  }
+
+type BuildUtilityType
+  {
+    type: String
+    buildUtilityName: String
+    cpeid: String
+    swid: String
+  }
+
+type Bundle
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    object: [UcoObject]!
+  }
+
+type Calendar
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CalendarEntry
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CalendarEntryFacet
+  {
+    type: String
+    application: ObservableObject
+    attendant: [Identity]
+    duration: Int
+    eventStatus: String
+    isPrivate: Boolean
+    observableCreatedTime: String
+    observableEndTime: String
+    observableEventType: String
+    observableLocation: Location
+    observableModifiedTime: String
+    observableStartTime: String
+    owner: UcoObject
+    recurrence: String
+    remindTime: String
+    subject: String
+  }
+
+type CalendarFacet
+  {
+    type: String
+    application: ObservableObject
+    owner: UcoObject
+  }
+
+type Call
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CallFacet
+  {
+    type: String
+    application: ObservableObject
+    callType: String
+    duration: Int
+    from: ObservableObject
+    observableEndTime: String
+    observableParticipant: [ObservableObject]
+    observableStartTime: String
+    to: [ObservableObject]
+  }
+
+type CapturedTelecommunicationsInformation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CapturedTelecommunicationsInformationFacet
+  {
+    type: String
+    captureCellSite: CellSite!
+    interceptedCallState: String
+    observableEndTime: String
+    observableStartTime: String
+  }
+
+type CellSite
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CellSiteFacet
+  {
+    type: String
+    cellSiteCountryCode: String
+    cellSiteIdentifier: String
+    cellSiteLocationAreaCode: String
+    cellSiteNetworkCode: String
+    cellSiteType: String
+  }
+
+type CharacterDeviceNode
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Code
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CoItem
+  {
+    itemContent: String
+  }
+
+type Compilation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type CompilerType
+  {
+    type: String
+    compilerInformalDescription: String
+    cpeid: String
+    swid: String
+  }
+
+type CompressedStreamFacet
+  {
+    type: String
+    compressionMethod: String
+    compressionRatio: Float
+  }
+
+type Computer
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ComputerSpecification
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ComputerSpecificationFacet
+  {
+    type: String
+    availableRam: Int
+    biosDate: String
+    biosManufacturer: String
+    biosReleaseDate: String
+    biosSerialNumber: String
+    biosVersion: String
+    cpu: String
+    cpuFamily: String
+    currentSystemDate: String
+    gpu: String
+    gpuFamily: String
+    hostname: String
+    localTime: String
+    networkInterface: [ObservableObject]
+    processorArchitecture: String
+    systemTime: String
+    timezoneDST: String
+    timezoneStandard: String
+    totalRam: Int
+    uptime: String
+  }
+
+type ConfidenceFacet
+  {
+    type: String
+    confidence: UcoNonNegativeInteger!
+  }
+
+type Configuration
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    configurationEntry: [ConfigurationEntry]
+    dependencies: [Dependency]
+    usageContextAssumptions: [String]
+  }
+
+type ConfigurationEntry
+  {
+    type: String
+    itemDescription: String
+    itemName: String
+    itemObject: [UcoObject]
+    itemType: String
+    itemValue: [String]
+  }
+
+type ConfiguredSoftware
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+    isConfigurationOf: Software
+    usesConfiguration: Configuration
+  }
+
+type ConfiguredTool
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    creator: Identity
+    references: [String]
+    servicePack: String
+    toolType: String
+    version: String
+    isConfigurationOf: Tool
+    usesConfiguration: Configuration
+  }
+
+type Contact
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ContactAddress
+  {
+    type: String
+    contactAddressScope: String
+    geolocationAddress: Location
+  }
+
+type ContactAffiliation
+  {
+    type: String
+    contactEmail: [ContactEmail]
+    contactMessaging: [ContactMessaging]
+    contactOrganization: Organization
+    contactPhone: [ContactPhone]
+    contactProfile: [ContactProfile]
+    contactURL: [ContactURL]
+    organizationDepartment: String
+    organizationLocation: [ContactAddress]
+    organizationPosition: String
+  }
+
+type ContactEmail
+  {
+    type: String
+    contactEmailScope: String
+    emailAddress: ObservableObject
+  }
+
+type ContactFacet
+  {
+    type: String
+    birthdate: String
+    contactAddress: [ContactAddress]
+    contactAffiliation: [ContactAffiliation]
+    contactEmail: [ContactEmail]
+    contactGroup: [String]
+    contactID: String
+    contactMessaging: [ContactMessaging]
+    contactNote: [String]
+    contactPhone: [ContactPhone]
+    contactProfile: [ContactProfile]
+    contactSIP: [ContactSIP]
+    contactURL: [ContactURL]
+    displayName: String
+    firstName: String
+    lastName: String
+    lastTimeContacted: String
+    middleName: String
+    namePhonetic: String
+    namePrefix: String
+    nameSuffix: String
+    nickname: [String]
+    numberTimesContacted: Int
+    sourceApplication: ObservableObject
+  }
+
+type ContactList
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ContactListFacet
+  {
+    type: String
+    contact: [ObservableObject]
+    sourceApplication: ObservableObject
+  }
+
+type ContactMessaging
+  {
+    type: String
+    contactMessagingPlatform: ObservableObject
+    messagingAddress: ObservableObject
+  }
+
+type ContactPhone
+  {
+    type: String
+    contactPhoneNumber: ObservableObject
+    contactPhoneScope: String
+  }
+
+type ContactProfile
+  {
+    type: String
+    contactProfilePlatform: ObservableObject
+    profile: ObservableObject
+  }
+
+type ContactSIP
+  {
+    type: String
+    contactSIPScope: String
+    sipAddress: ObservableObject
+  }
+
+type ContactURL
+  {
+    type: String
+    contactURLScope: String
+    url: ObservableObject
+  }
+
+type ContentData
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ContentDataFacet
+  {
+    type: String
+    byteOrder: String
+    dataPayload: String
+    dataPayloadReferenceURL: ObservableObject
+    entropy: Float
+    hash: [Hash]
+    isEncrypted: Boolean
+    magicNumber: String
+    mimeClass: String
+    mimeType: [String]
+    sizeInBytes: Int
+  }
+
+type ContextualCompilation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    object: [UcoObject]
+  }
+
+type ControlledDictionary
+  {
+    type: String
+    entry: [ControlledDictionaryEntry]
+  }
+
+type ControlledDictionaryEntry
+  {
+    type: String
+    key: String!
+    typesValue: String!
+  }
+
+type ControlledVocabulary
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    constrainingVocabularyName: String
+    constrainingVocabularyReference: String
+    value: String!
+  }
+
+type CookieHistory
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CountryOfResidenceFacet
+  {
+    type: String
+  }
+
+type Credential
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type CredentialDump
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DataRangeFacet
+  {
+    type: String
+    rangeOffset: Int
+    rangeOffsetType: String
+    rangeSize: Int
+  }
+
+type DefensiveTool
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    creator: Identity
+    references: [String]
+    servicePack: String
+    toolType: String
+    version: String
+  }
+
+type DefinedEffectFacet
+  {
+    type: String
+  }
+
+type Dependency
+  {
+    type: String
+    dependencyDescription: String
+    dependencyType: String
+  }
+
+type Device
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DeviceFacet
+  {
+    type: String
+    deviceType: String
+    manufacturer: Identity
+    model: String
+    observableCpeid: String
+    serialNumber: String
+  }
+
+type Dictionary
+  {
+    type: String
+    entry: [DictionaryEntry]
+  }
+
+type DictionaryEntry
+  {
+    type: String
+    key: String!
+    typesValue: String!
+  }
+
+type DigitalAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DigitalAccountFacet
+  {
+    type: String
+    accountLogin: [String]
+    displayName: String
+    firstLoginTime: String
+    isDisabled: Boolean
+    lastLoginTime: String
+  }
+
+type DigitalAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DigitalAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type DigitalCamera
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DigitalSignatureInfo
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DigitalSignatureInfoFacet
+  {
+    type: String
+    certificateIssuer: Identity
+    certificateSubject: UcoObject
+    signatureDescription: String
+    signatureExists: Boolean
+    signatureVerified: Boolean
+  }
+
+type Directory
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Disk
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DiskFacet
+  {
+    type: String
+    diskSize: Int
+    diskType: String
+    freeSpace: Int
+    partition: [ObservableObject]
+  }
+
+type DiskPartition
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DiskPartitionFacet
+  {
+    type: String
+    diskPartitionType: String
+    mountPoint: String
+    observableCreatedTime: String
+    partitionID: String
+    partitionLength: Int
+    partitionOffset: Int
+    spaceLeft: Int
+    spaceUsed: Int
+    totalSpace: Int
+  }
+
+type DNSCache
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DNSRecord
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DomainName
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type DomainNameFacet
+  {
+    type: String
+    isTLD: Boolean
+    observableValue: String
+  }
+
+type Drone
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EmailAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EmailAccountFacet
+  {
+    type: String
+    emailAddress: ObservableObject
+  }
+
+type EmailAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EmailAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type EmailMessage
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EmailMessageFacet
+  {
+    type: String
+    application: ObservableObject
+    bcc: [ObservableObject]
+    body: String
+    bodyMultipart: [MimePartType]
+    bodyRaw: ObservableObject
+    categories: [String]
+    cc: [ObservableObject]
+    contentDisposition: String
+    contentType: String
+    from: ObservableObject
+    headerRaw: ObservableObject
+    inReplyTo: String
+    isMimeEncoded: Boolean
+    isMultipart: Boolean
+    isRead: Boolean
+    labels: [String]
+    messageID: String
+    observableModifiedTime: String
+    observableReferences: [ObservableObject]
+    otherHeaders: Dictionary
+    priority: String
+    receivedLines: [String]
+    receivedTime: String
+    sender: ObservableObject
+    sentTime: String
+    subject: String
+    to: [ObservableObject]
+    xMailer: String
+    xOriginatingIP: ObservableObject
+  }
+
+type EmbeddedDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EnclosingCompilation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    object: [UcoObject]!
+  }
+
+type EncodedStreamFacet
+  {
+    type: String
+    encodingMethod: String
+  }
+
+type EncryptedStreamFacet
+  {
+    type: String
+    encryptionIV: [String]
+    encryptionKey: [String]
+    encryptionMethod: String
+    encryptionMode: String
+  }
+
+type EnvironmentVariable
+  {
+    type: String
+    name: String
+    observableValue: String
+  }
+
+type Event
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    endTime: [String]
+    eventAttribute: [Dictionary]
+    eventContext: [UcoObject]
+    eventType: [String]
+    startTime: [String]
+  }
+
+type EventLog
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EventRecord
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type EventRecordFacet
+  {
+    type: String
+    account: ObservableObject
+    application: ObservableObject
+    cyberAction: ObservableAction
+    eventID: String
+    eventRecordDevice: ObservableObject
+    eventRecordID: String
+    eventRecordRaw: String
+    eventRecordServiceName: String
+    eventRecordText: String
+    observableCreatedTime: String
+    observableEndTime: String
+    observableEventType: String
+    observableStartTime: String
+  }
+
+type EventsFacet
+  {
+    type: String
+  }
+
+type EXIFFacet
+  {
+    type: String
+    exifData: [ControlledDictionary]
+  }
+
+type ExternalReference
+  {
+    type: String
+    definingContext: String
+    externalIdentifier: String
+    referenceURL: String
+  }
+
+type ExtInodeFacet
+  {
+    type: String
+    extDeletionTime: String
+    extFileType: Int
+    extFlags: Int
+    extHardLinkCount: Int
+    extInodeChangeTime: String
+    extInodeID: Int
+    extPermissions: Int
+    extSGID: Int
+    extSUID: Int
+  }
+
+type ExtractedString
+  {
+    type: String
+    byteStringValue: UcoBase64Binary
+    encoding: String
+    englishTranslation: String
+    language: String
+    length: Int
+    stringValue: String
+  }
+
+type ExtractedStringsFacet
+  {
+    type: String
+    strings: [ExtractedString]
+  }
+
+type Facet
+  {
+    type: String
+  }
+
+type File
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type FileFacet
+  {
+    type: String
+    accessedTime: String
+    allocationStatus: String
+    extension: String
+    fileName: [String]
+    filePath: [String]
+    isDirectory: [Boolean]
+    metadataChangeTime: String
+    observableCreatedTime: String
+    observableModifiedTime: String
+    sizeInBytes: Int
+  }
+
+type FilePermissionsFacet
+  {
+    type: String
+    owner: UcoObject
+  }
+
+type FileSystem
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type FileSystemFacet
+  {
+    type: String
+    clusterSize: Int
+    fileSystemType: String
+  }
+
+type FileSystemObject
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ForumPost
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ForumPrivateMessage
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type FragmentFacet
+  {
+    type: String
+    fragmentIndex: [Int]
+    totalFragments: [Int]
+  }
+
+type GamingConsole
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type GenericObservableObject
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type GeoLocationEntry
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type GeoLocationEntryFacet
+  {
+    type: String
+    application: ObservableObject
+    observableCreatedTime: String
+    observableLocation: Location
+  }
+
+type GeoLocationLog
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type GeoLocationLogFacet
+  {
+    type: String
+    application: ObservableObject
+    observableCreatedTime: String
+  }
+
+type GeoLocationTrack
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type GeoLocationTrackFacet
+  {
+    type: String
+    application: ObservableObject
+    geoLocationEntry: [ObservableObject]
+    observableEndTime: String
+    observableStartTime: String
+  }
+
+type GlobalFlagType
+  {
+    type: String
+    abbreviation: String
+    destination: String
+    hexadecimalValue: [UcoHexBinary]
+    symbolicName: String
+  }
+
+type GPSCoordinatesFacet
+  {
+    type: String
+    hdop: Float
+    pdop: Float
+    tdop: Float
+    vdop: Float
+  }
+
+type GranularMarking
+  {
+    type: String
+    contentSelectors: [String]
+    marking: [MarkingDefinition]
+  }
+
+type Grouping
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    object: [UcoObject]
+    context: [String]
+  }
+
+type GUI
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Hash
+  {
+    type: String
+    hashMethod: String!
+    hashValue: UcoHexBinary!
+  }
+
+type Hostname
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type HTTPConnection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type HTTPConnectionFacet
+  {
+    type: String
+    httpMesageBodyLength: Int
+    httpMessageBodyData: ObservableObject
+    httpRequestHeader: Dictionary
+    requestMethod: String
+    requestValue: String
+    requestVersion: String
+  }
+
+type ICMPConnection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ICMPConnectionFacet
+  {
+    type: String
+    icmpCode: [UcoHexBinary]
+    icmpType: [UcoHexBinary]
+  }
+
+type IComHandlerActionType
+  {
+    type: String
+    comClassID: String
+    comData: String
+  }
+
+type IdentifierFacet
+  {
+    type: String
+  }
+
+type Identity
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type IdentityAbstraction
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type IdentityFacet
+  {
+    type: String
+  }
+
+type IExecActionType
+  {
+    type: String
+    execArguments: String
+    execProgramHashes: [Hash]
+    execProgramPath: String
+    execWorkingDirectory: String
+  }
+
+type Image
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ImageFacet
+  {
+    type: String
+    imageType: String
+  }
+
+type ImproperDictionary
+  {
+    type: String
+    entry: [DictionaryEntry]
+    repeatsKey: [String]
+  }
+
+type InstantMessagingAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type InstantMessagingAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type IPAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type IPAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type IPhone implements AppleDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type IPNetmask
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type IPv4Address
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type IPv4AddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type IPv6Address
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type IPv6AddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type IShowMessageActionType
+  {
+    type: String
+    showMessageBody: String
+    showMessageTitle: String
+  }
+
+type Item
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type Junction
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type LanguagesFacet
+  {
+    type: String
+  }
+
+type Laptop
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type LatLongCoordinatesFacet
+  {
+    type: String
+    altitude: Float
+    latitude: Float
+    longitude: Float
+  }
+
+type Library
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type LibraryFacet
+  {
+    type: String
+    libraryType: String
+  }
+
+type LibraryType
+  {
+    type: String
+    libraryName: String
+    libraryVersion: String
+  }
+
+type LicenseMarking
+  {
+    type: String
+    definitionType: [String]
+    license: String!
+  }
+
+type List
+  {
+    firstItem: ListItem
+    item: [ListItem]
+    lastItem: ListItem
+  }
+
+type ListItem
+  {
+    itemContent: String
+    followedBy: [CoItem]
+    index: Int
+  }
+
+type Location
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type LogicalPattern
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    patternExpression: String
+  }
+
+type MACAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MACAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type MaliciousRole
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type MaliciousTool
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    creator: Identity
+    references: [String]
+    servicePack: String
+    toolType: String
+    version: String
+  }
+
+type MarkingDefinition
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    definition: [MarkingModel]
+    definitionType: String!
+  }
+
+type MarkingDefinitionAbstraction
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type MarkingModel
+  {
+    type: String
+  }
+
+type Memory
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MemoryFacet
+  {
+    type: String
+    blockType: String
+    isInjected: Boolean
+    isMapped: Boolean
+    isProtected: Boolean
+    isVolatile: Boolean
+    regionEndAddress: [UcoHexBinary]
+    regionSize: Int
+    regionStartAddress: [UcoHexBinary]
+  }
+
+type Message
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MessageFacet
+  {
+    type: String
+    application: ObservableObject
+    from: ObservableObject
+    messageID: String
+    messageText: String
+    messageType: String
+    sentTime: String
+    sessionID: String
+    to: [ObservableObject]
+  }
+
+type MessageThread
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MessageThreadFacet
+  {
+    type: String
+    messageThread: Thread
+    observableParticipant: [ObservableObject]
+    visibility: Boolean
+  }
+
+type MftRecordFacet
+  {
+    type: String
+    mftFileID: Int
+    mftFileNameAccessedTime: String
+    mftFileNameCreatedTime: String
+    mftFileNameLength: Int
+    mftFileNameModifiedTime: String
+    mftFileNameRecordChangeTime: String
+    mftFlags: Int
+    mftParentID: Int
+    mftRecordChangeTime: String
+    ntfsHardLinkCount: Int
+    ntfsOwnerID: String
+    ntfsOwnerSID: String
+  }
+
+type MimePartType
+  {
+    type: String
+    body: String
+    bodyRaw: ObservableObject
+    contentDisposition: String
+    contentType: String
+  }
+
+type MobileAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MobileAccountFacet
+  {
+    type: String
+    iMSI: String
+    mSISDN: String
+    mSISDNType: String
+  }
+
+type MobileDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MobileDeviceFacet
+  {
+    type: String
+    eSN: String
+    iMEI: [String]
+    bluetoothDeviceName: String
+    clockSetting: String
+    keypadUnlockCode: String
+    mockLocationsAllowed: Boolean
+    network: String
+    phoneActivationTime: String
+    storageCapacityInBytes: Int
+  }
+
+type MobilePhone
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ModusOperandi
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type Mutex
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type MutexFacet
+  {
+    type: String
+    isNamed: Boolean
+    mutexName: String
+  }
+
+type NamedPipe
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NationalityFacet
+  {
+    type: String
+  }
+
+type NetworkAppliance
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkConnection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkConnectionFacet
+  {
+    type: String
+    destinationPort: Int
+    dst: [ObservableObject]
+    isActive: Boolean
+    observableEndTime: String
+    observableStartTime: String
+    protocols: ControlledDictionary
+    sourcePort: Int
+    src: [UcoObject]
+  }
+
+type NetworkFlow
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkFlowFacet
+  {
+    type: String
+    dstBytes: Int
+    dstPackets: Int
+    dstPayload: ObservableObject
+    ipfix: Dictionary
+    srcBytes: Int
+    srcPackets: Int
+    srcPayload: ObservableObject
+  }
+
+type NetworkInterface
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkInterfaceFacet
+  {
+    type: String
+    adapterName: String
+    dhcpLeaseExpires: String
+    dhcpLeaseObtained: String
+    dhcpServer: [ObservableObject]
+    ip: [ObservableObject]
+    ipGateway: [ObservableObject]
+    macAddress: ObservableObject
+  }
+
+type NetworkProtocol
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkRoute
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NetworkSubnet
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NeutralRole
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type Note
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NoteFacet
+  {
+    type: String
+    application: ObservableObject
+    observableCreatedTime: String
+    observableModifiedTime: String
+    text: String
+  }
+
+type NTFSFile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type NTFSFileFacet
+  {
+    type: String
+    alternateDataStreams: [AlternateDataStream]
+    entryID: Int
+    sid: String
+  }
+
+type NTFSFilePermissionsFacet
+  {
+    type: String
+  }
+
+type Observable
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type ObservableAction implements Action
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionObject: [UcoObject]
+    actionStartTime: String
+    environment: UcoObject
+    error: [UcoObject]
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+  }
+
+type ObservableObject implements Item
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ObservablePattern
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type ObservableRelationship implements Relationship
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    endTime: [String]
+    isDirectional: Boolean!
+    kindOfRelationship: String
+    source: [UcoObject]!
+    startTime: [String]
+    target: UcoObject!
+  }
+
+type Observation
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    actionCount: UcoNonNegativeInteger
+    actionStatus: String
+    actionEndTime: String
+    actionObject: [UcoObject]
+    actionStartTime: String
+    environment: UcoObject
+    error: [UcoObject]
+    instrument: [UcoObject]
+    location: [Location]
+    participant: [UcoObject]
+    performer: UcoObject
+    result: [UcoObject]
+    subaction: [Action]
+    name: String!
+  }
+
+type OccupationFacet
+  {
+    type: String
+  }
+
+type OnlineService
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type OnlineServiceFacet
+  {
+    type: String
+    inetLocation: [ObservableObject]
+    name: String
+    observableLocation: [Location]
+  }
+
+type OperatingSystem
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type OperatingSystemFacet
+  {
+    type: String
+    advertisingID: [String]
+    bitness: String
+    environmentVariables: Dictionary
+    installDate: String
+    isLimitAdTrackingEnabled: Boolean
+    manufacturer: Identity
+    observableVersion: String
+  }
+
+type Organization
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type OrganizationDetailsFacet
+  {
+    type: String
+  }
+
+type PathRelationFacet
+  {
+    type: String
+    path: [String]
+  }
+
+type Pattern
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type PatternExpression
+  {
+    type: String
+  }
+
+type PaymentCard
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type PDFFile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type PDFFileFacet
+  {
+    type: String
+    documentInformationDictionary: ControlledDictionary
+    isOptimized: Boolean
+    observableVersion: String
+    pdfCreationDate: String
+    pdfId0: [String]
+    pdfId1: String
+    pdfModDate: String
+  }
+
+type Person
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type PersonalDetailsFacet
+  {
+    type: String
+  }
+
+type PhoneAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type PhoneAccountFacet
+  {
+    type: String
+    phoneNumber: String
+  }
+
+type PhysicalInfoFacet
+  {
+    type: String
+  }
+
+type Pipe
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Post
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Process
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ProcessFacet
+  {
+    type: String
+    arguments: [String]
+    binary: ObservableObject
+    creatorUser: ObservableObject
+    currentWorkingDirectory: String
+    environmentVariables: Dictionary
+    exitStatus: Int
+    exitTime: String
+    isHidden: Boolean
+    observableCreatedTime: String
+    parent: ObservableObject
+    pid: Int
+    status: String
+  }
+
+type ProcessThread
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Profile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ProfileFacet
+  {
+    type: String
+    contactAddress: ContactAddress
+    contactEmail: ContactEmail
+    contactMessaging: ContactMessaging
+    contactPhone: ContactPhone
+    contactURL: ContactURL
+    displayName: String
+    name: String
+    profileAccount: ObservableObject
+    profileCreated: String
+    profileIdentity: Identity
+    profileLanguage: [String]
+    profileService: ObservableObject
+    profileWebsite: ObservableObject
+  }
+
+type ProperDictionary
+  {
+    type: String
+    entry: [DictionaryEntry]
+  }
+
+type PropertiesEnumeratedEffectFacet
+  {
+    type: String
+    properties: String
+  }
+
+type PropertyReadEffectFacet
+  {
+    type: String
+    observableValue: String
+    propertyName: String
+  }
+
+type ProtocolConverter
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type QualificationFacet
+  {
+    type: String
+  }
+
+type RasterPicture
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type RasterPictureFacet
+  {
+    type: String
+    bitsPerPixel: Int
+    camera: ObservableObject
+    imageCompressionMethod: String
+    pictureHeight: Int
+    pictureType: String
+    pictureWidth: Int
+  }
+
+type RecoveredObject
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type RecoveredObjectFacet
+  {
+    type: String
+    contentRecoveredStatus: String
+    metadataRecoveredStatus: String
+    nameRecoveredStatus: String
+  }
+
+type RelatedIdentityFacet
+  {
+    type: String
+  }
+
+type Relationship
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    endTime: [String]
+    isDirectional: Boolean!
+    kindOfRelationship: String
+    source: [UcoObject]!
+    startTime: [String]
+    target: UcoObject!
+  }
+
+type ReleaseToMarking
+  {
+    type: String
+    authorizedIdentities: [String]!
+    definitionType: [String]
+  }
+
+type ReparsePoint
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Role
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type SecurityAppliance
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Semaphore
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SendControlCodeEffectFacet
+  {
+    type: String
+    controlCode: String
+  }
+
+type Server
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type ShopListing
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SIMCard
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SIMCardFacet
+  {
+    type: String
+    iCCID: String
+    iMSI: String
+    pIN: String
+    pUK: String
+    sIMForm: String
+    sIMType: String
+    carrier: Identity
+    storageCapacityInBytes: Int
+  }
+
+type SimpleAddressFacet
+  {
+    type: String
+    addressType: String
+    country: String
+    locality: String
+    postalCode: String
+    region: String
+    street: String
+  }
+
+type SimpleNameFacet
+  {
+    type: String
+    familyName: [String]
+    givenName: [String]
+    honorificPrefix: [String]
+    honorificSuffix: [String]
+  }
+
+type SIPAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SIPAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type SmartDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SmartPhone implements Computer, SmartDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SMSMessage
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SMSMessageFacet
+  {
+    type: String
+    isRead: Boolean
+  }
+
+type Snapshot
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Socket
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SocketAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type Software
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SoftwareFacet
+  {
+    type: String
+    language: String
+    manufacturer: Identity
+    observableCpeid: String
+    observableSwid: String
+    observableVersion: String
+  }
+
+type SQLiteBlob
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SQLiteBlobFacet
+  {
+    type: String
+    columnName: String
+    rowCondition: String
+    rowIndex: [UcoPositiveInteger]
+    tableName: String
+  }
+
+type StateChangeEffectFacet
+  {
+    type: String
+    newObject: ObservableObject
+    oldObject: ObservableObject
+  }
+
+type StatementMarking
+  {
+    type: String
+    definitionType: [String]
+    markingStatement: String!
+  }
+
+type StorageMedium
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type StorageMediumFacet
+  {
+    type: String
+    totalStorageCapacityInBytes: Int
+  }
+
+type SymbolicLink
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type SymbolicLinkFacet
+  {
+    type: String
+    targetFile: ObservableObject
+  }
+
+type TableField
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type TableFieldFacet
+  {
+    type: String
+    recordFieldIsNull: Boolean
+    recordFieldName: String
+    recordFieldValue: String
+    recordRowID: String
+    tableName: String
+    tableSchema: String
+  }
+
+type Tablet implements MobileDevice, SmartDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type TaskActionType
+  {
+    type: String
+    actionID: String
+    actionType: String
+    iComHandlerAction: IComHandlerActionType
+    iEmailAction: ObservableObject
+    iExecAction: IExecActionType
+    iShowMessageAction: IShowMessageActionType
+  }
+
+type TCPConnection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type TCPConnectionFacet
+  {
+    type: String
+    destinationFlags: [UcoHexBinary]
+    sourceFlags: [UcoHexBinary]
+  }
+
+type Technique
+  {
+    id: String!
+    type: String
+    techniqueID: [String]
+  }
+
+type TermsOfUseMarking
+  {
+    type: String
+    definitionType: [String]
+    termsOfUse: String!
+  }
+
+type Thread implements Bag
+  {
+    type: String
+    id: String!
+    item: [ThreadItem]
+    threadOriginItem: [ThreadItem]
+    threadTerminalItem: [ThreadItem]
+    coSize: Int
+  }
+
+type ThreadItem implements CoItem
+  {
+    type: String
+    id: String!
+    itemContent: UcoObject
+    threadNextItem: [ThreadItem]
+    threadPredecessor: [ThreadItem]
+    threadPreviousItem: [ThreadItem]
+    threadSuccessor: [ThreadItem]
+  }
+
+type Tool
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    creator: Identity
+    references: [String]
+    servicePack: String
+    toolType: String
+    version: String
+  }
+
+type TriggerType
+  {
+    type: String
+    isEnabled: Boolean
+    triggerBeginTime: String
+    triggerDelay: String
+    triggerEndTime: String
+    triggerFrequency: String
+    triggerMaxRunTime: String
+    triggerSessionChangeType: String
+    triggerType: String
+  }
+
+type Tweet
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type TwitterProfileFacet
+  {
+    type: String
+    favoritesCount: UcoNonNegativeInteger
+    followersCount: UcoNonNegativeInteger
+    friendsCount: UcoNonNegativeInteger
+    listedCount: Int
+    profileBackgroundHash: [Hash]
+    profileBackgroundLocation: ObservableObject
+    profileBannerHash: [Hash]
+    profileBannerLocation: ObservableObject
+    profileImageHash: [Hash]
+    profileImageLocation: ObservableObject
+    profileIsProtected: Boolean
+    profileIsVerified: Boolean
+    statusesCount: UcoNonNegativeInteger
+    twitterHandle: String
+    twitterId: String
+    userLocationString: String
+  }
+
+type UcoDocument
+  {
+    graph: [UcoThing]
+  }
+
+type UcoInherentCharacterizationThing
+  {
+    type: String
+  }
+
+type UcoObject
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type UcoThing
+  {
+    type: String
+  }
+
+type UcoType
+  {
+    id: String!
+    type: String
+  }
+
+type UNIXAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type UNIXAccountFacet
+  {
+    type: String
+    gid: Int
+    shell: String
+  }
+
+type UNIXFile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type UNIXFilePermissionsFacet
+  {
+    type: String
+  }
+
+type UNIXProcess
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type UNIXProcessFacet
+  {
+    type: String
+    openFileDescriptor: [Int]
+    ruid: [UcoNonNegativeInteger]
+  }
+
+type UNIXVolumeFacet
+  {
+    type: String
+    mountPoint: String
+    options: String
+  }
+
+type URL
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type URLFacet
+  {
+    type: String
+    fragment: String
+    fullValue: String
+    host: ObservableObject
+    password: String
+    path: String
+    port: Int
+    query: String
+    scheme: String
+    userName: String
+  }
+
+type URLHistory
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type URLHistoryEntry
+  {
+    type: String
+    browserUserProfile: String
+    expirationTime: String
+    firstVisit: String
+    hostname: String
+    keywordSearchTerm: [String]
+    lastVisit: String
+    manuallyEnteredCount: UcoNonNegativeInteger
+    pageTitle: String
+    referrerUrl: [ObservableObject]
+    url: ObservableObject
+    visitCount: Int
+  }
+
+type URLHistoryFacet
+  {
+    type: String
+    browserInformation: ObservableObject
+    urlHistoryEntry: [URLHistoryEntry]
+  }
+
+type URLVisit
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type URLVisitFacet
+  {
+    type: String
+    browserInformation: ObservableObject
+    fromURLVisit: ObservableObject
+    url: ObservableObject
+    urlTransitionType: String
+    visitDuration: UcoDuration
+    visitTime: String
+  }
+
+type UserAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type UserAccountFacet
+  {
+    type: String
+    canEscalatePrivs: Boolean
+    homeDirectory: String
+    isPrivileged: Boolean
+    isServiceAccount: Boolean
+  }
+
+type UserSession
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type UserSessionFacet
+  {
+    type: String
+    effectiveGroup: String
+    effectiveGroupID: String
+    effectiveUser: ObservableObject
+    loginTime: String
+    logoutTime: String
+  }
+
+type ValuesEnumeratedEffectFacet
+  {
+    type: String
+    values: String
+  }
+
+type Victim
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type VictimTargeting
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+  }
+
+type VisaFacet
+  {
+    type: String
+  }
+
+type Volume
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type VolumeFacet
+  {
+    type: String
+    sectorSize: Int
+    volumeID: String
+  }
+
+type WearableDevice
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WebPage
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WhoIs
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WhoisContactFacet
+  {
+    type: String
+    birthdate: String
+    contactAddress: [ContactAddress]
+    contactAffiliation: [ContactAffiliation]
+    contactEmail: [ContactEmail]
+    contactGroup: [String]
+    contactID: String
+    contactMessaging: [ContactMessaging]
+    contactNote: [String]
+    contactPhone: [ContactPhone]
+    contactProfile: [ContactProfile]
+    contactSIP: [ContactSIP]
+    contactURL: [ContactURL]
+    displayName: String
+    firstName: String
+    lastName: String
+    lastTimeContacted: String
+    middleName: String
+    namePhonetic: String
+    namePrefix: String
+    nameSuffix: String
+    nickname: [String]
+    numberTimesContacted: Int
+    sourceApplication: ObservableObject
+    whoisContactType: String
+  }
+
+type WhoIsFacet
+  {
+    type: String
+    creationDate: String
+    dnssec: WhoisDNSSECTypeVocab
+    domainID: String
+    domainName: ObservableObject
+    expirationDate: String
+    ipAddress: ObservableObject
+    lookupDate: String
+    nameServer: [ObservableObject]
+    regionalInternetRegistry: String
+    registrantContactInfo: ObservableObject
+    registrantIDs: [String]
+    registrarInfo: WhoisRegistrarInfoType
+    remarks: String
+    serverName: ObservableObject
+    sponsoringRegistrar: String
+    status: String
+    updatedDate: String
+  }
+
+type WhoisRegistrarInfoType
+  {
+    type: String
+    contactPhoneNumber: ObservableObject
+    emailAddress: ObservableObject
+    geolocationAddress: Location
+    referralURL: ObservableObject
+    registrarGUID: String
+    registrarID: String
+    registrarName: String
+    whoisServer: ObservableObject
+  }
+
+type WifiAddress
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WifiAddressFacet
+  {
+    type: String
+    addressValue: String
+    displayName: String
+  }
+
+type Wiki
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WikiArticle
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsAccountFacet
+  {
+    type: String
+    groups: [String]
+  }
+
+type WindowsActiveDirectoryAccount
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsActiveDirectoryAccountFacet
+  {
+    type: String
+    activeDirectoryGroups: [String]
+    objectGUID: String
+  }
+
+type WindowsComputerSpecification
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsComputerSpecificationFacet
+  {
+    type: String
+    domain: [String]
+    globalFlagList: [GlobalFlagType]
+    lastShutdownDate: String
+    msProductID: String
+    msProductName: String
+    netBIOSName: String
+    osInstallDate: String
+    osLastUpgradeDate: String
+    registeredOrganization: Identity
+    registeredOwner: Identity
+    windowsDirectory: ObservableObject
+    windowsSystemDirectory: ObservableObject
+    windowsTempDirectory: ObservableObject
+  }
+
+type WindowsCriticalSection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsEvent
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsFilemapping
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsHandle
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsHook
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsMailslot
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsNetworkShare
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsPEBinaryFile
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsPEBinaryFileFacet
+  {
+    type: String
+    characteristics: [UcoUnsignedShort]
+    fileHeaderHashes: [Hash]
+    impHash: String
+    machine: [String]
+    numberOfSections: Int
+    numberOfSymbols: Int
+    optionalHeader: WindowsPEOptionalHeader
+    peType: String
+    pointerToSymbolTable: [UcoHexBinary]
+    sections: [WindowsPESection]
+    sizeOfOptionalHeader: Int
+    timeDateStamp: String
+  }
+
+type WindowsPEFileHeader
+  {
+    type: String
+    timeDateStamp: String
+  }
+
+type WindowsPEOptionalHeader
+  {
+    type: String
+    addressOfEntryPoint: [UcoUnsignedInt]
+    baseOfCode: [UcoUnsignedInt]
+    checksum: [UcoUnsignedInt]
+    dllCharacteristics: [UcoUnsignedShort]
+    fileAlignment: [UcoUnsignedInt]
+    imageBase: [UcoUnsignedInt]
+    loaderFlags: [UcoUnsignedInt]
+    magic: [UcoUnsignedShort]
+    majorImageVersion: [UcoUnsignedShort]
+    majorLinkerVersion: [UcoByte]
+    majorOSVersion: [UcoUnsignedShort]
+    majorSubsystemVersion: [UcoUnsignedShort]
+    minorImageVersion: [UcoUnsignedShort]
+    minorLinkerVersion: [UcoByte]
+    minorOSVersion: [UcoUnsignedShort]
+    minorSubsystemVersion: [UcoUnsignedShort]
+    numberOfRVAAndSizes: [UcoUnsignedInt]
+    sectionAlignment: [UcoUnsignedInt]
+    sizeOfCode: [UcoUnsignedInt]
+    sizeOfHeaders: [UcoUnsignedInt]
+    sizeOfHeapCommit: [UcoUnsignedInt]
+    sizeOfHeapReserve: [UcoUnsignedInt]
+    sizeOfImage: [UcoUnsignedInt]
+    sizeOfInitializedData: [UcoUnsignedInt]
+    sizeOfStackCommit: [UcoUnsignedInt]
+    sizeOfStackReserve: [UcoUnsignedInt]
+    sizeOfUninitializedData: [UcoUnsignedInt]
+    subsystem: [UcoUnsignedShort]
+    win32VersionValue: [UcoUnsignedInt]
+  }
+
+type WindowsPESection
+  {
+    type: String
+    entropy: Float
+    hashes: [Hash]
+    name: String
+    size: Int
+  }
+
+type WindowsPrefetch
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsPrefetchFacet
+  {
+    type: String
+    accessedDirectory: [ObservableObject]
+    accessedFile: [ObservableObject]
+    applicationFileName: String
+    firstRun: String
+    lastRun: String
+    prefetchHash: String
+    timesExecuted: Int
+    volume: ObservableObject
+  }
+
+type WindowsProcess
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsProcessFacet
+  {
+    type: String
+    aslrEnabled: Boolean
+    depEnabled: Boolean
+    ownerSID: String
+    priority: String
+    startupInfo: Dictionary
+    windowTitle: String
+  }
+
+type WindowsRegistryHive
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsRegistryHiveFacet
+  {
+    type: String
+    hiveType: String
+  }
+
+type WindowsRegistryKey
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsRegistryKeyFacet
+  {
+    type: String
+    numberOfSubkeys: Int
+    observableCreator: ObservableObject
+    observableKey: String
+    observableModifiedTime: String
+    registryValues: [WindowsRegistryValue]
+  }
+
+type WindowsRegistryValue
+  {
+    type: String
+    data: String
+    dataType: String
+    name: String
+  }
+
+type WindowsService
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsServiceFacet
+  {
+    type: String
+    descriptions: [String]
+    displayName: String
+    groupName: String
+    serviceName: String
+    serviceStatus: String
+    serviceType: String
+    startCommandLine: String
+    startType: String
+  }
+
+type WindowsSystemRestore
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsTask
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsTaskFacet
+  {
+    type: String
+    account: ObservableObject
+    accountLogonType: String
+    accountRunLevel: String
+    actionList: [TaskActionType]
+    application: ObservableObject
+    exitCode: Int
+    flags: [String]
+    imageName: String
+    maxRunTime: Int
+    mostRecentRunTime: String
+    nextRunTime: String
+    observableCreatedTime: String
+    parameters: String
+    priority: String
+    status: TaskStatusVocab
+    taskComment: String
+    taskCreator: String
+    triggerList: [TriggerType]
+    workItemData: ObservableObject
+    workingDirectory: ObservableObject
+  }
+
+type WindowsThread
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WindowsThreadFacet
+  {
+    type: String
+    creationFlags: [UcoUnsignedInt]
+    creationTime: String
+    observableCreatedTime: String
+    observableContext: String
+    parameterAddress: [UcoHexBinary]
+    priority: Int
+    runningStatus: String
+    securityAttributes: String
+    stackSize: [UcoNonNegativeInteger]
+    startAddress: [UcoHexBinary]
+    threadID: [UcoNonNegativeInteger]
+  }
+
+type WindowsVolumeFacet
+  {
+    type: String
+    driveLetter: String
+    driveType: String
+    windowsVolumeAttributes: [WindowsVolumeAttributeVocab]
+  }
+
+type WindowsWaitableTime
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WirelessNetworkConnection
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type WirelessNetworkConnectionFacet
+  {
+    type: String
+    baseStation: String
+    password: String
+    ssid: String
+    wirelessNetworkSecurityMode: String
+  }
+
+type WriteBlocker
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type X509Certificate
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type X509CertificateFacet
+  {
+    type: String
+    isSelfSigned: Boolean
+    issuer: String
+    issuerHash: Hash
+    observableVersion: String
+    serialNumber: String
+    signature: String
+    signatureAlgorithm: String
+    subject: String
+    subjectHash: Hash
+    subjectPublicKeyAlgorithm: String
+    subjectPublicKeyExponent: Int
+    subjectPublicKeyModulus: String
+    thumbprintHash: Hash
+    validityNotAfter: String
+    validityNotBefore: String
+    x509v3extensions: X509V3ExtensionsFacet
+  }
+
+type X509V3Certificate
+  {
+    type: String
+    id: String!
+    createdBy: IdentityAbstraction
+    description: [String]
+    externalReference: [ExternalReference]
+    hasFacet: [Facet]
+    modifiedTime: [String]
+    name: String
+    objectCreatedTime: String
+    objectMarking: [MarkingDefinitionAbstraction]
+    objectStatus: ObjectStatusVocab
+    specVersion: String
+    tag: [String]
+    hasChanged: Boolean
+    state: String
+  }
+
+type X509V3ExtensionsFacet
+  {
+    type: String
+    authorityKeyIdentifier: String
+    basicConstraints: String
+    certificatePolicies: String
+    crlDistributionPoints: String
+    extendedKeyUsage: String
+    inhibitAnyPolicy: String
+    issuerAlternativeName: String
+    keyUsage: String
+    nameConstraints: String
+    policyConstraints: String
+    policyMappings: String
+    privateKeyUsagePeriodNotAfter: String
+    privateKeyUsagePeriodNotBefore: String
+    subjectAlternativeName: String
+    subjectDirectoryAttributes: String
+    subjectKeyIdentifier: String
+  }

@@ -1,0 +1,140 @@
+---
+id: https://w3id.org/lmodel/uco-co
+name: uco_co
+title: Collections Ontology terms that UCO uses
+description: >-
+  The classes and properties of the Collections Ontology (CO), http://purl.org/co/, that UCO 1.5.0's files
+  use, with CO's IRIs and the constraints UCO's co.ttl adds.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+comments:
+  - >-
+    CO states no licence, so the descriptions here are this project's own; none is CO's text.
+  - >-
+    CO's index and size are integers with CO's bounds, since this module imports no module that declares
+    UCO's XSD types.
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+
+slots:
+
+  co_size:
+    description: How many items the collection holds.
+    slot_uri: coll:size
+    range: integer
+    minimum_value: 0
+
+  firstItem:
+    description: The first item of the list.
+    slot_uri: coll:firstItem
+    range: ListItem
+    inlined: true
+
+  followedBy:
+    description: An item that comes somewhere after this one.
+    slot_uri: coll:followedBy
+    range: CoItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  index:
+    description: The place of the item in its list, counting from 1.
+    slot_uri: coll:index
+    range: integer
+    minimum_value: 1
+
+  item:
+    description: An item of the collection.
+    slot_uri: coll:item
+    multivalued: true
+
+  itemContent:
+    description: The element that the item wraps.
+    slot_uri: coll:itemContent
+
+  lastItem:
+    description: The last item of the list.
+    slot_uri: coll:lastItem
+    range: ListItem
+    inlined: true
+
+  nextItem:
+    description: The item that comes straight after this one.
+    slot_uri: coll:nextItem
+    range: CoItem
+
+  precededBy:
+    description: An item that comes somewhere before this one.
+    slot_uri: coll:precededBy
+    range: CoItem
+
+  previousItem:
+    description: The item that comes straight before this one.
+    slot_uri: coll:previousItem
+    range: CoItem
+
+classes:
+
+  Bag:
+    class_uri: coll:Bag
+    description: A collection that may hold one element more than once, in no order.
+    slots:
+      - co_size
+
+  CoItem:
+    class_uri: coll:Item
+    description: An entry of a collection, which wraps one element of the collection's content.
+    slots:
+      - itemContent
+
+  List:
+    class_uri: coll:List
+    description: A collection whose items come in order, one after another.
+    slots:
+      - firstItem
+      - item
+      - lastItem
+    slot_usage:
+      item:
+        range: ListItem
+        inlined: true
+        inlined_as_list: true
+
+  ListItem:
+    is_a: CoItem
+    class_uri: coll:ListItem
+    description: An item of a list, which has a place in the list's order.
+    slots:
+      - followedBy
+      - index

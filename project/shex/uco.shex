@@ -1,0 +1,4616 @@
+# metamodel_version: 1.12.0
+# version: 1.5.0
+BASE <https://w3id.org/lmodel/uco/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uco-action: <https://ontology.unifiedcyberontology.org/uco/action/>
+PREFIX uco-analysis: <https://ontology.unifiedcyberontology.org/uco/analysis/>
+PREFIX uco-configuration: <https://ontology.unifiedcyberontology.org/uco/configuration/>
+PREFIX uco-core: <https://ontology.unifiedcyberontology.org/uco/core/>
+PREFIX uco-identity: <https://ontology.unifiedcyberontology.org/uco/identity/>
+PREFIX uco-location: <https://ontology.unifiedcyberontology.org/uco/location/>
+PREFIX uco-marking: <https://ontology.unifiedcyberontology.org/uco/marking/>
+PREFIX uco-observable: <https://ontology.unifiedcyberontology.org/uco/observable/>
+PREFIX uco-pattern: <https://ontology.unifiedcyberontology.org/uco/pattern/>
+PREFIX uco-role: <https://ontology.unifiedcyberontology.org/uco/role/>
+PREFIX uco-time: <https://ontology.unifiedcyberontology.org/uco/time/>
+PREFIX uco-tool: <https://ontology.unifiedcyberontology.org/uco/tool/>
+PREFIX uco-types: <https://ontology.unifiedcyberontology.org/uco/types/>
+PREFIX uco-victim: <https://ontology.unifiedcyberontology.org/uco/victim/>
+PREFIX coll: <http://purl.org/co/>
+PREFIX linkml: <https://w3id.org/linkml/>
+
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+<UcoBase64Binary> xsd:base64Binary
+
+<UcoByte> xsd:byte
+
+<UcoDuration> xsd:duration
+
+<UcoHexBinary> xsd:hexBinary
+
+<UcoNonNegativeInteger> xsd:nonNegativeInteger
+
+<UcoPositiveInteger> xsd:positiveInteger
+
+<UcoUnsignedInt> xsd:unsignedInt
+
+<UcoUnsignedShort> xsd:unsignedShort
+
+<Time> uco-time:Time
+
+<TimeRange> uco-time:TimeRange
+
+<Timestamp> uco-time:Timestamp
+
+<Identifier> uco-types:Identifier
+
+<NativeFormatString> uco-types:NativeFormatString
+
+<StructuredText> uco-types:StructuredText
+
+<Account>  (
+    CLOSED {
+       (  $<Account_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Account ]
+       )
+    } OR @<DigitalAccount>
+)
+
+<AccountAuthenticationFacet> CLOSED {
+    (  $<AccountAuthenticationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:password @linkml:String ? ;
+          uco-observable:passwordLastChanged @linkml:Datetime ? ;
+          uco-observable:passwordType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:AccountAuthenticationFacet ] ?
+    )
+}
+
+<AccountFacet> CLOSED {
+    (  $<AccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accountIdentifier @linkml:String ? ;
+          uco-observable:accountIssuer @<UcoObject> ? ;
+          uco-observable:accountType @linkml:String ? ;
+          uco-observable:expirationTime @linkml:Datetime ? ;
+          uco-observable:isActive @linkml:Boolean ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:owner @<UcoObject> ?
+       ) ;
+       rdf:type [ uco-observable:AccountFacet ] ?
+    )
+}
+
+<Action>  (
+    CLOSED {
+       (  $<Action_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ? ;
+             uco-action:actionCount @<UcoNonNegativeInteger> ? ;
+             uco-action:actionStatus @linkml:String ? ;
+             uco-action:endTime @linkml:Datetime ? ;
+             uco-action:object @<UcoObject> * ;
+             uco-action:startTime @linkml:Datetime ? ;
+             uco-action:environment @<UcoObject> ? ;
+             uco-action:error @<UcoObject> * ;
+             uco-action:instrument @<UcoObject> * ;
+             uco-action:location @<Location> * ;
+             uco-action:participant @<UcoObject> * ;
+             uco-action:performer @<UcoObject> ? ;
+             uco-action:result @<UcoObject> * ;
+             uco-action:subaction @<Action> *
+          ) ;
+          rdf:type [ uco-action:Action ]
+       )
+    } OR @<ActionLifecycle> OR @<ActionPattern> OR @<Analysis> OR @<Observation>
+)
+
+<ActionArgumentFacet> CLOSED {
+    (  $<ActionArgumentFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-action:value @linkml:String ;
+          uco-action:argumentName @linkml:String
+       ) ;
+       rdf:type [ uco-action:ActionArgumentFacet ] ?
+    )
+}
+
+<ActionEstimationFacet> CLOSED {
+    (  $<ActionEstimationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-action:estimatedCost @linkml:String ? ;
+          uco-action:estimatedEfficacy @linkml:String ? ;
+          uco-action:estimatedImpact @linkml:String ? ;
+          uco-action:objective @linkml:String ?
+       ) ;
+       rdf:type [ uco-action:ActionEstimationFacet ] ?
+    )
+}
+
+<ActionFrequencyFacet> CLOSED {
+    (  $<ActionFrequencyFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-action:rate @linkml:Decimal ;
+          uco-action:scale @linkml:String ;
+          uco-action:trend @linkml:String ;
+          uco-action:units @linkml:String
+       ) ;
+       rdf:type [ uco-action:ActionFrequencyFacet ] ?
+    )
+}
+
+<ActionLifecycle> CLOSED {
+    (  $<ActionLifecycle_tes> (  &<Action_tes> ;
+          rdf:type [ uco-action:Action ] ? ;
+          uco-action:phase @<ArrayOfAction> +
+       ) ;
+       rdf:type [ uco-action:ActionLifecycle ]
+    )
+}
+
+<ActionPattern> CLOSED {
+    (  $<ActionPattern_tes> (  &<Action_tes> ;
+          rdf:type [ uco-action:Action ] ? ;
+          &<Pattern_tes> ;
+          rdf:type [ uco-pattern:Pattern ] ?
+       ) ;
+       rdf:type [ uco-action:ActionPattern ]
+    )
+}
+
+<Adaptor> CLOSED {
+    (  $<Adaptor_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:Adaptor ]
+    )
+}
+
+<Address>  (
+    CLOSED {
+       (  $<Address_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Address ]
+       )
+    } OR @<DigitalAddress> OR @<SocketAddress>
+)
+
+<AddressFacet> CLOSED {
+    (  $<AddressFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ? ;
+          uco-identity:address @<Location> ?
+       ) ;
+       rdf:type [ uco-identity:AddressFacet ] ?
+    )
+}
+
+<AffiliationFacet> CLOSED {
+    (  $<AffiliationFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:AffiliationFacet ] ?
+    )
+}
+
+<AlternateDataStream> CLOSED {
+    (  $<AlternateDataStream_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:AlternateDataStream ]
+    )
+}
+
+<AlternateDataStreamFacet> CLOSED {
+    (  $<AlternateDataStreamFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:hashes @<Hash> ? ;
+          uco-core:name @linkml:String ? ;
+          uco-observable:size @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:AlternateDataStreamFacet ] ?
+    )
+}
+
+<Analysis> CLOSED {
+    (  $<Analysis_tes> (  &<Action_tes> ;
+          rdf:type [ uco-action:Action ] ?
+       ) ;
+       rdf:type [ uco-analysis:Analysis ]
+    )
+}
+
+<AnalyticResult> CLOSED {
+    (  $<AnalyticResult_tes> (  &<Assertion_tes> ;
+          rdf:type [ uco-core:Assertion ] ? ;
+          uco-analysis:originatingAnalysis @<Analysis> ? ;
+          uco-analysis:resultContent @<UcoObject> *
+       ) ;
+       rdf:type [ uco-analysis:AnalyticResult ]
+    )
+}
+
+<AnalyticResultFacet>  (
+    CLOSED {
+       (  $<AnalyticResultFacet_tes> (  &<Facet_tes> ;
+             rdf:type [ uco-core:Facet ] ?
+          ) ;
+          rdf:type [ uco-analysis:AnalyticResultFacet ] ?
+       )
+    } OR @<ArtifactClassificationResultFacet>
+)
+
+<AnalyticTool> CLOSED {
+    (  $<AnalyticTool_tes> (  &<Tool_tes> ;
+          rdf:type [ uco-tool:Tool ] ?
+       ) ;
+       rdf:type [ uco-tool:AnalyticTool ]
+    )
+}
+
+<AndroidDevice> CLOSED {
+    (  $<AndroidDevice_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:AndroidDevice ]
+    )
+}
+
+<AndroidDeviceFacet> CLOSED {
+    (  $<AndroidDeviceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:androidFingerprint @linkml:String ? ;
+          uco-observable:androidID @<UcoHexBinary> ? ;
+          uco-observable:androidVersion @linkml:String ? ;
+          uco-observable:isADBRootEnabled @linkml:Boolean ? ;
+          uco-observable:isSURootEnabled @linkml:Boolean ?
+       ) ;
+       rdf:type [ uco-observable:AndroidDeviceFacet ] ?
+    )
+}
+
+<AndroidPhone> CLOSED {
+    (  $<AndroidPhone_tes> (  &<SmartPhone_tes> ;
+          rdf:type [ uco-observable:SmartPhone ] ? ;
+          &<AndroidDevice_tes> ;
+          rdf:type [ uco-observable:AndroidDevice ] ?
+       ) ;
+       rdf:type [ uco-observable:AndroidPhone ]
+    )
+}
+
+<Annotation> CLOSED {
+    (  $<Annotation_tes> (  &<Assertion_tes> ;
+          rdf:type [ uco-core:Assertion ] ? ;
+          uco-core:object @<UcoObject> +
+       ) ;
+       rdf:type [ uco-core:Annotation ]
+    )
+}
+
+<AntennaFacet> CLOSED {
+    (  $<AntennaFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:antennaHeight @linkml:Decimal ? ;
+          uco-observable:azimuth @linkml:Decimal ? ;
+          uco-observable:elevation @linkml:Decimal ? ;
+          uco-observable:horizontalBeamWidth @linkml:Decimal ? ;
+          uco-observable:signalStrength @linkml:Decimal ? ;
+          uco-observable:skew @linkml:Decimal ?
+       ) ;
+       rdf:type [ uco-observable:AntennaFacet ] ?
+    )
+}
+
+<API> CLOSED {
+    (  $<API_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:API ]
+    )
+}
+
+<AppleDevice> CLOSED {
+    (  $<AppleDevice_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:AppleDevice ]
+    )
+}
+
+<Appliance>  (
+    CLOSED {
+       (  $<Appliance_tes> (  &<Device_tes> ;
+             rdf:type [ uco-observable:Device ] ?
+          ) ;
+          rdf:type [ uco-observable:Appliance ]
+       )
+    } OR @<NetworkAppliance> OR @<SecurityAppliance>
+)
+
+<Application> CLOSED {
+    (  $<Application_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Application ]
+    )
+}
+
+<ApplicationAccount> CLOSED {
+    (  $<ApplicationAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:ApplicationAccount ]
+    )
+}
+
+<ApplicationAccountFacet> CLOSED {
+    (  $<ApplicationAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ApplicationAccountFacet ] ?
+    )
+}
+
+<ApplicationFacet> CLOSED {
+    (  $<ApplicationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:applicationIdentifier @linkml:String ? ;
+          uco-observable:installedVersionHistory @<ApplicationVersion> * ;
+          uco-observable:numberOfLaunches @linkml:Integer ? ;
+          uco-observable:version @linkml:String ? ;
+          uco-observable:operatingSystem @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ApplicationFacet ] ?
+    )
+}
+
+<ApplicationVersion> CLOSED {
+    (  $<ApplicationVersion_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:installDate @linkml:Datetime ? ;
+          uco-observable:version @linkml:String ? ;
+          uco-observable:uninstallDate @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:ApplicationVersion ] ?
+    )
+}
+
+<ArchiveFile> CLOSED {
+    (  $<ArchiveFile_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:ArchiveFile ]
+    )
+}
+
+<ArchiveFileFacet> CLOSED {
+    (  $<ArchiveFileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:archiveType @linkml:String ? ;
+          uco-observable:comment @linkml:String ? ;
+          uco-observable:version @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ArchiveFileFacet ] ?
+    )
+}
+
+<ARPCache> CLOSED {
+    (  $<ARPCache_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ARPCache ]
+    )
+}
+
+<ARPCacheEntry> CLOSED {
+    (  $<ARPCacheEntry_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ARPCacheEntry ]
+    )
+}
+
+<ArrayOfAction> CLOSED {
+    (  $<ArrayOfAction_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-action:action @<Action> +
+       ) ;
+       rdf:type [ uco-action:ArrayOfAction ] ?
+    )
+}
+
+<ArtifactClassification> CLOSED {
+    (  $<ArtifactClassification_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-analysis:class @linkml:String + ;
+          uco-analysis:classificationConfidence @linkml:Decimal ?
+       ) ;
+       rdf:type [ uco-analysis:ArtifactClassification ] ?
+    )
+}
+
+<ArtifactClassificationResultFacet> CLOSED {
+    (  $<ArtifactClassificationResultFacet_tes> (  &<AnalyticResultFacet_tes> ;
+          rdf:type [ uco-analysis:AnalyticResultFacet ] ? ;
+          uco-analysis:classification @<ArtifactClassification> *
+       ) ;
+       rdf:type [ uco-analysis:ArtifactClassificationResultFacet ] ?
+    )
+}
+
+<Assertion>  (
+    CLOSED {
+       (  $<Assertion_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ? ;
+             uco-core:statement @linkml:String *
+          ) ;
+          rdf:type [ uco-core:Assertion ]
+       )
+    } OR @<AnalyticResult> OR @<Annotation>
+)
+
+<AttributedName> CLOSED {
+    (  $<AttributedName_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ? ;
+          uco-core:namingAuthority @linkml:String ?
+       ) ;
+       rdf:type [ uco-core:AttributedName ]
+    )
+}
+
+<Audio> CLOSED {
+    (  $<Audio_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Audio ]
+    )
+}
+
+<AudioFacet> CLOSED {
+    (  $<AudioFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:audioType @linkml:String ? ;
+          uco-observable:bitRate @linkml:Integer ? ;
+          uco-observable:duration @linkml:Integer ? ;
+          uco-observable:format @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:AudioFacet ] ?
+    )
+}
+
+<AutonomousSystem> CLOSED {
+    (  $<AutonomousSystem_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:AutonomousSystem ]
+    )
+}
+
+<AutonomousSystemFacet> CLOSED {
+    (  $<AutonomousSystemFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:asHandle @linkml:String ? ;
+          uco-observable:number @linkml:Integer ? ;
+          uco-observable:regionalInternetRegistry @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:AutonomousSystemFacet ] ?
+    )
+}
+
+<Bag> CLOSED {
+    (  $<Bag_tes> coll:size @linkml:Integer ? ;
+       rdf:type [ coll:Bag ] ?
+    )
+}
+
+<BenevolentRole> CLOSED {
+    (  $<BenevolentRole_tes> (  &<Role_tes> ;
+          rdf:type [ uco-role:Role ] ?
+       ) ;
+       rdf:type [ uco-role:BenevolentRole ]
+    )
+}
+
+<BirthInformationFacet> CLOSED {
+    (  $<BirthInformationFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ? ;
+          uco-identity:birthdate @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-identity:BirthInformationFacet ] ?
+    )
+}
+
+<BlackberryPhone> CLOSED {
+    (  $<BlackberryPhone_tes> (  &<SmartPhone_tes> ;
+          rdf:type [ uco-observable:SmartPhone ] ?
+       ) ;
+       rdf:type [ uco-observable:BlackberryPhone ]
+    )
+}
+
+<BlockDeviceNode> CLOSED {
+    (  $<BlockDeviceNode_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:BlockDeviceNode ]
+    )
+}
+
+<BluetoothAddress> CLOSED {
+    (  $<BluetoothAddress_tes> (  &<MACAddress_tes> ;
+          rdf:type [ uco-observable:MACAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:BluetoothAddress ]
+    )
+}
+
+<BluetoothAddressFacet> CLOSED {
+    (  $<BluetoothAddressFacet_tes> (  &<MACAddressFacet_tes> ;
+          rdf:type [ uco-observable:MACAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:BluetoothAddressFacet ] ?
+    )
+}
+
+<BotConfiguration> CLOSED {
+    (  $<BotConfiguration_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:BotConfiguration ]
+    )
+}
+
+<BrowserBookmark> CLOSED {
+    (  $<BrowserBookmark_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:BrowserBookmark ]
+    )
+}
+
+<BrowserBookmarkFacet> CLOSED {
+    (  $<BrowserBookmarkFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accessedTime @linkml:Datetime ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:bookmarkPath @linkml:String ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:urlTargeted @linkml:Uri * ;
+          uco-observable:visitCount @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:BrowserBookmarkFacet ] ?
+    )
+}
+
+<BrowserCookie> CLOSED {
+    (  $<BrowserCookie_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:BrowserCookie ]
+    )
+}
+
+<BrowserCookieFacet> CLOSED {
+    (  $<BrowserCookieFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accessedTime @linkml:Datetime ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:cookieDomain @<ObservableObject> ? ;
+          uco-observable:cookieName @linkml:String ? ;
+          uco-observable:cookiePath @linkml:String ? ;
+          uco-observable:expirationTime @linkml:Datetime ? ;
+          uco-observable:isSecure @linkml:Boolean ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:BrowserCookieFacet ] ?
+    )
+}
+
+<BuildFacet> CLOSED {
+    (  $<BuildFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-tool:buildInformation @<BuildInformationType> ?
+       ) ;
+       rdf:type [ uco-tool:BuildFacet ] ?
+    )
+}
+
+<BuildInformationType> CLOSED {
+    (  $<BuildInformationType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-tool:buildConfiguration @<Configuration> ? ;
+          uco-tool:buildID @linkml:String ? ;
+          uco-tool:buildLabel @linkml:String ? ;
+          uco-tool:buildOutputLog @linkml:String ? ;
+          uco-tool:buildProject @linkml:String ? ;
+          uco-tool:buildScript @linkml:String ? ;
+          uco-tool:buildUtility @<BuildUtilityType> ? ;
+          uco-tool:buildVersion @linkml:String ? ;
+          uco-tool:compilationDate @linkml:Datetime ? ;
+          uco-tool:compilers @<CompilerType> * ;
+          uco-tool:libraries @<LibraryType> *
+       ) ;
+       rdf:type [ uco-tool:BuildInformationType ] ?
+    )
+}
+
+<BuildUtilityType> CLOSED {
+    (  $<BuildUtilityType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-tool:buildUtilityName @linkml:String ? ;
+          uco-tool:cpeid @linkml:String ? ;
+          uco-tool:swid @linkml:String ?
+       ) ;
+       rdf:type [ uco-tool:BuildUtilityType ] ?
+    )
+}
+
+<Bundle> CLOSED {
+    (  $<Bundle_tes> (  &<EnclosingCompilation_tes> ;
+          rdf:type [ uco-core:EnclosingCompilation ] ?
+       ) ;
+       rdf:type [ uco-core:Bundle ]
+    )
+}
+
+<Calendar> CLOSED {
+    (  $<Calendar_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Calendar ]
+    )
+}
+
+<CalendarEntry> CLOSED {
+    (  $<CalendarEntry_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CalendarEntry ]
+    )
+}
+
+<CalendarEntryFacet> CLOSED {
+    (  $<CalendarEntryFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:attendant @<Identity> * ;
+          uco-observable:duration @linkml:Integer ? ;
+          uco-observable:eventStatus @linkml:String ? ;
+          uco-observable:isPrivate @linkml:Boolean ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:eventType @linkml:String ? ;
+          uco-observable:location @<Location> ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:startTime @linkml:Datetime ? ;
+          uco-observable:owner @<UcoObject> ? ;
+          uco-observable:recurrence @linkml:String ? ;
+          uco-observable:remindTime @linkml:Datetime ? ;
+          uco-observable:subject @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:CalendarEntryFacet ] ?
+    )
+}
+
+<CalendarFacet> CLOSED {
+    (  $<CalendarFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:owner @<UcoObject> ?
+       ) ;
+       rdf:type [ uco-observable:CalendarFacet ] ?
+    )
+}
+
+<Call> CLOSED {
+    (  $<Call_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Call ]
+    )
+}
+
+<CallFacet> CLOSED {
+    (  $<CallFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:callType @linkml:String ? ;
+          uco-observable:duration @linkml:Integer ? ;
+          uco-observable:from @<ObservableObject> ? ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:participant @<ObservableObject> * ;
+          uco-observable:startTime @linkml:Datetime ? ;
+          uco-observable:to @<ObservableObject> *
+       ) ;
+       rdf:type [ uco-observable:CallFacet ] ?
+    )
+}
+
+<CapturedTelecommunicationsInformation> CLOSED {
+    (  $<CapturedTelecommunicationsInformation_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CapturedTelecommunicationsInformation ]
+    )
+}
+
+<CapturedTelecommunicationsInformationFacet> CLOSED {
+    (  $<CapturedTelecommunicationsInformationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:captureCellSite @<CellSite> ;
+          uco-observable:interceptedCallState @linkml:String ? ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:startTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:CapturedTelecommunicationsInformationFacet ] ?
+    )
+}
+
+<CellSite> CLOSED {
+    (  $<CellSite_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CellSite ]
+    )
+}
+
+<CellSiteFacet> CLOSED {
+    (  $<CellSiteFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:cellSiteCountryCode @linkml:String ? ;
+          uco-observable:cellSiteIdentifier @linkml:String ? ;
+          uco-observable:cellSiteLocationAreaCode @linkml:String ? ;
+          uco-observable:cellSiteNetworkCode @linkml:String ? ;
+          uco-observable:cellSiteType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:CellSiteFacet ] ?
+    )
+}
+
+<CharacterDeviceNode> CLOSED {
+    (  $<CharacterDeviceNode_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CharacterDeviceNode ]
+    )
+}
+
+<Code> CLOSED {
+    (  $<Code_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Code ]
+    )
+}
+
+<CoItem>  (
+    CLOSED {
+       (  $<CoItem_tes> coll:itemContent @linkml:String ? ;
+          rdf:type [ coll:Item ] ?
+       )
+    } OR @<ListItem>
+)
+
+<Compilation>  (
+    CLOSED {
+       (  $<Compilation_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-core:Compilation ]
+       )
+    } OR @<ContextualCompilation> OR @<EnclosingCompilation>
+)
+
+<CompilerType> CLOSED {
+    (  $<CompilerType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-tool:compilerInformalDescription @linkml:String ? ;
+          uco-tool:cpeid @linkml:String ? ;
+          uco-tool:swid @linkml:String ?
+       ) ;
+       rdf:type [ uco-tool:CompilerType ] ?
+    )
+}
+
+<CompressedStreamFacet> CLOSED {
+    (  $<CompressedStreamFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:compressionMethod @linkml:String ? ;
+          uco-observable:compressionRatio @linkml:Decimal ?
+       ) ;
+       rdf:type [ uco-observable:CompressedStreamFacet ] ?
+    )
+}
+
+<Computer>  (
+    CLOSED {
+       (  $<Computer_tes> (  &<Device_tes> ;
+             rdf:type [ uco-observable:Device ] ?
+          ) ;
+          rdf:type [ uco-observable:Computer ]
+       )
+    } OR @<Laptop> OR @<Server> OR @<Tablet>
+)
+
+<ComputerSpecification> CLOSED {
+    (  $<ComputerSpecification_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ComputerSpecification ]
+    )
+}
+
+<ComputerSpecificationFacet> CLOSED {
+    (  $<ComputerSpecificationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:availableRam @linkml:Integer ? ;
+          uco-observable:biosDate @linkml:Datetime ? ;
+          uco-observable:biosManufacturer @linkml:String ? ;
+          uco-observable:biosReleaseDate @linkml:Datetime ? ;
+          uco-observable:biosSerialNumber @linkml:String ? ;
+          uco-observable:biosVersion @linkml:String ? ;
+          uco-observable:cpu @linkml:String ? ;
+          uco-observable:cpuFamily @linkml:String ? ;
+          uco-observable:currentSystemDate @linkml:Datetime ? ;
+          uco-observable:gpu @linkml:String ? ;
+          uco-observable:gpuFamily @linkml:String ? ;
+          uco-observable:hostname @linkml:String ? ;
+          uco-observable:localTime @linkml:Datetime ? ;
+          uco-observable:networkInterface @<ObservableObject> * ;
+          uco-observable:processorArchitecture @linkml:String ? ;
+          uco-observable:systemTime @linkml:Datetime ? ;
+          uco-observable:timezoneDST @linkml:String ? ;
+          uco-observable:timezoneStandard @linkml:String ? ;
+          uco-observable:totalRam @linkml:Integer ? ;
+          uco-observable:uptime @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ComputerSpecificationFacet ] ?
+    )
+}
+
+<ConfidenceFacet> CLOSED {
+    (  $<ConfidenceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-core:confidence @<UcoNonNegativeInteger>
+       ) ;
+       rdf:type [ uco-core:ConfidenceFacet ] ?
+    )
+}
+
+<Configuration> CLOSED {
+    (  $<Configuration_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ? ;
+          uco-configuration:configurationEntry @<ConfigurationEntry> * ;
+          uco-configuration:dependencies @<Dependency> * ;
+          uco-configuration:usageContextAssumptions @linkml:String *
+       ) ;
+       rdf:type [ uco-configuration:Configuration ]
+    )
+}
+
+<ConfigurationEntry> CLOSED {
+    (  $<ConfigurationEntry_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-configuration:itemDescription @linkml:String ? ;
+          uco-configuration:itemName @linkml:String ? ;
+          uco-configuration:itemObject @<UcoObject> * ;
+          uco-configuration:itemType @linkml:String ? ;
+          uco-configuration:itemValue @linkml:String *
+       ) ;
+       rdf:type [ uco-configuration:ConfigurationEntry ] ?
+    )
+}
+
+<ConfiguredSoftware> CLOSED {
+    (  $<ConfiguredSoftware_tes> (  &<Software_tes> ;
+          rdf:type [ uco-observable:Software ] ? ;
+          uco-configuration:isConfigurationOf @<Software> ? ;
+          uco-configuration:usesConfiguration @<Configuration> ?
+       ) ;
+       rdf:type [ uco-observable:ConfiguredSoftware ]
+    )
+}
+
+<ConfiguredTool> CLOSED {
+    (  $<ConfiguredTool_tes> (  &<Tool_tes> ;
+          rdf:type [ uco-tool:Tool ] ? ;
+          uco-configuration:isConfigurationOf @<Tool> ? ;
+          uco-configuration:usesConfiguration @<Configuration> ?
+       ) ;
+       rdf:type [ uco-tool:ConfiguredTool ]
+    )
+}
+
+<Contact> CLOSED {
+    (  $<Contact_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Contact ]
+    )
+}
+
+<ContactAddress> CLOSED {
+    (  $<ContactAddress_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactAddressScope @linkml:String ? ;
+          uco-observable:geolocationAddress @<Location> ?
+       ) ;
+       rdf:type [ uco-observable:ContactAddress ] ?
+    )
+}
+
+<ContactAffiliation> CLOSED {
+    (  $<ContactAffiliation_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactEmail @<ContactEmail> * ;
+          uco-observable:contactMessaging @<ContactMessaging> * ;
+          uco-observable:contactOrganization @<Organization> ? ;
+          uco-observable:contactPhone @<ContactPhone> * ;
+          uco-observable:contactProfile @<ContactProfile> * ;
+          uco-observable:contactURL @<ContactURL> * ;
+          uco-observable:organizationDepartment @linkml:String ? ;
+          uco-observable:organizationLocation @<ContactAddress> * ;
+          uco-observable:organizationPosition @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ContactAffiliation ] ?
+    )
+}
+
+<ContactEmail> CLOSED {
+    (  $<ContactEmail_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactEmailScope @linkml:String ? ;
+          uco-observable:emailAddress @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactEmail ] ?
+    )
+}
+
+<ContactFacet>  (
+    CLOSED {
+       (  $<ContactFacet_tes> (  &<Facet_tes> ;
+             rdf:type [ uco-core:Facet ] ? ;
+             uco-identity:birthdate @linkml:Datetime ? ;
+             uco-observable:contactAddress @<ContactAddress> * ;
+             uco-observable:contactAffiliation @<ContactAffiliation> * ;
+             uco-observable:contactEmail @<ContactEmail> * ;
+             uco-observable:contactGroup @linkml:String * ;
+             uco-observable:contactID @linkml:String ? ;
+             uco-observable:contactMessaging @<ContactMessaging> * ;
+             uco-observable:contactNote @linkml:String * ;
+             uco-observable:contactPhone @<ContactPhone> * ;
+             uco-observable:contactProfile @<ContactProfile> * ;
+             uco-observable:contactSIP @<ContactSIP> * ;
+             uco-observable:contactURL @<ContactURL> * ;
+             uco-observable:displayName @linkml:String ? ;
+             uco-observable:firstName @linkml:String ? ;
+             uco-observable:lastName @linkml:String ? ;
+             uco-observable:lastTimeContacted @linkml:Datetime ? ;
+             uco-observable:middleName @linkml:String ? ;
+             uco-observable:namePhonetic @linkml:String ? ;
+             uco-observable:namePrefix @linkml:String ? ;
+             uco-observable:nameSuffix @linkml:String ? ;
+             uco-observable:nickname @linkml:String * ;
+             uco-observable:numberTimesContacted @linkml:Integer ? ;
+             uco-observable:sourceApplication @<ObservableObject> ?
+          ) ;
+          rdf:type [ uco-observable:ContactFacet ] ?
+       )
+    } OR @<WhoisContactFacet>
+)
+
+<ContactList> CLOSED {
+    (  $<ContactList_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ContactList ]
+    )
+}
+
+<ContactListFacet> CLOSED {
+    (  $<ContactListFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:contact @<ObservableObject> * ;
+          uco-observable:sourceApplication @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactListFacet ] ?
+    )
+}
+
+<ContactMessaging> CLOSED {
+    (  $<ContactMessaging_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactMessagingPlatform @<ObservableObject> ? ;
+          uco-observable:messagingAddress @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactMessaging ] ?
+    )
+}
+
+<ContactPhone> CLOSED {
+    (  $<ContactPhone_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactPhoneNumber @<ObservableObject> ? ;
+          uco-observable:contactPhoneScope @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ContactPhone ] ?
+    )
+}
+
+<ContactProfile> CLOSED {
+    (  $<ContactProfile_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactProfilePlatform @<ObservableObject> ? ;
+          uco-observable:profile @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactProfile ] ?
+    )
+}
+
+<ContactSIP> CLOSED {
+    (  $<ContactSIP_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactSIPScope @linkml:String ? ;
+          uco-observable:sipAddress @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactSIP ] ?
+    )
+}
+
+<ContactURL> CLOSED {
+    (  $<ContactURL_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactURLScope @linkml:String ? ;
+          uco-observable:url @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ContactURL ] ?
+    )
+}
+
+<ContentData> CLOSED {
+    (  $<ContentData_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ContentData ]
+    )
+}
+
+<ContentDataFacet> CLOSED {
+    (  $<ContentDataFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:byteOrder @linkml:String ? ;
+          uco-observable:dataPayload @linkml:String ? ;
+          uco-observable:dataPayloadReferenceURL @<ObservableObject> ? ;
+          uco-observable:entropy @linkml:Decimal ? ;
+          uco-observable:hash @<Hash> * ;
+          uco-observable:isEncrypted @linkml:Boolean ? ;
+          uco-observable:magicNumber @linkml:String ? ;
+          uco-observable:mimeClass @linkml:String ? ;
+          uco-observable:mimeType @linkml:String * ;
+          uco-observable:sizeInBytes @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:ContentDataFacet ] ?
+    )
+}
+
+<ContextualCompilation>  (
+    CLOSED {
+       (  $<ContextualCompilation_tes> (  &<Compilation_tes> ;
+             rdf:type [ uco-core:Compilation ] ? ;
+             uco-core:object @<UcoObject> *
+          ) ;
+          rdf:type [ uco-core:ContextualCompilation ]
+       )
+    } OR @<Grouping>
+)
+
+<ControlledDictionary> CLOSED {
+    (  $<ControlledDictionary_tes> (  &<Dictionary_tes> ;
+          rdf:type [ uco-types:Dictionary ] ? ;
+          uco-types:entry @<ControlledDictionaryEntry> *
+       ) ;
+       rdf:type [ uco-types:ControlledDictionary ] ?
+    )
+}
+
+<ControlledDictionaryEntry> CLOSED {
+    (  $<ControlledDictionaryEntry_tes> (  &<DictionaryEntry_tes> ;
+          rdf:type [ uco-types:DictionaryEntry ] ?
+       ) ;
+       rdf:type [ uco-types:ControlledDictionaryEntry ] ?
+    )
+}
+
+<ControlledVocabulary> CLOSED {
+    (  $<ControlledVocabulary_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ? ;
+          uco-core:constrainingVocabularyName @linkml:String ? ;
+          uco-core:constrainingVocabularyReference @linkml:Uri ? ;
+          uco-core:value @linkml:String
+       ) ;
+       rdf:type [ uco-core:ControlledVocabulary ]
+    )
+}
+
+<CookieHistory> CLOSED {
+    (  $<CookieHistory_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CookieHistory ]
+    )
+}
+
+<CountryOfResidenceFacet> CLOSED {
+    (  $<CountryOfResidenceFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:CountryOfResidenceFacet ] ?
+    )
+}
+
+<Credential> CLOSED {
+    (  $<Credential_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Credential ]
+    )
+}
+
+<CredentialDump> CLOSED {
+    (  $<CredentialDump_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:CredentialDump ]
+    )
+}
+
+<DataRangeFacet> CLOSED {
+    (  $<DataRangeFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:rangeOffset @linkml:Integer ? ;
+          uco-observable:rangeOffsetType @linkml:String ? ;
+          uco-observable:rangeSize @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:DataRangeFacet ] ?
+    )
+}
+
+<DefensiveTool> CLOSED {
+    (  $<DefensiveTool_tes> (  &<Tool_tes> ;
+          rdf:type [ uco-tool:Tool ] ?
+       ) ;
+       rdf:type [ uco-tool:DefensiveTool ]
+    )
+}
+
+<DefinedEffectFacet>  (
+    CLOSED {
+       (  $<DefinedEffectFacet_tes> (  &<Facet_tes> ;
+             rdf:type [ uco-core:Facet ] ?
+          ) ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ?
+       )
+    } OR @<PropertiesEnumeratedEffectFacet> OR @<PropertyReadEffectFacet> OR @<SendControlCodeEffectFacet> OR
+    @<StateChangeEffectFacet> OR @<ValuesEnumeratedEffectFacet>
+)
+
+<Dependency> CLOSED {
+    (  $<Dependency_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-configuration:dependencyDescription @linkml:String ? ;
+          uco-configuration:dependencyType @linkml:String ?
+       ) ;
+       rdf:type [ uco-configuration:Dependency ] ?
+    )
+}
+
+<Device>  (
+    CLOSED {
+       (  $<Device_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Device ]
+       )
+    } OR @<Adaptor> OR @<AndroidDevice> OR @<AppleDevice> OR @<Appliance> OR @<Computer> OR @<DigitalCamera> OR @<EmbeddedDevice>
+    OR @<GamingConsole> OR @<MobileDevice> OR @<ProtocolConverter> OR @<SIMCard> OR @<SmartDevice> OR @<StorageMedium> OR
+    @<WriteBlocker>
+)
+
+<DeviceFacet> CLOSED {
+    (  $<DeviceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:deviceType @linkml:String ? ;
+          uco-observable:manufacturer @<Identity> ? ;
+          uco-observable:model @linkml:String ? ;
+          uco-observable:cpeid @linkml:String ? ;
+          uco-observable:serialNumber @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:DeviceFacet ] ?
+    )
+}
+
+<Dictionary>  (
+    CLOSED {
+       (  $<Dictionary_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+             rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+             uco-types:entry @<DictionaryEntry> *
+          ) ;
+          rdf:type [ uco-types:Dictionary ] ?
+       )
+    } OR @<ControlledDictionary> OR @<ImproperDictionary> OR @<ProperDictionary>
+)
+
+<DictionaryEntry>  (
+    CLOSED {
+       (  $<DictionaryEntry_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+             rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+             uco-types:key @linkml:String ;
+             uco-types:value @linkml:String
+          ) ;
+          rdf:type [ uco-types:DictionaryEntry ] ?
+       )
+    } OR @<ControlledDictionaryEntry>
+)
+
+<DigitalAccount>  (
+    CLOSED {
+       (  $<DigitalAccount_tes> (  &<Account_tes> ;
+             rdf:type [ uco-observable:Account ] ?
+          ) ;
+          rdf:type [ uco-observable:DigitalAccount ]
+       )
+    } OR @<ApplicationAccount> OR @<EmailAccount> OR @<MobileAccount> OR @<PhoneAccount> OR @<UNIXAccount> OR @<UserAccount> OR
+    @<WindowsAccount> OR @<WindowsActiveDirectoryAccount>
+)
+
+<DigitalAccountFacet> CLOSED {
+    (  $<DigitalAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accountLogin @linkml:String * ;
+          uco-observable:displayName @linkml:String ? ;
+          uco-observable:firstLoginTime @linkml:Datetime ? ;
+          uco-observable:isDisabled @linkml:Boolean ? ;
+          uco-observable:lastLoginTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:DigitalAccountFacet ] ?
+    )
+}
+
+<DigitalAddress>  (
+    CLOSED {
+       (  $<DigitalAddress_tes> (  &<Address_tes> ;
+             rdf:type [ uco-observable:Address ] ?
+          ) ;
+          rdf:type [ uco-observable:DigitalAddress ]
+       )
+    } OR @<EmailAddress> OR @<IPAddress> OR @<InstantMessagingAddress> OR @<MACAddress> OR @<SIPAddress>
+)
+
+<DigitalAddressFacet>  (
+    CLOSED {
+       (  $<DigitalAddressFacet_tes> (  &<Facet_tes> ;
+             rdf:type [ uco-core:Facet ] ? ;
+             uco-observable:addressValue @linkml:String ? ;
+             uco-observable:displayName @linkml:String ?
+          ) ;
+          rdf:type [ uco-observable:DigitalAddressFacet ] ?
+       )
+    } OR @<EmailAddressFacet> OR @<IPAddressFacet> OR @<InstantMessagingAddressFacet> OR @<MACAddressFacet> OR @<SIPAddressFacet>
+)
+
+<DigitalCamera> CLOSED {
+    (  $<DigitalCamera_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:DigitalCamera ]
+    )
+}
+
+<DigitalSignatureInfo> CLOSED {
+    (  $<DigitalSignatureInfo_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:DigitalSignatureInfo ]
+    )
+}
+
+<DigitalSignatureInfoFacet> CLOSED {
+    (  $<DigitalSignatureInfoFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:certificateIssuer @<Identity> ? ;
+          uco-observable:certificateSubject @<UcoObject> ? ;
+          uco-observable:signatureDescription @linkml:String ? ;
+          uco-observable:signatureExists @linkml:Boolean ? ;
+          uco-observable:signatureVerified @linkml:Boolean ?
+       ) ;
+       rdf:type [ uco-observable:DigitalSignatureInfoFacet ] ?
+    )
+}
+
+<Directory> CLOSED {
+    (  $<Directory_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Directory ]
+    )
+}
+
+<Disk> CLOSED {
+    (  $<Disk_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Disk ]
+    )
+}
+
+<DiskFacet> CLOSED {
+    (  $<DiskFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:diskSize @linkml:Integer ? ;
+          uco-observable:diskType @linkml:String ? ;
+          uco-observable:freeSpace @linkml:Integer ? ;
+          uco-observable:partition @<ObservableObject> *
+       ) ;
+       rdf:type [ uco-observable:DiskFacet ] ?
+    )
+}
+
+<DiskPartition> CLOSED {
+    (  $<DiskPartition_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:DiskPartition ]
+    )
+}
+
+<DiskPartitionFacet> CLOSED {
+    (  $<DiskPartitionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:diskPartitionType @linkml:String ? ;
+          uco-observable:mountPoint @linkml:String ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:partitionID @linkml:String ? ;
+          uco-observable:partitionLength @linkml:Integer ? ;
+          uco-observable:partitionOffset @linkml:Integer ? ;
+          uco-observable:spaceLeft @linkml:Integer ? ;
+          uco-observable:spaceUsed @linkml:Integer ? ;
+          uco-observable:totalSpace @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:DiskPartitionFacet ] ?
+    )
+}
+
+<DNSCache> CLOSED {
+    (  $<DNSCache_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:DNSCache ]
+    )
+}
+
+<DNSRecord> CLOSED {
+    (  $<DNSRecord_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:DNSRecord ]
+    )
+}
+
+<DomainName> CLOSED {
+    (  $<DomainName_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:DomainName ]
+    )
+}
+
+<DomainNameFacet> CLOSED {
+    (  $<DomainNameFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:isTLD @linkml:Boolean ? ;
+          uco-observable:value @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:DomainNameFacet ] ?
+    )
+}
+
+<Drone> CLOSED {
+    (  $<Drone_tes> (  &<MobileDevice_tes> ;
+          rdf:type [ uco-observable:MobileDevice ] ?
+       ) ;
+       rdf:type [ uco-observable:Drone ]
+    )
+}
+
+<EmailAccount> CLOSED {
+    (  $<EmailAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:EmailAccount ]
+    )
+}
+
+<EmailAccountFacet> CLOSED {
+    (  $<EmailAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:emailAddress @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:EmailAccountFacet ] ?
+    )
+}
+
+<EmailAddress> CLOSED {
+    (  $<EmailAddress_tes> (  &<DigitalAddress_tes> ;
+          rdf:type [ uco-observable:DigitalAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:EmailAddress ]
+    )
+}
+
+<EmailAddressFacet> CLOSED {
+    (  $<EmailAddressFacet_tes> (  &<DigitalAddressFacet_tes> ;
+          rdf:type [ uco-observable:DigitalAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:EmailAddressFacet ] ?
+    )
+}
+
+<EmailMessage> CLOSED {
+    (  $<EmailMessage_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:EmailMessage ]
+    )
+}
+
+<EmailMessageFacet> CLOSED {
+    (  $<EmailMessageFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:bcc @<ObservableObject> * ;
+          uco-observable:body @linkml:String ? ;
+          uco-observable:bodyMultipart @<MimePartType> * ;
+          uco-observable:bodyRaw @<ObservableObject> ? ;
+          uco-observable:categories @linkml:String * ;
+          uco-observable:cc @<ObservableObject> * ;
+          uco-observable:contentDisposition @linkml:String ? ;
+          uco-observable:contentType @linkml:String ? ;
+          uco-observable:from @<ObservableObject> ? ;
+          uco-observable:headerRaw @<ObservableObject> ? ;
+          uco-observable:inReplyTo @linkml:String ? ;
+          uco-observable:isMimeEncoded @linkml:Boolean ? ;
+          uco-observable:isMultipart @linkml:Boolean ? ;
+          uco-observable:isRead @linkml:Boolean ? ;
+          uco-observable:labels @linkml:String * ;
+          uco-observable:messageID @linkml:String ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:references @<ObservableObject> * ;
+          uco-observable:otherHeaders @<Dictionary> ? ;
+          uco-observable:priority @linkml:String ? ;
+          uco-observable:receivedLines @linkml:String * ;
+          uco-observable:receivedTime @linkml:Datetime ? ;
+          uco-observable:sender @<ObservableObject> ? ;
+          uco-observable:sentTime @linkml:Datetime ? ;
+          uco-observable:subject @linkml:String ? ;
+          uco-observable:to @<ObservableObject> * ;
+          uco-observable:xMailer @linkml:String ? ;
+          uco-observable:xOriginatingIP @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:EmailMessageFacet ] ?
+    )
+}
+
+<EmbeddedDevice> CLOSED {
+    (  $<EmbeddedDevice_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:EmbeddedDevice ]
+    )
+}
+
+<EnclosingCompilation>  (
+    CLOSED {
+       (  $<EnclosingCompilation_tes> (  &<Compilation_tes> ;
+             rdf:type [ uco-core:Compilation ] ? ;
+             uco-core:object @<UcoObject> +
+          ) ;
+          rdf:type [ uco-core:EnclosingCompilation ]
+       )
+    } OR @<Bundle>
+)
+
+<EncodedStreamFacet> CLOSED {
+    (  $<EncodedStreamFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:encodingMethod @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:EncodedStreamFacet ] ?
+    )
+}
+
+<EncryptedStreamFacet> CLOSED {
+    (  $<EncryptedStreamFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:encryptionIV @linkml:String * ;
+          uco-observable:encryptionKey @linkml:String * ;
+          uco-observable:encryptionMethod @linkml:String ? ;
+          uco-observable:encryptionMode @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:EncryptedStreamFacet ] ?
+    )
+}
+
+<EnvironmentVariable> CLOSED {
+    (  $<EnvironmentVariable_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-core:name @linkml:String ? ;
+          uco-observable:value @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:EnvironmentVariable ] ?
+    )
+}
+
+<Event> CLOSED {
+    (  $<Event_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ? ;
+          uco-core:endTime @linkml:Datetime * ;
+          uco-core:eventAttribute @<Dictionary> * ;
+          uco-core:eventContext @<UcoObject> * ;
+          uco-core:eventType @linkml:String * ;
+          uco-core:startTime @linkml:Datetime *
+       ) ;
+       rdf:type [ uco-core:Event ]
+    )
+}
+
+<EventLog> CLOSED {
+    (  $<EventLog_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:EventLog ]
+    )
+}
+
+<EventRecord> CLOSED {
+    (  $<EventRecord_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:EventRecord ]
+    )
+}
+
+<EventRecordFacet> CLOSED {
+    (  $<EventRecordFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:account @<ObservableObject> ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:cyberAction @<ObservableAction> ? ;
+          uco-observable:eventID @linkml:String ? ;
+          uco-observable:eventRecordDevice @<ObservableObject> ? ;
+          uco-observable:eventRecordID @linkml:String ? ;
+          uco-observable:eventRecordRaw @linkml:String ? ;
+          uco-observable:eventRecordServiceName @linkml:String ? ;
+          uco-observable:eventRecordText @linkml:String ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:eventType @linkml:String ? ;
+          uco-observable:startTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:EventRecordFacet ] ?
+    )
+}
+
+<EventsFacet> CLOSED {
+    (  $<EventsFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:EventsFacet ] ?
+    )
+}
+
+<EXIFFacet> CLOSED {
+    (  $<EXIFFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:exifData @<ControlledDictionary> *
+       ) ;
+       rdf:type [ uco-observable:EXIFFacet ] ?
+    )
+}
+
+<ExternalReference> CLOSED {
+    (  $<ExternalReference_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-core:definingContext @linkml:String ? ;
+          uco-core:externalIdentifier @linkml:String ? ;
+          uco-core:referenceURL @linkml:Uri ?
+       ) ;
+       rdf:type [ uco-core:ExternalReference ] ?
+    )
+}
+
+<ExtInodeFacet> CLOSED {
+    (  $<ExtInodeFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:extDeletionTime @linkml:Datetime ? ;
+          uco-observable:extFileType @linkml:Integer ? ;
+          uco-observable:extFlags @linkml:Integer ? ;
+          uco-observable:extHardLinkCount @linkml:Integer ? ;
+          uco-observable:extInodeChangeTime @linkml:Datetime ? ;
+          uco-observable:extInodeID @linkml:Integer ? ;
+          uco-observable:extPermissions @linkml:Integer ? ;
+          uco-observable:extSGID @linkml:Integer ? ;
+          uco-observable:extSUID @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:ExtInodeFacet ] ?
+    )
+}
+
+<ExtractedString> CLOSED {
+    (  $<ExtractedString_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:byteStringValue @<UcoBase64Binary> ? ;
+          uco-observable:encoding @linkml:String ? ;
+          uco-observable:englishTranslation @linkml:String ? ;
+          uco-observable:language @linkml:String ? ;
+          uco-observable:length @linkml:Integer ? ;
+          uco-observable:stringValue @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ExtractedString ] ?
+    )
+}
+
+<ExtractedStringsFacet> CLOSED {
+    (  $<ExtractedStringsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:strings @<ExtractedString> *
+       ) ;
+       rdf:type [ uco-observable:ExtractedStringsFacet ] ?
+    )
+}
+
+<Facet>  (
+    CLOSED {
+       (  $<Facet_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+             rdf:type [ uco-core:UcoInherentCharacterizationThing ] ?
+          ) ;
+          rdf:type [ uco-core:Facet ] ?
+       )
+    } OR @<AccountAuthenticationFacet> OR @<AccountFacet> OR @<ActionArgumentFacet> OR @<ActionEstimationFacet> OR
+    @<ActionFrequencyFacet> OR @<AlternateDataStreamFacet> OR @<AnalyticResultFacet> OR @<AndroidDeviceFacet> OR @<AntennaFacet> OR
+    @<ApplicationAccountFacet> OR @<ApplicationFacet> OR @<ArchiveFileFacet> OR @<AudioFacet> OR @<AutonomousSystemFacet> OR
+    @<BrowserBookmarkFacet> OR @<BrowserCookieFacet> OR @<BuildFacet> OR @<CalendarEntryFacet> OR @<CalendarFacet> OR @<CallFacet>
+    OR @<CapturedTelecommunicationsInformationFacet> OR @<CellSiteFacet> OR @<CompressedStreamFacet> OR
+    @<ComputerSpecificationFacet> OR @<ConfidenceFacet> OR @<ContactFacet> OR @<ContactListFacet> OR @<ContentDataFacet> OR
+    @<DataRangeFacet> OR @<DefinedEffectFacet> OR @<DeviceFacet> OR @<DigitalAccountFacet> OR @<DigitalAddressFacet> OR
+    @<DigitalSignatureInfoFacet> OR @<DiskFacet> OR @<DiskPartitionFacet> OR @<DomainNameFacet> OR @<EXIFFacet> OR
+    @<EmailAccountFacet> OR @<EmailMessageFacet> OR @<EncodedStreamFacet> OR @<EncryptedStreamFacet> OR @<EventRecordFacet> OR
+    @<ExtInodeFacet> OR @<ExtractedStringsFacet> OR @<FileFacet> OR @<FilePermissionsFacet> OR @<FileSystemFacet> OR
+    @<FragmentFacet> OR @<GPSCoordinatesFacet> OR @<GeoLocationEntryFacet> OR @<GeoLocationLogFacet> OR @<GeoLocationTrackFacet> OR
+    @<HTTPConnectionFacet> OR @<ICMPConnectionFacet> OR @<IdentityFacet> OR @<ImageFacet> OR @<LatLongCoordinatesFacet> OR
+    @<LibraryFacet> OR @<MemoryFacet> OR @<MessageFacet> OR @<MessageThreadFacet> OR @<MftRecordFacet> OR @<MobileAccountFacet> OR
+    @<MobileDeviceFacet> OR @<MutexFacet> OR @<NTFSFileFacet> OR @<NTFSFilePermissionsFacet> OR @<NetworkConnectionFacet> OR
+    @<NetworkFlowFacet> OR @<NetworkInterfaceFacet> OR @<NoteFacet> OR @<OnlineServiceFacet> OR @<OperatingSystemFacet> OR
+    @<PDFFileFacet> OR @<PathRelationFacet> OR @<PhoneAccountFacet> OR @<ProcessFacet> OR @<ProfileFacet> OR @<RasterPictureFacet>
+    OR @<RecoveredObjectFacet> OR @<SIMCardFacet> OR @<SMSMessageFacet> OR @<SQLiteBlobFacet> OR @<SimpleAddressFacet> OR
+    @<SoftwareFacet> OR @<StorageMediumFacet> OR @<SymbolicLinkFacet> OR @<TCPConnectionFacet> OR @<TableFieldFacet> OR
+    @<TwitterProfileFacet> OR @<UNIXAccountFacet> OR @<UNIXFilePermissionsFacet> OR @<UNIXProcessFacet> OR @<UNIXVolumeFacet> OR
+    @<URLFacet> OR @<URLHistoryFacet> OR @<URLVisitFacet> OR @<UserAccountFacet> OR @<UserSessionFacet> OR @<VolumeFacet> OR
+    @<WhoIsFacet> OR @<WindowsAccountFacet> OR @<WindowsActiveDirectoryAccountFacet> OR @<WindowsComputerSpecificationFacet> OR
+    @<WindowsPEBinaryFileFacet> OR @<WindowsPrefetchFacet> OR @<WindowsProcessFacet> OR @<WindowsRegistryHiveFacet> OR
+    @<WindowsRegistryKeyFacet> OR @<WindowsServiceFacet> OR @<WindowsTaskFacet> OR @<WindowsThreadFacet> OR @<WindowsVolumeFacet>
+    OR @<WirelessNetworkConnectionFacet> OR @<X509CertificateFacet> OR @<X509V3ExtensionsFacet>
+)
+
+<File>  (
+    CLOSED {
+       (  $<File_tes> (  &<FileSystemObject_tes> ;
+             rdf:type [ uco-observable:FileSystemObject ] ?
+          ) ;
+          rdf:type [ uco-observable:File ]
+       )
+    } OR @<ArchiveFile> OR @<NTFSFile> OR @<PDFFile> OR @<RasterPicture> OR @<UNIXFile> OR @<WindowsPEBinaryFile>
+)
+
+<FileFacet> CLOSED {
+    (  $<FileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accessedTime @linkml:Datetime ? ;
+          uco-observable:allocationStatus @linkml:String ? ;
+          uco-observable:extension @linkml:String ? ;
+          uco-observable:fileName @linkml:String * ;
+          uco-observable:filePath @linkml:String * ;
+          uco-observable:isDirectory @linkml:Boolean * ;
+          uco-observable:metadataChangeTime @linkml:Datetime ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:sizeInBytes @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:FileFacet ] ?
+    )
+}
+
+<FilePermissionsFacet> CLOSED {
+    (  $<FilePermissionsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:owner @<UcoObject> ?
+       ) ;
+       rdf:type [ uco-observable:FilePermissionsFacet ] ?
+    )
+}
+
+<FileSystem> CLOSED {
+    (  $<FileSystem_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:FileSystem ]
+    )
+}
+
+<FileSystemFacet> CLOSED {
+    (  $<FileSystemFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:clusterSize @linkml:Integer ? ;
+          uco-observable:fileSystemType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:FileSystemFacet ] ?
+    )
+}
+
+<FileSystemObject>  (
+    CLOSED {
+       (  $<FileSystemObject_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:FileSystemObject ]
+       )
+    } OR @<BlockDeviceNode> OR @<CharacterDeviceNode> OR @<Directory> OR @<File> OR @<Junction> OR @<NamedPipe> OR @<ReparsePoint>
+    OR @<Snapshot> OR @<Socket> OR @<SymbolicLink>
+)
+
+<ForumPost> CLOSED {
+    (  $<ForumPost_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:ForumPost ]
+    )
+}
+
+<ForumPrivateMessage> CLOSED {
+    (  $<ForumPrivateMessage_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:ForumPrivateMessage ]
+    )
+}
+
+<FragmentFacet> CLOSED {
+    (  $<FragmentFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:fragmentIndex @linkml:Integer * ;
+          uco-observable:totalFragments @linkml:Integer *
+       ) ;
+       rdf:type [ uco-observable:FragmentFacet ] ?
+    )
+}
+
+<GamingConsole> CLOSED {
+    (  $<GamingConsole_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:GamingConsole ]
+    )
+}
+
+<GenericObservableObject> CLOSED {
+    (  $<GenericObservableObject_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:GenericObservableObject ]
+    )
+}
+
+<GeoLocationEntry> CLOSED {
+    (  $<GeoLocationEntry_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationEntry ]
+    )
+}
+
+<GeoLocationEntryFacet> CLOSED {
+    (  $<GeoLocationEntryFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:location @<Location> ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationEntryFacet ] ?
+    )
+}
+
+<GeoLocationLog> CLOSED {
+    (  $<GeoLocationLog_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationLog ]
+    )
+}
+
+<GeoLocationLogFacet> CLOSED {
+    (  $<GeoLocationLogFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationLogFacet ] ?
+    )
+}
+
+<GeoLocationTrack> CLOSED {
+    (  $<GeoLocationTrack_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationTrack ]
+    )
+}
+
+<GeoLocationTrackFacet> CLOSED {
+    (  $<GeoLocationTrackFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:geoLocationEntry @<ObservableObject> * ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:startTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:GeoLocationTrackFacet ] ?
+    )
+}
+
+<GlobalFlagType> CLOSED {
+    (  $<GlobalFlagType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:abbreviation @linkml:String ? ;
+          uco-observable:destination @linkml:String ? ;
+          uco-observable:hexadecimalValue @<UcoHexBinary> * ;
+          uco-observable:symbolicName @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:GlobalFlagType ] ?
+    )
+}
+
+<GPSCoordinatesFacet> CLOSED {
+    (  $<GPSCoordinatesFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-location:hdop @linkml:Decimal ? ;
+          uco-location:pdop @linkml:Decimal ? ;
+          uco-location:tdop @linkml:Decimal ? ;
+          uco-location:vdop @linkml:Decimal ?
+       ) ;
+       rdf:type [ uco-location:GPSCoordinatesFacet ] ?
+    )
+}
+
+<GranularMarking> CLOSED {
+    (  $<GranularMarking_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-marking:contentSelectors @linkml:String * ;
+          uco-marking:marking @<MarkingDefinition> *
+       ) ;
+       rdf:type [ uco-marking:GranularMarking ] ?
+    )
+}
+
+<Grouping> CLOSED {
+    (  $<Grouping_tes> (  &<ContextualCompilation_tes> ;
+          rdf:type [ uco-core:ContextualCompilation ] ? ;
+          uco-core:context @linkml:String *
+       ) ;
+       rdf:type [ uco-core:Grouping ]
+    )
+}
+
+<GUI> CLOSED {
+    (  $<GUI_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:GUI ]
+    )
+}
+
+<Hash> CLOSED {
+    (  $<Hash_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-types:hashMethod @linkml:String ;
+          uco-types:hashValue @<UcoHexBinary>
+       ) ;
+       rdf:type [ uco-types:Hash ] ?
+    )
+}
+
+<Hostname> CLOSED {
+    (  $<Hostname_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Hostname ]
+    )
+}
+
+<HTTPConnection> CLOSED {
+    (  $<HTTPConnection_tes> (  &<NetworkConnection_tes> ;
+          rdf:type [ uco-observable:NetworkConnection ] ?
+       ) ;
+       rdf:type [ uco-observable:HTTPConnection ]
+    )
+}
+
+<HTTPConnectionFacet> CLOSED {
+    (  $<HTTPConnectionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:httpMesageBodyLength @linkml:Integer ? ;
+          uco-observable:httpMessageBodyData @<ObservableObject> ? ;
+          uco-observable:httpRequestHeader @<Dictionary> ? ;
+          uco-observable:requestMethod @linkml:String ? ;
+          uco-observable:requestValue @linkml:String ? ;
+          uco-observable:requestVersion @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:HTTPConnectionFacet ] ?
+    )
+}
+
+<ICMPConnection> CLOSED {
+    (  $<ICMPConnection_tes> (  &<NetworkConnection_tes> ;
+          rdf:type [ uco-observable:NetworkConnection ] ?
+       ) ;
+       rdf:type [ uco-observable:ICMPConnection ]
+    )
+}
+
+<ICMPConnectionFacet> CLOSED {
+    (  $<ICMPConnectionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:icmpCode @<UcoHexBinary> * ;
+          uco-observable:icmpType @<UcoHexBinary> *
+       ) ;
+       rdf:type [ uco-observable:ICMPConnectionFacet ] ?
+    )
+}
+
+<IComHandlerActionType> CLOSED {
+    (  $<IComHandlerActionType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:comClassID @linkml:String ? ;
+          uco-observable:comData @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:IComHandlerActionType ] ?
+    )
+}
+
+<IdentifierFacet> CLOSED {
+    (  $<IdentifierFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:IdentifierFacet ] ?
+    )
+}
+
+<Identity>  (
+    CLOSED {
+       (  $<Identity_tes> (  &<IdentityAbstraction_tes> ;
+             rdf:type [ uco-core:IdentityAbstraction ] ?
+          ) ;
+          rdf:type [ uco-identity:Identity ]
+       )
+    } OR @<Organization> OR @<Person>
+)
+
+<IdentityAbstraction>  (
+    CLOSED {
+       (  $<IdentityAbstraction_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-core:IdentityAbstraction ]
+       )
+    } OR @<Identity>
+)
+
+<IdentityFacet>  (
+    CLOSED {
+       (  $<IdentityFacet_tes> (  &<Facet_tes> ;
+             rdf:type [ uco-core:Facet ] ?
+          ) ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       )
+    } OR @<AddressFacet> OR @<AffiliationFacet> OR @<BirthInformationFacet> OR @<CountryOfResidenceFacet> OR @<EventsFacet> OR
+    @<IdentifierFacet> OR @<LanguagesFacet> OR @<NationalityFacet> OR @<OccupationFacet> OR @<OrganizationDetailsFacet> OR
+    @<PersonalDetailsFacet> OR @<PhysicalInfoFacet> OR @<QualificationFacet> OR @<RelatedIdentityFacet> OR @<SimpleNameFacet> OR
+    @<VisaFacet>
+)
+
+<IExecActionType> CLOSED {
+    (  $<IExecActionType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:execArguments @linkml:String ? ;
+          uco-observable:execProgramHashes @<Hash> * ;
+          uco-observable:execProgramPath @linkml:String ? ;
+          uco-observable:execWorkingDirectory @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:IExecActionType ] ?
+    )
+}
+
+<Image> CLOSED {
+    (  $<Image_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Image ]
+    )
+}
+
+<ImageFacet> CLOSED {
+    (  $<ImageFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:imageType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ImageFacet ] ?
+    )
+}
+
+<ImproperDictionary> CLOSED {
+    (  $<ImproperDictionary_tes> (  &<Dictionary_tes> ;
+          rdf:type [ uco-types:Dictionary ] ? ;
+          uco-types:repeatsKey @linkml:String *
+       ) ;
+       rdf:type [ uco-types:ImproperDictionary ] ?
+    )
+}
+
+<InstantMessagingAddress> CLOSED {
+    (  $<InstantMessagingAddress_tes> (  &<DigitalAddress_tes> ;
+          rdf:type [ uco-observable:DigitalAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:InstantMessagingAddress ]
+    )
+}
+
+<InstantMessagingAddressFacet> CLOSED {
+    (  $<InstantMessagingAddressFacet_tes> (  &<DigitalAddressFacet_tes> ;
+          rdf:type [ uco-observable:DigitalAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:InstantMessagingAddressFacet ] ?
+    )
+}
+
+<IPAddress>  (
+    CLOSED {
+       (  $<IPAddress_tes> (  &<DigitalAddress_tes> ;
+             rdf:type [ uco-observable:DigitalAddress ] ?
+          ) ;
+          rdf:type [ uco-observable:IPAddress ]
+       )
+    } OR @<IPv4Address> OR @<IPv6Address>
+)
+
+<IPAddressFacet>  (
+    CLOSED {
+       (  $<IPAddressFacet_tes> (  &<DigitalAddressFacet_tes> ;
+             rdf:type [ uco-observable:DigitalAddressFacet ] ?
+          ) ;
+          rdf:type [ uco-observable:IPAddressFacet ] ?
+       )
+    } OR @<IPv4AddressFacet> OR @<IPv6AddressFacet>
+)
+
+<IPhone> CLOSED {
+    (  $<IPhone_tes> (  &<SmartPhone_tes> ;
+          rdf:type [ uco-observable:SmartPhone ] ? ;
+          &<AppleDevice_tes> ;
+          rdf:type [ uco-observable:AppleDevice ] ?
+       ) ;
+       rdf:type [ uco-observable:IPhone ]
+    )
+}
+
+<IPNetmask> CLOSED {
+    (  $<IPNetmask_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:IPNetmask ]
+    )
+}
+
+<IPv4Address> CLOSED {
+    (  $<IPv4Address_tes> (  &<IPAddress_tes> ;
+          rdf:type [ uco-observable:IPAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:IPv4Address ]
+    )
+}
+
+<IPv4AddressFacet> CLOSED {
+    (  $<IPv4AddressFacet_tes> (  &<IPAddressFacet_tes> ;
+          rdf:type [ uco-observable:IPAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:IPv4AddressFacet ] ?
+    )
+}
+
+<IPv6Address> CLOSED {
+    (  $<IPv6Address_tes> (  &<IPAddress_tes> ;
+          rdf:type [ uco-observable:IPAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:IPv6Address ]
+    )
+}
+
+<IPv6AddressFacet> CLOSED {
+    (  $<IPv6AddressFacet_tes> (  &<IPAddressFacet_tes> ;
+          rdf:type [ uco-observable:IPAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:IPv6AddressFacet ] ?
+    )
+}
+
+<IShowMessageActionType> CLOSED {
+    (  $<IShowMessageActionType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:showMessageBody @linkml:String ? ;
+          uco-observable:showMessageTitle @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:IShowMessageActionType ] ?
+    )
+}
+
+<Item> CLOSED {
+    (  $<Item_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ?
+       ) ;
+       rdf:type [ uco-core:Item ]
+    )
+}
+
+<Junction> CLOSED {
+    (  $<Junction_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Junction ]
+    )
+}
+
+<LanguagesFacet> CLOSED {
+    (  $<LanguagesFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:LanguagesFacet ] ?
+    )
+}
+
+<Laptop> CLOSED {
+    (  $<Laptop_tes> (  &<Computer_tes> ;
+          rdf:type [ uco-observable:Computer ] ?
+       ) ;
+       rdf:type [ uco-observable:Laptop ]
+    )
+}
+
+<LatLongCoordinatesFacet> CLOSED {
+    (  $<LatLongCoordinatesFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-location:altitude @linkml:Decimal ? ;
+          uco-location:latitude @linkml:Decimal ? ;
+          uco-location:longitude @linkml:Decimal ?
+       ) ;
+       rdf:type [ uco-location:LatLongCoordinatesFacet ] ?
+    )
+}
+
+<Library> CLOSED {
+    (  $<Library_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Library ]
+    )
+}
+
+<LibraryFacet> CLOSED {
+    (  $<LibraryFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:libraryType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:LibraryFacet ] ?
+    )
+}
+
+<LibraryType> CLOSED {
+    (  $<LibraryType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-tool:libraryName @linkml:String ? ;
+          uco-tool:libraryVersion @linkml:String ?
+       ) ;
+       rdf:type [ uco-tool:LibraryType ] ?
+    )
+}
+
+<LicenseMarking> CLOSED {
+    (  $<LicenseMarking_tes> (  &<MarkingModel_tes> ;
+          rdf:type [ uco-marking:MarkingModel ] ? ;
+          uco-marking:definitionType @linkml:String * ;
+          uco-marking:license @linkml:String
+       ) ;
+       rdf:type [ uco-marking:LicenseMarking ] ?
+    )
+}
+
+<List> CLOSED {
+    (  $<List_tes> (  coll:firstItem @<ListItem> ? ;
+          coll:item @<ListItem> * ;
+          coll:lastItem @<ListItem> ?
+       ) ;
+       rdf:type [ coll:List ] ?
+    )
+}
+
+<ListItem> CLOSED {
+    (  $<ListItem_tes> (  &<CoItem_tes> ;
+          rdf:type [ coll:Item ] ? ;
+          coll:followedBy @<CoItem> * ;
+          coll:index @linkml:Integer ?
+       ) ;
+       rdf:type [ coll:ListItem ] ?
+    )
+}
+
+<Location> CLOSED {
+    (  $<Location_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ?
+       ) ;
+       rdf:type [ uco-location:Location ]
+    )
+}
+
+<LogicalPattern> CLOSED {
+    (  $<LogicalPattern_tes> (  &<Pattern_tes> ;
+          rdf:type [ uco-pattern:Pattern ] ? ;
+          uco-pattern:patternExpression @linkml:String ?
+       ) ;
+       rdf:type [ uco-pattern:LogicalPattern ]
+    )
+}
+
+<MACAddress>  (
+    CLOSED {
+       (  $<MACAddress_tes> (  &<DigitalAddress_tes> ;
+             rdf:type [ uco-observable:DigitalAddress ] ?
+          ) ;
+          rdf:type [ uco-observable:MACAddress ]
+       )
+    } OR @<BluetoothAddress> OR @<WifiAddress>
+)
+
+<MACAddressFacet>  (
+    CLOSED {
+       (  $<MACAddressFacet_tes> (  &<DigitalAddressFacet_tes> ;
+             rdf:type [ uco-observable:DigitalAddressFacet ] ?
+          ) ;
+          rdf:type [ uco-observable:MACAddressFacet ] ?
+       )
+    } OR @<BluetoothAddressFacet> OR @<WifiAddressFacet>
+)
+
+<MaliciousRole> CLOSED {
+    (  $<MaliciousRole_tes> (  &<Role_tes> ;
+          rdf:type [ uco-role:Role ] ?
+       ) ;
+       rdf:type [ uco-role:MaliciousRole ]
+    )
+}
+
+<MaliciousTool> CLOSED {
+    (  $<MaliciousTool_tes> (  &<Tool_tes> ;
+          rdf:type [ uco-tool:Tool ] ?
+       ) ;
+       rdf:type [ uco-tool:MaliciousTool ]
+    )
+}
+
+<MarkingDefinition> CLOSED {
+    (  $<MarkingDefinition_tes> (  &<MarkingDefinitionAbstraction_tes> ;
+          rdf:type [ uco-core:MarkingDefinitionAbstraction ] ? ;
+          uco-marking:definition @<MarkingModel> * ;
+          uco-marking:definitionType @linkml:String
+       ) ;
+       rdf:type [ uco-marking:MarkingDefinition ]
+    )
+}
+
+<MarkingDefinitionAbstraction>  (
+    CLOSED {
+       (  $<MarkingDefinitionAbstraction_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-core:MarkingDefinitionAbstraction ]
+       )
+    } OR @<MarkingDefinition>
+)
+
+<MarkingModel>  (
+    CLOSED {
+       (  $<MarkingModel_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+             rdf:type [ uco-core:UcoInherentCharacterizationThing ] ?
+          ) ;
+          rdf:type [ uco-marking:MarkingModel ] ?
+       )
+    } OR @<LicenseMarking> OR @<ReleaseToMarking> OR @<StatementMarking> OR @<TermsOfUseMarking>
+)
+
+<Memory> CLOSED {
+    (  $<Memory_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Memory ]
+    )
+}
+
+<MemoryFacet> CLOSED {
+    (  $<MemoryFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:blockType @linkml:String ? ;
+          uco-observable:isInjected @linkml:Boolean ? ;
+          uco-observable:isMapped @linkml:Boolean ? ;
+          uco-observable:isProtected @linkml:Boolean ? ;
+          uco-observable:isVolatile @linkml:Boolean ? ;
+          uco-observable:regionEndAddress @<UcoHexBinary> * ;
+          uco-observable:regionSize @linkml:Integer ? ;
+          uco-observable:regionStartAddress @<UcoHexBinary> *
+       ) ;
+       rdf:type [ uco-observable:MemoryFacet ] ?
+    )
+}
+
+<Message>  (
+    CLOSED {
+       (  $<Message_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Message ]
+       )
+    } OR @<EmailMessage> OR @<ForumPost> OR @<ForumPrivateMessage> OR @<Post> OR @<SMSMessage> OR @<Tweet>
+)
+
+<MessageFacet> CLOSED {
+    (  $<MessageFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:from @<ObservableObject> ? ;
+          uco-observable:messageID @linkml:String ? ;
+          uco-observable:messageText @linkml:String ? ;
+          uco-observable:messageType @linkml:String ? ;
+          uco-observable:sentTime @linkml:Datetime ? ;
+          uco-observable:sessionID @linkml:String ? ;
+          uco-observable:to @<ObservableObject> *
+       ) ;
+       rdf:type [ uco-observable:MessageFacet ] ?
+    )
+}
+
+<MessageThread> CLOSED {
+    (  $<MessageThread_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:MessageThread ]
+    )
+}
+
+<MessageThreadFacet> CLOSED {
+    (  $<MessageThreadFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:messageThread @<Thread> ? ;
+          uco-observable:participant @<ObservableObject> * ;
+          uco-observable:visibility @linkml:Boolean ?
+       ) ;
+       rdf:type [ uco-observable:MessageThreadFacet ] ?
+    )
+}
+
+<MftRecordFacet> CLOSED {
+    (  $<MftRecordFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:mftFileID @linkml:Integer ? ;
+          uco-observable:mftFileNameAccessedTime @linkml:Datetime ? ;
+          uco-observable:mftFileNameCreatedTime @linkml:Datetime ? ;
+          uco-observable:mftFileNameLength @linkml:Integer ? ;
+          uco-observable:mftFileNameModifiedTime @linkml:Datetime ? ;
+          uco-observable:mftFileNameRecordChangeTime @linkml:Datetime ? ;
+          uco-observable:mftFlags @linkml:Integer ? ;
+          uco-observable:mftParentID @linkml:Integer ? ;
+          uco-observable:mftRecordChangeTime @linkml:Datetime ? ;
+          uco-observable:ntfsHardLinkCount @linkml:Integer ? ;
+          uco-observable:ntfsOwnerID @linkml:String ? ;
+          uco-observable:ntfsOwnerSID @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:MftRecordFacet ] ?
+    )
+}
+
+<MimePartType> CLOSED {
+    (  $<MimePartType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:body @linkml:String ? ;
+          uco-observable:bodyRaw @<ObservableObject> ? ;
+          uco-observable:contentDisposition @linkml:String ? ;
+          uco-observable:contentType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:MimePartType ] ?
+    )
+}
+
+<MobileAccount> CLOSED {
+    (  $<MobileAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:MobileAccount ]
+    )
+}
+
+<MobileAccountFacet> CLOSED {
+    (  $<MobileAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:IMSI @linkml:String ? ;
+          uco-observable:MSISDN @linkml:String ? ;
+          uco-observable:MSISDNType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:MobileAccountFacet ] ?
+    )
+}
+
+<MobileDevice>  (
+    CLOSED {
+       (  $<MobileDevice_tes> (  &<Device_tes> ;
+             rdf:type [ uco-observable:Device ] ?
+          ) ;
+          rdf:type [ uco-observable:MobileDevice ]
+       )
+    } OR @<Drone> OR @<MobilePhone>
+)
+
+<MobileDeviceFacet> CLOSED {
+    (  $<MobileDeviceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:ESN @linkml:String ? ;
+          uco-observable:IMEI @linkml:String * ;
+          uco-observable:bluetoothDeviceName @linkml:String ? ;
+          uco-observable:clockSetting @linkml:Datetime ? ;
+          uco-observable:keypadUnlockCode @linkml:String ? ;
+          uco-observable:mockLocationsAllowed @linkml:Boolean ? ;
+          uco-observable:network @linkml:String ? ;
+          uco-observable:phoneActivationTime @linkml:Datetime ? ;
+          uco-observable:storageCapacityInBytes @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:MobileDeviceFacet ] ?
+    )
+}
+
+<MobilePhone>  (
+    CLOSED {
+       (  $<MobilePhone_tes> (  &<MobileDevice_tes> ;
+             rdf:type [ uco-observable:MobileDevice ] ?
+          ) ;
+          rdf:type [ uco-observable:MobilePhone ]
+       )
+    } OR @<SmartPhone>
+)
+
+<ModusOperandi> CLOSED {
+    (  $<ModusOperandi_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ?
+       ) ;
+       rdf:type [ uco-core:ModusOperandi ]
+    )
+}
+
+<Mutex> CLOSED {
+    (  $<Mutex_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Mutex ]
+    )
+}
+
+<MutexFacet> CLOSED {
+    (  $<MutexFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:isNamed @linkml:Boolean ? ;
+          uco-observable:mutexName @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:MutexFacet ] ?
+    )
+}
+
+<NamedPipe> CLOSED {
+    (  $<NamedPipe_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NamedPipe ]
+    )
+}
+
+<NationalityFacet> CLOSED {
+    (  $<NationalityFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:NationalityFacet ] ?
+    )
+}
+
+<NetworkAppliance> CLOSED {
+    (  $<NetworkAppliance_tes> (  &<Appliance_tes> ;
+          rdf:type [ uco-observable:Appliance ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkAppliance ]
+    )
+}
+
+<NetworkConnection>  (
+    CLOSED {
+       (  $<NetworkConnection_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:NetworkConnection ]
+       )
+    } OR @<HTTPConnection> OR @<ICMPConnection> OR @<TCPConnection> OR @<WirelessNetworkConnection>
+)
+
+<NetworkConnectionFacet> CLOSED {
+    (  $<NetworkConnectionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:destinationPort @linkml:Integer ? ;
+          uco-observable:dst @<ObservableObject> * ;
+          uco-observable:isActive @linkml:Boolean ? ;
+          uco-observable:endTime @linkml:Datetime ? ;
+          uco-observable:startTime @linkml:Datetime ? ;
+          uco-observable:protocols @<ControlledDictionary> ? ;
+          uco-observable:sourcePort @linkml:Integer ? ;
+          uco-observable:src @<UcoObject> *
+       ) ;
+       rdf:type [ uco-observable:NetworkConnectionFacet ] ?
+    )
+}
+
+<NetworkFlow> CLOSED {
+    (  $<NetworkFlow_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkFlow ]
+    )
+}
+
+<NetworkFlowFacet> CLOSED {
+    (  $<NetworkFlowFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:dstBytes @linkml:Integer ? ;
+          uco-observable:dstPackets @linkml:Integer ? ;
+          uco-observable:dstPayload @<ObservableObject> ? ;
+          uco-observable:ipfix @<Dictionary> ? ;
+          uco-observable:srcBytes @linkml:Integer ? ;
+          uco-observable:srcPackets @linkml:Integer ? ;
+          uco-observable:srcPayload @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:NetworkFlowFacet ] ?
+    )
+}
+
+<NetworkInterface> CLOSED {
+    (  $<NetworkInterface_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkInterface ]
+    )
+}
+
+<NetworkInterfaceFacet> CLOSED {
+    (  $<NetworkInterfaceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:adapterName @linkml:String ? ;
+          uco-observable:dhcpLeaseExpires @linkml:Datetime ? ;
+          uco-observable:dhcpLeaseObtained @linkml:Datetime ? ;
+          uco-observable:dhcpServer @<ObservableObject> * ;
+          uco-observable:ip @<ObservableObject> * ;
+          uco-observable:ipGateway @<ObservableObject> * ;
+          uco-observable:macAddress @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:NetworkInterfaceFacet ] ?
+    )
+}
+
+<NetworkProtocol> CLOSED {
+    (  $<NetworkProtocol_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkProtocol ]
+    )
+}
+
+<NetworkRoute> CLOSED {
+    (  $<NetworkRoute_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkRoute ]
+    )
+}
+
+<NetworkSubnet> CLOSED {
+    (  $<NetworkSubnet_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:NetworkSubnet ]
+    )
+}
+
+<NeutralRole>  (
+    CLOSED {
+       (  $<NeutralRole_tes> (  &<Role_tes> ;
+             rdf:type [ uco-role:Role ] ?
+          ) ;
+          rdf:type [ uco-role:NeutralRole ]
+       )
+    } OR @<Victim>
+)
+
+<Note> CLOSED {
+    (  $<Note_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Note ]
+    )
+}
+
+<NoteFacet> CLOSED {
+    (  $<NoteFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:text @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:NoteFacet ] ?
+    )
+}
+
+<NTFSFile> CLOSED {
+    (  $<NTFSFile_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:NTFSFile ]
+    )
+}
+
+<NTFSFileFacet> CLOSED {
+    (  $<NTFSFileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:alternateDataStreams @<AlternateDataStream> * ;
+          uco-observable:entryID @linkml:Integer ? ;
+          uco-observable:sid @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:NTFSFileFacet ] ?
+    )
+}
+
+<NTFSFilePermissionsFacet> CLOSED {
+    (  $<NTFSFilePermissionsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ?
+       ) ;
+       rdf:type [ uco-observable:NTFSFilePermissionsFacet ] ?
+    )
+}
+
+<Observable>  (
+    CLOSED {
+       (  $<Observable_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Observable ]
+       )
+    } OR @<ObservableAction> OR @<ObservableObject> OR @<ObservablePattern> OR @<ObservableRelationship>
+)
+
+<ObservableAction> CLOSED {
+    (  $<ObservableAction_tes> (  &<Observable_tes> ;
+          rdf:type [ uco-observable:Observable ] ? ;
+          &<Action_tes> ;
+          rdf:type [ uco-action:Action ] ? ;
+          uco-action:actionCount @<UcoNonNegativeInteger> ? ;
+          uco-action:actionStatus @linkml:String ? ;
+          uco-action:endTime @linkml:Datetime ? ;
+          uco-action:object @<UcoObject> * ;
+          uco-action:startTime @linkml:Datetime ? ;
+          uco-action:environment @<UcoObject> ? ;
+          uco-action:error @<UcoObject> * ;
+          uco-action:instrument @<UcoObject> * ;
+          uco-action:location @<Location> * ;
+          uco-action:participant @<UcoObject> * ;
+          uco-action:performer @<UcoObject> ? ;
+          uco-action:result @<UcoObject> * ;
+          uco-action:subaction @<Action> *
+       ) ;
+       rdf:type [ uco-observable:ObservableAction ]
+    )
+}
+
+<ObservableObject>  (
+    CLOSED {
+       (  $<ObservableObject_tes> (  &<Observable_tes> ;
+             rdf:type [ uco-observable:Observable ] ? ;
+             &<Item_tes> ;
+             rdf:type [ uco-core:Item ] ? ;
+             uco-observable:hasChanged @linkml:Boolean ? ;
+             uco-observable:state @linkml:String ?
+          ) ;
+          rdf:type [ uco-observable:ObservableObject ]
+       )
+    } OR @<API> OR @<ARPCache> OR @<ARPCacheEntry> OR @<Account> OR @<Address> OR @<AlternateDataStream> OR @<Application> OR
+    @<Audio> OR @<AutonomousSystem> OR @<BotConfiguration> OR @<BrowserBookmark> OR @<BrowserCookie> OR @<Calendar> OR
+    @<CalendarEntry> OR @<Call> OR @<CapturedTelecommunicationsInformation> OR @<CellSite> OR @<Code> OR @<ComputerSpecification>
+    OR @<Contact> OR @<ContactList> OR @<ContentData> OR @<CookieHistory> OR @<Credential> OR @<CredentialDump> OR @<DNSCache> OR
+    @<DNSRecord> OR @<Device> OR @<DigitalSignatureInfo> OR @<Disk> OR @<DiskPartition> OR @<DomainName> OR @<EventLog> OR
+    @<EventRecord> OR @<FileSystem> OR @<FileSystemObject> OR @<GUI> OR @<GenericObservableObject> OR @<GeoLocationEntry> OR
+    @<GeoLocationLog> OR @<GeoLocationTrack> OR @<Hostname> OR @<IPNetmask> OR @<Image> OR @<Library> OR @<Memory> OR @<Message> OR
+    @<MessageThread> OR @<Mutex> OR @<NetworkConnection> OR @<NetworkFlow> OR @<NetworkInterface> OR @<NetworkProtocol> OR
+    @<NetworkRoute> OR @<NetworkSubnet> OR @<Note> OR @<OnlineService> OR @<OperatingSystem> OR @<PaymentCard> OR @<Pipe> OR
+    @<Process> OR @<ProcessThread> OR @<Profile> OR @<RecoveredObject> OR @<SQLiteBlob> OR @<Semaphore> OR @<ShopListing> OR
+    @<Software> OR @<TableField> OR @<URL> OR @<URLHistory> OR @<URLVisit> OR @<UserSession> OR @<Volume> OR @<WebPage> OR @<WhoIs>
+    OR @<Wiki> OR @<WikiArticle> OR @<WindowsComputerSpecification> OR @<WindowsCriticalSection> OR @<WindowsEvent> OR
+    @<WindowsFilemapping> OR @<WindowsHandle> OR @<WindowsHook> OR @<WindowsMailslot> OR @<WindowsNetworkShare> OR
+    @<WindowsPrefetch> OR @<WindowsRegistryHive> OR @<WindowsRegistryKey> OR @<WindowsService> OR @<WindowsSystemRestore> OR
+    @<WindowsTask> OR @<WindowsWaitableTime> OR @<X509Certificate> OR @<X509V3Certificate>
+)
+
+<ObservablePattern> CLOSED {
+    (  $<ObservablePattern_tes> (  &<Observable_tes> ;
+          rdf:type [ uco-observable:Observable ] ?
+       ) ;
+       rdf:type [ uco-observable:ObservablePattern ]
+    )
+}
+
+<ObservableRelationship> CLOSED {
+    (  $<ObservableRelationship_tes> (  &<Observable_tes> ;
+          rdf:type [ uco-observable:Observable ] ? ;
+          &<Relationship_tes> ;
+          rdf:type [ uco-core:Relationship ] ? ;
+          uco-core:endTime @linkml:Datetime * ;
+          uco-core:isDirectional @linkml:Boolean ;
+          uco-core:kindOfRelationship @linkml:String ? ;
+          uco-core:source @<UcoObject> + ;
+          uco-core:startTime @linkml:Datetime * ;
+          uco-core:target @<UcoObject>
+       ) ;
+       rdf:type [ uco-observable:ObservableRelationship ]
+    )
+}
+
+<Observation> CLOSED {
+    (  $<Observation_tes> (  &<Action_tes> ;
+          rdf:type [ uco-action:Action ] ? ;
+          uco-core:name @linkml:String
+       ) ;
+       rdf:type [ uco-observable:Observation ]
+    )
+}
+
+<OccupationFacet> CLOSED {
+    (  $<OccupationFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:OccupationFacet ] ?
+    )
+}
+
+<OnlineService> CLOSED {
+    (  $<OnlineService_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:OnlineService ]
+    )
+}
+
+<OnlineServiceFacet> CLOSED {
+    (  $<OnlineServiceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:inetLocation @<ObservableObject> * ;
+          uco-core:name @linkml:String ? ;
+          uco-observable:location @<Location> *
+       ) ;
+       rdf:type [ uco-observable:OnlineServiceFacet ] ?
+    )
+}
+
+<OperatingSystem> CLOSED {
+    (  $<OperatingSystem_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:OperatingSystem ]
+    )
+}
+
+<OperatingSystemFacet> CLOSED {
+    (  $<OperatingSystemFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:advertisingID @linkml:String * ;
+          uco-observable:bitness @linkml:String ? ;
+          uco-observable:environmentVariables @<Dictionary> ? ;
+          uco-observable:installDate @linkml:Datetime ? ;
+          uco-observable:isLimitAdTrackingEnabled @linkml:Boolean ? ;
+          uco-observable:manufacturer @<Identity> ? ;
+          uco-observable:version @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:OperatingSystemFacet ] ?
+    )
+}
+
+<Organization> CLOSED {
+    (  $<Organization_tes> (  &<Identity_tes> ;
+          rdf:type [ uco-identity:Identity ] ?
+       ) ;
+       rdf:type [ uco-identity:Organization ]
+    )
+}
+
+<OrganizationDetailsFacet> CLOSED {
+    (  $<OrganizationDetailsFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:OrganizationDetailsFacet ] ?
+    )
+}
+
+<PathRelationFacet> CLOSED {
+    (  $<PathRelationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:path @linkml:String *
+       ) ;
+       rdf:type [ uco-observable:PathRelationFacet ] ?
+    )
+}
+
+<Pattern>  (
+    CLOSED {
+       (  $<Pattern_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-pattern:Pattern ]
+       )
+    } OR @<LogicalPattern>
+)
+
+<PatternExpression> CLOSED {
+    (  $<PatternExpression_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ?
+       ) ;
+       rdf:type [ uco-pattern:PatternExpression ] ?
+    )
+}
+
+<PaymentCard> CLOSED {
+    (  $<PaymentCard_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:PaymentCard ]
+    )
+}
+
+<PDFFile> CLOSED {
+    (  $<PDFFile_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:PDFFile ]
+    )
+}
+
+<PDFFileFacet> CLOSED {
+    (  $<PDFFileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:documentInformationDictionary @<ControlledDictionary> ? ;
+          uco-observable:isOptimized @linkml:Boolean ? ;
+          uco-observable:version @linkml:String ? ;
+          uco-observable:pdfCreationDate @linkml:Datetime ? ;
+          uco-observable:pdfId0 @linkml:String * ;
+          uco-observable:pdfId1 @linkml:String ? ;
+          uco-observable:pdfModDate @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:PDFFileFacet ] ?
+    )
+}
+
+<Person> CLOSED {
+    (  $<Person_tes> (  &<Identity_tes> ;
+          rdf:type [ uco-identity:Identity ] ?
+       ) ;
+       rdf:type [ uco-identity:Person ]
+    )
+}
+
+<PersonalDetailsFacet> CLOSED {
+    (  $<PersonalDetailsFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:PersonalDetailsFacet ] ?
+    )
+}
+
+<PhoneAccount> CLOSED {
+    (  $<PhoneAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:PhoneAccount ]
+    )
+}
+
+<PhoneAccountFacet> CLOSED {
+    (  $<PhoneAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:phoneNumber @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:PhoneAccountFacet ] ?
+    )
+}
+
+<PhysicalInfoFacet> CLOSED {
+    (  $<PhysicalInfoFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:PhysicalInfoFacet ] ?
+    )
+}
+
+<Pipe> CLOSED {
+    (  $<Pipe_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Pipe ]
+    )
+}
+
+<Post> CLOSED {
+    (  $<Post_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:Post ]
+    )
+}
+
+<Process>  (
+    CLOSED {
+       (  $<Process_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Process ]
+       )
+    } OR @<UNIXProcess> OR @<WindowsProcess>
+)
+
+<ProcessFacet> CLOSED {
+    (  $<ProcessFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:arguments @linkml:String * ;
+          uco-observable:binary @<ObservableObject> ? ;
+          uco-observable:creatorUser @<ObservableObject> ? ;
+          uco-observable:currentWorkingDirectory @linkml:String ? ;
+          uco-observable:environmentVariables @<Dictionary> ? ;
+          uco-observable:exitStatus @linkml:Integer ? ;
+          uco-observable:exitTime @linkml:Datetime ? ;
+          uco-observable:isHidden @linkml:Boolean ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:parent @<ObservableObject> ? ;
+          uco-observable:pid @linkml:Integer ? ;
+          uco-observable:status @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ProcessFacet ] ?
+    )
+}
+
+<ProcessThread>  (
+    CLOSED {
+       (  $<ProcessThread_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:ProcessThread ]
+       )
+    } OR @<WindowsThread>
+)
+
+<Profile> CLOSED {
+    (  $<Profile_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Profile ]
+    )
+}
+
+<ProfileFacet> CLOSED {
+    (  $<ProfileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:contactAddress @<ContactAddress> ? ;
+          uco-observable:contactEmail @<ContactEmail> ? ;
+          uco-observable:contactMessaging @<ContactMessaging> ? ;
+          uco-observable:contactPhone @<ContactPhone> ? ;
+          uco-observable:contactURL @<ContactURL> ? ;
+          uco-observable:displayName @linkml:String ? ;
+          uco-core:name @linkml:String ? ;
+          uco-observable:profileAccount @<ObservableObject> ? ;
+          uco-observable:profileCreated @linkml:Datetime ? ;
+          uco-observable:profileIdentity @<Identity> ? ;
+          uco-observable:profileLanguage @linkml:String * ;
+          uco-observable:profileService @<ObservableObject> ? ;
+          uco-observable:profileWebsite @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:ProfileFacet ] ?
+    )
+}
+
+<ProperDictionary> CLOSED {
+    (  $<ProperDictionary_tes> (  &<Dictionary_tes> ;
+          rdf:type [ uco-types:Dictionary ] ?
+       ) ;
+       rdf:type [ uco-types:ProperDictionary ] ?
+    )
+}
+
+<PropertiesEnumeratedEffectFacet> CLOSED {
+    (  $<PropertiesEnumeratedEffectFacet_tes> (  &<DefinedEffectFacet_tes> ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ? ;
+          uco-observable:properties @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:PropertiesEnumeratedEffectFacet ] ?
+    )
+}
+
+<PropertyReadEffectFacet> CLOSED {
+    (  $<PropertyReadEffectFacet_tes> (  &<DefinedEffectFacet_tes> ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ? ;
+          uco-observable:value @linkml:String ? ;
+          uco-observable:propertyName @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:PropertyReadEffectFacet ] ?
+    )
+}
+
+<ProtocolConverter> CLOSED {
+    (  $<ProtocolConverter_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:ProtocolConverter ]
+    )
+}
+
+<QualificationFacet> CLOSED {
+    (  $<QualificationFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:QualificationFacet ] ?
+    )
+}
+
+<RasterPicture> CLOSED {
+    (  $<RasterPicture_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:RasterPicture ]
+    )
+}
+
+<RasterPictureFacet> CLOSED {
+    (  $<RasterPictureFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:bitsPerPixel @linkml:Integer ? ;
+          uco-observable:camera @<ObservableObject> ? ;
+          uco-observable:imageCompressionMethod @linkml:String ? ;
+          uco-observable:pictureHeight @linkml:Integer ? ;
+          uco-observable:pictureType @linkml:String ? ;
+          uco-observable:pictureWidth @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:RasterPictureFacet ] ?
+    )
+}
+
+<RecoveredObject> CLOSED {
+    (  $<RecoveredObject_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:RecoveredObject ]
+    )
+}
+
+<RecoveredObjectFacet> CLOSED {
+    (  $<RecoveredObjectFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:contentRecoveredStatus @linkml:String ? ;
+          uco-observable:metadataRecoveredStatus @linkml:String ? ;
+          uco-observable:nameRecoveredStatus @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:RecoveredObjectFacet ] ?
+    )
+}
+
+<RelatedIdentityFacet> CLOSED {
+    (  $<RelatedIdentityFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:RelatedIdentityFacet ] ?
+    )
+}
+
+<Relationship> CLOSED {
+    (  $<Relationship_tes> (  &<UcoObject_tes> ;
+          rdf:type [ uco-core:UcoObject ] ? ;
+          uco-core:endTime @linkml:Datetime * ;
+          uco-core:isDirectional @linkml:Boolean ;
+          uco-core:kindOfRelationship @linkml:String ? ;
+          uco-core:source @<UcoObject> + ;
+          uco-core:startTime @linkml:Datetime * ;
+          uco-core:target @<UcoObject>
+       ) ;
+       rdf:type [ uco-core:Relationship ]
+    )
+}
+
+<ReleaseToMarking> CLOSED {
+    (  $<ReleaseToMarking_tes> (  &<MarkingModel_tes> ;
+          rdf:type [ uco-marking:MarkingModel ] ? ;
+          uco-marking:authorizedIdentities @linkml:String + ;
+          uco-marking:definitionType @linkml:String *
+       ) ;
+       rdf:type [ uco-marking:ReleaseToMarking ] ?
+    )
+}
+
+<ReparsePoint> CLOSED {
+    (  $<ReparsePoint_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ReparsePoint ]
+    )
+}
+
+<Role>  (
+    CLOSED {
+       (  $<Role_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ?
+          ) ;
+          rdf:type [ uco-role:Role ]
+       )
+    } OR @<BenevolentRole> OR @<MaliciousRole> OR @<NeutralRole>
+)
+
+<SecurityAppliance> CLOSED {
+    (  $<SecurityAppliance_tes> (  &<Appliance_tes> ;
+          rdf:type [ uco-observable:Appliance ] ?
+       ) ;
+       rdf:type [ uco-observable:SecurityAppliance ]
+    )
+}
+
+<Semaphore> CLOSED {
+    (  $<Semaphore_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Semaphore ]
+    )
+}
+
+<SendControlCodeEffectFacet> CLOSED {
+    (  $<SendControlCodeEffectFacet_tes> (  &<DefinedEffectFacet_tes> ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ? ;
+          uco-observable:controlCode @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:SendControlCodeEffectFacet ] ?
+    )
+}
+
+<Server> CLOSED {
+    (  $<Server_tes> (  &<Computer_tes> ;
+          rdf:type [ uco-observable:Computer ] ?
+       ) ;
+       rdf:type [ uco-observable:Server ]
+    )
+}
+
+<ShopListing> CLOSED {
+    (  $<ShopListing_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:ShopListing ]
+    )
+}
+
+<SIMCard> CLOSED {
+    (  $<SIMCard_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:SIMCard ]
+    )
+}
+
+<SIMCardFacet> CLOSED {
+    (  $<SIMCardFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:ICCID @linkml:String ? ;
+          uco-observable:IMSI @linkml:String ? ;
+          uco-observable:PIN @linkml:String ? ;
+          uco-observable:PUK @linkml:String ? ;
+          uco-observable:SIMForm @linkml:String ? ;
+          uco-observable:SIMType @linkml:String ? ;
+          uco-observable:carrier @<Identity> ? ;
+          uco-observable:storageCapacityInBytes @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:SIMCardFacet ] ?
+    )
+}
+
+<SimpleAddressFacet> CLOSED {
+    (  $<SimpleAddressFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-location:addressType @linkml:String ? ;
+          uco-location:country @linkml:String ? ;
+          uco-location:locality @linkml:String ? ;
+          uco-location:postalCode @linkml:String ? ;
+          uco-location:region @linkml:String ? ;
+          uco-location:street @linkml:String ?
+       ) ;
+       rdf:type [ uco-location:SimpleAddressFacet ] ?
+    )
+}
+
+<SimpleNameFacet> CLOSED {
+    (  $<SimpleNameFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ? ;
+          uco-identity:familyName @linkml:String * ;
+          uco-identity:givenName @linkml:String * ;
+          uco-identity:honorificPrefix @linkml:String * ;
+          uco-identity:honorificSuffix @linkml:String *
+       ) ;
+       rdf:type [ uco-identity:SimpleNameFacet ] ?
+    )
+}
+
+<SIPAddress> CLOSED {
+    (  $<SIPAddress_tes> (  &<DigitalAddress_tes> ;
+          rdf:type [ uco-observable:DigitalAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:SIPAddress ]
+    )
+}
+
+<SIPAddressFacet> CLOSED {
+    (  $<SIPAddressFacet_tes> (  &<DigitalAddressFacet_tes> ;
+          rdf:type [ uco-observable:DigitalAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:SIPAddressFacet ] ?
+    )
+}
+
+<SmartDevice>  (
+    CLOSED {
+       (  $<SmartDevice_tes> (  &<Device_tes> ;
+             rdf:type [ uco-observable:Device ] ?
+          ) ;
+          rdf:type [ uco-observable:SmartDevice ]
+       )
+    } OR @<WearableDevice>
+)
+
+<SmartPhone>  (
+    CLOSED {
+       (  $<SmartPhone_tes> (  &<MobilePhone_tes> ;
+             rdf:type [ uco-observable:MobilePhone ] ? ;
+             &<Computer_tes> ;
+             rdf:type [ uco-observable:Computer ] ? ;
+             &<SmartDevice_tes> ;
+             rdf:type [ uco-observable:SmartDevice ] ?
+          ) ;
+          rdf:type [ uco-observable:SmartPhone ]
+       )
+    } OR @<AndroidPhone> OR @<BlackberryPhone> OR @<IPhone>
+)
+
+<SMSMessage> CLOSED {
+    (  $<SMSMessage_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:SMSMessage ]
+    )
+}
+
+<SMSMessageFacet> CLOSED {
+    (  $<SMSMessageFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:isRead @linkml:Boolean ?
+       ) ;
+       rdf:type [ uco-observable:SMSMessageFacet ] ?
+    )
+}
+
+<Snapshot> CLOSED {
+    (  $<Snapshot_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Snapshot ]
+    )
+}
+
+<Socket> CLOSED {
+    (  $<Socket_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Socket ]
+    )
+}
+
+<SocketAddress> CLOSED {
+    (  $<SocketAddress_tes> (  &<Address_tes> ;
+          rdf:type [ uco-observable:Address ] ?
+       ) ;
+       rdf:type [ uco-observable:SocketAddress ]
+    )
+}
+
+<Software>  (
+    CLOSED {
+       (  $<Software_tes> (  &<ObservableObject_tes> ;
+             rdf:type [ uco-observable:ObservableObject ] ?
+          ) ;
+          rdf:type [ uco-observable:Software ]
+       )
+    } OR @<ConfiguredSoftware>
+)
+
+<SoftwareFacet> CLOSED {
+    (  $<SoftwareFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:language @linkml:String ? ;
+          uco-observable:manufacturer @<Identity> ? ;
+          uco-observable:cpeid @linkml:String ? ;
+          uco-observable:swid @linkml:String ? ;
+          uco-observable:version @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:SoftwareFacet ] ?
+    )
+}
+
+<SQLiteBlob> CLOSED {
+    (  $<SQLiteBlob_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:SQLiteBlob ]
+    )
+}
+
+<SQLiteBlobFacet> CLOSED {
+    (  $<SQLiteBlobFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:columnName @linkml:String ? ;
+          uco-observable:rowCondition @linkml:String ? ;
+          uco-observable:rowIndex @<UcoPositiveInteger> * ;
+          uco-observable:tableName @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:SQLiteBlobFacet ] ?
+    )
+}
+
+<StateChangeEffectFacet> CLOSED {
+    (  $<StateChangeEffectFacet_tes> (  &<DefinedEffectFacet_tes> ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ? ;
+          uco-observable:newObject @<ObservableObject> ? ;
+          uco-observable:oldObject @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:StateChangeEffectFacet ] ?
+    )
+}
+
+<StatementMarking> CLOSED {
+    (  $<StatementMarking_tes> (  &<MarkingModel_tes> ;
+          rdf:type [ uco-marking:MarkingModel ] ? ;
+          uco-marking:definitionType @linkml:String * ;
+          uco-marking:statement @linkml:String
+       ) ;
+       rdf:type [ uco-marking:StatementMarking ] ?
+    )
+}
+
+<StorageMedium> CLOSED {
+    (  $<StorageMedium_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:StorageMedium ]
+    )
+}
+
+<StorageMediumFacet> CLOSED {
+    (  $<StorageMediumFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:totalStorageCapacityInBytes @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:StorageMediumFacet ] ?
+    )
+}
+
+<SymbolicLink> CLOSED {
+    (  $<SymbolicLink_tes> (  &<FileSystemObject_tes> ;
+          rdf:type [ uco-observable:FileSystemObject ] ?
+       ) ;
+       rdf:type [ uco-observable:SymbolicLink ]
+    )
+}
+
+<SymbolicLinkFacet> CLOSED {
+    (  $<SymbolicLinkFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:targetFile @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:SymbolicLinkFacet ] ?
+    )
+}
+
+<TableField> CLOSED {
+    (  $<TableField_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:TableField ]
+    )
+}
+
+<TableFieldFacet> CLOSED {
+    (  $<TableFieldFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:recordFieldIsNull @linkml:Boolean ? ;
+          uco-observable:recordFieldName @linkml:String ? ;
+          uco-observable:recordFieldValue @linkml:String ? ;
+          uco-observable:recordRowID @linkml:String ? ;
+          uco-observable:tableName @linkml:String ? ;
+          uco-observable:tableSchema @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:TableFieldFacet ] ?
+    )
+}
+
+<Tablet> CLOSED {
+    (  $<Tablet_tes> (  &<Computer_tes> ;
+          rdf:type [ uco-observable:Computer ] ? ;
+          &<MobileDevice_tes> ;
+          rdf:type [ uco-observable:MobileDevice ] ? ;
+          &<SmartDevice_tes> ;
+          rdf:type [ uco-observable:SmartDevice ] ?
+       ) ;
+       rdf:type [ uco-observable:Tablet ]
+    )
+}
+
+<TaskActionType> CLOSED {
+    (  $<TaskActionType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:actionID @linkml:String ? ;
+          uco-observable:actionType @linkml:String ? ;
+          uco-observable:iComHandlerAction @<IComHandlerActionType> ? ;
+          uco-observable:iEmailAction @<ObservableObject> ? ;
+          uco-observable:iExecAction @<IExecActionType> ? ;
+          uco-observable:iShowMessageAction @<IShowMessageActionType> ?
+       ) ;
+       rdf:type [ uco-observable:TaskActionType ] ?
+    )
+}
+
+<TCPConnection> CLOSED {
+    (  $<TCPConnection_tes> (  &<NetworkConnection_tes> ;
+          rdf:type [ uco-observable:NetworkConnection ] ?
+       ) ;
+       rdf:type [ uco-observable:TCPConnection ]
+    )
+}
+
+<TCPConnectionFacet> CLOSED {
+    (  $<TCPConnectionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:destinationFlags @<UcoHexBinary> * ;
+          uco-observable:sourceFlags @<UcoHexBinary> *
+       ) ;
+       rdf:type [ uco-observable:TCPConnectionFacet ] ?
+    )
+}
+
+<Technique> CLOSED {
+    (  $<Technique_tes> (  &<UcoType_tes> ;
+          rdf:type [ uco-core:UcoType ] ? ;
+          uco-action:techniqueID @linkml:String *
+       ) ;
+       rdf:type [ uco-action:Technique ]
+    )
+}
+
+<TermsOfUseMarking> CLOSED {
+    (  $<TermsOfUseMarking_tes> (  &<MarkingModel_tes> ;
+          rdf:type [ uco-marking:MarkingModel ] ? ;
+          uco-marking:definitionType @linkml:String * ;
+          uco-marking:termsOfUse @linkml:String
+       ) ;
+       rdf:type [ uco-marking:TermsOfUseMarking ] ?
+    )
+}
+
+<Thread> CLOSED {
+    (  $<Thread_tes> (  &<UcoThing_tes> ;
+          rdf:type [ uco-core:UcoThing ] ? ;
+          &<Bag_tes> ;
+          rdf:type [ coll:Bag ] ? ;
+          coll:item @<ThreadItem> * ;
+          uco-types:threadOriginItem @<ThreadItem> * ;
+          uco-types:threadTerminalItem @<ThreadItem> * ;
+          coll:size @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-types:Thread ]
+    )
+}
+
+<ThreadItem> CLOSED {
+    (  $<ThreadItem_tes> (  &<UcoThing_tes> ;
+          rdf:type [ uco-core:UcoThing ] ? ;
+          &<CoItem_tes> ;
+          rdf:type [ coll:Item ] ? ;
+          coll:itemContent @<UcoObject> ? ;
+          uco-types:threadNextItem @<ThreadItem> * ;
+          uco-types:threadPredecessor @<ThreadItem> * ;
+          uco-types:threadPreviousItem @<ThreadItem> * ;
+          uco-types:threadSuccessor @<ThreadItem> *
+       ) ;
+       rdf:type [ uco-types:ThreadItem ]
+    )
+}
+
+<Tool>  (
+    CLOSED {
+       (  $<Tool_tes> (  &<UcoObject_tes> ;
+             rdf:type [ uco-core:UcoObject ] ? ;
+             uco-tool:creator @<Identity> ? ;
+             uco-tool:references @linkml:Uri * ;
+             uco-tool:servicePack @linkml:String ? ;
+             uco-tool:toolType @linkml:String ? ;
+             uco-tool:version @linkml:String ?
+          ) ;
+          rdf:type [ uco-tool:Tool ]
+       )
+    } OR @<AnalyticTool> OR @<ConfiguredTool> OR @<DefensiveTool> OR @<MaliciousTool>
+)
+
+<TriggerType> CLOSED {
+    (  $<TriggerType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:isEnabled @linkml:Boolean ? ;
+          uco-observable:triggerBeginTime @linkml:Datetime ? ;
+          uco-observable:triggerDelay @linkml:String ? ;
+          uco-observable:triggerEndTime @linkml:Datetime ? ;
+          uco-observable:triggerFrequency @linkml:String ? ;
+          uco-observable:triggerMaxRunTime @linkml:String ? ;
+          uco-observable:triggerSessionChangeType @linkml:String ? ;
+          uco-observable:triggerType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:TriggerType ] ?
+    )
+}
+
+<Tweet> CLOSED {
+    (  $<Tweet_tes> (  &<Message_tes> ;
+          rdf:type [ uco-observable:Message ] ?
+       ) ;
+       rdf:type [ uco-observable:Tweet ]
+    )
+}
+
+<TwitterProfileFacet> CLOSED {
+    (  $<TwitterProfileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:favoritesCount @<UcoNonNegativeInteger> ? ;
+          uco-observable:followersCount @<UcoNonNegativeInteger> ? ;
+          uco-observable:friendsCount @<UcoNonNegativeInteger> ? ;
+          uco-observable:listedCount @linkml:Integer ? ;
+          uco-observable:profileBackgroundHash @<Hash> * ;
+          uco-observable:profileBackgroundLocation @<ObservableObject> ? ;
+          uco-observable:profileBannerHash @<Hash> * ;
+          uco-observable:profileBannerLocation @<ObservableObject> ? ;
+          uco-observable:profileImageHash @<Hash> * ;
+          uco-observable:profileImageLocation @<ObservableObject> ? ;
+          uco-observable:profileIsProtected @linkml:Boolean ? ;
+          uco-observable:profileIsVerified @linkml:Boolean ? ;
+          uco-observable:statusesCount @<UcoNonNegativeInteger> ? ;
+          uco-observable:twitterHandle @linkml:String ? ;
+          uco-observable:twitterId @linkml:String ? ;
+          uco-observable:userLocationString @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:TwitterProfileFacet ] ?
+    )
+}
+
+<UcoDocument> CLOSED {
+    (  $<UcoDocument_tes> <graph> @<UcoThing> * ;
+       rdf:type [ <UcoDocument> ] ?
+    )
+}
+
+<UcoInherentCharacterizationThing>  (
+    CLOSED {
+       (  $<UcoInherentCharacterizationThing_tes> (  &<UcoThing_tes> ;
+             rdf:type [ uco-core:UcoThing ] ?
+          ) ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ?
+       )
+    } OR @<ApplicationVersion> OR @<ArrayOfAction> OR @<ArtifactClassification> OR @<BuildInformationType> OR @<BuildUtilityType>
+    OR @<CompilerType> OR @<ConfigurationEntry> OR @<ContactAddress> OR @<ContactAffiliation> OR @<ContactEmail> OR
+    @<ContactMessaging> OR @<ContactPhone> OR @<ContactProfile> OR @<ContactSIP> OR @<ContactURL> OR @<Dependency> OR @<Dictionary>
+    OR @<DictionaryEntry> OR @<EnvironmentVariable> OR @<ExternalReference> OR @<ExtractedString> OR @<Facet> OR @<GlobalFlagType>
+    OR @<GranularMarking> OR @<Hash> OR @<IComHandlerActionType> OR @<IExecActionType> OR @<IShowMessageActionType> OR
+    @<LibraryType> OR @<MarkingModel> OR @<MimePartType> OR @<PatternExpression> OR @<TaskActionType> OR @<TriggerType> OR
+    @<URLHistoryEntry> OR @<WhoisRegistrarInfoType> OR @<WindowsPEFileHeader> OR @<WindowsPEOptionalHeader> OR @<WindowsPESection>
+    OR @<WindowsRegistryValue>
+)
+
+<UcoObject>  (
+    CLOSED {
+       (  $<UcoObject_tes> (  &<UcoThing_tes> ;
+             rdf:type [ uco-core:UcoThing ] ? ;
+             uco-core:createdBy @<IdentityAbstraction> ? ;
+             uco-core:description @linkml:String * ;
+             uco-core:externalReference @<ExternalReference> * ;
+             uco-core:hasFacet @<Facet> * ;
+             uco-core:modifiedTime @linkml:Datetime * ;
+             uco-core:name @linkml:String ? ;
+             uco-core:objectCreatedTime @linkml:Datetime ? ;
+             uco-core:objectMarking @<MarkingDefinitionAbstraction> * ;
+             uco-core:objectStatus [ <https://w3id.org/lmodel/uco/ObjectStatusVocab#Draft>
+                <https://w3id.org/lmodel/uco/ObjectStatusVocab#Final> <https://w3id.org/lmodel/uco/ObjectStatusVocab#Deprecated> ]
+             ? ;
+             uco-core:specVersion @linkml:String ? ;
+             uco-core:tag @linkml:String *
+          ) ;
+          rdf:type [ uco-core:UcoObject ]
+       )
+    } OR @<Action> OR @<Assertion> OR @<AttributedName> OR @<Compilation> OR @<Configuration> OR @<ControlledVocabulary> OR
+    @<Event> OR @<IdentityAbstraction> OR @<Item> OR @<Location> OR @<MarkingDefinitionAbstraction> OR @<ModusOperandi> OR
+    @<Observable> OR @<Pattern> OR @<Relationship> OR @<Role> OR @<Tool>
+)
+
+<UcoThing>  (
+    CLOSED {
+       (  $<UcoThing_tes> rdf:type @linkml:Uriorcurie ? ;
+          rdf:type [ uco-core:UcoThing ] ?
+       )
+    } OR @<Thread> OR @<ThreadItem> OR @<UcoInherentCharacterizationThing> OR @<UcoObject>
+)
+
+<UcoType>  (
+    CLOSED {
+       (  $<UcoType_tes> rdf:type @linkml:Uriorcurie ? ;
+          rdf:type [ uco-core:UcoType ]
+       )
+    } OR @<Technique>
+)
+
+<UNIXAccount> CLOSED {
+    (  $<UNIXAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:UNIXAccount ]
+    )
+}
+
+<UNIXAccountFacet> CLOSED {
+    (  $<UNIXAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:gid @linkml:Integer ? ;
+          uco-observable:shell @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:UNIXAccountFacet ] ?
+    )
+}
+
+<UNIXFile> CLOSED {
+    (  $<UNIXFile_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:UNIXFile ]
+    )
+}
+
+<UNIXFilePermissionsFacet> CLOSED {
+    (  $<UNIXFilePermissionsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ?
+       ) ;
+       rdf:type [ uco-observable:UNIXFilePermissionsFacet ] ?
+    )
+}
+
+<UNIXProcess> CLOSED {
+    (  $<UNIXProcess_tes> (  &<Process_tes> ;
+          rdf:type [ uco-observable:Process ] ?
+       ) ;
+       rdf:type [ uco-observable:UNIXProcess ]
+    )
+}
+
+<UNIXProcessFacet> CLOSED {
+    (  $<UNIXProcessFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:openFileDescriptor @linkml:Integer * ;
+          uco-observable:ruid @<UcoNonNegativeInteger> *
+       ) ;
+       rdf:type [ uco-observable:UNIXProcessFacet ] ?
+    )
+}
+
+<UNIXVolumeFacet> CLOSED {
+    (  $<UNIXVolumeFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:mountPoint @linkml:String ? ;
+          uco-observable:options @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:UNIXVolumeFacet ] ?
+    )
+}
+
+<URL> CLOSED {
+    (  $<URL_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:URL ]
+    )
+}
+
+<URLFacet> CLOSED {
+    (  $<URLFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:fragment @linkml:String ? ;
+          uco-observable:fullValue @linkml:String ? ;
+          uco-observable:host @<ObservableObject> ? ;
+          uco-observable:password @linkml:String ? ;
+          uco-observable:path @linkml:String ? ;
+          uco-observable:port @linkml:Integer ? ;
+          uco-observable:query @linkml:String ? ;
+          uco-observable:scheme @linkml:String ? ;
+          uco-observable:userName @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:URLFacet ] ?
+    )
+}
+
+<URLHistory> CLOSED {
+    (  $<URLHistory_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:URLHistory ]
+    )
+}
+
+<URLHistoryEntry> CLOSED {
+    (  $<URLHistoryEntry_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:browserUserProfile @linkml:String ? ;
+          uco-observable:expirationTime @linkml:Datetime ? ;
+          uco-observable:firstVisit @linkml:Datetime ? ;
+          uco-observable:hostname @linkml:String ? ;
+          uco-observable:keywordSearchTerm @linkml:String * ;
+          uco-observable:lastVisit @linkml:Datetime ? ;
+          uco-observable:manuallyEnteredCount @<UcoNonNegativeInteger> ? ;
+          uco-observable:pageTitle @linkml:String ? ;
+          uco-observable:referrerUrl @<ObservableObject> * ;
+          uco-observable:url @<ObservableObject> ? ;
+          uco-observable:visitCount @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:URLHistoryEntry ] ?
+    )
+}
+
+<URLHistoryFacet> CLOSED {
+    (  $<URLHistoryFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:browserInformation @<ObservableObject> ? ;
+          uco-observable:urlHistoryEntry @<URLHistoryEntry> *
+       ) ;
+       rdf:type [ uco-observable:URLHistoryFacet ] ?
+    )
+}
+
+<URLVisit> CLOSED {
+    (  $<URLVisit_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:URLVisit ]
+    )
+}
+
+<URLVisitFacet> CLOSED {
+    (  $<URLVisitFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:browserInformation @<ObservableObject> ? ;
+          uco-observable:fromURLVisit @<ObservableObject> ? ;
+          uco-observable:url @<ObservableObject> ? ;
+          uco-observable:urlTransitionType @linkml:String ? ;
+          uco-observable:visitDuration @<UcoDuration> ? ;
+          uco-observable:visitTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:URLVisitFacet ] ?
+    )
+}
+
+<UserAccount> CLOSED {
+    (  $<UserAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:UserAccount ]
+    )
+}
+
+<UserAccountFacet> CLOSED {
+    (  $<UserAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:canEscalatePrivs @linkml:Boolean ? ;
+          uco-observable:homeDirectory @linkml:String ? ;
+          uco-observable:isPrivileged @linkml:Boolean ? ;
+          uco-observable:isServiceAccount @linkml:Boolean ?
+       ) ;
+       rdf:type [ uco-observable:UserAccountFacet ] ?
+    )
+}
+
+<UserSession> CLOSED {
+    (  $<UserSession_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:UserSession ]
+    )
+}
+
+<UserSessionFacet> CLOSED {
+    (  $<UserSessionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:effectiveGroup @linkml:String ? ;
+          uco-observable:effectiveGroupID @linkml:String ? ;
+          uco-observable:effectiveUser @<ObservableObject> ? ;
+          uco-observable:loginTime @linkml:Datetime ? ;
+          uco-observable:logoutTime @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:UserSessionFacet ] ?
+    )
+}
+
+<ValuesEnumeratedEffectFacet> CLOSED {
+    (  $<ValuesEnumeratedEffectFacet_tes> (  &<DefinedEffectFacet_tes> ;
+          rdf:type [ uco-observable:DefinedEffectFacet ] ? ;
+          uco-observable:values @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:ValuesEnumeratedEffectFacet ] ?
+    )
+}
+
+<Victim>  (
+    CLOSED {
+       (  $<Victim_tes> (  &<NeutralRole_tes> ;
+             rdf:type [ uco-role:NeutralRole ] ?
+          ) ;
+          rdf:type [ uco-victim:Victim ]
+       )
+    } OR @<VictimTargeting>
+)
+
+<VictimTargeting> CLOSED {
+    (  $<VictimTargeting_tes> (  &<Victim_tes> ;
+          rdf:type [ uco-victim:Victim ] ?
+       ) ;
+       rdf:type [ uco-victim:VictimTargeting ]
+    )
+}
+
+<VisaFacet> CLOSED {
+    (  $<VisaFacet_tes> (  &<IdentityFacet_tes> ;
+          rdf:type [ uco-identity:IdentityFacet ] ?
+       ) ;
+       rdf:type [ uco-identity:VisaFacet ] ?
+    )
+}
+
+<Volume> CLOSED {
+    (  $<Volume_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Volume ]
+    )
+}
+
+<VolumeFacet> CLOSED {
+    (  $<VolumeFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:sectorSize @linkml:Integer ? ;
+          uco-observable:volumeID @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:VolumeFacet ] ?
+    )
+}
+
+<WearableDevice> CLOSED {
+    (  $<WearableDevice_tes> (  &<SmartDevice_tes> ;
+          rdf:type [ uco-observable:SmartDevice ] ?
+       ) ;
+       rdf:type [ uco-observable:WearableDevice ]
+    )
+}
+
+<WebPage> CLOSED {
+    (  $<WebPage_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WebPage ]
+    )
+}
+
+<WhoIs> CLOSED {
+    (  $<WhoIs_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WhoIs ]
+    )
+}
+
+<WhoisContactFacet> CLOSED {
+    (  $<WhoisContactFacet_tes> (  &<ContactFacet_tes> ;
+          rdf:type [ uco-observable:ContactFacet ] ? ;
+          uco-observable:whoisContactType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WhoisContactFacet ] ?
+    )
+}
+
+<WhoIsFacet> CLOSED {
+    (  $<WhoIsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:creationDate @linkml:Datetime ? ;
+          uco-observable:dnssec [ <https://w3id.org/lmodel/uco/WhoisDNSSECTypeVocab#Signed>
+             <https://w3id.org/lmodel/uco/WhoisDNSSECTypeVocab#Unsigned> ] ? ;
+          uco-observable:domainID @linkml:String ? ;
+          uco-observable:domainName @<ObservableObject> ? ;
+          uco-observable:expirationDate @linkml:Datetime ? ;
+          uco-observable:ipAddress @<ObservableObject> ? ;
+          uco-observable:lookupDate @linkml:Datetime ? ;
+          uco-observable:nameServer @<ObservableObject> * ;
+          uco-observable:regionalInternetRegistry @linkml:String ? ;
+          uco-observable:registrantContactInfo @<ObservableObject> ? ;
+          uco-observable:registrantIDs @linkml:String * ;
+          uco-observable:registrarInfo @<WhoisRegistrarInfoType> ? ;
+          uco-observable:remarks @linkml:String ? ;
+          uco-observable:serverName @<ObservableObject> ? ;
+          uco-observable:sponsoringRegistrar @linkml:String ? ;
+          uco-observable:status @linkml:String ? ;
+          uco-observable:updatedDate @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:WhoIsFacet ] ?
+    )
+}
+
+<WhoisRegistrarInfoType> CLOSED {
+    (  $<WhoisRegistrarInfoType_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:contactPhoneNumber @<ObservableObject> ? ;
+          uco-observable:emailAddress @<ObservableObject> ? ;
+          uco-observable:geolocationAddress @<Location> ? ;
+          uco-observable:referralURL @<ObservableObject> ? ;
+          uco-observable:registrarGUID @linkml:String ? ;
+          uco-observable:registrarID @linkml:String ? ;
+          uco-observable:registrarName @linkml:String ? ;
+          uco-observable:whoisServer @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:WhoisRegistrarInfoType ] ?
+    )
+}
+
+<WifiAddress> CLOSED {
+    (  $<WifiAddress_tes> (  &<MACAddress_tes> ;
+          rdf:type [ uco-observable:MACAddress ] ?
+       ) ;
+       rdf:type [ uco-observable:WifiAddress ]
+    )
+}
+
+<WifiAddressFacet> CLOSED {
+    (  $<WifiAddressFacet_tes> (  &<MACAddressFacet_tes> ;
+          rdf:type [ uco-observable:MACAddressFacet ] ?
+       ) ;
+       rdf:type [ uco-observable:WifiAddressFacet ] ?
+    )
+}
+
+<Wiki> CLOSED {
+    (  $<Wiki_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:Wiki ]
+    )
+}
+
+<WikiArticle> CLOSED {
+    (  $<WikiArticle_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WikiArticle ]
+    )
+}
+
+<WindowsAccount> CLOSED {
+    (  $<WindowsAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsAccount ]
+    )
+}
+
+<WindowsAccountFacet> CLOSED {
+    (  $<WindowsAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:groups @linkml:String *
+       ) ;
+       rdf:type [ uco-observable:WindowsAccountFacet ] ?
+    )
+}
+
+<WindowsActiveDirectoryAccount> CLOSED {
+    (  $<WindowsActiveDirectoryAccount_tes> (  &<DigitalAccount_tes> ;
+          rdf:type [ uco-observable:DigitalAccount ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsActiveDirectoryAccount ]
+    )
+}
+
+<WindowsActiveDirectoryAccountFacet> CLOSED {
+    (  $<WindowsActiveDirectoryAccountFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:activeDirectoryGroups @linkml:String * ;
+          uco-observable:objectGUID @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WindowsActiveDirectoryAccountFacet ] ?
+    )
+}
+
+<WindowsComputerSpecification> CLOSED {
+    (  $<WindowsComputerSpecification_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsComputerSpecification ]
+    )
+}
+
+<WindowsComputerSpecificationFacet> CLOSED {
+    (  $<WindowsComputerSpecificationFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:domain @linkml:String * ;
+          uco-observable:globalFlagList @<GlobalFlagType> * ;
+          uco-observable:lastShutdownDate @linkml:Datetime ? ;
+          uco-observable:msProductID @linkml:String ? ;
+          uco-observable:msProductName @linkml:String ? ;
+          uco-observable:netBIOSName @linkml:String ? ;
+          uco-observable:osInstallDate @linkml:Datetime ? ;
+          uco-observable:osLastUpgradeDate @linkml:Datetime ? ;
+          uco-observable:registeredOrganization @<Identity> ? ;
+          uco-observable:registeredOwner @<Identity> ? ;
+          uco-observable:windowsDirectory @<ObservableObject> ? ;
+          uco-observable:windowsSystemDirectory @<ObservableObject> ? ;
+          uco-observable:windowsTempDirectory @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:WindowsComputerSpecificationFacet ] ?
+    )
+}
+
+<WindowsCriticalSection> CLOSED {
+    (  $<WindowsCriticalSection_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsCriticalSection ]
+    )
+}
+
+<WindowsEvent> CLOSED {
+    (  $<WindowsEvent_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsEvent ]
+    )
+}
+
+<WindowsFilemapping> CLOSED {
+    (  $<WindowsFilemapping_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsFilemapping ]
+    )
+}
+
+<WindowsHandle> CLOSED {
+    (  $<WindowsHandle_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsHandle ]
+    )
+}
+
+<WindowsHook> CLOSED {
+    (  $<WindowsHook_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsHook ]
+    )
+}
+
+<WindowsMailslot> CLOSED {
+    (  $<WindowsMailslot_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsMailslot ]
+    )
+}
+
+<WindowsNetworkShare> CLOSED {
+    (  $<WindowsNetworkShare_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsNetworkShare ]
+    )
+}
+
+<WindowsPEBinaryFile> CLOSED {
+    (  $<WindowsPEBinaryFile_tes> (  &<File_tes> ;
+          rdf:type [ uco-observable:File ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPEBinaryFile ]
+    )
+}
+
+<WindowsPEBinaryFileFacet> CLOSED {
+    (  $<WindowsPEBinaryFileFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:characteristics @<UcoUnsignedShort> * ;
+          uco-observable:fileHeaderHashes @<Hash> * ;
+          uco-observable:impHash @linkml:String ? ;
+          uco-observable:machine @linkml:String * ;
+          uco-observable:numberOfSections @linkml:Integer ? ;
+          uco-observable:numberOfSymbols @linkml:Integer ? ;
+          uco-observable:optionalHeader @<WindowsPEOptionalHeader> ? ;
+          uco-observable:peType @linkml:String ? ;
+          uco-observable:pointerToSymbolTable @<UcoHexBinary> * ;
+          uco-observable:sections @<WindowsPESection> * ;
+          uco-observable:sizeOfOptionalHeader @linkml:Integer ? ;
+          uco-observable:timeDateStamp @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPEBinaryFileFacet ] ?
+    )
+}
+
+<WindowsPEFileHeader> CLOSED {
+    (  $<WindowsPEFileHeader_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:timeDateStamp @linkml:Datetime ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPEFileHeader ] ?
+    )
+}
+
+<WindowsPEOptionalHeader> CLOSED {
+    (  $<WindowsPEOptionalHeader_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:addressOfEntryPoint @<UcoUnsignedInt> * ;
+          uco-observable:baseOfCode @<UcoUnsignedInt> * ;
+          uco-observable:checksum @<UcoUnsignedInt> * ;
+          uco-observable:dllCharacteristics @<UcoUnsignedShort> * ;
+          uco-observable:fileAlignment @<UcoUnsignedInt> * ;
+          uco-observable:imageBase @<UcoUnsignedInt> * ;
+          uco-observable:loaderFlags @<UcoUnsignedInt> * ;
+          uco-observable:magic @<UcoUnsignedShort> * ;
+          uco-observable:majorImageVersion @<UcoUnsignedShort> * ;
+          uco-observable:majorLinkerVersion @<UcoByte> * ;
+          uco-observable:majorOSVersion @<UcoUnsignedShort> * ;
+          uco-observable:majorSubsystemVersion @<UcoUnsignedShort> * ;
+          uco-observable:minorImageVersion @<UcoUnsignedShort> * ;
+          uco-observable:minorLinkerVersion @<UcoByte> * ;
+          uco-observable:minorOSVersion @<UcoUnsignedShort> * ;
+          uco-observable:minorSubsystemVersion @<UcoUnsignedShort> * ;
+          uco-observable:numberOfRVAAndSizes @<UcoUnsignedInt> * ;
+          uco-observable:sectionAlignment @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfCode @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfHeaders @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfHeapCommit @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfHeapReserve @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfImage @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfInitializedData @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfStackCommit @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfStackReserve @<UcoUnsignedInt> * ;
+          uco-observable:sizeOfUninitializedData @<UcoUnsignedInt> * ;
+          uco-observable:subsystem @<UcoUnsignedShort> * ;
+          uco-observable:win32VersionValue @<UcoUnsignedInt> *
+       ) ;
+       rdf:type [ uco-observable:WindowsPEOptionalHeader ] ?
+    )
+}
+
+<WindowsPESection> CLOSED {
+    (  $<WindowsPESection_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:entropy @linkml:Decimal ? ;
+          uco-observable:hashes @<Hash> * ;
+          uco-core:name @linkml:String ? ;
+          uco-observable:size @linkml:Integer ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPESection ] ?
+    )
+}
+
+<WindowsPrefetch> CLOSED {
+    (  $<WindowsPrefetch_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPrefetch ]
+    )
+}
+
+<WindowsPrefetchFacet> CLOSED {
+    (  $<WindowsPrefetchFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:accessedDirectory @<ObservableObject> * ;
+          uco-observable:accessedFile @<ObservableObject> * ;
+          uco-observable:applicationFileName @linkml:String ? ;
+          uco-observable:firstRun @linkml:Datetime ? ;
+          uco-observable:lastRun @linkml:Datetime ? ;
+          uco-observable:prefetchHash @linkml:String ? ;
+          uco-observable:timesExecuted @linkml:Integer ? ;
+          uco-observable:volume @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:WindowsPrefetchFacet ] ?
+    )
+}
+
+<WindowsProcess> CLOSED {
+    (  $<WindowsProcess_tes> (  &<Process_tes> ;
+          rdf:type [ uco-observable:Process ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsProcess ]
+    )
+}
+
+<WindowsProcessFacet> CLOSED {
+    (  $<WindowsProcessFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:aslrEnabled @linkml:Boolean ? ;
+          uco-observable:depEnabled @linkml:Boolean ? ;
+          uco-observable:ownerSID @linkml:String ? ;
+          uco-observable:priority @linkml:String ? ;
+          uco-observable:startupInfo @<Dictionary> ? ;
+          uco-observable:windowTitle @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WindowsProcessFacet ] ?
+    )
+}
+
+<WindowsRegistryHive> CLOSED {
+    (  $<WindowsRegistryHive_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsRegistryHive ]
+    )
+}
+
+<WindowsRegistryHiveFacet> CLOSED {
+    (  $<WindowsRegistryHiveFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:hiveType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WindowsRegistryHiveFacet ] ?
+    )
+}
+
+<WindowsRegistryKey> CLOSED {
+    (  $<WindowsRegistryKey_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsRegistryKey ]
+    )
+}
+
+<WindowsRegistryKeyFacet> CLOSED {
+    (  $<WindowsRegistryKeyFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:numberOfSubkeys @linkml:Integer ? ;
+          uco-observable:creator @<ObservableObject> ? ;
+          uco-observable:key @linkml:String ? ;
+          uco-observable:modifiedTime @linkml:Datetime ? ;
+          uco-observable:registryValues @<WindowsRegistryValue> *
+       ) ;
+       rdf:type [ uco-observable:WindowsRegistryKeyFacet ] ?
+    )
+}
+
+<WindowsRegistryValue> CLOSED {
+    (  $<WindowsRegistryValue_tes> (  &<UcoInherentCharacterizationThing_tes> ;
+          rdf:type [ uco-core:UcoInherentCharacterizationThing ] ? ;
+          uco-observable:data @linkml:String ? ;
+          uco-observable:dataType @linkml:String ? ;
+          uco-core:name @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WindowsRegistryValue ] ?
+    )
+}
+
+<WindowsService> CLOSED {
+    (  $<WindowsService_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsService ]
+    )
+}
+
+<WindowsServiceFacet> CLOSED {
+    (  $<WindowsServiceFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:descriptions @linkml:String * ;
+          uco-observable:displayName @linkml:String ? ;
+          uco-observable:groupName @linkml:String ? ;
+          uco-observable:serviceName @linkml:String ? ;
+          uco-observable:serviceStatus @linkml:String ? ;
+          uco-observable:serviceType @linkml:String ? ;
+          uco-observable:startCommandLine @linkml:String ? ;
+          uco-observable:startType @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WindowsServiceFacet ] ?
+    )
+}
+
+<WindowsSystemRestore> CLOSED {
+    (  $<WindowsSystemRestore_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsSystemRestore ]
+    )
+}
+
+<WindowsTask> CLOSED {
+    (  $<WindowsTask_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsTask ]
+    )
+}
+
+<WindowsTaskFacet> CLOSED {
+    (  $<WindowsTaskFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:account @<ObservableObject> ? ;
+          uco-observable:accountLogonType @linkml:String ? ;
+          uco-observable:accountRunLevel @linkml:String ? ;
+          uco-observable:actionList @<TaskActionType> * ;
+          uco-observable:application @<ObservableObject> ? ;
+          uco-observable:exitCode @linkml:Integer ? ;
+          uco-observable:flags @linkml:String * ;
+          uco-observable:imageName @linkml:String ? ;
+          uco-observable:maxRunTime @linkml:Integer ? ;
+          uco-observable:mostRecentRunTime @linkml:Datetime ? ;
+          uco-observable:nextRunTime @linkml:Datetime ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:parameters @linkml:String ? ;
+          uco-observable:priority @linkml:String ? ;
+          uco-observable:status [ <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_ACCOUNT_DBASE_CORRUPT>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_ACCOUNT_INFORMATION_NOT_SET>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_ACCOUNT_NAME_NOT_FOUND>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_CANNOT_OPEN_TASK>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_INVALID_TASK>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_NO_SECURITY_SERVICES>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_SERVICE_NOT_INSTALLED>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_SERVICE_NOT_RUNNING>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_TASK_NOT_READY>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_TASK_NOT_RUNNING>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_TRIGGER_NOT_FOUND>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_UNKNOWN_OBJECT_VERSION>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_E_UNSUPPORTED_ACCOUNT_OPTION>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_EVENT_TRIGGER>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_DISABLED>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_HAS_NOT_RUN>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_NOT_SCHEDULED>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_NO_MORE_RUNS>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_NO_VALID_TRIGGERS>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_READY>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_RUNNING>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#SCHED_S_TASK_TERMINATED>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#TASK_STATE_QUEUED>
+             <https://w3id.org/lmodel/uco/TaskStatusVocab#TASK_STATE_UNKNOWN> ] ? ;
+          uco-observable:taskComment @linkml:String ? ;
+          uco-observable:taskCreator @linkml:String ? ;
+          uco-observable:triggerList @<TriggerType> * ;
+          uco-observable:workItemData @<ObservableObject> ? ;
+          uco-observable:workingDirectory @<ObservableObject> ?
+       ) ;
+       rdf:type [ uco-observable:WindowsTaskFacet ] ?
+    )
+}
+
+<WindowsThread> CLOSED {
+    (  $<WindowsThread_tes> (  &<ProcessThread_tes> ;
+          rdf:type [ uco-observable:ProcessThread ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsThread ]
+    )
+}
+
+<WindowsThreadFacet> CLOSED {
+    (  $<WindowsThreadFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:creationFlags @<UcoUnsignedInt> * ;
+          uco-observable:creationTime @linkml:Datetime ? ;
+          uco-observable:observableCreatedTime @linkml:Datetime ? ;
+          uco-observable:context @linkml:String ? ;
+          uco-observable:parameterAddress @<UcoHexBinary> * ;
+          uco-observable:priority @linkml:Integer ? ;
+          uco-observable:runningStatus @linkml:String ? ;
+          uco-observable:securityAttributes @linkml:String ? ;
+          uco-observable:stackSize @<UcoNonNegativeInteger> * ;
+          uco-observable:startAddress @<UcoHexBinary> * ;
+          uco-observable:threadID @<UcoNonNegativeInteger> *
+       ) ;
+       rdf:type [ uco-observable:WindowsThreadFacet ] ?
+    )
+}
+
+<WindowsVolumeFacet> CLOSED {
+    (  $<WindowsVolumeFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:driveLetter @linkml:String ? ;
+          uco-observable:driveType @linkml:String ? ;
+          uco-observable:windowsVolumeAttributes [ <https://w3id.org/lmodel/uco/WindowsVolumeAttributeVocab#Hidden>
+             <https://w3id.org/lmodel/uco/WindowsVolumeAttributeVocab#NoDefaultDriveLetter>
+             <https://w3id.org/lmodel/uco/WindowsVolumeAttributeVocab#ReadOnly>
+             <https://w3id.org/lmodel/uco/WindowsVolumeAttributeVocab#ShadowCopy> ] *
+       ) ;
+       rdf:type [ uco-observable:WindowsVolumeFacet ] ?
+    )
+}
+
+<WindowsWaitableTime> CLOSED {
+    (  $<WindowsWaitableTime_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:WindowsWaitableTime ]
+    )
+}
+
+<WirelessNetworkConnection> CLOSED {
+    (  $<WirelessNetworkConnection_tes> (  &<NetworkConnection_tes> ;
+          rdf:type [ uco-observable:NetworkConnection ] ?
+       ) ;
+       rdf:type [ uco-observable:WirelessNetworkConnection ]
+    )
+}
+
+<WirelessNetworkConnectionFacet> CLOSED {
+    (  $<WirelessNetworkConnectionFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:baseStation @linkml:String ? ;
+          uco-observable:password @linkml:String ? ;
+          uco-observable:ssid @linkml:String ? ;
+          uco-observable:wirelessNetworkSecurityMode @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:WirelessNetworkConnectionFacet ] ?
+    )
+}
+
+<WriteBlocker> CLOSED {
+    (  $<WriteBlocker_tes> (  &<Device_tes> ;
+          rdf:type [ uco-observable:Device ] ?
+       ) ;
+       rdf:type [ uco-observable:WriteBlocker ]
+    )
+}
+
+<X509Certificate> CLOSED {
+    (  $<X509Certificate_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:X509Certificate ]
+    )
+}
+
+<X509CertificateFacet> CLOSED {
+    (  $<X509CertificateFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:isSelfSigned @linkml:Boolean ? ;
+          uco-observable:issuer @linkml:String ? ;
+          uco-observable:issuerHash @<Hash> ? ;
+          uco-observable:version @linkml:String ? ;
+          uco-observable:serialNumber @linkml:String ? ;
+          uco-observable:signature @linkml:String ? ;
+          uco-observable:signatureAlgorithm @linkml:String ? ;
+          uco-observable:subject @linkml:String ? ;
+          uco-observable:subjectHash @<Hash> ? ;
+          uco-observable:subjectPublicKeyAlgorithm @linkml:String ? ;
+          uco-observable:subjectPublicKeyExponent @linkml:Integer ? ;
+          uco-observable:subjectPublicKeyModulus @linkml:String ? ;
+          uco-observable:thumbprintHash @<Hash> ? ;
+          uco-observable:validityNotAfter @linkml:Datetime ? ;
+          uco-observable:validityNotBefore @linkml:Datetime ? ;
+          uco-observable:x509v3extensions @<X509V3ExtensionsFacet> ?
+       ) ;
+       rdf:type [ uco-observable:X509CertificateFacet ] ?
+    )
+}
+
+<X509V3Certificate> CLOSED {
+    (  $<X509V3Certificate_tes> (  &<ObservableObject_tes> ;
+          rdf:type [ uco-observable:ObservableObject ] ?
+       ) ;
+       rdf:type [ uco-observable:X509V3Certificate ]
+    )
+}
+
+<X509V3ExtensionsFacet> CLOSED {
+    (  $<X509V3ExtensionsFacet_tes> (  &<Facet_tes> ;
+          rdf:type [ uco-core:Facet ] ? ;
+          uco-observable:authorityKeyIdentifier @linkml:String ? ;
+          uco-observable:basicConstraints @linkml:String ? ;
+          uco-observable:certificatePolicies @linkml:String ? ;
+          uco-observable:crlDistributionPoints @linkml:String ? ;
+          uco-observable:extendedKeyUsage @linkml:String ? ;
+          uco-observable:inhibitAnyPolicy @linkml:String ? ;
+          uco-observable:issuerAlternativeName @linkml:String ? ;
+          uco-observable:keyUsage @linkml:String ? ;
+          uco-observable:nameConstraints @linkml:String ? ;
+          uco-observable:policyConstraints @linkml:String ? ;
+          uco-observable:policyMappings @linkml:String ? ;
+          uco-observable:privateKeyUsagePeriodNotAfter @linkml:Datetime ? ;
+          uco-observable:privateKeyUsagePeriodNotBefore @linkml:Datetime ? ;
+          uco-observable:subjectAlternativeName @linkml:String ? ;
+          uco-observable:subjectDirectoryAttributes @linkml:String ? ;
+          uco-observable:subjectKeyIdentifier @linkml:String ?
+       ) ;
+       rdf:type [ uco-observable:X509V3ExtensionsFacet ] ?
+    )
+}

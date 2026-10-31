@@ -1,0 +1,119 @@
+---
+id: https://w3id.org/lmodel/uco-analysis
+name: uco_analysis
+title: UCO Analysis
+description: >-
+  This ontology defines classes and properties for characterizing analytic actions and results.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_action
+
+slots:
+
+  class:
+    description: A specific classification class.
+    slot_uri: uco-analysis:class
+    range: string
+    required: true
+    multivalued: true
+
+  classification:
+    description: An asserted classification of an analyzed artifact resulting from the analysis.
+    slot_uri: uco-analysis:classification
+    range: ArtifactClassification
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  classificationConfidence:
+    description: The level of confidence that a classification assertion is correct.
+    slot_uri: uco-analysis:classificationConfidence
+    range: decimal
+
+  originatingAnalysis:
+    description: The analysis action that resulted in an analytic result.
+    slot_uri: uco-analysis:originatingAnalysis
+    range: Analysis
+    inlined: false
+
+  resultContent:
+    description: Structured content expressing the results of an analysis action.
+    slot_uri: uco-analysis:resultContent
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+classes:
+
+  Analysis:
+    is_a: Action
+    class_uri: uco-analysis:Analysis
+    description: >-
+      An analysis is an action of detailed examination of something in order to understand its nature,
+      context or essential features.
+
+  AnalyticResult:
+    is_a: Assertion
+    class_uri: uco-analysis:AnalyticResult
+    description: >-
+      An analytic result is a characterization of the understanding resulting from an analysis action.
+    slots:
+      - originatingAnalysis
+      - resultContent
+
+  AnalyticResultFacet:
+    is_a: Facet
+    class_uri: uco-analysis:AnalyticResultFacet
+    description: >-
+      An analytic result facet is a grouping of characteristics unique to the results of an analysis action.
+
+  ArtifactClassification:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-analysis:ArtifactClassification
+    description: >-
+      An artifact classification is a single specific assertion that a particular class of a classification
+      taxonomy applies to something.
+    slots:
+      - class
+      - classificationConfidence
+
+  ArtifactClassificationResultFacet:
+    is_a: AnalyticResultFacet
+    class_uri: uco-analysis:ArtifactClassificationResultFacet
+    description: >-
+      An artifact classification result facet is a grouping of characteristics unique to the results of
+      an artifact classification analysis action.
+    slots:
+      - classification

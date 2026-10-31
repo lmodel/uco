@@ -1,0 +1,1294 @@
+{
+   "coll": "http://purl.org/co/",
+   "linkml": "https://w3id.org/linkml/",
+   "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+   "uco-action": "https://ontology.unifiedcyberontology.org/uco/action/",
+   "uco-analysis": "https://ontology.unifiedcyberontology.org/uco/analysis/",
+   "uco-configuration": "https://ontology.unifiedcyberontology.org/uco/configuration/",
+   "uco-core": "https://ontology.unifiedcyberontology.org/uco/core/",
+   "uco-identity": "https://ontology.unifiedcyberontology.org/uco/identity/",
+   "uco-location": "https://ontology.unifiedcyberontology.org/uco/location/",
+   "uco-marking": "https://ontology.unifiedcyberontology.org/uco/marking/",
+   "uco-observable": "https://ontology.unifiedcyberontology.org/uco/observable/",
+   "uco-pattern": "https://ontology.unifiedcyberontology.org/uco/pattern/",
+   "uco-role": "https://ontology.unifiedcyberontology.org/uco/role/",
+   "uco-time": "https://ontology.unifiedcyberontology.org/uco/time/",
+   "uco-tool": "https://ontology.unifiedcyberontology.org/uco/tool/",
+   "uco-types": "https://ontology.unifiedcyberontology.org/uco/types/",
+   "uco-victim": "https://ontology.unifiedcyberontology.org/uco/victim/",
+   "uco-vocabulary": "https://ontology.unifiedcyberontology.org/uco/vocabulary/",
+   "uco_linkml": "https://w3id.org/lmodel/uco/",
+   "xsd": "http://www.w3.org/2001/XMLSchema#",
+   "Account": {
+      "@id": "uco-observable:Account"
+   },
+   "AccountAuthenticationFacet": {
+      "@id": "uco-observable:AccountAuthenticationFacet"
+   },
+   "AccountFacet": {
+      "@id": "uco-observable:AccountFacet"
+   },
+   "Action": {
+      "@id": "uco-action:Action"
+   },
+   "ActionArgumentFacet": {
+      "@id": "uco-action:ActionArgumentFacet"
+   },
+   "ActionEstimationFacet": {
+      "@id": "uco-action:ActionEstimationFacet"
+   },
+   "ActionFrequencyFacet": {
+      "@id": "uco-action:ActionFrequencyFacet"
+   },
+   "ActionLifecycle": {
+      "@id": "uco-action:ActionLifecycle"
+   },
+   "ActionPattern": {
+      "@id": "uco-action:ActionPattern"
+   },
+   "Adaptor": {
+      "@id": "uco-observable:Adaptor"
+   },
+   "Address": {
+      "@id": "uco-observable:Address"
+   },
+   "AddressFacet": {
+      "@id": "uco-identity:AddressFacet"
+   },
+   "AffiliationFacet": {
+      "@id": "uco-identity:AffiliationFacet"
+   },
+   "AlternateDataStream": {
+      "@id": "uco-observable:AlternateDataStream"
+   },
+   "AlternateDataStreamFacet": {
+      "@id": "uco-observable:AlternateDataStreamFacet"
+   },
+   "Analysis": {
+      "@id": "uco-analysis:Analysis"
+   },
+   "AnalyticResult": {
+      "@id": "uco-analysis:AnalyticResult"
+   },
+   "AnalyticResultFacet": {
+      "@id": "uco-analysis:AnalyticResultFacet"
+   },
+   "AnalyticTool": {
+      "@id": "uco-tool:AnalyticTool"
+   },
+   "AndroidDevice": {
+      "@id": "uco-observable:AndroidDevice"
+   },
+   "AndroidDeviceFacet": {
+      "@id": "uco-observable:AndroidDeviceFacet"
+   },
+   "AndroidPhone": {
+      "@id": "uco-observable:AndroidPhone"
+   },
+   "Annotation": {
+      "@id": "uco-core:Annotation"
+   },
+   "AntennaFacet": {
+      "@id": "uco-observable:AntennaFacet"
+   },
+   "API": {
+      "@id": "uco-observable:API"
+   },
+   "AppleDevice": {
+      "@id": "uco-observable:AppleDevice"
+   },
+   "Appliance": {
+      "@id": "uco-observable:Appliance"
+   },
+   "Application": {
+      "@id": "uco-observable:Application"
+   },
+   "ApplicationAccount": {
+      "@id": "uco-observable:ApplicationAccount"
+   },
+   "ApplicationAccountFacet": {
+      "@id": "uco-observable:ApplicationAccountFacet"
+   },
+   "ApplicationFacet": {
+      "@id": "uco-observable:ApplicationFacet"
+   },
+   "ApplicationVersion": {
+      "@id": "uco-observable:ApplicationVersion"
+   },
+   "ArchiveFile": {
+      "@id": "uco-observable:ArchiveFile"
+   },
+   "ArchiveFileFacet": {
+      "@id": "uco-observable:ArchiveFileFacet"
+   },
+   "ARPCache": {
+      "@id": "uco-observable:ARPCache"
+   },
+   "ARPCacheEntry": {
+      "@id": "uco-observable:ARPCacheEntry"
+   },
+   "ArrayOfAction": {
+      "@id": "uco-action:ArrayOfAction"
+   },
+   "ArtifactClassification": {
+      "@id": "uco-analysis:ArtifactClassification"
+   },
+   "ArtifactClassificationResultFacet": {
+      "@id": "uco-analysis:ArtifactClassificationResultFacet"
+   },
+   "Assertion": {
+      "@id": "uco-core:Assertion"
+   },
+   "AttributedName": {
+      "@id": "uco-core:AttributedName"
+   },
+   "Audio": {
+      "@id": "uco-observable:Audio"
+   },
+   "AudioFacet": {
+      "@id": "uco-observable:AudioFacet"
+   },
+   "AutonomousSystem": {
+      "@id": "uco-observable:AutonomousSystem"
+   },
+   "AutonomousSystemFacet": {
+      "@id": "uco-observable:AutonomousSystemFacet"
+   },
+   "Bag": {
+      "@id": "coll:Bag"
+   },
+   "BenevolentRole": {
+      "@id": "uco-role:BenevolentRole"
+   },
+   "BirthInformationFacet": {
+      "@id": "uco-identity:BirthInformationFacet"
+   },
+   "BlackberryPhone": {
+      "@id": "uco-observable:BlackberryPhone"
+   },
+   "BlockDeviceNode": {
+      "@id": "uco-observable:BlockDeviceNode"
+   },
+   "BluetoothAddress": {
+      "@id": "uco-observable:BluetoothAddress"
+   },
+   "BluetoothAddressFacet": {
+      "@id": "uco-observable:BluetoothAddressFacet"
+   },
+   "BotConfiguration": {
+      "@id": "uco-observable:BotConfiguration"
+   },
+   "BrowserBookmark": {
+      "@id": "uco-observable:BrowserBookmark"
+   },
+   "BrowserBookmarkFacet": {
+      "@id": "uco-observable:BrowserBookmarkFacet"
+   },
+   "BrowserCookie": {
+      "@id": "uco-observable:BrowserCookie"
+   },
+   "BrowserCookieFacet": {
+      "@id": "uco-observable:BrowserCookieFacet"
+   },
+   "BuildFacet": {
+      "@id": "uco-tool:BuildFacet"
+   },
+   "BuildInformationType": {
+      "@id": "uco-tool:BuildInformationType"
+   },
+   "BuildUtilityType": {
+      "@id": "uco-tool:BuildUtilityType"
+   },
+   "Bundle": {
+      "@id": "uco-core:Bundle"
+   },
+   "Calendar": {
+      "@id": "uco-observable:Calendar"
+   },
+   "CalendarEntry": {
+      "@id": "uco-observable:CalendarEntry"
+   },
+   "CalendarEntryFacet": {
+      "@id": "uco-observable:CalendarEntryFacet"
+   },
+   "CalendarFacet": {
+      "@id": "uco-observable:CalendarFacet"
+   },
+   "Call": {
+      "@id": "uco-observable:Call"
+   },
+   "CallFacet": {
+      "@id": "uco-observable:CallFacet"
+   },
+   "CapturedTelecommunicationsInformation": {
+      "@id": "uco-observable:CapturedTelecommunicationsInformation"
+   },
+   "CapturedTelecommunicationsInformationFacet": {
+      "@id": "uco-observable:CapturedTelecommunicationsInformationFacet"
+   },
+   "CellSite": {
+      "@id": "uco-observable:CellSite"
+   },
+   "CellSiteFacet": {
+      "@id": "uco-observable:CellSiteFacet"
+   },
+   "CharacterDeviceNode": {
+      "@id": "uco-observable:CharacterDeviceNode"
+   },
+   "Code": {
+      "@id": "uco-observable:Code"
+   },
+   "CoItem": {
+      "@id": "coll:Item"
+   },
+   "Compilation": {
+      "@id": "uco-core:Compilation"
+   },
+   "CompilerType": {
+      "@id": "uco-tool:CompilerType"
+   },
+   "CompressedStreamFacet": {
+      "@id": "uco-observable:CompressedStreamFacet"
+   },
+   "Computer": {
+      "@id": "uco-observable:Computer"
+   },
+   "ComputerSpecification": {
+      "@id": "uco-observable:ComputerSpecification"
+   },
+   "ComputerSpecificationFacet": {
+      "@id": "uco-observable:ComputerSpecificationFacet"
+   },
+   "ConfidenceFacet": {
+      "@id": "uco-core:ConfidenceFacet"
+   },
+   "Configuration": {
+      "@id": "uco-configuration:Configuration"
+   },
+   "ConfigurationEntry": {
+      "@id": "uco-configuration:ConfigurationEntry"
+   },
+   "ConfiguredSoftware": {
+      "@id": "uco-observable:ConfiguredSoftware"
+   },
+   "ConfiguredTool": {
+      "@id": "uco-tool:ConfiguredTool"
+   },
+   "Contact": {
+      "@id": "uco-observable:Contact"
+   },
+   "ContactAddress": {
+      "@id": "uco-observable:ContactAddress"
+   },
+   "ContactAffiliation": {
+      "@id": "uco-observable:ContactAffiliation"
+   },
+   "ContactEmail": {
+      "@id": "uco-observable:ContactEmail"
+   },
+   "ContactFacet": {
+      "@id": "uco-observable:ContactFacet"
+   },
+   "ContactList": {
+      "@id": "uco-observable:ContactList"
+   },
+   "ContactListFacet": {
+      "@id": "uco-observable:ContactListFacet"
+   },
+   "ContactMessaging": {
+      "@id": "uco-observable:ContactMessaging"
+   },
+   "ContactPhone": {
+      "@id": "uco-observable:ContactPhone"
+   },
+   "ContactProfile": {
+      "@id": "uco-observable:ContactProfile"
+   },
+   "ContactSIP": {
+      "@id": "uco-observable:ContactSIP"
+   },
+   "ContactURL": {
+      "@id": "uco-observable:ContactURL"
+   },
+   "ContentData": {
+      "@id": "uco-observable:ContentData"
+   },
+   "ContentDataFacet": {
+      "@id": "uco-observable:ContentDataFacet"
+   },
+   "ContextualCompilation": {
+      "@id": "uco-core:ContextualCompilation"
+   },
+   "ControlledDictionary": {
+      "@id": "uco-types:ControlledDictionary"
+   },
+   "ControlledDictionaryEntry": {
+      "@id": "uco-types:ControlledDictionaryEntry"
+   },
+   "ControlledVocabulary": {
+      "@id": "uco-core:ControlledVocabulary"
+   },
+   "CookieHistory": {
+      "@id": "uco-observable:CookieHistory"
+   },
+   "CountryOfResidenceFacet": {
+      "@id": "uco-identity:CountryOfResidenceFacet"
+   },
+   "Credential": {
+      "@id": "uco-observable:Credential"
+   },
+   "CredentialDump": {
+      "@id": "uco-observable:CredentialDump"
+   },
+   "DataRangeFacet": {
+      "@id": "uco-observable:DataRangeFacet"
+   },
+   "DefensiveTool": {
+      "@id": "uco-tool:DefensiveTool"
+   },
+   "DefinedEffectFacet": {
+      "@id": "uco-observable:DefinedEffectFacet"
+   },
+   "Dependency": {
+      "@id": "uco-configuration:Dependency"
+   },
+   "Device": {
+      "@id": "uco-observable:Device"
+   },
+   "DeviceFacet": {
+      "@id": "uco-observable:DeviceFacet"
+   },
+   "Dictionary": {
+      "@id": "uco-types:Dictionary"
+   },
+   "DictionaryEntry": {
+      "@id": "uco-types:DictionaryEntry"
+   },
+   "DigitalAccount": {
+      "@id": "uco-observable:DigitalAccount"
+   },
+   "DigitalAccountFacet": {
+      "@id": "uco-observable:DigitalAccountFacet"
+   },
+   "DigitalAddress": {
+      "@id": "uco-observable:DigitalAddress"
+   },
+   "DigitalAddressFacet": {
+      "@id": "uco-observable:DigitalAddressFacet"
+   },
+   "DigitalCamera": {
+      "@id": "uco-observable:DigitalCamera"
+   },
+   "DigitalSignatureInfo": {
+      "@id": "uco-observable:DigitalSignatureInfo"
+   },
+   "DigitalSignatureInfoFacet": {
+      "@id": "uco-observable:DigitalSignatureInfoFacet"
+   },
+   "Directory": {
+      "@id": "uco-observable:Directory"
+   },
+   "Disk": {
+      "@id": "uco-observable:Disk"
+   },
+   "DiskFacet": {
+      "@id": "uco-observable:DiskFacet"
+   },
+   "DiskPartition": {
+      "@id": "uco-observable:DiskPartition"
+   },
+   "DiskPartitionFacet": {
+      "@id": "uco-observable:DiskPartitionFacet"
+   },
+   "DNSCache": {
+      "@id": "uco-observable:DNSCache"
+   },
+   "DNSRecord": {
+      "@id": "uco-observable:DNSRecord"
+   },
+   "DomainName": {
+      "@id": "uco-observable:DomainName"
+   },
+   "DomainNameFacet": {
+      "@id": "uco-observable:DomainNameFacet"
+   },
+   "Drone": {
+      "@id": "uco-observable:Drone"
+   },
+   "EmailAccount": {
+      "@id": "uco-observable:EmailAccount"
+   },
+   "EmailAccountFacet": {
+      "@id": "uco-observable:EmailAccountFacet"
+   },
+   "EmailAddress": {
+      "@id": "uco-observable:EmailAddress"
+   },
+   "EmailAddressFacet": {
+      "@id": "uco-observable:EmailAddressFacet"
+   },
+   "EmailMessage": {
+      "@id": "uco-observable:EmailMessage"
+   },
+   "EmailMessageFacet": {
+      "@id": "uco-observable:EmailMessageFacet"
+   },
+   "EmbeddedDevice": {
+      "@id": "uco-observable:EmbeddedDevice"
+   },
+   "EnclosingCompilation": {
+      "@id": "uco-core:EnclosingCompilation"
+   },
+   "EncodedStreamFacet": {
+      "@id": "uco-observable:EncodedStreamFacet"
+   },
+   "EncryptedStreamFacet": {
+      "@id": "uco-observable:EncryptedStreamFacet"
+   },
+   "EnvironmentVariable": {
+      "@id": "uco-observable:EnvironmentVariable"
+   },
+   "Event": {
+      "@id": "uco-core:Event"
+   },
+   "EventLog": {
+      "@id": "uco-observable:EventLog"
+   },
+   "EventRecord": {
+      "@id": "uco-observable:EventRecord"
+   },
+   "EventRecordFacet": {
+      "@id": "uco-observable:EventRecordFacet"
+   },
+   "EventsFacet": {
+      "@id": "uco-identity:EventsFacet"
+   },
+   "EXIFFacet": {
+      "@id": "uco-observable:EXIFFacet"
+   },
+   "ExternalReference": {
+      "@id": "uco-core:ExternalReference"
+   },
+   "ExtInodeFacet": {
+      "@id": "uco-observable:ExtInodeFacet"
+   },
+   "ExtractedString": {
+      "@id": "uco-observable:ExtractedString"
+   },
+   "ExtractedStringsFacet": {
+      "@id": "uco-observable:ExtractedStringsFacet"
+   },
+   "Facet": {
+      "@id": "uco-core:Facet"
+   },
+   "File": {
+      "@id": "uco-observable:File"
+   },
+   "FileFacet": {
+      "@id": "uco-observable:FileFacet"
+   },
+   "FilePermissionsFacet": {
+      "@id": "uco-observable:FilePermissionsFacet"
+   },
+   "FileSystem": {
+      "@id": "uco-observable:FileSystem"
+   },
+   "FileSystemFacet": {
+      "@id": "uco-observable:FileSystemFacet"
+   },
+   "FileSystemObject": {
+      "@id": "uco-observable:FileSystemObject"
+   },
+   "ForumPost": {
+      "@id": "uco-observable:ForumPost"
+   },
+   "ForumPrivateMessage": {
+      "@id": "uco-observable:ForumPrivateMessage"
+   },
+   "FragmentFacet": {
+      "@id": "uco-observable:FragmentFacet"
+   },
+   "GamingConsole": {
+      "@id": "uco-observable:GamingConsole"
+   },
+   "GenericObservableObject": {
+      "@id": "uco-observable:GenericObservableObject"
+   },
+   "GeoLocationEntry": {
+      "@id": "uco-observable:GeoLocationEntry"
+   },
+   "GeoLocationEntryFacet": {
+      "@id": "uco-observable:GeoLocationEntryFacet"
+   },
+   "GeoLocationLog": {
+      "@id": "uco-observable:GeoLocationLog"
+   },
+   "GeoLocationLogFacet": {
+      "@id": "uco-observable:GeoLocationLogFacet"
+   },
+   "GeoLocationTrack": {
+      "@id": "uco-observable:GeoLocationTrack"
+   },
+   "GeoLocationTrackFacet": {
+      "@id": "uco-observable:GeoLocationTrackFacet"
+   },
+   "GlobalFlagType": {
+      "@id": "uco-observable:GlobalFlagType"
+   },
+   "GPSCoordinatesFacet": {
+      "@id": "uco-location:GPSCoordinatesFacet"
+   },
+   "GranularMarking": {
+      "@id": "uco-marking:GranularMarking"
+   },
+   "Grouping": {
+      "@id": "uco-core:Grouping"
+   },
+   "GUI": {
+      "@id": "uco-observable:GUI"
+   },
+   "Hash": {
+      "@id": "uco-types:Hash"
+   },
+   "Hostname": {
+      "@id": "uco-observable:Hostname"
+   },
+   "HTTPConnection": {
+      "@id": "uco-observable:HTTPConnection"
+   },
+   "HTTPConnectionFacet": {
+      "@id": "uco-observable:HTTPConnectionFacet"
+   },
+   "ICMPConnection": {
+      "@id": "uco-observable:ICMPConnection"
+   },
+   "ICMPConnectionFacet": {
+      "@id": "uco-observable:ICMPConnectionFacet"
+   },
+   "IComHandlerActionType": {
+      "@id": "uco-observable:IComHandlerActionType"
+   },
+   "IdentifierFacet": {
+      "@id": "uco-identity:IdentifierFacet"
+   },
+   "Identity": {
+      "@id": "uco-identity:Identity"
+   },
+   "IdentityAbstraction": {
+      "@id": "uco-core:IdentityAbstraction"
+   },
+   "IdentityFacet": {
+      "@id": "uco-identity:IdentityFacet"
+   },
+   "IExecActionType": {
+      "@id": "uco-observable:IExecActionType"
+   },
+   "Image": {
+      "@id": "uco-observable:Image"
+   },
+   "ImageFacet": {
+      "@id": "uco-observable:ImageFacet"
+   },
+   "ImproperDictionary": {
+      "@id": "uco-types:ImproperDictionary"
+   },
+   "InstantMessagingAddress": {
+      "@id": "uco-observable:InstantMessagingAddress"
+   },
+   "InstantMessagingAddressFacet": {
+      "@id": "uco-observable:InstantMessagingAddressFacet"
+   },
+   "IPAddress": {
+      "@id": "uco-observable:IPAddress"
+   },
+   "IPAddressFacet": {
+      "@id": "uco-observable:IPAddressFacet"
+   },
+   "IPhone": {
+      "@id": "uco-observable:IPhone"
+   },
+   "IPNetmask": {
+      "@id": "uco-observable:IPNetmask"
+   },
+   "IPv4Address": {
+      "@id": "uco-observable:IPv4Address"
+   },
+   "IPv4AddressFacet": {
+      "@id": "uco-observable:IPv4AddressFacet"
+   },
+   "IPv6Address": {
+      "@id": "uco-observable:IPv6Address"
+   },
+   "IPv6AddressFacet": {
+      "@id": "uco-observable:IPv6AddressFacet"
+   },
+   "IShowMessageActionType": {
+      "@id": "uco-observable:IShowMessageActionType"
+   },
+   "Item": {
+      "@id": "uco-core:Item"
+   },
+   "Junction": {
+      "@id": "uco-observable:Junction"
+   },
+   "LanguagesFacet": {
+      "@id": "uco-identity:LanguagesFacet"
+   },
+   "Laptop": {
+      "@id": "uco-observable:Laptop"
+   },
+   "LatLongCoordinatesFacet": {
+      "@id": "uco-location:LatLongCoordinatesFacet"
+   },
+   "Library": {
+      "@id": "uco-observable:Library"
+   },
+   "LibraryFacet": {
+      "@id": "uco-observable:LibraryFacet"
+   },
+   "LibraryType": {
+      "@id": "uco-tool:LibraryType"
+   },
+   "LicenseMarking": {
+      "@id": "uco-marking:LicenseMarking"
+   },
+   "List": {
+      "@id": "coll:List"
+   },
+   "ListItem": {
+      "@id": "coll:ListItem"
+   },
+   "Location": {
+      "@id": "uco-location:Location"
+   },
+   "LogicalPattern": {
+      "@id": "uco-pattern:LogicalPattern"
+   },
+   "MACAddress": {
+      "@id": "uco-observable:MACAddress"
+   },
+   "MACAddressFacet": {
+      "@id": "uco-observable:MACAddressFacet"
+   },
+   "MaliciousRole": {
+      "@id": "uco-role:MaliciousRole"
+   },
+   "MaliciousTool": {
+      "@id": "uco-tool:MaliciousTool"
+   },
+   "MarkingDefinition": {
+      "@id": "uco-marking:MarkingDefinition"
+   },
+   "MarkingDefinitionAbstraction": {
+      "@id": "uco-core:MarkingDefinitionAbstraction"
+   },
+   "MarkingModel": {
+      "@id": "uco-marking:MarkingModel"
+   },
+   "Memory": {
+      "@id": "uco-observable:Memory"
+   },
+   "MemoryFacet": {
+      "@id": "uco-observable:MemoryFacet"
+   },
+   "Message": {
+      "@id": "uco-observable:Message"
+   },
+   "MessageFacet": {
+      "@id": "uco-observable:MessageFacet"
+   },
+   "MessageThread": {
+      "@id": "uco-observable:MessageThread"
+   },
+   "MessageThreadFacet": {
+      "@id": "uco-observable:MessageThreadFacet"
+   },
+   "MftRecordFacet": {
+      "@id": "uco-observable:MftRecordFacet"
+   },
+   "MimePartType": {
+      "@id": "uco-observable:MimePartType"
+   },
+   "MobileAccount": {
+      "@id": "uco-observable:MobileAccount"
+   },
+   "MobileAccountFacet": {
+      "@id": "uco-observable:MobileAccountFacet"
+   },
+   "MobileDevice": {
+      "@id": "uco-observable:MobileDevice"
+   },
+   "MobileDeviceFacet": {
+      "@id": "uco-observable:MobileDeviceFacet"
+   },
+   "MobilePhone": {
+      "@id": "uco-observable:MobilePhone"
+   },
+   "ModusOperandi": {
+      "@id": "uco-core:ModusOperandi"
+   },
+   "Mutex": {
+      "@id": "uco-observable:Mutex"
+   },
+   "MutexFacet": {
+      "@id": "uco-observable:MutexFacet"
+   },
+   "NamedPipe": {
+      "@id": "uco-observable:NamedPipe"
+   },
+   "NationalityFacet": {
+      "@id": "uco-identity:NationalityFacet"
+   },
+   "NetworkAppliance": {
+      "@id": "uco-observable:NetworkAppliance"
+   },
+   "NetworkConnection": {
+      "@id": "uco-observable:NetworkConnection"
+   },
+   "NetworkConnectionFacet": {
+      "@id": "uco-observable:NetworkConnectionFacet"
+   },
+   "NetworkFlow": {
+      "@id": "uco-observable:NetworkFlow"
+   },
+   "NetworkFlowFacet": {
+      "@id": "uco-observable:NetworkFlowFacet"
+   },
+   "NetworkInterface": {
+      "@id": "uco-observable:NetworkInterface"
+   },
+   "NetworkInterfaceFacet": {
+      "@id": "uco-observable:NetworkInterfaceFacet"
+   },
+   "NetworkProtocol": {
+      "@id": "uco-observable:NetworkProtocol"
+   },
+   "NetworkRoute": {
+      "@id": "uco-observable:NetworkRoute"
+   },
+   "NetworkSubnet": {
+      "@id": "uco-observable:NetworkSubnet"
+   },
+   "NeutralRole": {
+      "@id": "uco-role:NeutralRole"
+   },
+   "Note": {
+      "@id": "uco-observable:Note"
+   },
+   "NoteFacet": {
+      "@id": "uco-observable:NoteFacet"
+   },
+   "NTFSFile": {
+      "@id": "uco-observable:NTFSFile"
+   },
+   "NTFSFileFacet": {
+      "@id": "uco-observable:NTFSFileFacet"
+   },
+   "NTFSFilePermissionsFacet": {
+      "@id": "uco-observable:NTFSFilePermissionsFacet"
+   },
+   "Observable": {
+      "@id": "uco-observable:Observable"
+   },
+   "ObservableAction": {
+      "@id": "uco-observable:ObservableAction"
+   },
+   "ObservableObject": {
+      "@id": "uco-observable:ObservableObject"
+   },
+   "ObservablePattern": {
+      "@id": "uco-observable:ObservablePattern"
+   },
+   "ObservableRelationship": {
+      "@id": "uco-observable:ObservableRelationship"
+   },
+   "Observation": {
+      "@id": "uco-observable:Observation"
+   },
+   "OccupationFacet": {
+      "@id": "uco-identity:OccupationFacet"
+   },
+   "OnlineService": {
+      "@id": "uco-observable:OnlineService"
+   },
+   "OnlineServiceFacet": {
+      "@id": "uco-observable:OnlineServiceFacet"
+   },
+   "OperatingSystem": {
+      "@id": "uco-observable:OperatingSystem"
+   },
+   "OperatingSystemFacet": {
+      "@id": "uco-observable:OperatingSystemFacet"
+   },
+   "Organization": {
+      "@id": "uco-identity:Organization"
+   },
+   "OrganizationDetailsFacet": {
+      "@id": "uco-identity:OrganizationDetailsFacet"
+   },
+   "PathRelationFacet": {
+      "@id": "uco-observable:PathRelationFacet"
+   },
+   "Pattern": {
+      "@id": "uco-pattern:Pattern"
+   },
+   "PatternExpression": {
+      "@id": "uco-pattern:PatternExpression"
+   },
+   "PaymentCard": {
+      "@id": "uco-observable:PaymentCard"
+   },
+   "PDFFile": {
+      "@id": "uco-observable:PDFFile"
+   },
+   "PDFFileFacet": {
+      "@id": "uco-observable:PDFFileFacet"
+   },
+   "Person": {
+      "@id": "uco-identity:Person"
+   },
+   "PersonalDetailsFacet": {
+      "@id": "uco-identity:PersonalDetailsFacet"
+   },
+   "PhoneAccount": {
+      "@id": "uco-observable:PhoneAccount"
+   },
+   "PhoneAccountFacet": {
+      "@id": "uco-observable:PhoneAccountFacet"
+   },
+   "PhysicalInfoFacet": {
+      "@id": "uco-identity:PhysicalInfoFacet"
+   },
+   "Pipe": {
+      "@id": "uco-observable:Pipe"
+   },
+   "Post": {
+      "@id": "uco-observable:Post"
+   },
+   "Process": {
+      "@id": "uco-observable:Process"
+   },
+   "ProcessFacet": {
+      "@id": "uco-observable:ProcessFacet"
+   },
+   "ProcessThread": {
+      "@id": "uco-observable:ProcessThread"
+   },
+   "Profile": {
+      "@id": "uco-observable:Profile"
+   },
+   "ProfileFacet": {
+      "@id": "uco-observable:ProfileFacet"
+   },
+   "ProperDictionary": {
+      "@id": "uco-types:ProperDictionary"
+   },
+   "PropertiesEnumeratedEffectFacet": {
+      "@id": "uco-observable:PropertiesEnumeratedEffectFacet"
+   },
+   "PropertyReadEffectFacet": {
+      "@id": "uco-observable:PropertyReadEffectFacet"
+   },
+   "ProtocolConverter": {
+      "@id": "uco-observable:ProtocolConverter"
+   },
+   "QualificationFacet": {
+      "@id": "uco-identity:QualificationFacet"
+   },
+   "RasterPicture": {
+      "@id": "uco-observable:RasterPicture"
+   },
+   "RasterPictureFacet": {
+      "@id": "uco-observable:RasterPictureFacet"
+   },
+   "RecoveredObject": {
+      "@id": "uco-observable:RecoveredObject"
+   },
+   "RecoveredObjectFacet": {
+      "@id": "uco-observable:RecoveredObjectFacet"
+   },
+   "RelatedIdentityFacet": {
+      "@id": "uco-identity:RelatedIdentityFacet"
+   },
+   "Relationship": {
+      "@id": "uco-core:Relationship"
+   },
+   "ReleaseToMarking": {
+      "@id": "uco-marking:ReleaseToMarking"
+   },
+   "ReparsePoint": {
+      "@id": "uco-observable:ReparsePoint"
+   },
+   "Role": {
+      "@id": "uco-role:Role"
+   },
+   "SecurityAppliance": {
+      "@id": "uco-observable:SecurityAppliance"
+   },
+   "Semaphore": {
+      "@id": "uco-observable:Semaphore"
+   },
+   "SendControlCodeEffectFacet": {
+      "@id": "uco-observable:SendControlCodeEffectFacet"
+   },
+   "Server": {
+      "@id": "uco-observable:Server"
+   },
+   "ShopListing": {
+      "@id": "uco-observable:ShopListing"
+   },
+   "SIMCard": {
+      "@id": "uco-observable:SIMCard"
+   },
+   "SIMCardFacet": {
+      "@id": "uco-observable:SIMCardFacet"
+   },
+   "SimpleAddressFacet": {
+      "@id": "uco-location:SimpleAddressFacet"
+   },
+   "SimpleNameFacet": {
+      "@id": "uco-identity:SimpleNameFacet"
+   },
+   "SIPAddress": {
+      "@id": "uco-observable:SIPAddress"
+   },
+   "SIPAddressFacet": {
+      "@id": "uco-observable:SIPAddressFacet"
+   },
+   "SmartDevice": {
+      "@id": "uco-observable:SmartDevice"
+   },
+   "SmartPhone": {
+      "@id": "uco-observable:SmartPhone"
+   },
+   "SMSMessage": {
+      "@id": "uco-observable:SMSMessage"
+   },
+   "SMSMessageFacet": {
+      "@id": "uco-observable:SMSMessageFacet"
+   },
+   "Snapshot": {
+      "@id": "uco-observable:Snapshot"
+   },
+   "Socket": {
+      "@id": "uco-observable:Socket"
+   },
+   "SocketAddress": {
+      "@id": "uco-observable:SocketAddress"
+   },
+   "Software": {
+      "@id": "uco-observable:Software"
+   },
+   "SoftwareFacet": {
+      "@id": "uco-observable:SoftwareFacet"
+   },
+   "SQLiteBlob": {
+      "@id": "uco-observable:SQLiteBlob"
+   },
+   "SQLiteBlobFacet": {
+      "@id": "uco-observable:SQLiteBlobFacet"
+   },
+   "StateChangeEffectFacet": {
+      "@id": "uco-observable:StateChangeEffectFacet"
+   },
+   "StatementMarking": {
+      "@id": "uco-marking:StatementMarking"
+   },
+   "StorageMedium": {
+      "@id": "uco-observable:StorageMedium"
+   },
+   "StorageMediumFacet": {
+      "@id": "uco-observable:StorageMediumFacet"
+   },
+   "SymbolicLink": {
+      "@id": "uco-observable:SymbolicLink"
+   },
+   "SymbolicLinkFacet": {
+      "@id": "uco-observable:SymbolicLinkFacet"
+   },
+   "TableField": {
+      "@id": "uco-observable:TableField"
+   },
+   "TableFieldFacet": {
+      "@id": "uco-observable:TableFieldFacet"
+   },
+   "Tablet": {
+      "@id": "uco-observable:Tablet"
+   },
+   "TaskActionType": {
+      "@id": "uco-observable:TaskActionType"
+   },
+   "TCPConnection": {
+      "@id": "uco-observable:TCPConnection"
+   },
+   "TCPConnectionFacet": {
+      "@id": "uco-observable:TCPConnectionFacet"
+   },
+   "Technique": {
+      "@id": "uco-action:Technique"
+   },
+   "TermsOfUseMarking": {
+      "@id": "uco-marking:TermsOfUseMarking"
+   },
+   "Thread": {
+      "@id": "uco-types:Thread"
+   },
+   "ThreadItem": {
+      "@id": "uco-types:ThreadItem"
+   },
+   "Tool": {
+      "@id": "uco-tool:Tool"
+   },
+   "TriggerType": {
+      "@id": "uco-observable:TriggerType"
+   },
+   "Tweet": {
+      "@id": "uco-observable:Tweet"
+   },
+   "TwitterProfileFacet": {
+      "@id": "uco-observable:TwitterProfileFacet"
+   },
+   "UcoInherentCharacterizationThing": {
+      "@id": "uco-core:UcoInherentCharacterizationThing"
+   },
+   "UcoObject": {
+      "@id": "uco-core:UcoObject"
+   },
+   "UcoThing": {
+      "@id": "uco-core:UcoThing"
+   },
+   "UcoType": {
+      "@id": "uco-core:UcoType"
+   },
+   "UNIXAccount": {
+      "@id": "uco-observable:UNIXAccount"
+   },
+   "UNIXAccountFacet": {
+      "@id": "uco-observable:UNIXAccountFacet"
+   },
+   "UNIXFile": {
+      "@id": "uco-observable:UNIXFile"
+   },
+   "UNIXFilePermissionsFacet": {
+      "@id": "uco-observable:UNIXFilePermissionsFacet"
+   },
+   "UNIXProcess": {
+      "@id": "uco-observable:UNIXProcess"
+   },
+   "UNIXProcessFacet": {
+      "@id": "uco-observable:UNIXProcessFacet"
+   },
+   "UNIXVolumeFacet": {
+      "@id": "uco-observable:UNIXVolumeFacet"
+   },
+   "URL": {
+      "@id": "uco-observable:URL"
+   },
+   "URLFacet": {
+      "@id": "uco-observable:URLFacet"
+   },
+   "URLHistory": {
+      "@id": "uco-observable:URLHistory"
+   },
+   "URLHistoryEntry": {
+      "@id": "uco-observable:URLHistoryEntry"
+   },
+   "URLHistoryFacet": {
+      "@id": "uco-observable:URLHistoryFacet"
+   },
+   "URLVisit": {
+      "@id": "uco-observable:URLVisit"
+   },
+   "URLVisitFacet": {
+      "@id": "uco-observable:URLVisitFacet"
+   },
+   "UserAccount": {
+      "@id": "uco-observable:UserAccount"
+   },
+   "UserAccountFacet": {
+      "@id": "uco-observable:UserAccountFacet"
+   },
+   "UserSession": {
+      "@id": "uco-observable:UserSession"
+   },
+   "UserSessionFacet": {
+      "@id": "uco-observable:UserSessionFacet"
+   },
+   "ValuesEnumeratedEffectFacet": {
+      "@id": "uco-observable:ValuesEnumeratedEffectFacet"
+   },
+   "Victim": {
+      "@id": "uco-victim:Victim"
+   },
+   "VictimTargeting": {
+      "@id": "uco-victim:VictimTargeting"
+   },
+   "VisaFacet": {
+      "@id": "uco-identity:VisaFacet"
+   },
+   "Volume": {
+      "@id": "uco-observable:Volume"
+   },
+   "VolumeFacet": {
+      "@id": "uco-observable:VolumeFacet"
+   },
+   "WearableDevice": {
+      "@id": "uco-observable:WearableDevice"
+   },
+   "WebPage": {
+      "@id": "uco-observable:WebPage"
+   },
+   "WhoIs": {
+      "@id": "uco-observable:WhoIs"
+   },
+   "WhoisContactFacet": {
+      "@id": "uco-observable:WhoisContactFacet"
+   },
+   "WhoIsFacet": {
+      "@id": "uco-observable:WhoIsFacet"
+   },
+   "WhoisRegistrarInfoType": {
+      "@id": "uco-observable:WhoisRegistrarInfoType"
+   },
+   "WifiAddress": {
+      "@id": "uco-observable:WifiAddress"
+   },
+   "WifiAddressFacet": {
+      "@id": "uco-observable:WifiAddressFacet"
+   },
+   "Wiki": {
+      "@id": "uco-observable:Wiki"
+   },
+   "WikiArticle": {
+      "@id": "uco-observable:WikiArticle"
+   },
+   "WindowsAccount": {
+      "@id": "uco-observable:WindowsAccount"
+   },
+   "WindowsAccountFacet": {
+      "@id": "uco-observable:WindowsAccountFacet"
+   },
+   "WindowsActiveDirectoryAccount": {
+      "@id": "uco-observable:WindowsActiveDirectoryAccount"
+   },
+   "WindowsActiveDirectoryAccountFacet": {
+      "@id": "uco-observable:WindowsActiveDirectoryAccountFacet"
+   },
+   "WindowsComputerSpecification": {
+      "@id": "uco-observable:WindowsComputerSpecification"
+   },
+   "WindowsComputerSpecificationFacet": {
+      "@id": "uco-observable:WindowsComputerSpecificationFacet"
+   },
+   "WindowsCriticalSection": {
+      "@id": "uco-observable:WindowsCriticalSection"
+   },
+   "WindowsEvent": {
+      "@id": "uco-observable:WindowsEvent"
+   },
+   "WindowsFilemapping": {
+      "@id": "uco-observable:WindowsFilemapping"
+   },
+   "WindowsHandle": {
+      "@id": "uco-observable:WindowsHandle"
+   },
+   "WindowsHook": {
+      "@id": "uco-observable:WindowsHook"
+   },
+   "WindowsMailslot": {
+      "@id": "uco-observable:WindowsMailslot"
+   },
+   "WindowsNetworkShare": {
+      "@id": "uco-observable:WindowsNetworkShare"
+   },
+   "WindowsPEBinaryFile": {
+      "@id": "uco-observable:WindowsPEBinaryFile"
+   },
+   "WindowsPEBinaryFileFacet": {
+      "@id": "uco-observable:WindowsPEBinaryFileFacet"
+   },
+   "WindowsPEFileHeader": {
+      "@id": "uco-observable:WindowsPEFileHeader"
+   },
+   "WindowsPEOptionalHeader": {
+      "@id": "uco-observable:WindowsPEOptionalHeader"
+   },
+   "WindowsPESection": {
+      "@id": "uco-observable:WindowsPESection"
+   },
+   "WindowsPrefetch": {
+      "@id": "uco-observable:WindowsPrefetch"
+   },
+   "WindowsPrefetchFacet": {
+      "@id": "uco-observable:WindowsPrefetchFacet"
+   },
+   "WindowsProcess": {
+      "@id": "uco-observable:WindowsProcess"
+   },
+   "WindowsProcessFacet": {
+      "@id": "uco-observable:WindowsProcessFacet"
+   },
+   "WindowsRegistryHive": {
+      "@id": "uco-observable:WindowsRegistryHive"
+   },
+   "WindowsRegistryHiveFacet": {
+      "@id": "uco-observable:WindowsRegistryHiveFacet"
+   },
+   "WindowsRegistryKey": {
+      "@id": "uco-observable:WindowsRegistryKey"
+   },
+   "WindowsRegistryKeyFacet": {
+      "@id": "uco-observable:WindowsRegistryKeyFacet"
+   },
+   "WindowsRegistryValue": {
+      "@id": "uco-observable:WindowsRegistryValue"
+   },
+   "WindowsService": {
+      "@id": "uco-observable:WindowsService"
+   },
+   "WindowsServiceFacet": {
+      "@id": "uco-observable:WindowsServiceFacet"
+   },
+   "WindowsSystemRestore": {
+      "@id": "uco-observable:WindowsSystemRestore"
+   },
+   "WindowsTask": {
+      "@id": "uco-observable:WindowsTask"
+   },
+   "WindowsTaskFacet": {
+      "@id": "uco-observable:WindowsTaskFacet"
+   },
+   "WindowsThread": {
+      "@id": "uco-observable:WindowsThread"
+   },
+   "WindowsThreadFacet": {
+      "@id": "uco-observable:WindowsThreadFacet"
+   },
+   "WindowsVolumeFacet": {
+      "@id": "uco-observable:WindowsVolumeFacet"
+   },
+   "WindowsWaitableTime": {
+      "@id": "uco-observable:WindowsWaitableTime"
+   },
+   "WirelessNetworkConnection": {
+      "@id": "uco-observable:WirelessNetworkConnection"
+   },
+   "WirelessNetworkConnectionFacet": {
+      "@id": "uco-observable:WirelessNetworkConnectionFacet"
+   },
+   "WriteBlocker": {
+      "@id": "uco-observable:WriteBlocker"
+   },
+   "X509Certificate": {
+      "@id": "uco-observable:X509Certificate"
+   },
+   "X509CertificateFacet": {
+      "@id": "uco-observable:X509CertificateFacet"
+   },
+   "X509V3Certificate": {
+      "@id": "uco-observable:X509V3Certificate"
+   },
+   "X509V3ExtensionsFacet": {
+      "@id": "uco-observable:X509V3ExtensionsFacet"
+   }
+}

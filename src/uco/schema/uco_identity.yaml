@@ -1,0 +1,227 @@
+---
+id: https://w3id.org/lmodel/uco-identity
+name: uco_identity
+title: UCO Identity
+description: >-
+  The classes, properties and vocabularies of UCO 1.5.0's identity namespace, https://ontology.unifiedcyberontology.org/uco/identity/.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_core
+  - ./uco_location
+
+slots:
+
+  address:
+    description: UCO 1.5.0 declares the property uco-identity:address without a definition.
+    slot_uri: uco-identity:address
+    range: Location
+    inlined: false
+
+  birthdate:
+    description: UCO 1.5.0 declares the property uco-identity:birthdate without a definition.
+    slot_uri: uco-identity:birthdate
+    range: datetime
+
+  familyName:
+    description: UCO 1.5.0 declares the property uco-identity:familyName without a definition.
+    slot_uri: uco-identity:familyName
+    range: string
+    multivalued: true
+
+  givenName:
+    description: UCO 1.5.0 declares the property uco-identity:givenName without a definition.
+    slot_uri: uco-identity:givenName
+    range: string
+    multivalued: true
+
+  honorificPrefix:
+    description: >-
+      UCO 1.5.0 declares the property uco-identity:honorificPrefix without a definition.
+    slot_uri: uco-identity:honorificPrefix
+    range: string
+    multivalued: true
+
+  honorificSuffix:
+    description: >-
+      UCO 1.5.0 declares the property uco-identity:honorificSuffix without a definition.
+    slot_uri: uco-identity:honorificSuffix
+    range: string
+    multivalued: true
+
+classes:
+
+  AddressFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:AddressFacet
+    description: >-
+      An address facet is a grouping of characteristics unique to an administrative identifier for a geolocation
+      associated with a specific identity.
+    slots:
+      - address
+
+  AffiliationFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:AffiliationFacet
+    description: >-
+      An affiliation is a grouping of characteristics unique to the established affiliations of an entity.
+
+  BirthInformationFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:BirthInformationFacet
+    description: >-
+      Birth information is a grouping of characteristics unique to information pertaining to the birth
+      of an entity.
+    slots:
+      - birthdate
+
+  CountryOfResidenceFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:CountryOfResidenceFacet
+    description: >-
+      Country of residence is a grouping of characteristics unique to information related to the country,
+      or countries, where an entity resides.
+
+  EventsFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:EventsFacet
+    description: >-
+      Events is a grouping of characteristics unique to information related to specific relevant things
+      that happen in the lifetime of an entity.
+
+  IdentifierFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:IdentifierFacet
+    description: >-
+      Identifier is a grouping of characteristics unique to information that uniquely and specifically
+      identities an entity.
+
+  Identity:
+    is_a: IdentityAbstraction
+    class_uri: uco-identity:Identity
+    description: >-
+      An identity is a grouping of identifying characteristics unique to an individual or organization.
+
+  IdentityFacet:
+    is_a: Facet
+    class_uri: uco-identity:IdentityFacet
+    description: >-
+      An identity facet is a grouping of characteristics unique to a particular aspect of an identity.
+
+  LanguagesFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:LanguagesFacet
+    description: >-
+      Languages is a grouping of characteristics unique to specific syntactically and grammatically standardized
+      forms of communication (human or computer) in which an entity has proficiency (comprehends, speaks,
+      reads, or writes).
+
+  NationalityFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:NationalityFacet
+    description: >-
+      Nationality is a grouping of characteristics unique to the condition of an entity belonging to a
+      particular nation.
+
+  OccupationFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:OccupationFacet
+    description: >-
+      Occupation is a grouping of characteristics unique to the job or profession of an entity.
+
+  Organization:
+    is_a: Identity
+    class_uri: uco-identity:Organization
+    description: >-
+      An organization is a grouping of identifying characteristics unique to a group of people who work
+      together in an organized way for a shared purpose. [based on https://dictionary.cambridge.org/us/dictionary/english/organization]
+
+  OrganizationDetailsFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:OrganizationDetailsFacet
+    description: >-
+      Organization details is a grouping of characteristics unique to an identity representing an administrative
+      and functional structure.
+
+  Person:
+    is_a: Identity
+    class_uri: uco-identity:Person
+    description: >-
+      A person is a grouping of identifying characteristics unique to a human being regarded as an individual.
+      [based on https://www.lexico.com/en/definition/person]
+
+  PersonalDetailsFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:PersonalDetailsFacet
+    description: >-
+      Personal details is a grouping of characteristics unique to an identity representing an individual
+      person.
+
+  PhysicalInfoFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:PhysicalInfoFacet
+    description: >-
+      Physical info is a grouping of characteristics unique to the outwardly observable nature of an individual
+      person.
+
+  QualificationFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:QualificationFacet
+    description: >-
+      Qualification is a grouping of characteristics unique to particular skills, capabilities or their
+      related achievements (educational, professional, etc.) of an entity.
+
+  RelatedIdentityFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:RelatedIdentityFacet
+    description: <Needs fleshed out from CIQ>
+
+  SimpleNameFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:SimpleNameFacet
+    description: >-
+      A simple name facet is a grouping of characteristics unique to the personal name (e.g., Dr. John
+      Smith Jr.) held by an identity.
+    slots:
+      - familyName
+      - givenName
+      - honorificPrefix
+      - honorificSuffix
+
+  VisaFacet:
+    is_a: IdentityFacet
+    class_uri: uco-identity:VisaFacet
+    description: >-
+      Visa is a grouping of characteristics unique to information related to a person's ability to enter,
+      leave, or stay for a specified period of time in a country.

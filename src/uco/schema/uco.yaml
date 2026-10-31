@@ -1,98 +1,103 @@
 ---
 id: https://w3id.org/lmodel/uco
 name: uco
-title: uco
-description: |-
-  Unified Cyber Ontology (UCO): LinkML Schema
+title: Unified Cyber Ontology (UCO)
+description: >-
+  A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module per UCO namespace and one for
+  the Collections Ontology terms UCO uses, with every class, property and vocabulary keeping its UCO IRI.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
 license: Apache-2.0
 see_also:
   - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+comments:
+  - >-
+    scripts/uco_to_linkml.py writes every YAML file in this folder from UCO's files in upstream/. Change
+    the script or the copy, never the files.
+  - >-
+    Each module imports the modules its UCO file imports, and this file imports them in that order, so
+    an importer can import one module alone.
+  - >-
+    The descriptions are UCO's rdfs:comment texts, which the UCO Community publishes under the Apache
+    License 2.0.
+  - >-
+    Where UCO defines one local name in more than one namespace, the namespace that comes first in this
+    file's imports keeps it, and each other takes its namespace as a prefix: action_endTime, action_object,
+    action_startTime, action_value, marking_statement, observable_context, observable_cpeid, observable_creator,
+    observable_endTime, observable_eventType, observable_key, observable_location, observable_modifiedTime,
+    observable_participant, observable_references, observable_startTime, observable_swid, observable_value,
+    observable_version, types_value.
+  - >-
+    Declared in uco_core although their IRIs are in UCO's types namespace, since Event's eventAttribute
+    ranges over them and uco-core imports no other UCO namespace: Dictionary (uco-types:Dictionary), entry
+    (uco-types:entry), DictionaryEntry (uco-types:DictionaryEntry), key (uco-types:key), types_value (uco-types:value).
+  - >-
+    Left out: SHACL advice (severity sh:Info or sh:Warning), SPARQL constraints, sh:not, sh:xone, paths
+    of more than one property, and UCO's rule that a UcoThing is never a blank node, which a facet inlined
+    here is when written as RDF.
 
 prefixes:
-  uco: https://w3id.org/lmodel/uco/
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
   linkml: https://w3id.org/linkml/
-  biolink: https://w3id.org/biolink/vocab/
-  schema: http://schema.org/
-  PATO: http://purl.obolibrary.org/obo/PATO_
-  example: http://www.example.org/rdf#
-default_prefix: uco
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
 default_range: string
 
 imports:
   - linkml:types
+  - ./uco_co
+  - ./uco_core
+  - ./uco_configuration
+  - ./uco_location
+  - ./uco_identity
+  - ./uco_marking
+  - ./uco_pattern
+  - ./uco_role
+  - ./uco_time
+  - ./uco_tool
+  - ./uco_victim
+  - ./uco_vocabulary
+  - ./uco_types
+  - ./uco_action
+  - ./uco_analysis
+  - ./uco_observable
+
+slots:
+
+  graph:
+    description: >-
+      The things the document holds: UCO objects, with their facets inlined, threads and their items.
+    range: UcoThing
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+    comments:
+      - UCO's JSON-LD holds the same list under @graph.
 
 classes:
 
-  NamedThing:
-    description: >-
-      A generic grouping for any identifiable entity
-    slots:
-      - id
-      - name
-      - description
-    class_uri: schema:Thing
-
-  Person:
-    is_a: NamedThing
-    description: >-
-      Represents a Person
-    slots:
-      - primary_email
-      - birth_date
-      - age_in_years
-      - vital_status
-    slot_usage:
-      primary_email:
-        pattern: "^\\S+@[\\S+\\.]+\\S+"
-
-  PersonCollection:
+  UcoDocument:
+    class_uri: uco_linkml:UcoDocument
+    description: A document of UCO data, as a JSON-LD file of UCO holds one graph.
     tree_root: true
-    description: >-
-      A holder for Person objects
-    attributes:
-      people:
-        range: Person
-        multivalued: true
-        inlined_as_list: true
-
-slots:
-  id:
-    identifier: true
-    slot_uri: schema:identifier
-    range: uriorcurie
-    description: A unique identifier for a thing
-  name:
-    slot_uri: schema:name
-    description: A human-readable name for a thing
-  description:
-    slot_uri: schema:description
-    description: A human-readable description for a thing
-  primary_email:
-    slot_uri: schema:email
-    description: The main email address of a person
-  birth_date:
-    slot_uri: schema:birthDate
-    range: date
-    description: Date on which a person is born
-  age_in_years:
-    range: integer
-    description: Number of years since birth
-  vital_status:
-    range: PersonStatus
-    description: living or dead status
-
-enums:
-  PersonStatus:
-    description:
-      The vital status of a person
-    permissible_values:
-      ALIVE:
-        description: the person is living
-        meaning: PATO:0001421
-      DEAD:
-        description: the person is deceased
-        meaning: PATO:0001422
-      UNKNOWN:
-        description: the vital status is not known
-        todos:
-          - map this to an ontology
+    slots:
+      - graph

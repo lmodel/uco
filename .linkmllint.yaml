@@ -1,0 +1,14 @@
+# linkml-lint reads this file from the directory `just lint` runs in.
+# The recommended rules apply, with the naming rule fitted to UCO's names.
+# Slots keep UCO's property names, so data compares with UCO's without
+# translation: lowerCamelCase (hasFacet, objectCreatedTime), an upper-case
+# acronym for a few identifiers (IMEI, MSISDNType), and, where UCO defines a
+# name in more than one namespace, the namespace and an underscore before
+# all but one of them (observable_endTime). Permissible values are UCO's
+# vocabulary values as UCO writes them (SHA3-256, Delay Time (ms)).
+extends: recommended
+rules:
+  standard_naming:
+    slot_pattern: "^([a-z]+_)?[A-Za-z][A-Za-z0-9]*$"
+    exclude_type:
+      - permissible_value

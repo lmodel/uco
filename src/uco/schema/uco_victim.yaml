@@ -1,0 +1,56 @@
+---
+id: https://w3id.org/lmodel/uco-victim
+name: uco_victim
+title: UCO Victim
+description: >-
+  The classes, properties and vocabularies of UCO 1.5.0's victim namespace, https://ontology.unifiedcyberontology.org/uco/victim/.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_role
+
+classes:
+
+  Victim:
+    is_a: NeutralRole
+    class_uri: uco-victim:Victim
+    description: >-
+      A victim is a role played by a person or organization that is/was the target of some malicious action.
+
+  VictimTargeting:
+    is_a: Victim
+    class_uri: uco-victim:VictimTargeting
+    description: >-
+      A victim targeting is a grouping of characteristics unique to people or organizations that are the
+      target of some malicious activity.

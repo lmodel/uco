@@ -1,0 +1,21 @@
+package example;
+
+/* metamodel_version: 1.12.0 */
+/* version: 1.5.0 */
+import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.List;
+import lombok.*;
+
+/**
+  An SQLite blob is a blob (binary large object) of data within an SQLite database. [based on https://en.wikipedia.org/wiki/SQLite]
+**/
+@Data
+@EqualsAndHashCode(callSuper=false)
+public class SQLiteBlob extends ObservableObject {
+
+
+
+}

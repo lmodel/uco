@@ -1,0 +1,22 @@
+package example;
+
+/* metamodel_version: 1.12.0 */
+/* version: 1.5.0 */
+import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.util.List;
+import lombok.*;
+
+/**
+  An entry of a collection, which wraps one element of the collection's content.
+**/
+@Data
+@EqualsAndHashCode(callSuper=false)
+public class CoItem  {
+
+  private String itemContent;
+
+
+}

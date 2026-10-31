@@ -1,0 +1,218 @@
+---
+id: https://w3id.org/lmodel/uco-marking
+name: uco_marking
+title: UCO Marking
+description: >-
+  Data markings represent restrictions, permissions, and other guidance for how data can be used and shared.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_core
+
+slots:
+
+  authorizedIdentities:
+    title: Authorized Identities
+    description: >-
+      Specifies the identities that are authorized to access the data to which the data marking is associated.
+      The list of authorized identities are represented as UUIDs.
+    slot_uri: uco-marking:authorizedIdentities
+    range: string
+    required: true
+    multivalued: true
+
+  contentSelectors:
+    description: >-
+      Explicit specification of exactly which portions of a UCO object to apply marking definitions to.
+      Specific syntax for how to specify the UCO object portions is dependent on the particular syntactic
+      serialization implementation (XML, JSON, etc.) of UCO and MUST be explicitly specified in a separate
+      binding specification for that syntactic serialization implementation (e.g. a UCO XML Binding Specification).
+    slot_uri: uco-marking:contentSelectors
+    range: string
+    multivalued: true
+
+  definition:
+    description: Explicit specification of a data marking instance.
+    slot_uri: uco-marking:definition
+    range: MarkingModel
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  definitionType:
+    description: Specifies the Marking Model for a Marking Definition.
+    slot_uri: uco-marking:definitionType
+    is_a: informalType
+    range: string
+
+  license:
+    title: License
+    description: Specifies the identifier for the type of license
+    slot_uri: uco-marking:license
+    range: string
+    required: true
+
+  marking:
+    description: Represents specific marking definitions to be applied to UCO data.
+    slot_uri: uco-marking:marking
+    range: MarkingDefinition
+    multivalued: true
+    inlined: false
+
+  marking_statement:
+    title: Statement
+    description: >-
+      Specifies the statement to apply to the structure for which the Marking is to be applied.
+    slot_uri: uco-marking:statement
+    range: string
+    required: true
+
+  termsOfUse:
+    title: Terms of Use
+    description: >-
+      Specifies the terms of use that apply to the structure for which the Marking is to be applied.
+    slot_uri: uco-marking:termsOfUse
+    range: string
+    required: true
+
+classes:
+
+  GranularMarking:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-marking:GranularMarking
+    description: >-
+      A granular marking is a grouping of characteristics unique to specification of marking definitions
+      (restrictions, permissions, and other guidance for how data can be used and shared) that apply to
+      particular portions of a particular UCO object.
+    slots:
+      - contentSelectors
+      - marking
+
+  LicenseMarking:
+    is_a: MarkingModel
+    class_uri: uco-marking:LicenseMarking
+    title: License Marking
+    description: >-
+      A license marking is a grouping of characteristics unique to the expression of data marking definitions
+      (restrictions, permissions, and other guidance for how data can be used and shared) to convey details
+      of license restrictions that apply to the data.
+    slots:
+      - definitionType
+      - license
+    slot_usage:
+      definitionType:
+        multivalued: true
+        has_member:
+          equals_string: license
+
+  MarkingDefinition:
+    is_a: MarkingDefinitionAbstraction
+    class_uri: uco-marking:MarkingDefinition
+    description: >-
+      A marking definition is a grouping of characteristics unique to the expression of a specific data
+      marking conveying restrictions, permissions, and other guidance for how marked data can be used
+      and shared.
+    slots:
+      - definition
+      - definitionType
+    slot_usage:
+      definitionType:
+        required: true
+
+  MarkingModel:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-marking:MarkingModel
+    description: >-
+      A marking model is a grouping of characteristics unique to the expression of a particular form of
+      data marking definitions (restrictions, permissions, and other guidance for how data can be used
+      and shared).
+
+  ReleaseToMarking:
+    is_a: MarkingModel
+    class_uri: uco-marking:ReleaseToMarking
+    title: Release-To Marking
+    description: >-
+      A release-to marking is a grouping of characteristics unique to the expression of data marking definitions
+      (restrictions, permissions, and other guidance for how data can be used and shared) to convey details
+      of authorized persons and/or organizations to which to the associated content may be released. The
+      existence of the Release-To marking restricts access to ONLY those identities explicitly listed,
+      regardless of whether another data marking exists that allows sharing with other members of the
+      community.
+    slots:
+      - authorizedIdentities
+      - definitionType
+    slot_usage:
+      definitionType:
+        multivalued: true
+        has_member:
+          equals_string: release-to
+
+  StatementMarking:
+    is_a: MarkingModel
+    class_uri: uco-marking:StatementMarking
+    title: Statement Marking
+    description: >-
+      A statement marking is a grouping of characteristics unique to the expression of data marking definitions
+      (restrictions, permissions, and other guidance for how data can be used and shared) to convey details
+      of a textual marking statement, (e.g., copyright) whose semantic meaning should apply to the associated
+      content. Statement markings are generally not machine-readable. An example of this would be a simple
+      marking to apply copyright information, such as 'Copyright 2014 Acme Inc.'.
+    slots:
+      - definitionType
+      - marking_statement
+    slot_usage:
+      definitionType:
+        multivalued: true
+        has_member:
+          equals_string: statement
+
+  TermsOfUseMarking:
+    is_a: MarkingModel
+    class_uri: uco-marking:TermsOfUseMarking
+    title: Terms Of Use Marking
+    description: >-
+      A terms of use marking is a grouping of characteristics unique to the expression of data marking
+      definitions (restrictions, permissions, and other guidance for how data can be used and shared)
+      to convey details of a textual statement specifying the Terms of Use (that is, the conditions under
+      which the content may be shared, applied, or otherwise used) of the marked content. An example of
+      this would be used to communicate a simple statement, such as 'Acme Inc. is not responsible for
+      the content of this file'.
+    slots:
+      - definitionType
+      - termsOfUse
+    slot_usage:
+      definitionType:
+        multivalued: true
+        has_member:
+          equals_string: terms-of-use

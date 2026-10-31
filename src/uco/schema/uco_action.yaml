@@ -1,0 +1,334 @@
+---
+id: https://w3id.org/lmodel/uco-action
+name: uco_action
+title: UCO Action
+description: This ontology defines classes and properties for characterizing actions.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_core
+  - ./uco_location
+  - ./uco_pattern
+  - ./uco_vocabulary
+  - ./uco_types
+
+slots:
+
+  action:
+    description: A characterization of a single action.
+    slot_uri: uco-action:action
+    range: Action
+    required: true
+    multivalued: true
+    inlined: false
+
+  actionCount:
+    description: The number of times that the action was performed.
+    slot_uri: uco-action:actionCount
+    range: uco_non_negative_integer
+
+  actionStatus:
+    description: The current state of the action.
+    slot_uri: uco-action:actionStatus
+    any_of:
+      - range: ActionStatusTypeVocab
+      - range: string
+
+  action_endTime:
+    description: The time at which performance of the action ended.
+    slot_uri: uco-action:endTime
+    range: datetime
+
+  action_object:
+    description: The things that the action is performed on/against.
+    slot_uri: uco-action:object
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  action_startTime:
+    description: The time at which performance of the action began.
+    slot_uri: uco-action:startTime
+    range: datetime
+
+  action_value:
+    description: The value of an action parameter.
+    slot_uri: uco-action:value
+    range: string
+    required: true
+
+  argumentName:
+    description: The identifying label of an argument.
+    slot_uri: uco-action:argumentName
+    range: string
+    required: true
+
+  environment:
+    description: The environment wherein an action occurs.
+    slot_uri: uco-action:environment
+    range: UcoObject
+    inlined: false
+
+  error:
+    description: >-
+      A characterization of the differences between the expected and the actual performance of the action.
+    slot_uri: uco-action:error
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  estimatedCost:
+    description: An estimation of the cost if the action is performed.
+    slot_uri: uco-action:estimatedCost
+    range: string
+
+  estimatedEfficacy:
+    description: >-
+      An estimation of the effectiveness of the action at achieving its objective if the action is performed.
+    slot_uri: uco-action:estimatedEfficacy
+    range: string
+
+  estimatedImpact:
+    description: An estimation of the impact if the action is performed.
+    slot_uri: uco-action:estimatedImpact
+    range: string
+
+  instrument:
+    description: The things used to perform an action.
+    slot_uri: uco-action:instrument
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  location:
+    description: The locations where an action occurs.
+    slot_uri: uco-action:location
+    range: Location
+    multivalued: true
+    inlined: false
+
+  objective:
+    description: The intended purpose for performing the action.
+    slot_uri: uco-action:objective
+    range: string
+
+  participant:
+    description: The supporting (non-primary) performers of an action.
+    slot_uri: uco-action:participant
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  performer:
+    description: The primary performer of an action.
+    slot_uri: uco-action:performer
+    range: UcoObject
+    inlined: false
+
+  phase:
+    description: >-
+      The ordered set of actions or sub action-lifecycles that represent the action lifecycle.
+    slot_uri: uco-action:phase
+    is_a: subaction
+    range: ArrayOfAction
+    required: true
+    inlined: true
+    inlined_as_list: true
+
+  rate:
+    description: The frequency rate for the occurence of an action.
+    slot_uri: uco-action:rate
+    range: decimal
+    required: true
+
+  result:
+    description: The things resulting from performing an action.
+    slot_uri: uco-action:result
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  scale:
+    description: >-
+      The time scale utilized for the frequency rate count for the occurence of an action.
+    slot_uri: uco-action:scale
+    range: string
+    required: true
+
+  subaction:
+    description: References to other actions that make up part of a larger more complex action.
+    slot_uri: uco-action:subaction
+    range: Action
+    multivalued: true
+    inlined: false
+
+  techniqueID:
+    description: >-
+      An identifier for a technique within some cataloguing system. At the general level of UCO, techniqueID
+      is left optional and minimally-described aside from needing to be Literal-valued. Specializations
+      of Technique should also consider specializing a corresponding subproperty of techniqueID to enable
+      support of global review of technique identifiers.
+    slot_uri: uco-action:techniqueID
+    domain: Technique
+    multivalued: true
+
+  trend:
+    description: A characterization of the frequency trend for the occurence of an action.
+    slot_uri: uco-action:trend
+    any_of:
+      - range: TrendVocab
+      - range: string
+    required: true
+
+  units:
+    description: >-
+      The units of measure utilized for the frequency rate count for the occurence of an action.
+    slot_uri: uco-action:units
+    range: string
+    required: true
+
+classes:
+
+  Action:
+    is_a: UcoObject
+    class_uri: uco-action:Action
+    description: An action is something that may be done or performed.
+    disjoint_with:
+      - Event
+    slots:
+      - actionCount
+      - actionStatus
+      - action_endTime
+      - action_object
+      - action_startTime
+      - environment
+      - error
+      - instrument
+      - location
+      - participant
+      - performer
+      - result
+      - subaction
+
+  ActionArgumentFacet:
+    is_a: Facet
+    class_uri: uco-action:ActionArgumentFacet
+    description: >-
+      An action argument facet is a grouping of characteristics unique to a single parameter of an action.
+    slots:
+      - action_value
+      - argumentName
+
+  ActionEstimationFacet:
+    is_a: Facet
+    class_uri: uco-action:ActionEstimationFacet
+    description: >-
+      An action estimation facet is a grouping of characteristics unique to decision-focused approximation
+      aspects for an action that may potentially be performed.
+    slots:
+      - estimatedCost
+      - estimatedEfficacy
+      - estimatedImpact
+      - objective
+
+  ActionFrequencyFacet:
+    is_a: Facet
+    class_uri: uco-action:ActionFrequencyFacet
+    description: >-
+      An action frequency facet is a grouping of characteristics unique to the frequency of occurrence
+      for an action.
+    slots:
+      - rate
+      - scale
+      - trend
+      - units
+
+  ActionLifecycle:
+    is_a: Action
+    class_uri: uco-action:ActionLifecycle
+    description: >-
+      An action lifecycle is an action pattern consisting of an ordered set of multiple actions or subordinate
+      action lifecycles.
+    none_of:
+      - slot_conditions:
+          actionCount:
+            value_presence: PRESENT
+      - slot_conditions:
+          actionStatus:
+            value_presence: PRESENT
+      - slot_conditions:
+          action_endTime:
+            value_presence: PRESENT
+      - slot_conditions:
+          action_startTime:
+            value_presence: PRESENT
+      - slot_conditions:
+          error:
+            value_presence: PRESENT
+    slots:
+      - actionCount
+      - actionStatus
+      - action_endTime
+      - action_startTime
+      - error
+      - phase
+    slot_usage:
+      phase:
+        maximum_cardinality: 1
+
+  ActionPattern:
+    is_a: Action
+    mixins:
+      - Pattern
+    class_uri: uco-action:ActionPattern
+    description: >-
+      An action pattern is a grouping of characteristics unique to a combination of actions forming a
+      consistent or characteristic arrangement.
+
+  ArrayOfAction:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-action:ArrayOfAction
+    description: >-
+      An array of action is an ordered list of references to things that may be done or performed.
+    slots:
+      - action
+
+  Technique:
+    is_a: UcoType
+    class_uri: uco-action:Technique
+    description: >-
+      A technique is a class of actions joined by some common characteristics. The class uco-action:Technique
+      is a metaclass. A Technique instance is an owl:Class that is a subclass of uco-action:Action.
+    slots:
+      - techniqueID

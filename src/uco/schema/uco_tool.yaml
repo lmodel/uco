@@ -1,0 +1,283 @@
+---
+id: https://w3id.org/lmodel/uco-tool
+name: uco_tool
+title: UCO Tool
+description: >-
+  The classes, properties and vocabularies of UCO 1.5.0's tool namespace, https://ontology.unifiedcyberontology.org/uco/tool/.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_configuration
+  - ./uco_identity
+
+slots:
+
+  buildConfiguration:
+    description: >-
+      How the build utility was configured for a particular build of a particular software.
+    slot_uri: uco-tool:buildConfiguration
+    range: Configuration
+    inlined: false
+
+  buildID:
+    description: An externally defined unique identifier for a particular build of a software.
+    slot_uri: uco-tool:buildID
+    range: string
+
+  buildInformation:
+    description: Describes how a particular tool was built.
+    slot_uri: uco-tool:buildInformation
+    range: BuildInformationType
+    inlined: true
+
+  buildLabel:
+    description: Relevant label for a particular build of a particular software.
+    slot_uri: uco-tool:buildLabel
+    range: string
+
+  buildOutputLog:
+    description: The output log of the build process for a software.
+    slot_uri: uco-tool:buildOutputLog
+    range: string
+
+  buildProject:
+    description: The project name of a build of a software.
+    slot_uri: uco-tool:buildProject
+    range: string
+
+  buildScript:
+    description: The actual build script for a particular build of a particular software.
+    slot_uri: uco-tool:buildScript
+    range: string
+
+  buildUtility:
+    description: Identifies the utility used to build a software.
+    slot_uri: uco-tool:buildUtility
+    range: BuildUtilityType
+    inlined: true
+
+  buildUtilityName:
+    description: The informally defined name of the utility used to build a particular software.
+    slot_uri: uco-tool:buildUtilityName
+    range: string
+
+  buildVersion:
+    description: >-
+      The appropriate version descriptor of a particular build of a particular software.
+    slot_uri: uco-tool:buildVersion
+    range: string
+
+  compilationDate:
+    description: The compilation date for the build of a software.
+    slot_uri: uco-tool:compilationDate
+    range: datetime
+
+  compilerInformalDescription:
+    description: An informal description of a compiler.
+    slot_uri: uco-tool:compilerInformalDescription
+    range: string
+
+  compilers:
+    description: The compilers utilized during a particular build of a particular software.
+    slot_uri: uco-tool:compilers
+    range: CompilerType
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  cpeid:
+    description: Specifies the Common Platform Enumeration identifier for the software.
+    slot_uri: uco-tool:cpeid
+    range: string
+
+  creator:
+    description: The creator organization for a particular tool.
+    slot_uri: uco-tool:creator
+    range: Identity
+    inlined: false
+
+  libraries:
+    description: The libraries incorporated into a particular build of a software.
+    slot_uri: uco-tool:libraries
+    range: LibraryType
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  libraryName:
+    description: The name of the library.
+    slot_uri: uco-tool:libraryName
+    range: string
+
+  libraryVersion:
+    description: The version of the library.
+    slot_uri: uco-tool:libraryVersion
+    range: string
+
+  references:
+    description: References to information describing a particular tool.
+    slot_uri: uco-tool:references
+    range: uri
+    multivalued: true
+
+  servicePack:
+    description: An appropriate service pack descriptor for a particular tool.
+    slot_uri: uco-tool:servicePack
+    range: string
+
+  swid:
+    description: Specifies the SWID tag for the software.
+    slot_uri: uco-tool:swid
+    range: string
+
+  toolType:
+    description: The type of tool.
+    slot_uri: uco-tool:toolType
+    is_a: informalType
+    range: string
+
+  version:
+    description: An appropriate version descriptor of a particular tool.
+    slot_uri: uco-tool:version
+    range: string
+
+classes:
+
+  AnalyticTool:
+    is_a: Tool
+    class_uri: uco-tool:AnalyticTool
+    description: >-
+      An analytic tool is an artifact of hardware and/or software utilized to accomplish a task or purpose
+      of explanation, interpretation or logical reasoning.
+
+  BuildFacet:
+    is_a: Facet
+    class_uri: uco-tool:BuildFacet
+    description: >-
+      A build facet is a grouping of characteristics unique to a particular version of a software.
+    slots:
+      - buildInformation
+
+  BuildInformationType:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-tool:BuildInformationType
+    description: >-
+      A build information type is a grouping of characteristics that describe how a particular version
+      of software was converted from source code to executable code.
+    slots:
+      - buildConfiguration
+      - buildID
+      - buildLabel
+      - buildOutputLog
+      - buildProject
+      - buildScript
+      - buildUtility
+      - buildVersion
+      - compilationDate
+      - compilers
+      - libraries
+
+  BuildUtilityType:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-tool:BuildUtilityType
+    description: >-
+      A build utility type characterizes the tool used to convert from source code to executable code
+      for a particular version of software.
+    slots:
+      - buildUtilityName
+      - cpeid
+      - swid
+
+  CompilerType:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-tool:CompilerType
+    description: >-
+      A compiler type is a grouping of characteristics unique to a specific program that translates computer
+      code written in one programming language (the source language) into another language (the target
+      language). Typically a program that translates source code from a high-level programming language
+      to a lower-level language (e.g., assembly language, object code, or machine code) to create an executable
+      program. [based on https://en.wikipedia.org/wiki/Compiler]
+    slots:
+      - compilerInformalDescription
+      - cpeid
+      - swid
+
+  ConfiguredTool:
+    is_a: Tool
+    class_uri: uco-tool:ConfiguredTool
+    description: >-
+      A ConfiguredTool is a Tool that is known to be configured to run in a more specified manner than
+      some unconfigured or less-configured Tool.
+    slots:
+      - isConfigurationOf
+      - usesConfiguration
+    slot_usage:
+      isConfigurationOf:
+        range: Tool
+
+  DefensiveTool:
+    is_a: Tool
+    class_uri: uco-tool:DefensiveTool
+    description: >-
+      A defensive tool is an artifact of hardware and/or software utilized to accomplish a task or purpose
+      of guarding.
+
+  LibraryType:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-tool:LibraryType
+    description: >-
+      A library type is a grouping of characteristics unique to a collection of resources incorporated
+      into the build of a software.
+    slots:
+      - libraryName
+      - libraryVersion
+
+  MaliciousTool:
+    is_a: Tool
+    class_uri: uco-tool:MaliciousTool
+    description: >-
+      A malicious tool is an artifact of hardware and/or software utilized to accomplish a malevolent
+      task or purpose.
+
+  Tool:
+    is_a: UcoObject
+    class_uri: uco-tool:Tool
+    description: >-
+      A tool is an element of hardware and/or software utilized to carry out a particular function.
+    slots:
+      - creator
+      - references
+      - servicePack
+      - toolType
+      - version

@@ -1,0 +1,163 @@
+---
+id: https://w3id.org/lmodel/uco-configuration
+name: uco_configuration
+title: UCO Configuration
+description: This ontology defines classes and properties for characterizing configurations.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_core
+
+slots:
+
+  configurationEntry:
+    description: A single configuration setting entry item for a tool or other software.
+    slot_uri: uco-configuration:configurationEntry
+    see_also:
+      - https://github.com/ucoProject/UCO/issues/432
+    range: ConfigurationEntry
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  dependencies:
+    description: >-
+      The relevant configuration dependencies for a tool, application, software, or other cyber object.
+    slot_uri: uco-configuration:dependencies
+    range: Dependency
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+  dependencyDescription:
+    description: A description of a tool or other software dependency.
+    slot_uri: uco-configuration:dependencyDescription
+    range: string
+
+  dependencyType:
+    description: The type of a tool or other software dependency.
+    slot_uri: uco-configuration:dependencyType
+    is_a: informalType
+    range: string
+
+  isConfigurationOf:
+    description: >-
+      The object which has been configured to run in a more specified manner than another object. This
+      property is expected to have a more specific range when associated with a class, such as a configured
+      Tool having this property have a range of a Tool.
+    slot_uri: uco-configuration:isConfigurationOf
+    range: UcoObject
+    inlined: false
+
+  itemDescription:
+    description: A description of a configuration setting entry item.
+    slot_uri: uco-configuration:itemDescription
+    range: string
+
+  itemName:
+    description: The name of a configuration setting entry item.
+    slot_uri: uco-configuration:itemName
+    range: string
+
+  itemObject:
+    description: The structured value of a configuration setting entry instance.
+    slot_uri: uco-configuration:itemObject
+    see_also:
+      - https://github.com/ucoProject/UCO/issues/432
+    range: UcoObject
+    multivalued: true
+    inlined: false
+
+  itemType:
+    description: The type of a configuration setting entry item.
+    slot_uri: uco-configuration:itemType
+    is_a: informalType
+    range: string
+
+  itemValue:
+    description: The value of a configuration setting entry instance.
+    slot_uri: uco-configuration:itemValue
+    range: string
+    multivalued: true
+
+  usageContextAssumptions:
+    description: >-
+      Description of the various relevant usage context assumptions for a tool or other software .
+    slot_uri: uco-configuration:usageContextAssumptions
+    range: string
+    multivalued: true
+
+  usesConfiguration:
+    description: A configuration used by an object.
+    slot_uri: uco-configuration:usesConfiguration
+    range: Configuration
+    inlined: false
+
+classes:
+
+  Configuration:
+    is_a: UcoObject
+    class_uri: uco-configuration:Configuration
+    description: >-
+      A configuration is a grouping of characteristics unique to a set of parameters or initial settings
+      for the use of a tool, application, software, or other cyber object.
+    see_also:
+      - https://github.com/ucoProject/UCO/issues/432
+    slots:
+      - configurationEntry
+      - dependencies
+      - usageContextAssumptions
+
+  ConfigurationEntry:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-configuration:ConfigurationEntry
+    description: >-
+      A configuration entry is a grouping of characteristics unique to a particular parameter or initial
+      setting for the use of a tool, application, software, or other cyber object.
+    slots:
+      - itemDescription
+      - itemName
+      - itemObject
+      - itemType
+      - itemValue
+
+  Dependency:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-configuration:Dependency
+    description: >-
+      A dependency is a grouping of characteristics unique to something that a tool or other software
+      relies on to function as intended.
+    slots:
+      - dependencyDescription
+      - dependencyType

@@ -1,0 +1,154 @@
+---
+id: https://w3id.org/lmodel/uco-location
+name: uco_location
+title: UCO Location
+description: >-
+  The classes, properties and vocabularies of UCO 1.5.0's location namespace, https://ontology.unifiedcyberontology.org/uco/location/.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_core
+
+slots:
+
+  addressType:
+    description: The type of the address, for instance home or work.
+    slot_uri: uco-location:addressType
+    is_a: informalType
+    range: string
+
+  altitude:
+    description: The altitude coordinate of a geolocation.
+    slot_uri: uco-location:altitude
+    range: decimal
+
+  country:
+    description: The name of the geolocation country.
+    slot_uri: uco-location:country
+    range: string
+
+  hdop:
+    description: The horizontal dilution of precision of the GPS location.
+    slot_uri: uco-location:hdop
+    range: decimal
+
+  latitude:
+    description: The latitude coordinate of a geolocation.
+    slot_uri: uco-location:latitude
+    range: decimal
+
+  locality:
+    description: The name of the geolocation locality (e.g., city).
+    slot_uri: uco-location:locality
+    range: string
+
+  longitude:
+    description: The longitude coordinate of a geolocation.
+    slot_uri: uco-location:longitude
+    range: decimal
+
+  pdop:
+    description: The positional (3D) dilution of precision of the GPS location.
+    slot_uri: uco-location:pdop
+    range: decimal
+
+  postalCode:
+    description: The zip-code.
+    slot_uri: uco-location:postalCode
+    range: string
+
+  region:
+    description: The name of the geolocation region (e.g., state).
+    slot_uri: uco-location:region
+    range: string
+
+  street:
+    description: The name of the street.
+    slot_uri: uco-location:street
+    range: string
+
+  tdop:
+    description: The temporal dilution of precision of the GPS location.
+    slot_uri: uco-location:tdop
+    range: decimal
+
+  vdop:
+    description: The vertical dilution of precision of the GPS location.
+    slot_uri: uco-location:vdop
+    range: decimal
+
+classes:
+
+  GPSCoordinatesFacet:
+    is_a: Facet
+    class_uri: uco-location:GPSCoordinatesFacet
+    description: >-
+      A GPS coordinates facet is a grouping of characteristics unique to the expression of quantified
+      dilution of precision (DOP) for an asserted set of geolocation coordinates typically associated
+      with satellite navigation such as the Global Positioning System (GPS).
+    slots:
+      - hdop
+      - pdop
+      - tdop
+      - vdop
+
+  LatLongCoordinatesFacet:
+    is_a: Facet
+    class_uri: uco-location:LatLongCoordinatesFacet
+    description: >-
+      A lat long coordinates facet is a grouping of characteristics unique to the expression of a geolocation
+      as the intersection of specific latitude, longitude, and altitude values.
+    slots:
+      - altitude
+      - latitude
+      - longitude
+
+  Location:
+    is_a: UcoObject
+    class_uri: uco-location:Location
+    description: A location is a geospatial place, site, or position.
+
+  SimpleAddressFacet:
+    is_a: Facet
+    class_uri: uco-location:SimpleAddressFacet
+    description: >-
+      A simple address facet is a grouping of characteristics unique to a geolocation expressed as an
+      administrative address.
+    slots:
+      - addressType
+      - country
+      - locality
+      - postalCode
+      - region
+      - street

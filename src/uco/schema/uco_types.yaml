@@ -1,0 +1,250 @@
+---
+id: https://w3id.org/lmodel/uco-types
+name: uco_types
+title: UCO Types
+description: >-
+  The classes, properties and vocabularies of UCO 1.5.0's types namespace, https://ontology.unifiedcyberontology.org/uco/types/.
+version: 1.5.0
+source: https://github.com/ucoProject/UCO/releases/tag/1.5.0
+license: Apache-2.0
+see_also:
+  - https://lmodel.github.io/uco
+  - https://unifiedcyberontology.org/releases/1.5.0/
+
+prefixes:
+  uco_linkml: https://w3id.org/lmodel/uco/
+  uco-action: https://ontology.unifiedcyberontology.org/uco/action/
+  uco-analysis: https://ontology.unifiedcyberontology.org/uco/analysis/
+  uco-configuration: https://ontology.unifiedcyberontology.org/uco/configuration/
+  uco-core: https://ontology.unifiedcyberontology.org/uco/core/
+  uco-identity: https://ontology.unifiedcyberontology.org/uco/identity/
+  uco-location: https://ontology.unifiedcyberontology.org/uco/location/
+  uco-marking: https://ontology.unifiedcyberontology.org/uco/marking/
+  uco-observable: https://ontology.unifiedcyberontology.org/uco/observable/
+  uco-pattern: https://ontology.unifiedcyberontology.org/uco/pattern/
+  uco-role: https://ontology.unifiedcyberontology.org/uco/role/
+  uco-time: https://ontology.unifiedcyberontology.org/uco/time/
+  uco-tool: https://ontology.unifiedcyberontology.org/uco/tool/
+  uco-types: https://ontology.unifiedcyberontology.org/uco/types/
+  uco-victim: https://ontology.unifiedcyberontology.org/uco/victim/
+  uco-vocabulary: https://ontology.unifiedcyberontology.org/uco/vocabulary/
+  coll: http://purl.org/co/
+  linkml: https://w3id.org/linkml/
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: uco_linkml
+default_range: string
+
+imports:
+  - linkml:types
+  - ./uco_co
+  - ./uco_core
+  - ./uco_vocabulary
+
+types:
+
+  Identifier:
+    typeof: string
+    base: str
+    uri: uco-types:Identifier
+    description: >-
+      An identifier is a string conformant to the specified UUID-based format for UCO object identifiers.
+
+  NativeFormatString:
+    typeof: string
+    base: str
+    uri: uco-types:NativeFormatString
+    description: >-
+      Specifies data in its native format of some external language. The data may be encoded in Base64
+      per [RFC4648]. Data encoded in Base64 must be denoted as such using the encoded property.
+
+  StructuredText:
+    typeof: string
+    base: str
+    uri: uco-types:StructuredText
+    description: >-
+      Expresses string-based data in some information structuring format (e.g., HTML5).
+
+slots:
+
+  hashMethod:
+    description: A particular cryptographic hashing method (e.g., MD5).
+    slot_uri: uco-types:hashMethod
+    any_of:
+      - range: HashNameVocab
+      - range: string
+    required: true
+
+  hashValue:
+    description: A cryptographic hash value.
+    slot_uri: uco-types:hashValue
+    range: uco_hex_binary
+    required: true
+
+  repeatsKey:
+    description: A key found to be repeated in multiple dictionary entries within one dictionary.
+    slot_uri: uco-types:repeatsKey
+    domain: ImproperDictionary
+    range: string
+    multivalued: true
+
+  threadNextItem:
+    description: The link to a next item in a thread.
+    slot_uri: uco-types:threadNextItem
+    is_a: threadSuccessor
+    domain: ThreadItem
+    see_also:
+      - coll:nextItem
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+  threadOriginItem:
+    description: A link to an item of the thread known to have no predecessor.
+    slot_uri: uco-types:threadOriginItem
+    is_a: item
+    domain: Thread
+    see_also:
+      - coll:firstItem
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+  threadPredecessor:
+    description: The link to the preceding item in a thread.
+    slot_uri: uco-types:threadPredecessor
+    domain: ThreadItem
+    inverse: threadSuccessor
+    transitive: true
+    see_also:
+      - coll:precededBy
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+  threadPreviousItem:
+    description: A direct link to a previous item in a thread.
+    slot_uri: uco-types:threadPreviousItem
+    is_a: threadPredecessor
+    domain: ThreadItem
+    inverse: threadNextItem
+    see_also:
+      - coll:previousItem
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+  threadSuccessor:
+    description: A link to a following item in a thread.
+    slot_uri: uco-types:threadSuccessor
+    domain: ThreadItem
+    transitive: true
+    see_also:
+      - coll:followedBy
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+  threadTerminalItem:
+    description: A link to an item of the thread known to have no successor.
+    slot_uri: uco-types:threadTerminalItem
+    is_a: item
+    domain: Thread
+    see_also:
+      - coll:lastItem
+    range: ThreadItem
+    multivalued: true
+    inlined: false
+
+classes:
+
+  ControlledDictionary:
+    is_a: Dictionary
+    class_uri: uco-types:ControlledDictionary
+    description: >-
+      A controlled dictionary is a list of (term/key, value) pairs where each term/key exists no more
+      than once and is constrained to an explicitly defined set of values.
+    slots:
+      - entry
+    slot_usage:
+      entry:
+        range: ControlledDictionaryEntry
+
+  ControlledDictionaryEntry:
+    is_a: DictionaryEntry
+    class_uri: uco-types:ControlledDictionaryEntry
+    description: >-
+      A controlled dictionary entry is a single (term/key, value) pair where the term/key is constrained
+      to an explicitly defined set of values.
+
+  Hash:
+    is_a: UcoInherentCharacterizationThing
+    class_uri: uco-types:Hash
+    description: >-
+      A hash is a grouping of characteristics unique to the result of applying a mathematical algorithm
+      that maps data of arbitrary size to a bit string (the 'hash') and is a one-way function, that is,
+      a function which is practically infeasible to invert. This is commonly used for integrity checking
+      of data. [based on https://en.wikipedia.org/wiki/Cryptographic_hash_function]
+    slots:
+      - hashMethod
+      - hashValue
+
+  ImproperDictionary:
+    is_a: Dictionary
+    class_uri: uco-types:ImproperDictionary
+    description: UCO 1.5.0 declares the class uco-types:ImproperDictionary without a definition.
+    disjoint_with:
+      - ProperDictionary
+    slots:
+      - repeatsKey
+
+  ProperDictionary:
+    is_a: Dictionary
+    class_uri: uco-types:ProperDictionary
+    description: >-
+      A proper dictionary is list of (term/key, value) pairs with each term/key existing no more than
+      once.
+    disjoint_with:
+      - ImproperDictionary
+
+  Thread:
+    is_a: UcoThing
+    mixins:
+      - Bag
+    class_uri: uco-types:Thread
+    description: >-
+      A semi-ordered array of items, that can be present in multiple copies. Implementation of a UCO Thread
+      is similar to a Collections Ontology List, except a Thread may fork and merge - that is, one of
+      its members may have two or more direct successors, and two or more direct predecessors.
+    disjoint_with:
+      - List
+    slots:
+      - id
+      - item
+      - threadOriginItem
+      - threadTerminalItem
+    slot_usage:
+      item:
+        range: ThreadItem
+        inlined: false
+
+  ThreadItem:
+    is_a: UcoThing
+    mixins:
+      - CoItem
+    class_uri: uco-types:ThreadItem
+    description: A ThreadItem is a member of a thread.
+    disjoint_with:
+      - ListItem
+    slots:
+      - id
+      - itemContent
+      - threadNextItem
+      - threadPredecessor
+      - threadPreviousItem
+      - threadSuccessor
+    slot_usage:
+      itemContent:
+        range: UcoObject
+        inlined: false
