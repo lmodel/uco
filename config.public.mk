@@ -22,7 +22,10 @@ LINKML_GENERATORS_DOC_ARGS=
 ## pass args to workaround genowl rdfs config bug (linkml#1453)
 ##   (i.e. --no-type-objects --no-metaclasses --metadata-profile=rdfs)
 # LINKML_GENERATORS_OWL_ARGS="--no-type-objects --no-metaclasses --metadata-profile=rdfs"
-LINKML_GENERATORS_OWL_ARGS=
+## The generator's announced future defaults, set now, as lmodel/spdx does, so
+## that the OWL stays the same when they become the defaults. They leave out
+## the vacuous axioms, which makes the OWL a fifth smaller.
+LINKML_GENERATORS_OWL_ARGS="--skip-vacuous-min-zero-cardinality-axioms --skip-vacuous-local-range-axioms --consolidate-cardinality-axioms"
 
 ## pass args to pydantic generator which isn't supported by gen-project
 ## https://github.com/linkml/linkml/issues/2537
