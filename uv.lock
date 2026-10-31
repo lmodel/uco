@@ -4243,7 +4243,7 @@ wheels = [
 ]
 
 [[package]]
-name = "uco"
+name = "uco-linkml"
 source = { editable = "." }
 dependencies = [
     { name = "linkml-runtime" },
