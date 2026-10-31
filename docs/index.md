@@ -1,6 +1,6 @@
 # uco
 
-A LinkML rendering of the [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) 1.5.0. The [schema pages](elements/index.md) describe each class, slot and vocabulary, under UCO's own names and IRIs.
+This project is a LinkML rendering of the [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) 1.5.0. The [schema pages](elements/index.md) describe each class, slot and vocabulary, under UCO's own names and IRIs.
 
 ## Validate data
 
@@ -21,7 +21,7 @@ Validate one object against its class, or a whole document as a `UcoDocument`, w
 uv run linkml-validate -s src/uco/schema/uco.yaml -C File file.yaml
 ```
 
-The validator applies every constraint the schema states; the generated Python and Pydantic models apply fewer. The JSON Schema in `project/jsonschema/` holds the same constraints for a tool without LinkML, and the tests hold every example to it.
+The validator applies every constraint the schema states. The generated Python and Pydantic models apply fewer. The JSON Schema in `project/jsonschema/` holds the same constraints for a tool without LinkML, and the tests hold every example to it.
 
 ## Read UCO's JSON-LD
 

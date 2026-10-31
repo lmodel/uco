@@ -24,7 +24,7 @@ Unified Cyber Ontology (UCO) 1.5.0 (LinkML)
 
 ## What it models
 
-The [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) at release [1.5.0](https://github.com/ucoProject/UCO/releases/tag/1.5.0): one module for each of UCO's fifteen namespaces, one for the Collections Ontology (CO) terms UCO uses, and the umbrella `uco.yaml`.
+The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) at release [1.5.0](https://github.com/ucoProject/UCO/releases/tag/1.5.0) as one module for each of UCO's fifteen namespaces, one for the Collections Ontology (CO) terms UCO uses, and the umbrella `uco.yaml`.
 
 * **Core** (`uco_core`): UcoThing and UcoObject, facets, relationships, annotations, bundles and other compilations, events and external references.
 * **Observable** (`uco_observable`): observable objects such as files, accounts, devices, processes, network connections and messages, and the facets that describe them.
@@ -35,7 +35,7 @@ The [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) at release
 * **Types**, **Time**, **Vocabulary** (`uco_types`, `uco_time`, `uco_vocabulary`): dictionaries, hashes and threads, UCO's datatypes, and its 44 open vocabularies as enums.
 * **Collections** (`uco_co`): CO's bag, list and item classes that UCO's threads build on.
 
-`scripts/uco_to_linkml.py` writes every module from a copy of UCO's Turtle files in [src/uco/schema/upstream/](src/uco/schema/upstream), and every class, property and vocabulary keeps its UCO name and Internationalized Resource Identifier (IRI) under UCO's own prefixes, such as `uco-core:UcoObject`. Each class's slots come from its SHACL shapes and its parents'. The schema's `version` is 1.5.0, a weekly workflow opens an issue when UCO releases or tags a newer version or the copy differs, and release tags number the schema's versions.
+`scripts/uco_to_linkml.py` writes every module from a copy of UCO's Turtle files in [src/uco/schema/upstream/](src/uco/schema/upstream). Every class, property and vocabulary keeps its UCO name and Internationalized Resource Identifier (IRI) under UCO's own prefixes, such as `uco-core:UcoObject`. Each class's slots come from its SHACL shapes and its parents'. The schema's `version` is 1.5.0, and release tags number the schema's own versions. A weekly workflow opens an issue when UCO releases or tags a newer version, or when the copy differs.
 
 Data in the schema's form keeps UCO's keys, gives each object its IRI as `id` and its class as `type`, and holds facets inside the object they describe. `scripts/uco_examples.py` writes UCO's own examples that way into [tests/data/valid/](tests/data/valid).
 
@@ -51,7 +51,14 @@ None: each element is UCO's or CO's own term under its own IRI, and no element n
 
 ## Not modelled here
 
-The converter leaves out what LinkML cannot state, and prints a note for each: SHACL shapes of severity Info or Warning, which are advice; SPARQL constraints, `sh:not` and `sh:xone`; shapes over a path of more than one property; and UCO's rule that a UcoThing is never a blank node, since a facet here is a value inside its object. UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/test_data.py` holds each fault of UCO's own failing examples to the validator, and lists the faults LinkML cannot state with the reason. [docs/about.md](docs/about.md) says where the schema's form differs from UCO's JSON-LD.
+The converter leaves out what LinkML cannot state, and prints a note for each:
+
+* SHACL shapes of severity Info or Warning, which are advice;
+* SPARQL constraints, `sh:not` and `sh:xone`;
+* shapes over a path of more than one property;
+* UCO's rule that a UcoThing is never a blank node, since a facet here is a value inside its object.
+
+UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/test_data.py` holds each fault of UCO's own failing examples to the validator, and lists the faults LinkML cannot state with the reason. [docs/about.md](docs/about.md) says where the schema's form differs from UCO's JSON-LD.
 
 ## Repository Structure
 
@@ -71,7 +78,7 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 `.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle, written in the Linked Open Knowledge Format (LOKF). Its domain schema is `.lokf/uco.yaml`, which `lokf adapt` writes from `src/uco/schema/uco.yaml`. Change the converter, never the copy. A release carries the copy as `schema-<tag>-uco.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
 
-`just lokf-adapt` rewrites the copy, and `just lokf-adapt-check` says when it is stale. The copy roots the four classes with an IRI on `Concept`: UcoObject, UcoType, Thread and ThreadItem. A concept may name any of the 221 classes at or under them as its `type`; [tests/data/valid/](tests/data/valid) holds an example of each. In Obsidian, add the ones a bundle uses to the KTL Registrar and KTL Curator plugins' *Known LOKF types* setting, for example:
+`just lokf-adapt` rewrites the copy, and `just lokf-adapt-check` says when it is stale. The copy roots the four classes with an IRI on `Concept`: UcoObject, UcoType, Thread and ThreadItem. A concept may name any of the 221 classes at or under them as its `type`, and [tests/data/valid/](tests/data/valid) holds an example of each. In Obsidian, add the ones a bundle uses to the KTL Registrar and KTL Curator plugins' *Known LOKF types* setting, for example:
 
 ```text
 UcoObject, Identity, UcoPerson, UcoOrganization, UcoRole, Location, Tool, AnalyticTool, ConfiguredTool, DefensiveTool, MaliciousTool, Software, ConfiguredSoftware, File, Device, Computer, Account, DigitalAccount, Action, Observation, Event, Relationship, Annotation, Bundle, Grouping, Technique
