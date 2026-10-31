@@ -20,7 +20,7 @@ status: draft
 
 # The Unified Cyber Ontology (UCO)
 
-The UCO Community publishes the Unified Cyber Ontology at ucoProject/UCO, under the Apache License 2.0. Release 1.5.0 was published on July 24, 2026.[^1.5.0] It describes cyber-domain information as UCO objects, such as files, accounts, tools and actions, each with facets that hold its properties, in fifteen namespaces of OWL classes and SHACL shapes, with a master ontology that imports them all.
+The UCO Community publishes the Unified Cyber Ontology at ucoProject/UCO, under the Apache License 2.0. Release 1.5.0 was published on July 24, 2026.[^1.5.0] It describes cyber-domain information as UCO objects, such as files, accounts, tools and actions, each with facets that hold its properties. Its fifteen namespaces of OWL classes and SHACL shapes sit under a master ontology that imports them all.
 
 The schema renders release 1.5.0, one module per namespace, and keeps every UCO name and IRI.[^readme.md]
 

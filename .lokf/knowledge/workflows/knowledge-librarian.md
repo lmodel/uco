@@ -17,6 +17,6 @@ status: draft
 
 # Knowledge Librarian (knowledge-librarian.yaml)
 
-`.github/workflows/knowledge-librarian.yaml` is the workflow named "Knowledge Librarian", a copy of the ktl-sidecar template. It runs every Monday at 05:00 UTC and by hand, and does nothing until the repository variable `KNOWLEDGE_LIBRARIAN_ENABLED` is `true`.[^knowledge-librarian.yaml] Its `earlier` job reads what became of the pull requests it opened before. Its `refresh` job, in the `knowledge-librarian` Environment and with a read-only checkout, installs the ktl-librarian skill at `TRUST_LADDER_SKILLS_REF`, `v0.59.0`, runs the agent, and hands on a patch. Its `publish` job runs no agent: it applies the patch and opens the review pull request.
+`.github/workflows/knowledge-librarian.yaml` is the workflow named "Knowledge Librarian", a copy of the ktl-sidecar template. It runs every Monday at 05:00 UTC and by hand, and does nothing until the repository variable `KNOWLEDGE_LIBRARIAN_ENABLED` is `true`.[^knowledge-librarian.yaml] Its `earlier` job reads what became of the pull requests it opened before. Its `refresh` job, in the `knowledge-librarian` Environment and with a read-only checkout, installs the ktl-librarian skill at `TRUST_LADDER_SKILLS_REF`, `v0.59.0`, runs the agent, and uploads its change as a patch artifact. Its `publish` job runs no agent: it applies the patch and opens the review pull request.
 
 [^knowledge-librarian.yaml]: .github/workflows/knowledge-librarian.yaml, the header comment, the on key and the jobs

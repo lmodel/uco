@@ -31,7 +31,7 @@ status: draft
 - UCO's `LICENSE`, the Apache License 2.0;
 - 42 example files from `tests/examples/`, the passing and failing JSON-LD examples, and the 19 SHACL reports on the failing ones.
 
-`scripts/check_upstream_release.py` pins each file's git object hash, and `tests/test_upstream.py` holds the copy to the pins offline.[^check_upstream_release.py] NOTICE credits the copy, and says that UCO's LICENSE carries no copyright line and that UCO ships no NOTICE file of its own.[^notice] The converter reads the Turtle files, the examples script reads the passing examples, and `tests/test_data.py` reads the failing ones with their reports. Nothing changes the copy.
+`scripts/check_upstream_release.py` pins each file's git object hash, and `tests/test_upstream.py` holds the copy to the pins offline.[^check_upstream_release.py] NOTICE credits the copy. It says that UCO's LICENSE carries no copyright line and that UCO has no NOTICE file of its own.[^notice] The converter reads the Turtle files, the examples script reads the passing examples, and `tests/test_data.py` reads the failing ones with their reports. Nothing changes the copy.
 
 [^upstream]: src/uco/schema/upstream, the copied files
 [^check_upstream_release.py]: scripts/check_upstream_release.py, PINNED_TAG, PINNED_COMMIT and PINNED_BLOBS

@@ -2,6 +2,7 @@
 
 ## 2026-10-31
 
+* **Prose**: reworded 10 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Changed**: The Unified Cyber Ontology (UCO), its footnote's address in angle brackets, as Markdown linters ask.
 * **Added**: Knowledge sources map, the librarian's scrape map, from the repository's tree.
 * **Added**: UCO LinkML schema, from `src/uco/schema/uco.yaml`.

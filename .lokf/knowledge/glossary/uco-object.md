@@ -19,6 +19,6 @@ status: draft
 
 # UcoObject
 
-In the Unified Cyber Ontology, a `UcoObject` represents a concept of the cyber domain, or one needed to describe it, and is the base class of every object a graph names by IRI: a file, an account, a tool, an identity, an action and the rest. The schema renders it as `UcoObject`, which carries the identifier `id`, and its adapt copy roots it on `Concept`.[^uco_core.yaml]
+In the Unified Cyber Ontology, a `UcoObject` represents a concept of the cyber domain, or one needed to describe it. It is the base class of every object a graph names by IRI: a file, an account, a tool, an identity, an action and the rest. The schema renders it as `UcoObject`, which carries the identifier `id`, and its adapt copy roots it on `Concept`.[^uco_core.yaml]
 
 [^uco_core.yaml]: src/uco/schema/uco_core.yaml, UcoObject
