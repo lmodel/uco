@@ -1,0 +1,5 @@
+# http://example.org/kb/configured-object-711b4e95-996e-461a-83a0-e0d6342bf028 in UCO's configuration_setting_PASS.json.
+id: http://example.org/kb/configured-object-711b4e95-996e-461a-83a0-e0d6342bf028
+type: uco-tool:ConfiguredTool
+isConfigurationOf: http://example.org/kb/tool-f12e10c5-daca-4bd1-8b49-ae728f309053
+usesConfiguration: http://example.org/kb/configuration-26760258-ffc7-4241-96f9-0056781eccff

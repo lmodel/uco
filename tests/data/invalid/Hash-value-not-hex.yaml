@@ -1,0 +1,5 @@
+# Fails at: /hashValue
+# Invalid: a hash value is hexadecimal (xsd:hexBinary).
+type: uco-types:Hash
+hashMethod: SHA256
+hashValue: not a hexadecimal value

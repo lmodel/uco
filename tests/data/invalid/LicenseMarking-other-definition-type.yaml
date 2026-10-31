@@ -1,0 +1,6 @@
+# Fails at: /definitionType
+# Invalid: a license marking's definition type includes license (sh:hasValue).
+type: uco-marking:LicenseMarking
+definitionType:
+  - statement
+license: Apache-2.0

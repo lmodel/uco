@@ -1,0 +1,7 @@
+# Fails at: /
+# Invalid: a relationship names its target, which UCO requires (sh:minCount 1).
+id: http://example.org/kb/relationship-001
+type: uco-core:Relationship
+isDirectional: true
+source:
+  - http://example.org/kb/file-001

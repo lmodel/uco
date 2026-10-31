@@ -1,0 +1,7 @@
+# Fails at: /hasFacet/0
+# Invalid: a facet is a Facet; an external reference is not one (sh:class core:Facet).
+id: http://example.org/kb/uco-object-001
+type: uco-core:UcoObject
+hasFacet:
+  - type: uco-core:ExternalReference
+    referenceURL: https://example.org/

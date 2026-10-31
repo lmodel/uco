@@ -1,0 +1,4 @@
+# Fails at: /
+# Invalid: an object has an IRI.
+type: uco-core:UcoObject
+name: no identifier

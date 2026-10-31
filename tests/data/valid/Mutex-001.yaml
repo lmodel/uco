@@ -1,0 +1,3 @@
+# A minimal instance written from the schema: no UCO example has one.
+id: http://example.org/kb/mutex-001
+type: uco-observable:Mutex

@@ -1,0 +1,8 @@
+# http://example.org/kb/relationship-1-1-1-7273698b-34ef-4d04-8cbf-99bdcad7a336 in UCO's relationship_PASS.json.
+id: http://example.org/kb/relationship-1-1-1-7273698b-34ef-4d04-8cbf-99bdcad7a336
+type: uco-core:Relationship
+isDirectional: true
+kindOfRelationship: CUSTOM_Influenced
+source:
+  - http://example.org/kb/file-6aea6ec2-2524-437f-8a1f-762d2dfe6dd0
+target: http://example.org/kb/zipfile-f1ebf584-6abd-472d-bb0e-03d13f50830d

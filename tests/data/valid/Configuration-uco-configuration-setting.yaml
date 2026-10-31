@@ -1,0 +1,14 @@
+# http://example.org/kb/configuration-26760258-ffc7-4241-96f9-0056781eccff in UCO's configuration_setting_PASS.json.
+id: http://example.org/kb/configuration-26760258-ffc7-4241-96f9-0056781eccff
+type: uco-configuration:Configuration
+configurationEntry:
+  - type: uco-configuration:ConfigurationEntry
+    itemName: --setting-0
+  - type: uco-configuration:ConfigurationEntry
+    itemName: --setting-1
+    itemObject:
+      - http://example.org/kb/thing-b752452a-9f7a-4421-a9f3-9611a8cd216c
+  - type: uco-configuration:ConfigurationEntry
+    itemName: --setting-2
+    itemValue:
+      - A value

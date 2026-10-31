@@ -1,0 +1,9 @@
+# Fails at: /
+# Invalid: an action lifecycle has no status of its own (sh:maxCount 0).
+id: http://example.org/kb/action-lifecycle-001
+type: uco-action:ActionLifecycle
+actionStatus: Pending
+phase:
+  - type: uco-action:ArrayOfAction
+    action:
+      - http://example.org/kb/action-001

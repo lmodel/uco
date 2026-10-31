@@ -1,0 +1,9 @@
+# Fails at: /windowsVolumeAttributes
+# Invalid: a volume has four attributes at most (sh:maxCount 4).
+type: uco-observable:WindowsVolumeFacet
+windowsVolumeAttributes:
+  - Hidden
+  - NoDefaultDriveLetter
+  - ReadOnly
+  - ShadowCopy
+  - Hidden

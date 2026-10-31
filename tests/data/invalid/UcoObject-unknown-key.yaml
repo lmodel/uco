@@ -1,0 +1,5 @@
+# Fails at: /
+# Invalid: an object holds only the slots its class lists.
+id: http://example.org/kb/uco-object-001
+type: uco-core:UcoObject
+colour: red

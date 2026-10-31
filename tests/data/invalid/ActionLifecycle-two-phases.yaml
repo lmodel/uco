@@ -1,0 +1,11 @@
+# Fails at: /phase
+# Invalid: an action lifecycle has one phase at most (sh:maxCount 1).
+id: http://example.org/kb/action-lifecycle-001
+type: uco-action:ActionLifecycle
+phase:
+  - type: uco-action:ArrayOfAction
+    action:
+      - http://example.org/kb/action-001
+  - type: uco-action:ArrayOfAction
+    action:
+      - http://example.org/kb/action-002

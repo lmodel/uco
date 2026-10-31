@@ -1,0 +1,7 @@
+# http://example.org/kb/sqlite-record-ff678274-ab0f-4671-9a9b-da1828326fb8 in UCO's database_records_PASS.json.
+id: http://example.org/kb/sqlite-record-ff678274-ab0f-4671-9a9b-da1828326fb8
+type: uco-observable:TableField
+hasFacet:
+  - type: uco-observable:TableFieldFacet
+    recordFieldIsNull: false
+    recordFieldValue: 2jmj7l5rSw0yVb/vlWAYkK/YBwk=

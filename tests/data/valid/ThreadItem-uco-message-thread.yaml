@@ -1,0 +1,9 @@
+# http://example.org/kb/message-thread-item-a6ad1873-c843-4f29-bc79-7d881c3261c5 in UCO's message_thread_PASS.json.
+id: http://example.org/kb/message-thread-item-a6ad1873-c843-4f29-bc79-7d881c3261c5
+type: uco-types:ThreadItem
+itemContent: http://example.org/kb/message-2-2e770ebe-cc83-46cd-b340-9c2ba081c002
+threadNextItem:
+  - http://example.org/kb/message-thread-item-ad4c64f2-aff4-4322-aff4-29b12fcf4f9e
+  - http://example.org/kb/message-thread-item-be503989-4185-40c1-bb3f-b2b8745b8a58
+threadPreviousItem:
+  - http://example.org/kb/message-thread-item-9707179c-3a1a-49e8-838e-0ec95cb8b8b2

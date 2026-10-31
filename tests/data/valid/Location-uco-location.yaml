@@ -1,0 +1,14 @@
+# http://example.org/kb/location-4aa228c5-239a-468f-b668-21d413dc9159 in UCO's location_PASS.json.
+id: http://example.org/kb/location-4aa228c5-239a-468f-b668-21d413dc9159
+type: uco-location:Location
+description:
+  - Second of two locations in example.
+hasFacet:
+  - type: uco-location:SimpleAddressFacet
+    country: France
+    locality: Paris
+    postalCode: F-75002
+    street: 38 Bad Guy Headquarters st.
+  - type: uco-location:LatLongCoordinatesFacet
+    latitude: 48.860346
+    longitude: 2.331199

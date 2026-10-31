@@ -1,0 +1,5 @@
+# A minimal instance written from the schema: no UCO example has one.
+id: http://example.org/kb/enclosing-compilation-001
+type: uco-core:EnclosingCompilation
+object:
+  - http://example.org/kb/uco-object-001

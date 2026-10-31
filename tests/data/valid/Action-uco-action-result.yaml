@@ -1,0 +1,12 @@
+# http://example.org/kb/action-1-094d6f1a-eaaf-48b2-bbe8-1943aa77cff1 in UCO's action_result_PASS.json.
+id: http://example.org/kb/action-1-094d6f1a-eaaf-48b2-bbe8-1943aa77cff1
+type: uco-action:Action
+result:
+  - http://example.org/kb/node-0-0cc5b4d4-e85f-4131-86ff-206a7ca9e8fc
+  - http://example.org/kb/node-1-21bea5ad-9fd3-4221-a839-4f0864c79fc3
+  - http://example.org/kb/node-2-5e759182-ae22-4f73-9c55-215974f2a61b
+  - http://example.org/kb/node-3-6c5d68fc-c869-4567-af65-8bfba49bd26d
+  - http://example.org/kb/node-4-90352b81-74f1-43aa-8cf1-a194442077a9
+  - http://example.org/kb/node-5-ee7608ee-e372-4574-bc22-23ef74e5f882
+  - http://example.org/kb/node-6-f456dbf2-a2f4-4060-ad79-6a954c5d0140
+  - http://example.org/kb/node-7-fd15ec16-9eff-49f4-ba70-b315d90d72a8

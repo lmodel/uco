@@ -1,0 +1,4 @@
+# http://example.org/kb/UcoObject-f86c567d-374a-4873-b9bc-a746ca2bf360 in UCO's object_status_PASS.json.
+id: http://example.org/kb/UcoObject-f86c567d-374a-4873-b9bc-a746ca2bf360
+type: uco-core:UcoObject
+objectStatus: Draft

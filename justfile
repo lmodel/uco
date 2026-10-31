@@ -219,8 +219,12 @@ _test-schema:
 _test-python: gen-python
   uv run python -m pytest
 
-# Run example tests
+# Run example tests. The validator reads a merged copy of the schema: it
+# reads a schema's imports again for every example it checks, which takes
+# seconds each with the sixteen modules.
 _test-examples: _ensure_examples_output
+  -mkdir -p tmp
+  uv run python -c 'from linkml_runtime.utils.schemaview import SchemaView; from linkml_runtime.dumpers import yaml_dumper; v = SchemaView("{{source_schema_path}}"); v.merge_imports(); yaml_dumper.dump(v.schema, "tmp/{{schema_name}}-merged.yaml")'
   uv run linkml-run-examples \
     --input-formats json \
     --input-formats yaml \
@@ -229,7 +233,7 @@ _test-examples: _ensure_examples_output
     --counter-example-input-directory tests/data/invalid \
     --input-directory tests/data/valid \
     --output-directory examples/output \
-    --schema {{source_schema_path}} > examples/output/README.md
+    --schema tmp/{{schema_name}}-merged.yaml > examples/output/README.md
 
 # Add the merged model to docs/schema.
 _gen-yaml:

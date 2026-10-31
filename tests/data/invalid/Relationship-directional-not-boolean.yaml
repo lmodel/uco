@@ -1,0 +1,8 @@
+# Fails at: /isDirectional
+# Invalid: isDirectional is a boolean (sh:datatype xsd:boolean).
+id: http://example.org/kb/relationship-001
+type: uco-core:Relationship
+isDirectional: sometimes
+source:
+  - http://example.org/kb/file-001
+target: http://example.org/kb/file-002

@@ -1,0 +1,5 @@
+# Fails at: /objectStatus
+# Invalid: the status is one of Draft, Final and Deprecated (sh:in).
+id: http://example.org/kb/uco-object-001
+type: uco-core:UcoObject
+objectStatus: Approved

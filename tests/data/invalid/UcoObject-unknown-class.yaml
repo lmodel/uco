@@ -1,0 +1,4 @@
+# Fails at: /type
+# Invalid: the type names a class the schema defines.
+id: http://example.org/kb/uco-object-001
+type: uco-core:NoSuchClass

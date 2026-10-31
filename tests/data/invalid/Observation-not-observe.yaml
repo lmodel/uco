@@ -1,0 +1,5 @@
+# Fails at: /name
+# Invalid: an observation's name is observe (sh:hasValue).
+id: http://example.org/kb/observation-001
+type: uco-observable:Observation
+name: watch

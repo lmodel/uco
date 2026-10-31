@@ -1,0 +1,5 @@
+# http://example.org/kb/action-7acb25ab-0a51-4495-9133-baa69c3be54e in UCO's action_inheritance_PASS.json.
+id: http://example.org/kb/action-7acb25ab-0a51-4495-9133-baa69c3be54e
+type: uco-action:Action
+actionStatus: CUSTOM Started
+name: Open File

@@ -1,0 +1,4 @@
+# http://example.org/kb/Organization-4ea8a5bf-60ea-43ba-9ba6-f852ce8f8b54 in UCO's operating_system_PASS.json.
+id: http://example.org/kb/Organization-4ea8a5bf-60ea-43ba-9ba6-f852ce8f8b54
+type: uco-identity:Organization
+name: Example OS Company

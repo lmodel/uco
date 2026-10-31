@@ -1,0 +1,6 @@
+# http://example.org/kb/windows-thread-da52a01e-41cc-42d5-85be-ca14bfa10fd6 in UCO's observable_creation_time_PASS.json.
+id: http://example.org/kb/windows-thread-da52a01e-41cc-42d5-85be-ca14bfa10fd6
+type: uco-observable:WindowsThread
+hasFacet:
+  - type: uco-observable:WindowsThreadFacet
+    creationTime: '2023-01-01T01:23:45+00:00'

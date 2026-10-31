@@ -1,0 +1,5 @@
+# http://example.org/kb/object-57dd2e88-0714-4015-9f20-a4785c48ea6b in UCO's has_facet_inverse_functional_PASS.json.
+id: http://example.org/kb/object-57dd2e88-0714-4015-9f20-a4785c48ea6b
+type: uco-core:UcoObject
+hasFacet:
+  - type: uco-core:Facet

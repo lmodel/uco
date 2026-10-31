@@ -1,0 +1,5 @@
+# Fails at: /majorImageVersion/0
+# Invalid: a major image version fits in an unsigned short (xsd:unsignedShort).
+type: uco-observable:WindowsPEOptionalHeader
+majorImageVersion:
+  - 70000

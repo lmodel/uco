@@ -1,0 +1,7 @@
+# http://example.org/kb/thread-1c94da2d-0a8d-4ae9-95e1-d3977466f4dd in UCO's thread_PASS.json.
+id: http://example.org/kb/thread-1c94da2d-0a8d-4ae9-95e1-d3977466f4dd
+type: uco-types:Thread
+item:
+  - http://example.org/kb/thread-item-85b644e5-da20-43af-b899-1d55c249def8
+  - http://example.org/kb/thread-item-a8c06685-1d5e-4f60-866e-16af567cf218
+  - http://example.org/kb/thread-item-e9c2219b-9881-47ef-bc73-fb9240c69238

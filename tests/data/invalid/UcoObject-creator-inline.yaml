@@ -1,0 +1,7 @@
+# Fails at: /createdBy
+# Invalid: an object names the identity that created it by its IRI, not inline.
+id: http://example.org/kb/uco-object-001
+type: uco-core:UcoObject
+createdBy:
+  id: http://example.org/kb/identity-001
+  type: uco-identity:Identity
