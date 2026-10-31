@@ -250,6 +250,10 @@ PREFIX = "a type whose prefix the example's context leaves undeclared, so it nam
 OWL = "OWL and RDF list structure, not UCO data"
 OWN_ONTOLOGY = "classes and shapes the example's own ontology defines, which the schema cannot know"
 METACLASS = "a class as an instance of UcoType, which data in the schema's form does not describe"
+ITEM_LINK = (
+    "a list item's link to the next or previous item, which the schema leaves out:"
+    " a list item here is a value inside its list, without the IRI such a link names"
+)
 
 # Each fault UCO reports that this schema does not state, as (example,
 # focus node, path, constraint component), with the reason.
@@ -284,6 +288,8 @@ UNSTATED = {
         "-",
         "NotConstraintComponent",
     ): NOT,
+    ("co_XFAIL.json", "*", "co:nextItem", "MaxCountConstraintComponent"): ITEM_LINK,
+    ("co_XFAIL.json", "*", "co:previousItem", "MaxCountConstraintComponent"): ITEM_LINK,
     (
         "configuration_setting_XFAIL.json",
         "configuration-entry-5f0fc3ea-e763-4b6d-997a-be0d1ceffc8c",
@@ -439,7 +445,9 @@ def test_unstated_faults_are_faults_uco_reports():
 )
 def test_uco_xfail_fault_fails_here(key):
     """A fault UCO's report names, and UNSTATED does not, fails the
-    validator on the same node, at the slot UCO's report names."""
+    validator on the same node, at the slot UCO's report names. That slot is
+    one the node's class has, so the failure is the constraint UCO names and
+    not a key the class lacks."""
     data, focus, path = _faults()[key]
     reader = _reader()
     graph = EXAMPLES.read(data)
@@ -448,6 +456,7 @@ def test_uco_xfail_fault_fails_here(key):
     assert messages, f"{key} validates"
     if path is not None and isinstance(path, URIRef):
         slot = reader.slot_by_iri[str(path)]
+        assert slot in reader.induced(target), f"{target} has no slot {slot}"
         assert any(f" in /{slot}" in m or f"'{slot}'" in m for m in messages), messages
 
 
@@ -455,7 +464,7 @@ def test_uco_xfail_fault_fails_here(key):
 # list's first item has the index 0, written as an xsd:positiveInteger,
 # which pySHACL does not check (UCO's co_XFAIL.json says so) and the schema's
 # minimum of 1 does; and an item names the next by co:nextItem, a link the
-# schema leaves out.
+# schema leaves out (ITEM_LINK).
 CO_PASS_DIFFERENCES = (
     r"0 is less than the minimum of 1 in /(firstItem|item/\d+)/index",
     r"Additional properties are not allowed \('nextItem' was unexpected\) in /.*",
