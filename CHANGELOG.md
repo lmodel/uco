@@ -6,6 +6,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-31
+
 ### Added
 
 - **A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0**, written by `scripts/uco_to_linkml.py` from UCO's own Turtle files: one module per UCO namespace, one for the Collections Ontology terms UCO uses, and an umbrella. Every class, property and vocabulary keeps its UCO name and IRI, and each class's slots come from its SHACL shapes and its parents'.
