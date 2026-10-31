@@ -2,6 +2,8 @@
 
 ## 2026-10-31
 
+* **Changed**: the test data holds 19 counter-examples, with a lower bound and a union of datatypes added.
+* **Changed**: the security policy names the three assets a release carries, as SECURITY.md now does.
 * **Prose**: reworded 10 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Changed**: The Unified Cyber Ontology (UCO), its footnote's address in angle brackets, as Markdown linters ask.
 * **Added**: Knowledge sources map, the librarian's scrape map, from the repository's tree.
