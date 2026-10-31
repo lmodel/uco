@@ -24,7 +24,7 @@ Unified Cyber Ontology (UCO) 1.5.0 (LinkML)
 
 ## What it models
 
-The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) at release [1.5.0](https://github.com/ucoProject/UCO/releases/tag/1.5.0) as one module for each of UCO's fifteen namespaces, one for the Collections Ontology (CO) terms UCO uses, and the umbrella `uco.yaml`.
+The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontology.org/) at release [1.5.0](https://github.com/ucoProject/UCO/releases/tag/1.5.0) as one module for each of UCO's fifteen namespaces and the umbrella `uco.yaml`. The Collections Ontology (CO) terms UCO uses come from [lmodel/collections](https://github.com/lmodel/collections).
 
 * **Core** (`uco_core`): UcoThing and UcoObject, facets, relationships, annotations, bundles and other compilations, events and external references.
 * **Observable** (`uco_observable`): observable objects such as files, accounts, devices, processes, network connections and messages, and the facets that describe them.
@@ -33,17 +33,17 @@ The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontolo
 * **Tool**, **Configuration** (`uco_tool`, `uco_configuration`): tools and their configurations.
 * **Marking** (`uco_marking`): data markings, such as licence and terms-of-use statements.
 * **Types**, **Time**, **Vocabulary** (`uco_types`, `uco_time`, `uco_vocabulary`): dictionaries, hashes and threads, UCO's datatypes, and its 44 open vocabularies as enums.
-* **Collections** (`uco_co`): CO's bag, list and item classes that UCO's threads build on.
+* **Collections** (`collections/collections`): lmodel/collections' schema at release [v0.1.0](https://github.com/lmodel/collections/releases/tag/v0.1.0), copied unchanged. It renders CO 2.0's collection, set, bag, list and item classes, under CO's names and IRIs, and UCO's threads build on its bag and item.
 
 `scripts/uco_to_linkml.py` writes every module from a copy of UCO's Turtle files in [src/uco/schema/upstream/](src/uco/schema/upstream). Every class, property and vocabulary keeps its UCO name and Internationalized Resource Identifier (IRI) under UCO's own prefixes, such as `uco-core:UcoObject`. Each class's slots come from its SHACL shapes and its parents'. The schema's `version` is 1.5.0, and release tags number the schema's own versions. A weekly workflow opens an issue when UCO releases or tags a newer version, or when the copy differs.
 
 Data in the schema's form keeps UCO's keys, gives each object its IRI as `id` and its class as `type`, and holds facets inside the object they describe. `scripts/uco_examples.py` writes UCO's own examples that way into [tests/data/valid/](tests/data/valid).
 
-The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. Each module keeps its old repository's identifier, such as `https://w3id.org/lmodel/uco-core`, and the umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place.
+The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. Each UCO module keeps its old repository's identifier, such as `https://w3id.org/lmodel/uco-core`, and the umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place. The CO terms of uco-co are lmodel/collections' now.
 
 ## Influences
 
-None beyond UCO 1.5.0: the schema renders one ontology. Its converter follows [lmodel/spdx](https://github.com/lmodel/spdx)'s, and its release asset and governance files follow [lmodel/slsa](https://github.com/lmodel/slsa).
+None beyond UCO 1.5.0 and lmodel/collections, whose schema it imports for CO's terms. Its converter follows [lmodel/spdx](https://github.com/lmodel/spdx)'s, and its release asset and governance files follow [lmodel/slsa](https://github.com/lmodel/slsa).
 
 ## Mappings
 
@@ -57,7 +57,6 @@ The converter leaves out what LinkML cannot state, and prints a note for each:
 * SPARQL constraints, `sh:not` and `sh:xone`, and shapes on a property's objects;
 * UCO's rule that `hasFacet` is inverse functional, so that a facet belongs to one object only;
 * shapes over a path of more than one property;
-* a CO list item's links to the next and previous item, since a list item here sits inside its list without an IRI;
 * UCO's rule that a UcoThing is never a blank node, since a facet here is a value inside its object.
 
 UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/test_data.py` holds each fault of UCO's own failing examples to the validator, and lists the faults LinkML cannot state with the reason. [docs/about.md](docs/about.md) says where the schema's form differs from UCO's JSON-LD.
@@ -92,11 +91,13 @@ A host imports the copy beside `lokf.yaml`, and LinkML merges the two into one n
 
 Other names are UCO's and also a neighbour copy's, under another IRI there. The classes `Action`, `Address`, `Facet`, `Hash`, `Location`, `Observation` and `Profile` are oscal's too, and `Annotation`, `Bundle`, `DictionaryEntry`, `File`, `Hash`, `Relationship` and `Tool` are spdx's, so a host cannot import this copy beside oscal's or spdx's until one copy renames them. Sixteen keys are oscal's too, seventeen spdx's, three slsa's (`dependencies`, `subject`, `value`) and two in-toto's (`subject`, `value`). [lokf #169](https://github.com/nicholsn/lokf/issues/169) asks `adapt` for a `--beside` option to rename them. `tests/test_schema_rules.py` lists every shared name, checks the copy against LOKF and nine released neighbours, and fails on a new one.
 
+The copy holds lmodel/collections' module, so it holds every class and key of collections' own copy, `schema-v0.1.0-collections.yaml`, under the same IRIs. A host imports this copy in place of both.
+
 ## License
 
 The schema and the code are under the Apache License 2.0 ([LICENSE](LICENSE)).
 
-UCO's files in [src/uco/schema/upstream/](src/uco/schema/upstream) are the UCO Community's, under the Apache License 2.0, and the descriptions of UCO's terms are its texts. CO states no licence, so the descriptions of CO's terms are this project's own: see [NOTICE](NOTICE). The knowledge bundle in [.lokf/knowledge/](.lokf/knowledge) is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as its `index.md` declares.
+UCO's files in [src/uco/schema/upstream/](src/uco/schema/upstream) are the UCO Community's, under the Apache License 2.0, and the descriptions of UCO's terms are its texts. The copy of lmodel/collections' schema in [src/uco/schema/collections/](src/uco/schema/collections) is under the Apache License 2.0, and its descriptions of CO's terms are lmodel/collections' own words: see [NOTICE](NOTICE). The knowledge bundle in [.lokf/knowledge/](.lokf/knowledge) is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as its `index.md` declares.
 
 This is not an official UCO release, and its use implies no endorsement by the UCO Community.
 
