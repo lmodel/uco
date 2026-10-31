@@ -4,9 +4,11 @@ scripts/check_upstream_release.py asks the GitHub API about ucoProject/UCO.
 These tests replace its one network call, `_get`, with a table of answers,
 so they run offline. They show what the report says when a release or a
 tag is newer, a release drops or changes a file, the licence changes, the
-network fails, the UCO Community adds a file or the pinned tag moves.
+network fails or cuts an answer off, the UCO Community adds a file or the
+pinned tag moves.
 """
 
+import http.client
 import importlib.util
 import json
 import urllib.error
@@ -91,7 +93,7 @@ def test_nothing_changed(watch, tmp_path):
     _stub(watch, _answers(watch, watch.PINNED_TAG))
     code, text = _run(watch, tmp_path)
     assert code == 0, text
-    assert f"Latest release: UCO {watch.PINNED_TAG}, the pinned one." in text
+    assert f"Latest release: UCO `{watch.PINNED_TAG}`, the pinned one." in text
     assert "Licence: Apache-2.0, as pinned." in text
     count = len(watch.PINNED_BLOBS)
     assert f"{count} of {count} copied files match" in text
@@ -104,9 +106,10 @@ def test_a_newer_release_is_reported(watch, tmp_path):
     _stub(watch, _answers(watch, NEWER))
     code, text = _run(watch, tmp_path)
     assert code == 1
-    assert f"**UCO {NEWER} is out; the schema renders" in text
+    assert f"**UCO `{NEWER}` is out; the schema renders" in text
     assert (
-        f"Latest release: UCO {NEWER}, which holds the pinned files unchanged." in text
+        f"Latest release: UCO `{NEWER}`, which holds the pinned files unchanged."
+        in text
     )
 
 
@@ -115,7 +118,7 @@ def test_a_newer_tag_without_a_release_is_reported(watch, tmp_path):
     _stub(watch, _answers(watch, watch.PINNED_TAG, tags=("1.6.0",)))
     code, text = _run(watch, tmp_path)
     assert code == 1
-    assert "**UCO 1.6.0 is out; the schema renders" in text
+    assert "**UCO `1.6.0` is out; the schema renders" in text
 
 
 def test_a_release_that_drops_and_changes_files(watch, tmp_path):
@@ -131,8 +134,10 @@ def test_a_release_that_drops_and_changes_files(watch, tmp_path):
     _stub(watch, answers)
     code, text = _run(watch, tmp_path)
     assert code == 1
-    assert f"**UCO {NEWER} no longer holds `ontology/uco/victim/victim.ttl`.**" in text
-    assert f"**UCO {NEWER} changes `LICENSE`.**" in text
+    assert (
+        f"**UCO `{NEWER}` no longer holds `ontology/uco/victim/victim.ttl`.**" in text
+    )
+    assert f"**UCO `{NEWER}` changes `LICENSE`.**" in text
 
 
 def test_a_changed_licence_is_reported(watch, tmp_path):
@@ -143,8 +148,25 @@ def test_a_changed_licence_is_reported(watch, tmp_path):
     code, text = _run(watch, tmp_path)
     assert code == 1
     assert (
-        "**ucoProject/UCO's licence now reads as NOASSERTION, not Apache-2.0.**" in text
+        "**ucoProject/UCO's licence now reads as `NOASSERTION`, not Apache-2.0.**"
+        in text
     )
+
+
+def test_no_licence_is_reported(watch, tmp_path):
+    """GitHub's 404, or a null licence, when it detects none is a finding,
+    not a check that could not finish."""
+    for answer in (None, {"license": None}):
+        fresh = _answers(watch, watch.PINNED_TAG)
+        if answer is None:
+            del fresh[f"{watch.API}/license"]
+        else:
+            fresh[f"{watch.API}/license"] = answer
+        _stub(watch, fresh)
+        code, text = _run(watch, tmp_path)
+        assert code == 1
+        assert "licence now reads as no licence GitHub detects" in text
+        assert "licence check could not finish" not in text
 
 
 def test_a_network_failure_still_writes_a_report(watch, tmp_path):
@@ -158,10 +180,10 @@ def test_a_network_failure_still_writes_a_report(watch, tmp_path):
     code, text = _run(watch, tmp_path)
     assert code == 1
     assert (
-        "**The copy check could not finish: <urlopen error Connection refused>.**"
+        "**The copy check could not finish: `<urlopen error Connection refused>`.**"
         in text
     )
-    assert f"Latest release: UCO {watch.PINNED_TAG}, the pinned one." in text
+    assert f"Latest release: UCO `{watch.PINNED_TAG}`, the pinned one." in text
     assert "Licence: Apache-2.0, as pinned." in text
 
 
@@ -175,7 +197,50 @@ def test_a_truncated_tree_is_reported_as_unfinished(watch, tmp_path):
     _stub(watch, answers)
     code, text = _run(watch, tmp_path)
     assert code == 1
-    assert "**The copy check could not finish: the tree at" in text
+    assert "**The copy check could not finish: `the tree at" in text
+
+
+def test_a_cut_off_or_odd_answer_could_not_finish(watch, tmp_path):
+    """An answer cut off mid-read, or JSON of another shape, is a check that
+    could not finish, and each check that reads it reports so."""
+    answers = _answers(watch, watch.PINNED_TAG)
+    answers[f"{watch.API}/license"] = http.client.IncompleteRead(b"{")
+    answers[f"{watch.API}/releases/latest"] = ["not", "a", "release"]
+    _stub(watch, answers)
+    code, text = _run(watch, tmp_path)
+    assert code == 1
+    assert "**The licence check could not finish: `IncompleteRead" in text
+    assert "**The release check could not finish: `" in text
+    assert "**The copy check could not finish: `" in text
+
+
+def test_the_apis_text_is_quoted(watch, tmp_path):
+    """A tag name the API gives is quoted as code, so it cannot mention a
+    person in the issue, and a backtick in it cannot end the quotation."""
+    tag = "9.0.0 @someone`x"
+    _stub(watch, _answers(watch, tag))
+    text = _run(watch, tmp_path)[1]
+    assert "**UCO `9.0.0 @someone'x` is out;" in text
+    assert "@someone`" not in text
+
+
+def test_an_answer_over_the_cap_is_refused(watch, monkeypatch):
+    """The script reads at most MAX_BYTES of an answer, and one larger
+    stops the check."""
+
+    class Answer:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self, size):
+            return b"x" * size
+
+    monkeypatch.setattr(watch.urllib.request, "urlopen", lambda req, timeout: Answer())
+    with pytest.raises(ValueError, match="larger than"):
+        watch._get(f"{watch.API}/releases/latest")
 
 
 def test_a_file_the_community_adds_is_information_only(watch, tmp_path):
@@ -217,7 +282,7 @@ def test_the_token_never_follows_a_redirect(watch, monkeypatch):
         def __exit__(self, *exc):
             return False
 
-        def read(self):
+        def read(self, size=-1):
             return b"{}"
 
     def urlopen(req, timeout):

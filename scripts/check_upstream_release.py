@@ -27,13 +27,16 @@ It prints a Markdown report, and exits 1 when:
 - a pinned file changed or is gone at a newer release;
 - a copied file differs from its pin, or the copy holds an unpinned file;
 - the pinned tag moved;
-- the licence is no longer Apache-2.0;
-- a check could not finish, such as a refused or failed request.
+- the licence is no longer Apache-2.0, or GitHub detects none;
+- a check could not finish, such as a refused, failed or cut-off request,
+  or an answer larger than the script reads.
 
 A file the UCO Community adds beside the copied ones, in the folders the
 copy is taken from, is reported for information only.
 
-Set ``GITHUB_TOKEN`` to raise the API rate limit. The token goes to
+Text the API chose, such as a tag name or an error message, is quoted as
+code in the report, so the issue the workflow opens from it cannot mention
+anyone. Set ``GITHUB_TOKEN`` to raise the API rate limit. The token goes to
 api.github.com alone, never on to a redirect. Usage::
 
     python scripts/check_upstream_release.py [--report FILE]
@@ -43,12 +46,14 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import os
 import re
 import sys
 import urllib.error
 import urllib.request
+from urllib.parse import quote
 from functools import cache
 from pathlib import Path
 
@@ -56,6 +61,10 @@ ROOT = Path(__file__).resolve().parent.parent
 COPY = ROOT / "src" / "uco" / "schema" / "upstream"
 API = "https://api.github.com/repos/ucoProject/UCO"
 USER_AGENT = "lmodel-uco-upstream-check"
+
+# The most the script reads of one answer. The largest, the file tree at
+# the pinned commit, is about 54 kB.
+MAX_BYTES = 5_000_000
 
 # The release and the commit its tag names. Move them together when the copy
 # is replaced from a newer release, with PINNED_BLOBS, the schema header
@@ -189,7 +198,16 @@ def _get(url: str) -> bytes:
         # an unredirected one and reaches api.github.com alone.
         req.add_unredirected_header("Authorization", f"Bearer {token}")
     with urllib.request.urlopen(req, timeout=60) as resp:
-        return resp.read()
+        body = resp.read(MAX_BYTES + 1)
+    if len(body) > MAX_BYTES:
+        raise ValueError(f"the answer from {url} is larger than {MAX_BYTES} bytes")
+    return body
+
+
+def _code(text: object) -> str:
+    """Text the API chose, such as a tag name, as a code span, so it cannot
+    mention a person or add a link in the issue."""
+    return "`" + str(text).replace("`", "'") + "`"
 
 
 def _version_key(tag: str) -> tuple[int, ...]:
@@ -210,7 +228,8 @@ def _tree(ref: str) -> dict[str, str]:
     A ref the repository does not hold gives an empty mapping. Each tree is
     asked for once, and no caller changes what it returns."""
     try:
-        body = json.loads(_get(f"{API}/git/trees/{ref}?recursive=1"))
+        # A tag name is the API's text: quoted, it names one ref and no other path.
+        body = json.loads(_get(f"{API}/git/trees/{quote(ref, safe='')}?recursive=1"))
     except urllib.error.HTTPError as err:
         if err.code == 404:
             return {}
@@ -265,23 +284,30 @@ def check_release() -> tuple[list[str], bool]:
     latest = _latest()
     if _newer(latest):
         return [
-            f"- **UCO {latest} is out; the schema renders {PINNED_TAG}.** Read its "
+            f"- **UCO {_code(latest)} is out; the schema renders {PINNED_TAG}.** Read its "
             "release notes, replace the copy from that release, move the pins "
             "here, and run `scripts/uco_to_linkml.py` and `just test`."
         ], True
-    return [f"- Latest release: UCO {latest}, the pinned one."], False
+    return [f"- Latest release: UCO {_code(latest)}, the pinned one."], False
 
 
 def check_licence() -> tuple[list[str], bool]:
-    """Report whether GitHub still detects the pinned licence."""
-    found = json.loads(_get(f"{API}/license"))["license"]["spdx_id"]
+    """Report whether GitHub still detects the pinned licence. GitHub
+    answers 404, or names no licence, when it detects none."""
+    try:
+        found = (json.loads(_get(f"{API}/license")).get("license") or {}).get("spdx_id")
+    except urllib.error.HTTPError as err:
+        if err.code != 404:
+            raise
+        found = None
     if found != PINNED_LICENSE:
+        shown = _code(found) if found else "no licence GitHub detects"
         return [
-            f"- **ucoProject/UCO's licence now reads as {found}, not {PINNED_LICENSE}.** "
+            f"- **ucoProject/UCO's licence now reads as {shown}, not {PINNED_LICENSE}.** "
             "Check what it allows before the copy or the descriptions taken from it "
             "move to a newer release, and update NOTICE."
         ], True
-    return [f"- Licence: {found}, as pinned."], False
+    return [f"- Licence: {PINNED_LICENSE}, as pinned."], False
 
 
 def check_copy() -> tuple[list[str], bool]:
@@ -297,7 +323,7 @@ def check_copy() -> tuple[list[str], bool]:
     commit = _tag_commit(PINNED_TAG)
     if commit != PINNED_COMMIT:
         attention = True
-        named = f"commit `{commit[:12]}`" if commit else "nothing"
+        named = f"commit {_code(commit[:12])}" if commit else "nothing"
         report.append(
             f"- **The tag {PINNED_TAG} now names {named}, not the pinned commit "
             f"`{PINNED_COMMIT[:12]}`.** Find out why it moved before trusting either."
@@ -344,28 +370,27 @@ def check_copy() -> tuple[list[str], bool]:
         for name in dropped:
             attention = True
             report.append(
-                f"- **UCO {latest} no longer holds `{name}`.** Find where the UCO "
+                f"- **UCO {_code(latest)} no longer holds `{name}`.** Find where the UCO "
                 "Community now publishes it, and move the pins."
             )
         for name in changed:
             attention = True
             report.append(
-                f"- **UCO {latest} changes `{name}`.** Replace "
-                f"`src/uco/schema/upstream/{name}` with the file at that tag "
-                f"(https://github.com/ucoProject/UCO/blob/{latest}/{name}), move the "
+                f"- **UCO {_code(latest)} changes `{name}`.** Replace "
+                f"`src/uco/schema/upstream/{name}` with the file at that tag, move the "
                 "pins here, and regenerate the schema."
             )
         if not dropped and not changed:
             report.append(
-                f"- Latest release: UCO {latest}, which holds the pinned files unchanged."
+                f"- Latest release: UCO {_code(latest)}, which holds the pinned files unchanged."
             )
         added[latest] = _added(latest_tree)
 
     for ref, names in added.items():
         if names:
             report.append(
-                f"- For information, ucoProject/UCO at {ref} also holds "
-                + ", ".join(f"`{n}`" for n in names)
+                f"- For information, ucoProject/UCO at {_code(ref)} also holds "
+                + ", ".join(_code(n) for n in names)
                 + ", which the copy neither holds nor leaves out on purpose."
             )
     return report, attention
@@ -389,14 +414,21 @@ def main(argv: list[str] | None = None) -> int:
     for label, check in CHECKS:
         try:
             found, needs = check()
+        # OSError covers a refused or failed request and a timeout,
+        # HTTPException and EOFError a connection cut off mid-answer,
+        # ValueError an answer that is not JSON or is too large, and
+        # LookupError, TypeError and AttributeError JSON of another shape.
         except (
-            urllib.error.URLError,
-            TimeoutError,
             OSError,
-            KeyError,
+            http.client.HTTPException,
+            EOFError,
             ValueError,
+            LookupError,
+            TypeError,
+            AttributeError,
         ) as err:
-            found, needs = [f"- **The {label} check could not finish: {err}.**"], True
+            found = [f"- **The {label} check could not finish: {_code(err)}.**"]
+            needs = True
         lines += found
         attention = attention or needs
     text = "\n".join(lines) + "\n"
