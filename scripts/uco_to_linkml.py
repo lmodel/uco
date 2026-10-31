@@ -29,7 +29,7 @@ The rules, each applied the same way to every element:
   but no file declares (``uco-observable:eventID``) is a slot too.
 - A local name UCO defines in more than one namespace keeps its bare form in
   the namespace that comes first in the modules' import order (the umbrella
-  imports them in that order); each other one takes its namespace and an
+  imports them in that order). Each other one takes its namespace and an
   underscore as a prefix (``observable_endTime``).
 - The Collections Ontology (CO) terms UCO's files name, in a shape's path or
   elsewhere, keep CO's IRIs, under Bioregistry's prefix ``coll``. One whose
@@ -39,7 +39,7 @@ The rules, each applied the same way to every element:
   each CO property belongs to, and an IRI as the range of the two that name
   any thing.
 - ``rdfs:subClassOf`` gives ``is_a``. Where a class has more than one parent,
-  a parent that is an ancestor of another is dropped; ``is_a`` is the UCO
+  a parent that is an ancestor of another is dropped. ``is_a`` is the UCO
   parent with the most ancestors, a tie going to the class's own namespace,
   and each other parent is a mixin.
 - A class's SHACL property shapes, and those of the shapes that target it,
@@ -271,14 +271,17 @@ CO_PARENTS = {"List": "Bag"}
 
 # The domains CO 2.0's own ontology gives the CO properties UCO's files use,
 # as the CO classes rendered here: CO's Collection, which UCO's files do not
-# name, is Bag. Each is a slot of its domain, beside any class a UCO shape
-# gives it to. item stays on the classes UCO's shapes give it to, List and
-# Thread: a list holds its items inline and a thread names them by IRI, and
-# LinkML cannot undo on Thread an inlining its parent Bag states. CO states
-# no domain for nextItem, previousItem and precededBy, which hold on a list
-# item through followedBy, and they stay on no class: a list item here has no
-# IRI, so an item that names the next and is named back by it would nest
-# without end.
+# name, is Bag. Each property is a slot of its domain, and of any class a UCO
+# shape gives it to.
+#
+# item is not listed. It stays on the classes UCO's shapes give it to, List
+# and Thread: a list holds its items inline and a thread names them by IRI,
+# and LinkML cannot undo on Thread an inlining its parent Bag states.
+#
+# CO states no domain for nextItem, previousItem and precededBy, which hold
+# on a list item through followedBy. They stay on no class: a list item here
+# has no IRI, so an item that names the next, and is named back by it, would
+# nest without end.
 CO_DOMAINS = {
     "size": "Bag",
     "element": "Bag",
@@ -290,7 +293,7 @@ CO_DOMAINS = {
 }
 
 # The CO properties whose range in CO 2.0 is any thing (owl:Thing, or what is
-# not an item), and which UCO's shapes leave without a class: each holds the
+# not an item), and which UCO's shapes leave without a class. Each holds the
 # thing's IRI, so RDF written from the data names the thing, not a string.
 CO_RANGES = {"element": "uriorcurie", "itemContent": "uriorcurie"}
 

@@ -473,11 +473,11 @@ def test_uco_xfail_fault_fails_here(key):
         assert any(f" in /{slot}" in m or f"'{slot}'" in m for m in messages), messages
 
 
-# Where UCO's co_PASS.json lists, in the schema's form, fail the schema: each
-# list's first item has the index 0, written as an xsd:positiveInteger,
-# which pySHACL does not check (UCO's co_XFAIL.json says so) and the schema's
-# minimum of 1 does; and an item names the next by co:nextItem, a link the
-# schema leaves out (ITEM_LINK).
+# The two places where UCO's co_PASS.json lists, in the schema's form, fail
+# the schema. First, each list's first item has the index 0, written as an
+# xsd:positiveInteger. pySHACL does not check that (UCO's co_XFAIL.json says
+# so), but the schema's minimum of 1 does. Second, an item names the next by
+# co:nextItem, a link the schema leaves out (ITEM_LINK).
 CO_PASS_DIFFERENCES = (
     r"0 is less than the minimum of 1 in /(firstItem|item/\d+)/index",
     r"Additional properties are not allowed \('nextItem' was unexpected\) in /.*",

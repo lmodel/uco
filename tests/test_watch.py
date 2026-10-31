@@ -3,9 +3,9 @@
 scripts/check_upstream_release.py asks the GitHub API about ucoProject/UCO.
 These tests replace its one network call, `_get`, with a table of answers,
 so they run offline. They show what the report says when a release or a
-tag is newer, a release drops or changes a file, the licence changes, the
-network fails or cuts an answer off, the UCO Community adds a file or the
-pinned tag moves.
+tag is newer, a release drops or changes a file, or the licence changes.
+They also show it when the network fails or cuts an answer off, the UCO
+Community adds a file, or the pinned tag moves.
 """
 
 import http.client
