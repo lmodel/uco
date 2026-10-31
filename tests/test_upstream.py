@@ -57,12 +57,9 @@ def test_the_copy_holds_every_namespace_of_the_master_ontology():
     """uco.ttl imports fifteen UCO namespaces, the Collections Ontology's
     supplement and the OWL shapes; the copy holds each file but the last,
     which the schema does not render."""
-    master = (COPY / "ontology" / "uco" / "master" / "uco.ttl").read_text()
-    imported = {
-        line.split("/")[-2]
-        for line in master.splitlines()
-        if line.startswith("# imports: ")
-    }
+    master = Graph().parse(COPY / "ontology" / "uco" / "master" / "uco.ttl")
+    imported = {str(iri).split("/")[-2] for iri in master.objects(None, OWL.imports)}
+    assert len(imported) == 17
     held = {p.stem for p in (COPY / "ontology" / "uco").glob("*/*.ttl")} - {"uco"}
     held |= {p.stem for p in (COPY / "ontology" / "co").glob("*.ttl")}
     assert imported - held == {"owl"}
