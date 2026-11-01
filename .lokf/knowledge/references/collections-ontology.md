@@ -23,7 +23,7 @@ status: draft
 
 # The Collections Ontology (CO)
 
-The Collections Ontology, version 2.0, by Paolo Ciccarese and Silvio Peroni, defines bags, sets and lists of items, at <http://purl.org/co/>. Its repository states no licence of its own. NOTICE says that the Google Code archive gives the Apache License 2.0 for the project's code, CO's OWL file among it, and CC BY 3.0 for its other content, such as its wiki.[^notice]
+The Collections Ontology, version 2.0, by Paolo Ciccarese and Silvio Peroni, defines bags, sets and lists of items, at <http://purl.org/co/>. Its repository states no licence. NOTICE says the Google Code archive gives the Apache License 2.0 for the project's code, CO's OWL file among it, and CC BY 3.0 for its other content, such as its wiki.[^notice]
 
 UCO's `co.ttl` adds SHACL shapes over CO's terms, and UCO's thread is a CO bag whose items are CO items.[^co.ttl] The schema imports lmodel/collections' module for CO's terms. That module keeps CO's IRIs under the prefix `coll` and describes the terms in lmodel/collections' own words.[^collections.yaml]
 

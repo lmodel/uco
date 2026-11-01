@@ -2,7 +2,7 @@
 
 ## 2026-11-01
 
-* **Prose**: reworded 5 concept bodies in plain English. No fact, link, number or frontmatter changed.
+* **Prose**: reworded 6 concept bodies in plain English. No fact, link, number or frontmatter changed.
 
 ## 2026-10-31
 

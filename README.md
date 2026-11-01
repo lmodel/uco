@@ -43,7 +43,7 @@ The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by 
 
 ## Influences
 
-None beyond UCO 1.5.0 and lmodel/collections, whose schema it imports for CO's terms. Its converter follows [lmodel/spdx](https://github.com/lmodel/spdx)'s, and its release asset and governance files follow [lmodel/slsa](https://github.com/lmodel/slsa).
+None beyond UCO 1.5.0 and lmodel/collections. Its converter follows [lmodel/spdx](https://github.com/lmodel/spdx)'s, and its release asset and governance files follow [lmodel/slsa](https://github.com/lmodel/slsa).
 
 ## Mappings
 
