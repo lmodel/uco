@@ -3,7 +3,7 @@ type: Dataset
 id: https://w3id.org/lmodel/uco/knowledge/datasets/uco-linkml-schema
 genre: reference
 title: UCO LinkML schema
-description: "The LinkML schema of the Unified Cyber Ontology (UCO) 1.5.0, `src/uco/schema/uco.yaml` (schema id `https://w3id.org/lmodel/uco`) with sixteen modules, one per UCO namespace and one for the Collections Ontology terms UCO uses: 425 classes, 771 slots, 53 enums and 14 types, all written by a converter. Its `lokf adapt` copy `.lokf/uco.yaml` is the bundle's domain schema."
+description: The LinkML schema of the Unified Cyber Ontology (UCO) 1.5.0, `src/uco/schema/uco.yaml` (schema id `https://w3id.org/lmodel/uco`) with fifteen modules, one per UCO namespace, written by a converter, and lmodel/collections' module for the Collections Ontology terms UCO uses. Its `lokf adapt` copy `.lokf/uco.yaml` is the bundle's domain schema.
 resource: src/uco/schema/uco.yaml
 derivedFrom:
   - https://w3id.org/lmodel/uco/knowledge/datasets/uco-copy
@@ -14,6 +14,9 @@ sources:
   - id: uco_to_linkml.py
     resource: scripts/uco_to_linkml.py
     title: the docstring's rules and the counts the script prints
+  - id: collections.yaml
+    resource: src/uco/schema/collections/collections.yaml
+    title: its classes and slots
   - id: project.justfile
     resource: project.justfile
     title: the lokf-adapt recipes and their roots
@@ -25,15 +28,15 @@ sources:
     title: the schema := line
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 
 # UCO LinkML schema
 
-`src/uco/schema/uco.yaml` is the umbrella schema `uco`, id `https://w3id.org/lmodel/uco`, version 1.5.0, under the Apache License 2.0. Its `source` is UCO's 1.5.0 release. It imports sixteen modules in their import order and adds one class of its own, `UcoDocument`, whose `graph` lists UCO's things.[^uco.yaml]
+`src/uco/schema/uco.yaml` is the umbrella schema `uco`, id `https://w3id.org/lmodel/uco`, version 1.5.0, under the Apache License 2.0. Its `source` is UCO's 1.5.0 release. It imports lmodel/collections' module and fifteen modules in their import order and adds one class of its own, `UcoDocument`, whose `graph` lists UCO's things.[^uco.yaml]
 
-`scripts/uco_to_linkml.py` writes every module from UCO's Turtle files, and nobody edits them by hand. The modules are `uco_core`, `uco_action`, `uco_analysis`, `uco_configuration`, `uco_identity`, `uco_location`, `uco_marking`, `uco_observable`, `uco_pattern`, `uco_role`, `uco_time`, `uco_tool`, `uco_types`, `uco_victim`, `uco_vocabulary` and `uco_co`. Each keeps the id of the old uco-* repository it replaces, such as `https://w3id.org/lmodel/uco-core`. Together they hold 425 classes, 771 slots, 53 enums and 14 types.[^uco_to_linkml.py]
+`scripts/uco_to_linkml.py` writes every module from UCO's Turtle files, and nobody edits them by hand. The modules are `uco_core`, `uco_action`, `uco_analysis`, `uco_configuration`, `uco_identity`, `uco_location`, `uco_marking`, `uco_observable`, `uco_pattern`, `uco_role`, `uco_time`, `uco_tool`, `uco_types`, `uco_victim` and `uco_vocabulary`. Each keeps the id of the old uco-* repository it replaces, such as `https://w3id.org/lmodel/uco-core`. The converter counts 421 classes, 761 slots, 53 enums and 14 types in them and the umbrella.[^uco_to_linkml.py] The Collections Ontology terms come from `collections/collections.yaml`, an unchanged copy of lmodel/collections' module at v0.1.0. It adds 6 classes and 16 slots.[^collections.yaml]
 
 ## Domain schema
 
@@ -44,3 +47,5 @@ status: draft
 [^project.justfile]: project.justfile, lokf_adapt_roots, lokf-adapt and lokf-adapt-check
 [^lokf-uco.yaml]: .lokf/uco.yaml, the header comment and the notes
 [^lokf-justfile]: .lokf/justfile, the schema := line
+
+[^collections.yaml]: src/uco/schema/collections/collections.yaml, its classes and slots

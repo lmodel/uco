@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  An entry of a collection, which wraps one element of the collection's content.
+  An entry of a bag, which wraps one of the bag's elements.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

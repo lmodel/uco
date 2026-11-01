@@ -264,8 +264,9 @@ OWL = "OWL and RDF list structure, not UCO data"
 OWN_ONTOLOGY = "classes and shapes the example's own ontology defines, which the schema cannot know"
 METACLASS = "a class as an instance of UcoType, which data in the schema's form does not describe"
 ITEM_LINK = (
-    "a list item's link to the next or previous item, which the schema leaves out:"
-    " a list item here is a value inside its list, without the IRI such a link names"
+    "a list item's link to the next or previous item: lmodel/collections holds the"
+    " linked item as a copy inside the item, and the example's items link back to"
+    " each other, which no finite copy holds"
 )
 
 # Each fault UCO reports that this schema does not state, as (example,
@@ -473,14 +474,13 @@ def test_uco_xfail_fault_fails_here(key):
         assert any(f" in /{slot}" in m or f"'{slot}'" in m for m in messages), messages
 
 
-# The two places where UCO's co_PASS.json lists, in the schema's form, fail
-# the schema. First, each list's first item has the index 0, written as an
+# The one place where UCO's co_PASS.json lists, in the schema's form, fail
+# the schema: each list's first item has the index 0, written as an
 # xsd:positiveInteger. pySHACL does not check that (UCO's co_XFAIL.json says
-# so), but the schema's minimum of 1 does. Second, an item names the next by
-# co:nextItem, a link the schema leaves out (ITEM_LINK).
+# so), but the schema's minimum of 1 does. lmodel/collections names CO's
+# index co_index.
 CO_PASS_DIFFERENCES = (
-    r"0 is less than the minimum of 1 in /(firstItem|item/\d+)/index",
-    r"Additional properties are not allowed \('nextItem' was unexpected\) in /.*",
+    r"0 is less than the minimum of 1 in /(firstItem|item/\d+)/co_index",
 )
 
 

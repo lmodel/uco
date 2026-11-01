@@ -1748,6 +1748,7 @@ type Bag
   {
     coSize: Int
     element: [String]
+    item: [CoItem]
   }
 
 type BenevolentRole
@@ -2161,7 +2162,13 @@ type Code
 
 type CoItem
   {
-    itemContent: String
+    itemContent: String!
+  }
+
+type Collection
+  {
+    coSize: Int
+    element: [String]
   }
 
 type Compilation
@@ -4016,15 +4023,18 @@ type List
     coSize: Int
     element: [String]
     firstItem: ListItem
-    item: [ListItem]
     lastItem: ListItem
+    item: [ListItem]
   }
 
 type ListItem
   {
-    itemContent: String
-    followedBy: [CoItem]
-    index: Int
+    itemContent: String!
+    coIndex: Int!
+    nextItem: ListItem
+    previousItem: ListItem
+    followedBy: [ListItem]
+    precededBy: [ListItem]
   }
 
 type Location
@@ -5391,6 +5401,12 @@ type Server
     tag: [String]
     hasChanged: Boolean
     state: String
+  }
+
+type Set
+  {
+    coSize: Int
+    element: [String]
   }
 
 type ShopListing

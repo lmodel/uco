@@ -16560,7 +16560,7 @@
             "description": "A collection that may hold one element more than once, in no order.",
             "properties": {
                 "co_size": {
-                    "description": "How many items the collection holds.",
+                    "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
                     "minimum": 0,
                     "type": [
                         "integer",
@@ -16568,9 +16568,29 @@
                     ]
                 },
                 "element": {
-                    "description": "A member of the collection, which one of its items wraps.",
+                    "description": "A thing the collection holds, named by its IRI.",
                     "items": {
                         "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "item": {
+                    "description": "An item of the bag, which holds one of its elements.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/CoItem"
+                            },
+                            {
+                                "$ref": "#/$defs/ListItem"
+                            },
+                            {
+                                "$ref": "#/$defs/ThreadItem"
+                            }
+                        ]
                     },
                     "type": [
                         "array",
@@ -25621,16 +25641,16 @@
         },
         "CoItem": {
             "additionalProperties": false,
-            "description": "An entry of a collection, which wraps one element of the collection's content.",
+            "description": "An entry of a bag, which wraps one of the bag's elements.",
             "properties": {
                 "itemContent": {
                     "description": "The element that the item wraps.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "string"
                 }
             },
+            "required": [
+                "itemContent"
+            ],
             "title": "CoItem",
             "type": "object"
         },
@@ -26224,6 +26244,32 @@
                 "id"
             ],
             "title": "Code",
+            "type": "object"
+        },
+        "Collection": {
+            "additionalProperties": false,
+            "description": "A group of things that is taken as a whole.",
+            "properties": {
+                "co_size": {
+                    "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "element": {
+                    "description": "A thing the collection holds, named by its IRI.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Collection",
             "type": "object"
         },
         "Compilation": {
@@ -67341,7 +67387,7 @@
             "description": "A collection whose items come in order, one after another.",
             "properties": {
                 "co_size": {
-                    "description": "How many items the collection holds.",
+                    "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
                     "minimum": 0,
                     "type": [
                         "integer",
@@ -67349,7 +67395,7 @@
                     ]
                 },
                 "element": {
-                    "description": "A member of the collection, which one of its items wraps.",
+                    "description": "A thing the collection holds, named by its IRI.",
                     "items": {
                         "type": "string"
                     },
@@ -67370,7 +67416,7 @@
                     "description": "The first item of the list."
                 },
                 "item": {
-                    "description": "An item of the collection.",
+                    "description": "An item of the bag, which holds one of its elements.",
                     "items": {
                         "$ref": "#/$defs/ListItem"
                     },
@@ -67398,42 +67444,62 @@
             "additionalProperties": false,
             "description": "An item of a list, which has a place in the list's order.",
             "properties": {
+                "co_index": {
+                    "description": "The place of the item in its list, counting from 1.",
+                    "minimum": 1,
+                    "type": "integer"
+                },
                 "followedBy": {
                     "description": "An item that comes somewhere after this one.",
                     "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/$defs/CoItem"
-                            },
-                            {
-                                "$ref": "#/$defs/ListItem"
-                            },
-                            {
-                                "$ref": "#/$defs/ThreadItem"
-                            }
-                        ]
+                        "$ref": "#/$defs/ListItem"
                     },
                     "type": [
                         "array",
                         "null"
                     ]
                 },
-                "index": {
-                    "description": "The place of the item in its list, counting from 1.",
-                    "minimum": 1,
+                "itemContent": {
+                    "description": "The element that the item wraps.",
+                    "type": "string"
+                },
+                "nextItem": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ListItem"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The item that comes straight after this one."
+                },
+                "precededBy": {
+                    "description": "An item that comes somewhere before this one.",
+                    "items": {
+                        "$ref": "#/$defs/ListItem"
+                    },
                     "type": [
-                        "integer",
+                        "array",
                         "null"
                     ]
                 },
-                "itemContent": {
-                    "description": "The element that the item wraps.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                "previousItem": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ListItem"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "The item that comes straight before this one."
                 }
             },
+            "required": [
+                "co_index",
+                "itemContent"
+            ],
             "title": "ListItem",
             "type": "object"
         },
@@ -104384,6 +104450,32 @@
             "title": "Server",
             "type": "object"
         },
+        "Set": {
+            "additionalProperties": false,
+            "description": "A collection that holds each of its elements once.",
+            "properties": {
+                "co_size": {
+                    "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "element": {
+                    "description": "A thing the collection holds, named by its IRI.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Set",
+            "type": "object"
+        },
         "ShopListing": {
             "additionalProperties": false,
             "description": "A shop listing is a listing of offered products on an online marketplace/shop.",
@@ -112144,7 +112236,7 @@
             "description": "A semi-ordered array of items, that can be present in multiple copies. Implementation of a UCO Thread is similar to a Collections Ontology List, except a Thread may fork and merge - that is, one of its members may have two or more direct successors, and two or more direct predecessors.",
             "properties": {
                 "co_size": {
-                    "description": "How many items the collection holds.",
+                    "description": "How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.",
                     "minimum": 0,
                     "type": [
                         "integer",
@@ -112152,7 +112244,7 @@
                     ]
                 },
                 "element": {
-                    "description": "A member of the collection, which one of its items wraps.",
+                    "description": "A thing the collection holds, named by its IRI.",
                     "items": {
                         "type": "string"
                     },
@@ -112166,7 +112258,7 @@
                     "type": "string"
                 },
                 "item": {
-                    "description": "An item of the collection.",
+                    "description": "An item of the bag, which holds one of its elements.",
                     "items": {
                         "type": "string"
                     },

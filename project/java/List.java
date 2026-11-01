@@ -17,7 +17,6 @@ import lombok.*;
 public class List extends Bag {
 
   private ListItem firstItem;
-  private List<ListItem> item;
   private ListItem lastItem;
 
 

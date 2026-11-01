@@ -61,9 +61,11 @@ skip = [
   "project/*",
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
-  # UCO's ontology files and examples, copied as published, the neighbours'
-  # adapt copies, and files the KTL sidecar sync copies in, not by hand.
+  # UCO's ontology files and examples, copied as published, lmodel/collections'
+  # module and the neighbours' adapt copies, copied as released, and files the
+  # KTL sidecar sync copies in, not by hand.
   "src/uco/schema/upstream/*",
+  "src/uco/schema/collections/*",
   "tests/neighbours/*",
   ".lokf/scripts/*",
   "website/package-lock.json",
@@ -86,6 +88,7 @@ extend-exclude = [
   "src/uco/datamodel/uco_pydantic.py",
   "src/uco/datamodel/uco.py",
   "src/uco/schema/upstream/*",
+  "src/uco/schema/collections/*",
   "tests/neighbours/*",
   ".lokf/scripts/*",
   "website/package-lock.json",

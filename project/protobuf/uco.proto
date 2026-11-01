@@ -1141,10 +1141,12 @@ message AutonomousSystemFacet {
 }
 // A collection that may hold one element more than once, in no order.
 message Bag {
-  // How many items the collection holds.
+  // How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
   int32 co_size = 1;
-  // A member of the collection, which one of its items wraps.
+  // A thing the collection holds, named by its IRI.
   repeated string element = 2;
+  // An item of the bag, which holds one of its elements.
+  repeated CoItem item = 3;
 }
 // A benevolent role is a role with positive and/or beneficial intent.
 message BenevolentRole {
@@ -1829,10 +1831,17 @@ message Code {
   // UCO 1.5.0 declares the property uco-observable:state without a definition.
   string state = 15;
 }
-// An entry of a collection, which wraps one element of the collection's content.
+// An entry of a bag, which wraps one of the bag's elements.
 message CoItem {
   // The element that the item wraps.
   string itemContent = 1;
+}
+// A group of things that is taken as a whole.
+message Collection {
+  // How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
+  int32 co_size = 1;
+  // A thing the collection holds, named by its IRI.
+  repeated string element = 2;
 }
 // A compilation is a grouping of things.
 message Compilation {
@@ -4845,25 +4854,31 @@ message LicenseMarking {
 }
 // A collection whose items come in order, one after another.
 message List {
-  // How many items the collection holds.
+  // How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
   int32 co_size = 1;
-  // A member of the collection, which one of its items wraps.
+  // A thing the collection holds, named by its IRI.
   repeated string element = 2;
   // The first item of the list.
   ListItem firstItem = 3;
-  // An item of the collection.
-  repeated ListItem item = 4;
   // The last item of the list.
-  ListItem lastItem = 5;
+  ListItem lastItem = 4;
+  // An item of the bag, which holds one of its elements.
+  repeated ListItem item = 5;
 }
 // An item of a list, which has a place in the list's order.
 message ListItem {
   // The element that the item wraps.
   string itemContent = 1;
-  // An item that comes somewhere after this one.
-  repeated CoItem followedBy = 2;
   // The place of the item in its list, counting from 1.
-  int32 index = 3;
+  int32 co_index = 2;
+  // The item that comes straight after this one.
+  ListItem nextItem = 3;
+  // The item that comes straight before this one.
+  ListItem previousItem = 4;
+  // An item that comes somewhere after this one.
+  repeated ListItem followedBy = 5;
+  // An item that comes somewhere before this one.
+  repeated ListItem precededBy = 6;
 }
 // A location is a geospatial place, site, or position.
 message Location {
@@ -7137,6 +7152,13 @@ message Server {
   // UCO 1.5.0 declares the property uco-observable:state without a definition.
   string state = 15;
 }
+// A collection that holds each of its elements once.
+message Set {
+  // How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
+  int32 co_size = 1;
+  // A thing the collection holds, named by its IRI.
+  repeated string element = 2;
+}
 // A shop listing is a listing of offered products on an online marketplace/shop.
 message ShopListing {
   // The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
@@ -7859,15 +7881,15 @@ message Thread {
   string type = 1;
   // The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.
   string id = 2;
-  // An item of the collection.
+  // An item of the bag, which holds one of its elements.
   repeated ThreadItem item = 3;
   // A link to an item of the thread known to have no predecessor.
   repeated ThreadItem threadOriginItem = 4;
   // A link to an item of the thread known to have no successor.
   repeated ThreadItem threadTerminalItem = 5;
-  // How many items the collection holds.
+  // How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
   int32 co_size = 6;
-  // A member of the collection, which one of its items wraps.
+  // A thing the collection holds, named by its IRI.
   repeated string element = 7;
 }
 // A ThreadItem is a member of a thread.

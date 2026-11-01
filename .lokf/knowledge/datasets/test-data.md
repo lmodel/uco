@@ -17,9 +17,12 @@ sources:
   - id: test_schema_rules.py
     resource: tests/test_schema_rules.py
     title: NEIGHBOURS, SHARED_KEYS and SHARED_CLASSES
+  - id: test_collections_import.py
+    resource: tests/test_collections_import.py
+    title: PINNED_BLOBS and CO_TERMS_BEFORE
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T10:47:15Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 
@@ -29,8 +32,12 @@ status: draft
 
 `tests/test_data.py` holds every example to the validator and to the generated JSON Schema file. Its `KINDS` table pairs each kind of constraint with its counter-example. Its `UNSTATED` table lists each fault of UCO's failing examples that LinkML does not state, with the reason. Every other fault must fail the validator at the slot UCO's report names.[^test_data.py]
 
-`tests/test_upstream.py` holds the copy and the schema header to the watch's pins, `tests/test_watch.py` runs the watch against stubbed answers, and `tests/test_schema_is_generated.py` reruns the two scripts with `--check`. `tests/test_schema_rules.py` holds the adapt copy apart from LOKF and nine released neighbours' copies in `tests/neighbours/`, each pinned by its SHA-256, and lists the names it shares with them.[^test_schema_rules.py]
+`tests/test_upstream.py` holds the copy and the schema header to the watch's pins, `tests/test_watch.py` runs the watch against stubbed answers, and `tests/test_schema_is_generated.py` reruns the two scripts with `--check`. `tests/test_schema_rules.py` holds the adapt copy apart from LOKF and nine released neighbours' copies in `tests/neighbours/`, each pinned by its SHA-256, and lists the names it shares with them. It also checks that the copy holds every name of lmodel/collections' released copy under the same IRIs.[^test_schema_rules.py]
+
+`tests/test_collections_import.py` pins the vendored lmodel/collections module by git object hash and checks that CO's IRIs are unchanged.[^test_collections_import.py]
 
 [^tests]: tests, the test files and the data folders
 [^test_data.py]: tests/test_data.py, KINDS and UNSTATED
 [^test_schema_rules.py]: tests/test_schema_rules.py, NEIGHBOURS, SHARED_KEYS and SHARED_CLASSES
+
+[^test_collections_import.py]: tests/test_collections_import.py, PINNED_BLOBS and CO_TERMS_BEFORE

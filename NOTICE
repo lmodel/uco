@@ -31,16 +31,32 @@ example data from UCO's examples under tests/examples/ at that commit,
 which are under the same licence. Nothing in this repository changes the
 copied files.
 
-The Collections Ontology
-------------------------
+lmodel/collections and the Collections Ontology
+-----------------------------------------------
 
-src/uco/schema/uco_co.yaml renders the classes and properties of the
-Collections Ontology (CO), http://purl.org/co/, that UCO's files use, with
-CO's own IRIs and the constraints UCO's co.ttl adds. CO 2.0 is the work
-of Paolo Ciccarese and Silvio Peroni. Its OWL file and repository
-(https://github.com/collections-ontology/collections-ontology) state no
-licence (read on 2026-10-31), so nothing of CO's text is copied here: the
-descriptions of its terms are this project's own.
+src/uco/schema/collections/collections.yaml is the schema module of the
+Collections Ontology LinkML schema of lmodel/collections
+(https://github.com/lmodel/collections) at release v0.1.0 (commit
+a55334d11fdff610988c1c1776fcc3055295d74d), under the Apache License,
+Version 2.0, copied unchanged. tests/test_collections_import.py pins its
+git object hash. It renders the Collections Ontology (CO) 2.0 by Paolo
+Ciccarese and Silvio Peroni, http://purl.org/co, which they describe in
+"The Collections Ontology: creating and handling collections in OWL 2 DL
+frameworks", Semantic Web 5(6), 2014, https://doi.org/10.3233/SW-130121.
+The module keeps CO's names and IRIs. Its descriptions are
+lmodel/collections' own words, and its use does not imply endorsement by
+CO's authors.
+
+lmodel/collections' NOTICE states the position on CO's licence. CO's
+repository (https://github.com/collections-ontology/collections-ontology)
+states no licence of its own. The Google Code archive's record of the
+project, https://code.google.com/archive/p/collections-ontology, gives the
+Apache License, Version 2.0, for its code, CO's OWL file among it, and
+Creative Commons Attribution 3.0
+(https://creativecommons.org/licenses/by/3.0/) for its other content, such
+as its wiki. The module cites one page of that wiki for a fact and copies
+none of its text. This repository copies none of CO's own files: the
+ontology/co/co.ttl named above is UCO's, which adds SHACL shapes to CO.
 
 linkml-project-copier
 ---------------------

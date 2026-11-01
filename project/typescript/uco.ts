@@ -1391,22 +1391,29 @@ export enum WindowsServiceType {
 
 
 /**
- * A collection that may hold one element more than once, in no order.
+ * A group of things that is taken as a whole.
  */
-export interface Bag {
-    /** How many items the collection holds. */
+export interface Collection {
+    /** How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list. */
     co_size?: number,
-    /** A member of the collection, which one of its items wraps. */
+    /** A thing the collection holds, named by its IRI. */
     element?: string[],
 }
 
 
 /**
- * An entry of a collection, which wraps one element of the collection's content.
+ * A collection that holds each of its elements once.
  */
-export interface CoItem {
-    /** The element that the item wraps. */
-    itemContent?: string,
+export interface Set extends Collection {
+}
+
+
+/**
+ * A collection that may hold one element more than once, in no order.
+ */
+export interface Bag extends Collection {
+    /** An item of the bag, which holds one of its elements. */
+    item?: CoItem[],
 }
 
 
@@ -1416,10 +1423,17 @@ export interface CoItem {
 export interface List extends Bag {
     /** The first item of the list. */
     firstItem?: ListItem,
-    /** An item of the collection. */
-    item?: ListItem[],
     /** The last item of the list. */
     lastItem?: ListItem,
+}
+
+
+/**
+ * An entry of a bag, which wraps one of the bag's elements.
+ */
+export interface CoItem {
+    /** The element that the item wraps. */
+    itemContent: string,
 }
 
 
@@ -1427,10 +1441,16 @@ export interface List extends Bag {
  * An item of a list, which has a place in the list's order.
  */
 export interface ListItem extends CoItem {
-    /** An item that comes somewhere after this one. */
-    followedBy?: CoItem[],
     /** The place of the item in its list, counting from 1. */
-    index?: number,
+    co_index: number,
+    /** The item that comes straight after this one. */
+    nextItem?: ListItem,
+    /** The item that comes straight before this one. */
+    previousItem?: ListItem,
+    /** An item that comes somewhere after this one. */
+    followedBy?: ListItem[],
+    /** An item that comes somewhere before this one. */
+    precededBy?: ListItem[],
 }
 
 
@@ -2244,7 +2264,7 @@ export interface ProperDictionary extends Dictionary {
 export interface Thread extends UcoThing, Bag {
     /** The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI. */
     id: string,
-    /** An item of the collection. */
+    /** An item of the bag, which holds one of its elements. */
     item?: ThreadItemId[],
     /** A link to an item of the thread known to have no predecessor. */
     threadOriginItem?: ThreadItemId[],

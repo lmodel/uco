@@ -387,6 +387,10 @@
          "@type": "xsd:integer",
          "@id": "uco-observable:clusterSize"
       },
+      "co_index": {
+         "@type": "xsd:integer",
+         "@id": "coll:index"
+      },
       "co_size": {
          "@type": "xsd:integer",
          "@id": "coll:size"
@@ -738,6 +742,10 @@
          "@type": "xsd:anyURI",
          "@id": "coll:element"
       },
+      "elementOf": {
+         "@type": "@id",
+         "@id": "coll:elementOf"
+      },
       "elevation": {
          "@type": "xsd:decimal",
          "@id": "uco-observable:elevation"
@@ -954,6 +962,10 @@
          "@type": "@id",
          "@id": "coll:firstItem"
       },
+      "firstItemOf": {
+         "@type": "@id",
+         "@id": "coll:firstItemOf"
+      },
       "firstLoginTime": {
          "@type": "xsd:dateTime",
          "@id": "uco-observable:firstLoginTime"
@@ -1160,10 +1172,6 @@
       "IMSI": {
          "@id": "uco-observable:IMSI"
       },
-      "index": {
-         "@type": "xsd:integer",
-         "@id": "coll:index"
-      },
       "inetLocation": {
          "@type": "@id",
          "@id": "uco-observable:inetLocation"
@@ -1327,11 +1335,16 @@
          "@id": "uco-observable:isVolatile"
       },
       "item": {
+         "@type": "@id",
          "@id": "coll:item"
       },
       "itemContent": {
          "@type": "xsd:anyURI",
          "@id": "coll:itemContent"
+      },
+      "itemContentOf": {
+         "@type": "@id",
+         "@id": "coll:itemContentOf"
       },
       "itemDescription": {
          "@id": "uco-configuration:itemDescription"
@@ -1342,6 +1355,10 @@
       "itemObject": {
          "@type": "@id",
          "@id": "uco-configuration:itemObject"
+      },
+      "itemOf": {
+         "@type": "@id",
+         "@id": "coll:itemOf"
       },
       "itemType": {
          "@id": "uco-configuration:itemType"
@@ -1373,6 +1390,10 @@
       "lastItem": {
          "@type": "@id",
          "@id": "coll:lastItem"
+      },
+      "lastItemOf": {
+         "@type": "@id",
+         "@id": "coll:lastItemOf"
       },
       "lastLoginTime": {
          "@type": "xsd:dateTime",
@@ -3007,6 +3028,9 @@
       "CoItem": {
          "@id": "coll:Item"
       },
+      "Collection": {
+         "@id": "coll:Collection"
+      },
       "Compilation": {
          "@id": "uco-core:Compilation"
       },
@@ -3419,13 +3443,7 @@
          "@id": "uco-marking:LicenseMarking"
       },
       "List": {
-         "@id": "coll:List",
-         "@context": {
-            "item": {
-               "@id": "coll:item",
-               "@type": "@id"
-            }
-         }
+         "@id": "coll:List"
       },
       "ListItem": {
          "@id": "coll:ListItem"
@@ -3706,6 +3724,9 @@
       "Server": {
          "@id": "uco-observable:Server"
       },
+      "Set": {
+         "@id": "coll:Set"
+      },
       "ShopListing": {
          "@id": "uco-observable:ShopListing"
       },
@@ -3803,13 +3824,7 @@
          "@id": "uco-marking:TermsOfUseMarking"
       },
       "Thread": {
-         "@id": "uco-types:Thread",
-         "@context": {
-            "item": {
-               "@id": "coll:item",
-               "@type": "@id"
-            }
-         }
+         "@id": "uco-types:Thread"
       },
       "ThreadItem": {
          "@id": "uco-types:ThreadItem",

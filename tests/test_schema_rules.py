@@ -43,6 +43,11 @@ NEIGHBOURS = {
     # lmodel/in-toto v0.1.1, schema-v0.1.1-in-toto.yaml
     "in-toto.yaml": "feb2711d782643dfeb670648508540f29393c437aaceae5318849f62e8e14c6d",
 }
+# lmodel/collections v0.1.0, schema-v0.1.0-collections.yaml, the release
+# whose module src/uco/schema/collections/ holds, checked the same way.
+COLLECTIONS = {
+    "collections.yaml": "11e3d604355eca5bba2e5ab4e21716566b9ac04d11b00ff4f097983c9c1c7d8a"
+}
 ELEMENT_KINDS = ("classes", "enums", "types", "subsets")
 
 # Keys the copy shares with a neighbour, each under another IRI there. They
@@ -136,8 +141,9 @@ def _curies(node):
 
 def test_neighbours_are_the_released_assets():
     """Each neighbour copy is byte for byte the asset its release published."""
-    assert {p.name for p in NEIGHBOUR_DIR.iterdir()} == set(NEIGHBOURS)
-    for name, sha256 in NEIGHBOURS.items():
+    pinned = {**NEIGHBOURS, **COLLECTIONS}
+    assert {p.name for p in NEIGHBOUR_DIR.iterdir()} == set(pinned)
+    for name, sha256 in pinned.items():
         digest = hashlib.sha256((NEIGHBOUR_DIR / name).read_bytes()).hexdigest()
         assert digest == sha256, name
 
@@ -168,6 +174,18 @@ def test_names_apart_from_neighbours():
         assert slots.keys() & their_slots.keys() == SHARED_KEYS[name], name
 
 
+def test_the_copy_holds_collections_copy():
+    """The copy holds lmodel/collections' module, so it holds every element
+    and key of collections' own copy, each key with the same IRI, and a host
+    imports this copy in place of both."""
+    elements, slots = _names(COPY)
+    their_elements, their_slots = _names(NEIGHBOUR_DIR / "collections.yaml")
+    for kind in ELEMENT_KINDS:
+        assert their_elements[kind] <= elements[kind], kind
+    for name, iris in their_slots.items():
+        assert slots.get(name) == iris, name
+
+
 def test_copy_roots_the_concept_classes():
     """The copy re-roots exactly the classes with an IRI on Concept and imports
     nothing but the LinkML types and LOKF."""
@@ -196,7 +214,10 @@ def test_no_prefix_is_bound_twice():
     """A prefix the copy binds means what lokf.yaml and each neighbour bind it
     to, so LinkML can merge the files in one composite."""
     ours = yaml.safe_load(COPY.read_text()).get("prefixes") or {}
-    for other in (LOKF, *(NEIGHBOUR_DIR / name for name in NEIGHBOURS)):
+    for other in (
+        LOKF,
+        *(NEIGHBOUR_DIR / name for name in {**NEIGHBOURS, **COLLECTIONS}),
+    ):
         theirs = yaml.safe_load(other.read_text()).get("prefixes") or {}
         for prefix in ours.keys() & theirs.keys():
             assert ours[prefix] == theirs[prefix], (other.name, prefix)

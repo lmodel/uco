@@ -1,22 +1,31 @@
 -- # Class: UcoDocument Description: A document of UCO data, as a JSON-LD file of UCO holds one graph.
 --     * Slot: id
+-- # Class: Collection Description: A group of things that is taken as a whole.
+--     * Slot: id
+--     * Slot: co_size Description: How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
+-- # Class: Set Description: A collection that holds each of its elements once.
+--     * Slot: id
+--     * Slot: co_size Description: How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
 -- # Class: Bag Description: A collection that may hold one element more than once, in no order.
 --     * Slot: id
---     * Slot: co_size Description: How many items the collection holds.
--- # Class: CoItem Description: An entry of a collection, which wraps one element of the collection's content.
---     * Slot: id
---     * Slot: itemContent Description: The element that the item wraps.
---     * Slot: ListItem_id Description: Autocreated FK slot
+--     * Slot: co_size Description: How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
 -- # Class: List Description: A collection whose items come in order, one after another.
 --     * Slot: id
---     * Slot: co_size Description: How many items the collection holds.
+--     * Slot: co_size Description: How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
 --     * Slot: firstItem_id Description: The first item of the list.
 --     * Slot: lastItem_id Description: The last item of the list.
+-- # Class: CoItem Description: An entry of a bag, which wraps one of the bag's elements.
+--     * Slot: id
+--     * Slot: itemContent Description: The element that the item wraps.
+--     * Slot: Bag_id Description: Autocreated FK slot
 -- # Class: ListItem Description: An item of a list, which has a place in the list's order.
 --     * Slot: id
---     * Slot: index Description: The place of the item in its list, counting from 1.
+--     * Slot: co_index Description: The place of the item in its list, counting from 1.
 --     * Slot: itemContent Description: The element that the item wraps.
 --     * Slot: List_id Description: Autocreated FK slot
+--     * Slot: ListItem_id Description: Autocreated FK slot
+--     * Slot: nextItem_id Description: The item that comes straight after this one.
+--     * Slot: previousItem_id Description: The item that comes straight before this one.
 -- # Class: Annotation Description: An annotation is an assertion made in relation to one or more objects.
 --     * Slot: id Description: The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.
 --     * Slot: createdBy Description: The identity that created a characterization of a concept.
@@ -973,8 +982,8 @@
 --     * Slot: type Description: The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
 -- # Class: Thread Description: A semi-ordered array of items, that can be present in multiple copies. Implementation of a UCO Thread is similar to a Collections Ontology List, except a Thread may fork and merge - that is, one of its members may have two or more direct successors, and two or more direct predecessors.
 --     * Slot: id Description: The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.
---     * Slot: co_size Description: How many items the collection holds.
 --     * Slot: type Description: The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
+--     * Slot: co_size Description: How many times the collection holds a thing, counting each repeat: the number of elements of a set, or of items of a bag or a list.
 -- # Class: ThreadItem Description: A ThreadItem is a member of a thread.
 --     * Slot: id Description: The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.
 --     * Slot: itemContent Description: The element that the item wraps.
@@ -3975,12 +3984,18 @@
 --     * Slot: subjectDirectoryAttributes Description: UCO 1.5.0 declares the property uco-observable:subjectDirectoryAttributes without a definition.
 --     * Slot: subjectKeyIdentifier Description: UCO 1.5.0 declares the property uco-observable:subjectKeyIdentifier without a definition.
 --     * Slot: type Description: The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.
+-- # Class: Collection_element
+--     * Slot: Collection_id Description: Autocreated FK slot
+--     * Slot: element Description: A thing the collection holds, named by its IRI.
+-- # Class: Set_element
+--     * Slot: Set_id Description: Autocreated FK slot
+--     * Slot: element Description: A thing the collection holds, named by its IRI.
 -- # Class: Bag_element
 --     * Slot: Bag_id Description: Autocreated FK slot
---     * Slot: element Description: A member of the collection, which one of its items wraps.
+--     * Slot: element Description: A thing the collection holds, named by its IRI.
 -- # Class: List_element
 --     * Slot: List_id Description: Autocreated FK slot
---     * Slot: element Description: A member of the collection, which one of its items wraps.
+--     * Slot: element Description: A thing the collection holds, named by its IRI.
 -- # Class: Annotation_object
 --     * Slot: Annotation_id Description: Autocreated FK slot
 --     * Slot: object_id Description: Specifies one or more UcoObjects.
@@ -4508,7 +4523,7 @@
 --     * Slot: repeatsKey Description: A key found to be repeated in multiple dictionary entries within one dictionary.
 -- # Class: Thread_item
 --     * Slot: Thread_id Description: Autocreated FK slot
---     * Slot: item_id Description: An item of the collection.
+--     * Slot: item_id Description: An item of the bag, which holds one of its elements.
 -- # Class: Thread_threadOriginItem
 --     * Slot: Thread_id Description: Autocreated FK slot
 --     * Slot: threadOriginItem_id Description: A link to an item of the thread known to have no predecessor.
@@ -4517,7 +4532,7 @@
 --     * Slot: threadTerminalItem_id Description: A link to an item of the thread known to have no successor.
 -- # Class: Thread_element
 --     * Slot: Thread_id Description: Autocreated FK slot
---     * Slot: element Description: A member of the collection, which one of its items wraps.
+--     * Slot: element Description: A thing the collection holds, named by its IRI.
 -- # Class: ThreadItem_threadNextItem
 --     * Slot: ThreadItem_id Description: Autocreated FK slot
 --     * Slot: threadNextItem_id Description: The link to a next item in a thread.
@@ -7186,6 +7201,20 @@ CREATE TABLE "UcoDocument" (
 );
 CREATE INDEX "ix_UcoDocument_id" ON "UcoDocument" (id);
 
+CREATE TABLE "Collection" (
+	id INTEGER NOT NULL,
+	co_size INTEGER,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_Collection_id" ON "Collection" (id);
+
+CREATE TABLE "Set" (
+	id INTEGER NOT NULL,
+	co_size INTEGER,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_Set_id" ON "Set" (id);
+
 CREATE TABLE "Bag" (
 	id INTEGER NOT NULL,
 	co_size INTEGER,
@@ -7206,11 +7235,17 @@ CREATE INDEX "ix_List_id" ON "List" (id);
 
 CREATE TABLE "ListItem" (
 	id INTEGER NOT NULL,
-	"index" INTEGER,
-	"itemContent" TEXT,
+	co_index INTEGER NOT NULL,
+	"itemContent" TEXT NOT NULL,
 	"List_id" INTEGER,
+	"ListItem_id" INTEGER,
+	"nextItem_id" INTEGER,
+	"previousItem_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("List_id") REFERENCES "List" (id)
+	FOREIGN KEY("List_id") REFERENCES "List" (id),
+	FOREIGN KEY("ListItem_id") REFERENCES "ListItem" (id),
+	FOREIGN KEY("nextItem_id") REFERENCES "ListItem" (id),
+	FOREIGN KEY("previousItem_id") REFERENCES "ListItem" (id)
 );
 CREATE INDEX "ix_ListItem_id" ON "ListItem" (id);
 
@@ -7467,8 +7502,8 @@ CREATE INDEX "ix_ProperDictionary_id" ON "ProperDictionary" (id);
 
 CREATE TABLE "Thread" (
 	id TEXT NOT NULL,
-	co_size INTEGER,
 	type TEXT,
+	co_size INTEGER,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_Thread_id" ON "Thread" (id);
@@ -8284,10 +8319,10 @@ CREATE INDEX "ix_X509V3ExtensionsFacet_id" ON "X509V3ExtensionsFacet" (id);
 
 CREATE TABLE "CoItem" (
 	id INTEGER NOT NULL,
-	"itemContent" TEXT,
-	"ListItem_id" INTEGER,
+	"itemContent" TEXT NOT NULL,
+	"Bag_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ListItem_id") REFERENCES "ListItem" (id)
+	FOREIGN KEY("Bag_id") REFERENCES "Bag" (id)
 );
 CREATE INDEX "ix_CoItem_id" ON "CoItem" (id);
 
@@ -11320,14 +11355,32 @@ CREATE TABLE "X509V3Certificate" (
 );
 CREATE INDEX "ix_X509V3Certificate_id" ON "X509V3Certificate" (id);
 
+CREATE TABLE "Collection_element" (
+	"Collection_id" INTEGER,
+	element TEXT,
+	PRIMARY KEY ("Collection_id", element),
+	FOREIGN KEY("Collection_id") REFERENCES "Collection" (id)
+);
+CREATE INDEX "ix_Collection_element_element" ON "Collection_element" (element);
+CREATE INDEX "ix_Collection_element_Collection_id" ON "Collection_element" ("Collection_id");
+
+CREATE TABLE "Set_element" (
+	"Set_id" INTEGER,
+	element TEXT,
+	PRIMARY KEY ("Set_id", element),
+	FOREIGN KEY("Set_id") REFERENCES "Set" (id)
+);
+CREATE INDEX "ix_Set_element_element" ON "Set_element" (element);
+CREATE INDEX "ix_Set_element_Set_id" ON "Set_element" ("Set_id");
+
 CREATE TABLE "Bag_element" (
 	"Bag_id" INTEGER,
 	element TEXT,
 	PRIMARY KEY ("Bag_id", element),
 	FOREIGN KEY("Bag_id") REFERENCES "Bag" (id)
 );
-CREATE INDEX "ix_Bag_element_element" ON "Bag_element" (element);
 CREATE INDEX "ix_Bag_element_Bag_id" ON "Bag_element" ("Bag_id");
+CREATE INDEX "ix_Bag_element_element" ON "Bag_element" (element);
 
 CREATE TABLE "List_element" (
 	"List_id" INTEGER,
@@ -11344,8 +11397,8 @@ CREATE TABLE "IdentityAbstraction_description" (
 	PRIMARY KEY ("IdentityAbstraction_id", description),
 	FOREIGN KEY("IdentityAbstraction_id") REFERENCES "IdentityAbstraction" (id)
 );
-CREATE INDEX "ix_IdentityAbstraction_description_IdentityAbstraction_id" ON "IdentityAbstraction_description" ("IdentityAbstraction_id");
 CREATE INDEX "ix_IdentityAbstraction_description_description" ON "IdentityAbstraction_description" (description);
+CREATE INDEX "ix_IdentityAbstraction_description_IdentityAbstraction_id" ON "IdentityAbstraction_description" ("IdentityAbstraction_id");
 
 CREATE TABLE "IdentityAbstraction_modifiedTime" (
 	"IdentityAbstraction_id" TEXT,
@@ -11353,8 +11406,8 @@ CREATE TABLE "IdentityAbstraction_modifiedTime" (
 	PRIMARY KEY ("IdentityAbstraction_id", "modifiedTime"),
 	FOREIGN KEY("IdentityAbstraction_id") REFERENCES "IdentityAbstraction" (id)
 );
-CREATE INDEX "ix_IdentityAbstraction_modifiedTime_modifiedTime" ON "IdentityAbstraction_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IdentityAbstraction_modifiedTime_IdentityAbstraction_id" ON "IdentityAbstraction_modifiedTime" ("IdentityAbstraction_id");
+CREATE INDEX "ix_IdentityAbstraction_modifiedTime_modifiedTime" ON "IdentityAbstraction_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IdentityAbstraction_tag" (
 	"IdentityAbstraction_id" TEXT,
@@ -11371,8 +11424,8 @@ CREATE TABLE "SimpleNameFacet_familyName" (
 	PRIMARY KEY ("SimpleNameFacet_id", "familyName"),
 	FOREIGN KEY("SimpleNameFacet_id") REFERENCES "SimpleNameFacet" (id)
 );
-CREATE INDEX "ix_SimpleNameFacet_familyName_SimpleNameFacet_id" ON "SimpleNameFacet_familyName" ("SimpleNameFacet_id");
 CREATE INDEX "ix_SimpleNameFacet_familyName_familyName" ON "SimpleNameFacet_familyName" ("familyName");
+CREATE INDEX "ix_SimpleNameFacet_familyName_SimpleNameFacet_id" ON "SimpleNameFacet_familyName" ("SimpleNameFacet_id");
 
 CREATE TABLE "SimpleNameFacet_givenName" (
 	"SimpleNameFacet_id" INTEGER,
@@ -11380,8 +11433,8 @@ CREATE TABLE "SimpleNameFacet_givenName" (
 	PRIMARY KEY ("SimpleNameFacet_id", "givenName"),
 	FOREIGN KEY("SimpleNameFacet_id") REFERENCES "SimpleNameFacet" (id)
 );
-CREATE INDEX "ix_SimpleNameFacet_givenName_givenName" ON "SimpleNameFacet_givenName" ("givenName");
 CREATE INDEX "ix_SimpleNameFacet_givenName_SimpleNameFacet_id" ON "SimpleNameFacet_givenName" ("SimpleNameFacet_id");
+CREATE INDEX "ix_SimpleNameFacet_givenName_givenName" ON "SimpleNameFacet_givenName" ("givenName");
 
 CREATE TABLE "SimpleNameFacet_honorificPrefix" (
 	"SimpleNameFacet_id" INTEGER,
@@ -11398,8 +11451,8 @@ CREATE TABLE "SimpleNameFacet_honorificSuffix" (
 	PRIMARY KEY ("SimpleNameFacet_id", "honorificSuffix"),
 	FOREIGN KEY("SimpleNameFacet_id") REFERENCES "SimpleNameFacet" (id)
 );
-CREATE INDEX "ix_SimpleNameFacet_honorificSuffix_SimpleNameFacet_id" ON "SimpleNameFacet_honorificSuffix" ("SimpleNameFacet_id");
 CREATE INDEX "ix_SimpleNameFacet_honorificSuffix_honorificSuffix" ON "SimpleNameFacet_honorificSuffix" ("honorificSuffix");
+CREATE INDEX "ix_SimpleNameFacet_honorificSuffix_SimpleNameFacet_id" ON "SimpleNameFacet_honorificSuffix" ("SimpleNameFacet_id");
 
 CREATE TABLE "GranularMarking_contentSelectors" (
 	"GranularMarking_id" INTEGER,
@@ -11425,8 +11478,8 @@ CREATE TABLE "ReleaseToMarking_authorizedIdentities" (
 	PRIMARY KEY ("ReleaseToMarking_id", "authorizedIdentities"),
 	FOREIGN KEY("ReleaseToMarking_id") REFERENCES "ReleaseToMarking" (id)
 );
-CREATE INDEX "ix_ReleaseToMarking_authorizedIdentities_authorizedIdentities" ON "ReleaseToMarking_authorizedIdentities" ("authorizedIdentities");
 CREATE INDEX "ix_ReleaseToMarking_authorizedIdentities_ReleaseToMarking_id" ON "ReleaseToMarking_authorizedIdentities" ("ReleaseToMarking_id");
+CREATE INDEX "ix_ReleaseToMarking_authorizedIdentities_authorizedIdentities" ON "ReleaseToMarking_authorizedIdentities" ("authorizedIdentities");
 
 CREATE TABLE "ReleaseToMarking_definitionType" (
 	"ReleaseToMarking_id" INTEGER,
@@ -11434,8 +11487,8 @@ CREATE TABLE "ReleaseToMarking_definitionType" (
 	PRIMARY KEY ("ReleaseToMarking_id", "definitionType"),
 	FOREIGN KEY("ReleaseToMarking_id") REFERENCES "ReleaseToMarking" (id)
 );
-CREATE INDEX "ix_ReleaseToMarking_definitionType_ReleaseToMarking_id" ON "ReleaseToMarking_definitionType" ("ReleaseToMarking_id");
 CREATE INDEX "ix_ReleaseToMarking_definitionType_definitionType" ON "ReleaseToMarking_definitionType" ("definitionType");
+CREATE INDEX "ix_ReleaseToMarking_definitionType_ReleaseToMarking_id" ON "ReleaseToMarking_definitionType" ("ReleaseToMarking_id");
 
 CREATE TABLE "StatementMarking_definitionType" (
 	"StatementMarking_id" INTEGER,
@@ -11470,8 +11523,8 @@ CREATE TABLE "Thread_element" (
 	PRIMARY KEY ("Thread_id", element),
 	FOREIGN KEY("Thread_id") REFERENCES "Thread" (id)
 );
-CREATE INDEX "ix_Thread_element_element" ON "Thread_element" (element);
 CREATE INDEX "ix_Thread_element_Thread_id" ON "Thread_element" ("Thread_id");
+CREATE INDEX "ix_Thread_element_element" ON "Thread_element" (element);
 
 CREATE TABLE "Technique_techniqueID" (
 	"Technique_id" TEXT,
@@ -11488,8 +11541,8 @@ CREATE TABLE "DigitalAccountFacet_accountLogin" (
 	PRIMARY KEY ("DigitalAccountFacet_id", "accountLogin"),
 	FOREIGN KEY("DigitalAccountFacet_id") REFERENCES "DigitalAccountFacet" (id)
 );
-CREATE INDEX "ix_DigitalAccountFacet_accountLogin_DigitalAccountFacet_id" ON "DigitalAccountFacet_accountLogin" ("DigitalAccountFacet_id");
 CREATE INDEX "ix_DigitalAccountFacet_accountLogin_accountLogin" ON "DigitalAccountFacet_accountLogin" ("accountLogin");
+CREATE INDEX "ix_DigitalAccountFacet_accountLogin_DigitalAccountFacet_id" ON "DigitalAccountFacet_accountLogin" ("DigitalAccountFacet_id");
 
 CREATE TABLE "EncryptedStreamFacet_encryptionIV" (
 	"EncryptedStreamFacet_id" INTEGER,
@@ -11506,8 +11559,8 @@ CREATE TABLE "EncryptedStreamFacet_encryptionKey" (
 	PRIMARY KEY ("EncryptedStreamFacet_id", "encryptionKey"),
 	FOREIGN KEY("EncryptedStreamFacet_id") REFERENCES "EncryptedStreamFacet" (id)
 );
-CREATE INDEX "ix_EncryptedStreamFacet_encryptionKey_encryptionKey" ON "EncryptedStreamFacet_encryptionKey" ("encryptionKey");
 CREATE INDEX "ix_EncryptedStreamFacet_encryptionKey_EncryptedStreamFacet_id" ON "EncryptedStreamFacet_encryptionKey" ("EncryptedStreamFacet_id");
+CREATE INDEX "ix_EncryptedStreamFacet_encryptionKey_encryptionKey" ON "EncryptedStreamFacet_encryptionKey" ("encryptionKey");
 
 CREATE TABLE "FileFacet_fileName" (
 	"FileFacet_id" INTEGER,
@@ -11515,8 +11568,8 @@ CREATE TABLE "FileFacet_fileName" (
 	PRIMARY KEY ("FileFacet_id", "fileName"),
 	FOREIGN KEY("FileFacet_id") REFERENCES "FileFacet" (id)
 );
-CREATE INDEX "ix_FileFacet_fileName_fileName" ON "FileFacet_fileName" ("fileName");
 CREATE INDEX "ix_FileFacet_fileName_FileFacet_id" ON "FileFacet_fileName" ("FileFacet_id");
+CREATE INDEX "ix_FileFacet_fileName_fileName" ON "FileFacet_fileName" ("fileName");
 
 CREATE TABLE "FileFacet_filePath" (
 	"FileFacet_id" INTEGER,
@@ -11524,8 +11577,8 @@ CREATE TABLE "FileFacet_filePath" (
 	PRIMARY KEY ("FileFacet_id", "filePath"),
 	FOREIGN KEY("FileFacet_id") REFERENCES "FileFacet" (id)
 );
-CREATE INDEX "ix_FileFacet_filePath_FileFacet_id" ON "FileFacet_filePath" ("FileFacet_id");
 CREATE INDEX "ix_FileFacet_filePath_filePath" ON "FileFacet_filePath" ("filePath");
+CREATE INDEX "ix_FileFacet_filePath_FileFacet_id" ON "FileFacet_filePath" ("FileFacet_id");
 
 CREATE TABLE "FileFacet_isDirectory" (
 	"FileFacet_id" INTEGER,
@@ -11560,8 +11613,8 @@ CREATE TABLE "ICMPConnectionFacet_icmpCode" (
 	PRIMARY KEY ("ICMPConnectionFacet_id", "icmpCode"),
 	FOREIGN KEY("ICMPConnectionFacet_id") REFERENCES "ICMPConnectionFacet" (id)
 );
-CREATE INDEX "ix_ICMPConnectionFacet_icmpCode_ICMPConnectionFacet_id" ON "ICMPConnectionFacet_icmpCode" ("ICMPConnectionFacet_id");
 CREATE INDEX "ix_ICMPConnectionFacet_icmpCode_icmpCode" ON "ICMPConnectionFacet_icmpCode" ("icmpCode");
+CREATE INDEX "ix_ICMPConnectionFacet_icmpCode_ICMPConnectionFacet_id" ON "ICMPConnectionFacet_icmpCode" ("ICMPConnectionFacet_id");
 
 CREATE TABLE "ICMPConnectionFacet_icmpType" (
 	"ICMPConnectionFacet_id" INTEGER,
@@ -11578,8 +11631,8 @@ CREATE TABLE "MemoryFacet_regionEndAddress" (
 	PRIMARY KEY ("MemoryFacet_id", "regionEndAddress"),
 	FOREIGN KEY("MemoryFacet_id") REFERENCES "MemoryFacet" (id)
 );
-CREATE INDEX "ix_MemoryFacet_regionEndAddress_MemoryFacet_id" ON "MemoryFacet_regionEndAddress" ("MemoryFacet_id");
 CREATE INDEX "ix_MemoryFacet_regionEndAddress_regionEndAddress" ON "MemoryFacet_regionEndAddress" ("regionEndAddress");
+CREATE INDEX "ix_MemoryFacet_regionEndAddress_MemoryFacet_id" ON "MemoryFacet_regionEndAddress" ("MemoryFacet_id");
 
 CREATE TABLE "MemoryFacet_regionStartAddress" (
 	"MemoryFacet_id" INTEGER,
@@ -11614,8 +11667,8 @@ CREATE TABLE "SQLiteBlobFacet_rowIndex" (
 	PRIMARY KEY ("SQLiteBlobFacet_id", "rowIndex"),
 	FOREIGN KEY("SQLiteBlobFacet_id") REFERENCES "SQLiteBlobFacet" (id)
 );
-CREATE INDEX "ix_SQLiteBlobFacet_rowIndex_rowIndex" ON "SQLiteBlobFacet_rowIndex" ("rowIndex");
 CREATE INDEX "ix_SQLiteBlobFacet_rowIndex_SQLiteBlobFacet_id" ON "SQLiteBlobFacet_rowIndex" ("SQLiteBlobFacet_id");
+CREATE INDEX "ix_SQLiteBlobFacet_rowIndex_rowIndex" ON "SQLiteBlobFacet_rowIndex" ("rowIndex");
 
 CREATE TABLE "TCPConnectionFacet_destinationFlags" (
 	"TCPConnectionFacet_id" INTEGER,
@@ -11623,8 +11676,8 @@ CREATE TABLE "TCPConnectionFacet_destinationFlags" (
 	PRIMARY KEY ("TCPConnectionFacet_id", "destinationFlags"),
 	FOREIGN KEY("TCPConnectionFacet_id") REFERENCES "TCPConnectionFacet" (id)
 );
-CREATE INDEX "ix_TCPConnectionFacet_destinationFlags_TCPConnectionFacet_id" ON "TCPConnectionFacet_destinationFlags" ("TCPConnectionFacet_id");
 CREATE INDEX "ix_TCPConnectionFacet_destinationFlags_destinationFlags" ON "TCPConnectionFacet_destinationFlags" ("destinationFlags");
+CREATE INDEX "ix_TCPConnectionFacet_destinationFlags_TCPConnectionFacet_id" ON "TCPConnectionFacet_destinationFlags" ("TCPConnectionFacet_id");
 
 CREATE TABLE "TCPConnectionFacet_sourceFlags" (
 	"TCPConnectionFacet_id" INTEGER,
@@ -11632,8 +11685,8 @@ CREATE TABLE "TCPConnectionFacet_sourceFlags" (
 	PRIMARY KEY ("TCPConnectionFacet_id", "sourceFlags"),
 	FOREIGN KEY("TCPConnectionFacet_id") REFERENCES "TCPConnectionFacet" (id)
 );
-CREATE INDEX "ix_TCPConnectionFacet_sourceFlags_sourceFlags" ON "TCPConnectionFacet_sourceFlags" ("sourceFlags");
 CREATE INDEX "ix_TCPConnectionFacet_sourceFlags_TCPConnectionFacet_id" ON "TCPConnectionFacet_sourceFlags" ("TCPConnectionFacet_id");
+CREATE INDEX "ix_TCPConnectionFacet_sourceFlags_sourceFlags" ON "TCPConnectionFacet_sourceFlags" ("sourceFlags");
 
 CREATE TABLE "UNIXProcessFacet_openFileDescriptor" (
 	"UNIXProcessFacet_id" INTEGER,
@@ -11668,8 +11721,8 @@ CREATE TABLE "WindowsActiveDirectoryAccountFacet_activeDirectoryGroups" (
 	PRIMARY KEY ("WindowsActiveDirectoryAccountFacet_id", "activeDirectoryGroups"),
 	FOREIGN KEY("WindowsActiveDirectoryAccountFacet_id") REFERENCES "WindowsActiveDirectoryAccountFacet" (id)
 );
-CREATE INDEX "ix_WindowsActiveDirectoryAccountFacet_activeDirectoryGroups_WindowsActiveDirectoryAccountFacet_id" ON "WindowsActiveDirectoryAccountFacet_activeDirectoryGroups" ("WindowsActiveDirectoryAccountFacet_id");
 CREATE INDEX "ix_WindowsActiveDirectoryAccountFacet_activeDirectoryGroups_activeDirectoryGroups" ON "WindowsActiveDirectoryAccountFacet_activeDirectoryGroups" ("activeDirectoryGroups");
+CREATE INDEX "ix_WindowsActiveDirectoryAccountFacet_activeDirectoryGroups_WindowsActiveDirectoryAccountFacet_id" ON "WindowsActiveDirectoryAccountFacet_activeDirectoryGroups" ("WindowsActiveDirectoryAccountFacet_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_addressOfEntryPoint" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11695,8 +11748,8 @@ CREATE TABLE "WindowsPEOptionalHeader_checksum" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", checksum),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_checksum_checksum" ON "WindowsPEOptionalHeader_checksum" (checksum);
 CREATE INDEX "ix_WindowsPEOptionalHeader_checksum_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_checksum" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_checksum_checksum" ON "WindowsPEOptionalHeader_checksum" (checksum);
 
 CREATE TABLE "WindowsPEOptionalHeader_dllCharacteristics" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11722,8 +11775,8 @@ CREATE TABLE "WindowsPEOptionalHeader_imageBase" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "imageBase"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_imageBase_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_imageBase" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_imageBase_imageBase" ON "WindowsPEOptionalHeader_imageBase" ("imageBase");
+CREATE INDEX "ix_WindowsPEOptionalHeader_imageBase_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_imageBase" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_loaderFlags" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11731,8 +11784,8 @@ CREATE TABLE "WindowsPEOptionalHeader_loaderFlags" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "loaderFlags"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_loaderFlags_loaderFlags" ON "WindowsPEOptionalHeader_loaderFlags" ("loaderFlags");
 CREATE INDEX "ix_WindowsPEOptionalHeader_loaderFlags_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_loaderFlags" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_loaderFlags_loaderFlags" ON "WindowsPEOptionalHeader_loaderFlags" ("loaderFlags");
 
 CREATE TABLE "WindowsPEOptionalHeader_magic" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11749,8 +11802,8 @@ CREATE TABLE "WindowsPEOptionalHeader_majorImageVersion" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "majorImageVersion"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_majorImageVersion_majorImageVersion" ON "WindowsPEOptionalHeader_majorImageVersion" ("majorImageVersion");
 CREATE INDEX "ix_WindowsPEOptionalHeader_majorImageVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_majorImageVersion" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_majorImageVersion_majorImageVersion" ON "WindowsPEOptionalHeader_majorImageVersion" ("majorImageVersion");
 
 CREATE TABLE "WindowsPEOptionalHeader_majorLinkerVersion" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11758,8 +11811,8 @@ CREATE TABLE "WindowsPEOptionalHeader_majorLinkerVersion" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "majorLinkerVersion"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_majorLinkerVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_majorLinkerVersion" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_majorLinkerVersion_majorLinkerVersion" ON "WindowsPEOptionalHeader_majorLinkerVersion" ("majorLinkerVersion");
+CREATE INDEX "ix_WindowsPEOptionalHeader_majorLinkerVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_majorLinkerVersion" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_majorOSVersion" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11785,8 +11838,8 @@ CREATE TABLE "WindowsPEOptionalHeader_minorImageVersion" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "minorImageVersion"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_minorImageVersion_minorImageVersion" ON "WindowsPEOptionalHeader_minorImageVersion" ("minorImageVersion");
 CREATE INDEX "ix_WindowsPEOptionalHeader_minorImageVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_minorImageVersion" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_minorImageVersion_minorImageVersion" ON "WindowsPEOptionalHeader_minorImageVersion" ("minorImageVersion");
 
 CREATE TABLE "WindowsPEOptionalHeader_minorLinkerVersion" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11794,8 +11847,8 @@ CREATE TABLE "WindowsPEOptionalHeader_minorLinkerVersion" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "minorLinkerVersion"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_minorLinkerVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_minorLinkerVersion" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_minorLinkerVersion_minorLinkerVersion" ON "WindowsPEOptionalHeader_minorLinkerVersion" ("minorLinkerVersion");
+CREATE INDEX "ix_WindowsPEOptionalHeader_minorLinkerVersion_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_minorLinkerVersion" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_minorOSVersion" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11821,8 +11874,8 @@ CREATE TABLE "WindowsPEOptionalHeader_numberOfRVAAndSizes" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "numberOfRVAAndSizes"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_numberOfRVAAndSizes_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_numberOfRVAAndSizes" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_numberOfRVAAndSizes_numberOfRVAAndSizes" ON "WindowsPEOptionalHeader_numberOfRVAAndSizes" ("numberOfRVAAndSizes");
+CREATE INDEX "ix_WindowsPEOptionalHeader_numberOfRVAAndSizes_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_numberOfRVAAndSizes" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_sectionAlignment" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11839,8 +11892,8 @@ CREATE TABLE "WindowsPEOptionalHeader_sizeOfCode" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "sizeOfCode"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfCode_sizeOfCode" ON "WindowsPEOptionalHeader_sizeOfCode" ("sizeOfCode");
 CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfCode_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfCode" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfCode_sizeOfCode" ON "WindowsPEOptionalHeader_sizeOfCode" ("sizeOfCode");
 
 CREATE TABLE "WindowsPEOptionalHeader_sizeOfHeaders" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11848,8 +11901,8 @@ CREATE TABLE "WindowsPEOptionalHeader_sizeOfHeaders" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "sizeOfHeaders"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeaders_sizeOfHeaders" ON "WindowsPEOptionalHeader_sizeOfHeaders" ("sizeOfHeaders");
 CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeaders_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfHeaders" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeaders_sizeOfHeaders" ON "WindowsPEOptionalHeader_sizeOfHeaders" ("sizeOfHeaders");
 
 CREATE TABLE "WindowsPEOptionalHeader_sizeOfHeapCommit" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11866,8 +11919,8 @@ CREATE TABLE "WindowsPEOptionalHeader_sizeOfHeapReserve" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "sizeOfHeapReserve"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeapReserve_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfHeapReserve" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeapReserve_sizeOfHeapReserve" ON "WindowsPEOptionalHeader_sizeOfHeapReserve" ("sizeOfHeapReserve");
+CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfHeapReserve_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfHeapReserve" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_sizeOfImage" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11893,8 +11946,8 @@ CREATE TABLE "WindowsPEOptionalHeader_sizeOfStackCommit" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "sizeOfStackCommit"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackCommit_sizeOfStackCommit" ON "WindowsPEOptionalHeader_sizeOfStackCommit" ("sizeOfStackCommit");
 CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackCommit_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfStackCommit" ("WindowsPEOptionalHeader_id");
+CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackCommit_sizeOfStackCommit" ON "WindowsPEOptionalHeader_sizeOfStackCommit" ("sizeOfStackCommit");
 
 CREATE TABLE "WindowsPEOptionalHeader_sizeOfStackReserve" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11902,8 +11955,8 @@ CREATE TABLE "WindowsPEOptionalHeader_sizeOfStackReserve" (
 	PRIMARY KEY ("WindowsPEOptionalHeader_id", "sizeOfStackReserve"),
 	FOREIGN KEY("WindowsPEOptionalHeader_id") REFERENCES "WindowsPEOptionalHeader" (id)
 );
-CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackReserve_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfStackReserve" ("WindowsPEOptionalHeader_id");
 CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackReserve_sizeOfStackReserve" ON "WindowsPEOptionalHeader_sizeOfStackReserve" ("sizeOfStackReserve");
+CREATE INDEX "ix_WindowsPEOptionalHeader_sizeOfStackReserve_WindowsPEOptionalHeader_id" ON "WindowsPEOptionalHeader_sizeOfStackReserve" ("WindowsPEOptionalHeader_id");
 
 CREATE TABLE "WindowsPEOptionalHeader_sizeOfUninitializedData" (
 	"WindowsPEOptionalHeader_id" INTEGER,
@@ -11974,8 +12027,8 @@ CREATE TABLE "WindowsThreadFacet_startAddress" (
 	PRIMARY KEY ("WindowsThreadFacet_id", "startAddress"),
 	FOREIGN KEY("WindowsThreadFacet_id") REFERENCES "WindowsThreadFacet" (id)
 );
-CREATE INDEX "ix_WindowsThreadFacet_startAddress_WindowsThreadFacet_id" ON "WindowsThreadFacet_startAddress" ("WindowsThreadFacet_id");
 CREATE INDEX "ix_WindowsThreadFacet_startAddress_startAddress" ON "WindowsThreadFacet_startAddress" ("startAddress");
+CREATE INDEX "ix_WindowsThreadFacet_startAddress_WindowsThreadFacet_id" ON "WindowsThreadFacet_startAddress" ("WindowsThreadFacet_id");
 
 CREATE TABLE "WindowsThreadFacet_threadID" (
 	"WindowsThreadFacet_id" INTEGER,
@@ -11992,8 +12045,8 @@ CREATE TABLE "WindowsVolumeFacet_windowsVolumeAttributes" (
 	PRIMARY KEY ("WindowsVolumeFacet_id", "windowsVolumeAttributes"),
 	FOREIGN KEY("WindowsVolumeFacet_id") REFERENCES "WindowsVolumeFacet" (id)
 );
-CREATE INDEX "ix_WindowsVolumeFacet_windowsVolumeAttributes_windowsVolumeAttributes" ON "WindowsVolumeFacet_windowsVolumeAttributes" ("windowsVolumeAttributes");
 CREATE INDEX "ix_WindowsVolumeFacet_windowsVolumeAttributes_WindowsVolumeFacet_id" ON "WindowsVolumeFacet_windowsVolumeAttributes" ("WindowsVolumeFacet_id");
+CREATE INDEX "ix_WindowsVolumeFacet_windowsVolumeAttributes_windowsVolumeAttributes" ON "WindowsVolumeFacet_windowsVolumeAttributes" ("windowsVolumeAttributes");
 
 CREATE TABLE "Dictionary" (
 	id INTEGER NOT NULL,
@@ -12934,8 +12987,8 @@ CREATE TABLE "Annotation_object" (
 	FOREIGN KEY("Annotation_id") REFERENCES "Annotation" (id),
 	FOREIGN KEY(object_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Annotation_object_object_id" ON "Annotation_object" (object_id);
 CREATE INDEX "ix_Annotation_object_Annotation_id" ON "Annotation_object" ("Annotation_id");
+CREATE INDEX "ix_Annotation_object_object_id" ON "Annotation_object" (object_id);
 
 CREATE TABLE "Annotation_statement" (
 	"Annotation_id" TEXT,
@@ -12943,8 +12996,8 @@ CREATE TABLE "Annotation_statement" (
 	PRIMARY KEY ("Annotation_id", statement),
 	FOREIGN KEY("Annotation_id") REFERENCES "Annotation" (id)
 );
-CREATE INDEX "ix_Annotation_statement_Annotation_id" ON "Annotation_statement" ("Annotation_id");
 CREATE INDEX "ix_Annotation_statement_statement" ON "Annotation_statement" (statement);
+CREATE INDEX "ix_Annotation_statement_Annotation_id" ON "Annotation_statement" ("Annotation_id");
 
 CREATE TABLE "Annotation_description" (
 	"Annotation_id" TEXT,
@@ -12961,8 +13014,8 @@ CREATE TABLE "Annotation_modifiedTime" (
 	PRIMARY KEY ("Annotation_id", "modifiedTime"),
 	FOREIGN KEY("Annotation_id") REFERENCES "Annotation" (id)
 );
-CREATE INDEX "ix_Annotation_modifiedTime_modifiedTime" ON "Annotation_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Annotation_modifiedTime_Annotation_id" ON "Annotation_modifiedTime" ("Annotation_id");
+CREATE INDEX "ix_Annotation_modifiedTime_modifiedTime" ON "Annotation_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Annotation_objectMarking" (
 	"Annotation_id" TEXT,
@@ -12971,8 +13024,8 @@ CREATE TABLE "Annotation_objectMarking" (
 	FOREIGN KEY("Annotation_id") REFERENCES "Annotation" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Annotation_objectMarking_objectMarking_id" ON "Annotation_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Annotation_objectMarking_Annotation_id" ON "Annotation_objectMarking" ("Annotation_id");
+CREATE INDEX "ix_Annotation_objectMarking_objectMarking_id" ON "Annotation_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Annotation_tag" (
 	"Annotation_id" TEXT,
@@ -12989,8 +13042,8 @@ CREATE TABLE "Assertion_statement" (
 	PRIMARY KEY ("Assertion_id", statement),
 	FOREIGN KEY("Assertion_id") REFERENCES "Assertion" (id)
 );
-CREATE INDEX "ix_Assertion_statement_Assertion_id" ON "Assertion_statement" ("Assertion_id");
 CREATE INDEX "ix_Assertion_statement_statement" ON "Assertion_statement" (statement);
+CREATE INDEX "ix_Assertion_statement_Assertion_id" ON "Assertion_statement" ("Assertion_id");
 
 CREATE TABLE "Assertion_description" (
 	"Assertion_id" TEXT,
@@ -12998,8 +13051,8 @@ CREATE TABLE "Assertion_description" (
 	PRIMARY KEY ("Assertion_id", description),
 	FOREIGN KEY("Assertion_id") REFERENCES "Assertion" (id)
 );
-CREATE INDEX "ix_Assertion_description_description" ON "Assertion_description" (description);
 CREATE INDEX "ix_Assertion_description_Assertion_id" ON "Assertion_description" ("Assertion_id");
+CREATE INDEX "ix_Assertion_description_description" ON "Assertion_description" (description);
 
 CREATE TABLE "Assertion_modifiedTime" (
 	"Assertion_id" TEXT,
@@ -13017,8 +13070,8 @@ CREATE TABLE "Assertion_objectMarking" (
 	FOREIGN KEY("Assertion_id") REFERENCES "Assertion" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Assertion_objectMarking_objectMarking_id" ON "Assertion_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Assertion_objectMarking_Assertion_id" ON "Assertion_objectMarking" ("Assertion_id");
+CREATE INDEX "ix_Assertion_objectMarking_objectMarking_id" ON "Assertion_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Assertion_tag" (
 	"Assertion_id" TEXT,
@@ -13035,8 +13088,8 @@ CREATE TABLE "AttributedName_description" (
 	PRIMARY KEY ("AttributedName_id", description),
 	FOREIGN KEY("AttributedName_id") REFERENCES "AttributedName" (id)
 );
-CREATE INDEX "ix_AttributedName_description_description" ON "AttributedName_description" (description);
 CREATE INDEX "ix_AttributedName_description_AttributedName_id" ON "AttributedName_description" ("AttributedName_id");
+CREATE INDEX "ix_AttributedName_description_description" ON "AttributedName_description" (description);
 
 CREATE TABLE "AttributedName_modifiedTime" (
 	"AttributedName_id" TEXT,
@@ -13054,8 +13107,8 @@ CREATE TABLE "AttributedName_objectMarking" (
 	FOREIGN KEY("AttributedName_id") REFERENCES "AttributedName" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AttributedName_objectMarking_objectMarking_id" ON "AttributedName_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_AttributedName_objectMarking_AttributedName_id" ON "AttributedName_objectMarking" ("AttributedName_id");
+CREATE INDEX "ix_AttributedName_objectMarking_objectMarking_id" ON "AttributedName_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "AttributedName_tag" (
 	"AttributedName_id" TEXT,
@@ -13091,8 +13144,8 @@ CREATE TABLE "Bundle_modifiedTime" (
 	PRIMARY KEY ("Bundle_id", "modifiedTime"),
 	FOREIGN KEY("Bundle_id") REFERENCES "Bundle" (id)
 );
-CREATE INDEX "ix_Bundle_modifiedTime_modifiedTime" ON "Bundle_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Bundle_modifiedTime_Bundle_id" ON "Bundle_modifiedTime" ("Bundle_id");
+CREATE INDEX "ix_Bundle_modifiedTime_modifiedTime" ON "Bundle_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Bundle_objectMarking" (
 	"Bundle_id" TEXT,
@@ -13101,8 +13154,8 @@ CREATE TABLE "Bundle_objectMarking" (
 	FOREIGN KEY("Bundle_id") REFERENCES "Bundle" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Bundle_objectMarking_Bundle_id" ON "Bundle_objectMarking" ("Bundle_id");
 CREATE INDEX "ix_Bundle_objectMarking_objectMarking_id" ON "Bundle_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Bundle_objectMarking_Bundle_id" ON "Bundle_objectMarking" ("Bundle_id");
 
 CREATE TABLE "Bundle_tag" (
 	"Bundle_id" TEXT,
@@ -13128,8 +13181,8 @@ CREATE TABLE "Compilation_modifiedTime" (
 	PRIMARY KEY ("Compilation_id", "modifiedTime"),
 	FOREIGN KEY("Compilation_id") REFERENCES "Compilation" (id)
 );
-CREATE INDEX "ix_Compilation_modifiedTime_modifiedTime" ON "Compilation_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Compilation_modifiedTime_Compilation_id" ON "Compilation_modifiedTime" ("Compilation_id");
+CREATE INDEX "ix_Compilation_modifiedTime_modifiedTime" ON "Compilation_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Compilation_objectMarking" (
 	"Compilation_id" TEXT,
@@ -13138,8 +13191,8 @@ CREATE TABLE "Compilation_objectMarking" (
 	FOREIGN KEY("Compilation_id") REFERENCES "Compilation" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Compilation_objectMarking_objectMarking_id" ON "Compilation_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Compilation_objectMarking_Compilation_id" ON "Compilation_objectMarking" ("Compilation_id");
+CREATE INDEX "ix_Compilation_objectMarking_objectMarking_id" ON "Compilation_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Compilation_tag" (
 	"Compilation_id" TEXT,
@@ -13175,8 +13228,8 @@ CREATE TABLE "ContextualCompilation_modifiedTime" (
 	PRIMARY KEY ("ContextualCompilation_id", "modifiedTime"),
 	FOREIGN KEY("ContextualCompilation_id") REFERENCES "ContextualCompilation" (id)
 );
-CREATE INDEX "ix_ContextualCompilation_modifiedTime_ContextualCompilation_id" ON "ContextualCompilation_modifiedTime" ("ContextualCompilation_id");
 CREATE INDEX "ix_ContextualCompilation_modifiedTime_modifiedTime" ON "ContextualCompilation_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ContextualCompilation_modifiedTime_ContextualCompilation_id" ON "ContextualCompilation_modifiedTime" ("ContextualCompilation_id");
 
 CREATE TABLE "ContextualCompilation_objectMarking" (
 	"ContextualCompilation_id" TEXT,
@@ -13203,8 +13256,8 @@ CREATE TABLE "ControlledVocabulary_description" (
 	PRIMARY KEY ("ControlledVocabulary_id", description),
 	FOREIGN KEY("ControlledVocabulary_id") REFERENCES "ControlledVocabulary" (id)
 );
-CREATE INDEX "ix_ControlledVocabulary_description_description" ON "ControlledVocabulary_description" (description);
 CREATE INDEX "ix_ControlledVocabulary_description_ControlledVocabulary_id" ON "ControlledVocabulary_description" ("ControlledVocabulary_id");
+CREATE INDEX "ix_ControlledVocabulary_description_description" ON "ControlledVocabulary_description" (description);
 
 CREATE TABLE "ControlledVocabulary_modifiedTime" (
 	"ControlledVocabulary_id" TEXT,
@@ -13212,8 +13265,8 @@ CREATE TABLE "ControlledVocabulary_modifiedTime" (
 	PRIMARY KEY ("ControlledVocabulary_id", "modifiedTime"),
 	FOREIGN KEY("ControlledVocabulary_id") REFERENCES "ControlledVocabulary" (id)
 );
-CREATE INDEX "ix_ControlledVocabulary_modifiedTime_ControlledVocabulary_id" ON "ControlledVocabulary_modifiedTime" ("ControlledVocabulary_id");
 CREATE INDEX "ix_ControlledVocabulary_modifiedTime_modifiedTime" ON "ControlledVocabulary_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ControlledVocabulary_modifiedTime_ControlledVocabulary_id" ON "ControlledVocabulary_modifiedTime" ("ControlledVocabulary_id");
 
 CREATE TABLE "ControlledVocabulary_objectMarking" (
 	"ControlledVocabulary_id" TEXT,
@@ -13269,8 +13322,8 @@ CREATE TABLE "EnclosingCompilation_objectMarking" (
 	FOREIGN KEY("EnclosingCompilation_id") REFERENCES "EnclosingCompilation" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EnclosingCompilation_objectMarking_EnclosingCompilation_id" ON "EnclosingCompilation_objectMarking" ("EnclosingCompilation_id");
 CREATE INDEX "ix_EnclosingCompilation_objectMarking_objectMarking_id" ON "EnclosingCompilation_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_EnclosingCompilation_objectMarking_EnclosingCompilation_id" ON "EnclosingCompilation_objectMarking" ("EnclosingCompilation_id");
 
 CREATE TABLE "EnclosingCompilation_tag" (
 	"EnclosingCompilation_id" TEXT,
@@ -13287,8 +13340,8 @@ CREATE TABLE "Event_endTime" (
 	PRIMARY KEY ("Event_id", "endTime"),
 	FOREIGN KEY("Event_id") REFERENCES "Event" (id)
 );
-CREATE INDEX "ix_Event_endTime_Event_id" ON "Event_endTime" ("Event_id");
 CREATE INDEX "ix_Event_endTime_endTime" ON "Event_endTime" ("endTime");
+CREATE INDEX "ix_Event_endTime_Event_id" ON "Event_endTime" ("Event_id");
 
 CREATE TABLE "Event_eventContext" (
 	"Event_id" TEXT,
@@ -13306,8 +13359,8 @@ CREATE TABLE "Event_eventType" (
 	PRIMARY KEY ("Event_id", "eventType"),
 	FOREIGN KEY("Event_id") REFERENCES "Event" (id)
 );
-CREATE INDEX "ix_Event_eventType_Event_id" ON "Event_eventType" ("Event_id");
 CREATE INDEX "ix_Event_eventType_eventType" ON "Event_eventType" ("eventType");
+CREATE INDEX "ix_Event_eventType_Event_id" ON "Event_eventType" ("Event_id");
 
 CREATE TABLE "Event_startTime" (
 	"Event_id" TEXT,
@@ -13324,8 +13377,8 @@ CREATE TABLE "Event_description" (
 	PRIMARY KEY ("Event_id", description),
 	FOREIGN KEY("Event_id") REFERENCES "Event" (id)
 );
-CREATE INDEX "ix_Event_description_Event_id" ON "Event_description" ("Event_id");
 CREATE INDEX "ix_Event_description_description" ON "Event_description" (description);
+CREATE INDEX "ix_Event_description_Event_id" ON "Event_description" ("Event_id");
 
 CREATE TABLE "Event_modifiedTime" (
 	"Event_id" TEXT,
@@ -13343,8 +13396,8 @@ CREATE TABLE "Event_objectMarking" (
 	FOREIGN KEY("Event_id") REFERENCES "Event" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Event_objectMarking_Event_id" ON "Event_objectMarking" ("Event_id");
 CREATE INDEX "ix_Event_objectMarking_objectMarking_id" ON "Event_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Event_objectMarking_Event_id" ON "Event_objectMarking" ("Event_id");
 
 CREATE TABLE "Event_tag" (
 	"Event_id" TEXT,
@@ -13361,8 +13414,8 @@ CREATE TABLE "Grouping_context" (
 	PRIMARY KEY ("Grouping_id", context),
 	FOREIGN KEY("Grouping_id") REFERENCES "Grouping" (id)
 );
-CREATE INDEX "ix_Grouping_context_Grouping_id" ON "Grouping_context" ("Grouping_id");
 CREATE INDEX "ix_Grouping_context_context" ON "Grouping_context" (context);
+CREATE INDEX "ix_Grouping_context_Grouping_id" ON "Grouping_context" ("Grouping_id");
 
 CREATE TABLE "Grouping_object" (
 	"Grouping_id" TEXT,
@@ -13389,8 +13442,8 @@ CREATE TABLE "Grouping_modifiedTime" (
 	PRIMARY KEY ("Grouping_id", "modifiedTime"),
 	FOREIGN KEY("Grouping_id") REFERENCES "Grouping" (id)
 );
-CREATE INDEX "ix_Grouping_modifiedTime_modifiedTime" ON "Grouping_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Grouping_modifiedTime_Grouping_id" ON "Grouping_modifiedTime" ("Grouping_id");
+CREATE INDEX "ix_Grouping_modifiedTime_modifiedTime" ON "Grouping_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Grouping_objectMarking" (
 	"Grouping_id" TEXT,
@@ -13427,8 +13480,8 @@ CREATE TABLE "Item_description" (
 	PRIMARY KEY ("Item_id", description),
 	FOREIGN KEY("Item_id") REFERENCES "Item" (id)
 );
-CREATE INDEX "ix_Item_description_Item_id" ON "Item_description" ("Item_id");
 CREATE INDEX "ix_Item_description_description" ON "Item_description" (description);
+CREATE INDEX "ix_Item_description_Item_id" ON "Item_description" ("Item_id");
 
 CREATE TABLE "Item_modifiedTime" (
 	"Item_id" TEXT,
@@ -13436,8 +13489,8 @@ CREATE TABLE "Item_modifiedTime" (
 	PRIMARY KEY ("Item_id", "modifiedTime"),
 	FOREIGN KEY("Item_id") REFERENCES "Item" (id)
 );
-CREATE INDEX "ix_Item_modifiedTime_modifiedTime" ON "Item_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Item_modifiedTime_Item_id" ON "Item_modifiedTime" ("Item_id");
+CREATE INDEX "ix_Item_modifiedTime_modifiedTime" ON "Item_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Item_objectMarking" (
 	"Item_id" TEXT,
@@ -13464,8 +13517,8 @@ CREATE TABLE "MarkingDefinitionAbstraction_description" (
 	PRIMARY KEY ("MarkingDefinitionAbstraction_id", description),
 	FOREIGN KEY("MarkingDefinitionAbstraction_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MarkingDefinitionAbstraction_description_MarkingDefinitionAbstraction_id" ON "MarkingDefinitionAbstraction_description" ("MarkingDefinitionAbstraction_id");
 CREATE INDEX "ix_MarkingDefinitionAbstraction_description_description" ON "MarkingDefinitionAbstraction_description" (description);
+CREATE INDEX "ix_MarkingDefinitionAbstraction_description_MarkingDefinitionAbstraction_id" ON "MarkingDefinitionAbstraction_description" ("MarkingDefinitionAbstraction_id");
 
 CREATE TABLE "MarkingDefinitionAbstraction_modifiedTime" (
 	"MarkingDefinitionAbstraction_id" TEXT,
@@ -13473,8 +13526,8 @@ CREATE TABLE "MarkingDefinitionAbstraction_modifiedTime" (
 	PRIMARY KEY ("MarkingDefinitionAbstraction_id", "modifiedTime"),
 	FOREIGN KEY("MarkingDefinitionAbstraction_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MarkingDefinitionAbstraction_modifiedTime_modifiedTime" ON "MarkingDefinitionAbstraction_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_MarkingDefinitionAbstraction_modifiedTime_MarkingDefinitionAbstraction_id" ON "MarkingDefinitionAbstraction_modifiedTime" ("MarkingDefinitionAbstraction_id");
+CREATE INDEX "ix_MarkingDefinitionAbstraction_modifiedTime_modifiedTime" ON "MarkingDefinitionAbstraction_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "MarkingDefinitionAbstraction_objectMarking" (
 	"MarkingDefinitionAbstraction_id" TEXT,
@@ -13492,8 +13545,8 @@ CREATE TABLE "MarkingDefinitionAbstraction_tag" (
 	PRIMARY KEY ("MarkingDefinitionAbstraction_id", tag),
 	FOREIGN KEY("MarkingDefinitionAbstraction_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MarkingDefinitionAbstraction_tag_MarkingDefinitionAbstraction_id" ON "MarkingDefinitionAbstraction_tag" ("MarkingDefinitionAbstraction_id");
 CREATE INDEX "ix_MarkingDefinitionAbstraction_tag_tag" ON "MarkingDefinitionAbstraction_tag" (tag);
+CREATE INDEX "ix_MarkingDefinitionAbstraction_tag_MarkingDefinitionAbstraction_id" ON "MarkingDefinitionAbstraction_tag" ("MarkingDefinitionAbstraction_id");
 
 CREATE TABLE "ModusOperandi_description" (
 	"ModusOperandi_id" TEXT,
@@ -13501,8 +13554,8 @@ CREATE TABLE "ModusOperandi_description" (
 	PRIMARY KEY ("ModusOperandi_id", description),
 	FOREIGN KEY("ModusOperandi_id") REFERENCES "ModusOperandi" (id)
 );
-CREATE INDEX "ix_ModusOperandi_description_ModusOperandi_id" ON "ModusOperandi_description" ("ModusOperandi_id");
 CREATE INDEX "ix_ModusOperandi_description_description" ON "ModusOperandi_description" (description);
+CREATE INDEX "ix_ModusOperandi_description_ModusOperandi_id" ON "ModusOperandi_description" ("ModusOperandi_id");
 
 CREATE TABLE "ModusOperandi_modifiedTime" (
 	"ModusOperandi_id" TEXT,
@@ -13520,8 +13573,8 @@ CREATE TABLE "ModusOperandi_objectMarking" (
 	FOREIGN KEY("ModusOperandi_id") REFERENCES "ModusOperandi" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ModusOperandi_objectMarking_ModusOperandi_id" ON "ModusOperandi_objectMarking" ("ModusOperandi_id");
 CREATE INDEX "ix_ModusOperandi_objectMarking_objectMarking_id" ON "ModusOperandi_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ModusOperandi_objectMarking_ModusOperandi_id" ON "ModusOperandi_objectMarking" ("ModusOperandi_id");
 
 CREATE TABLE "ModusOperandi_tag" (
 	"ModusOperandi_id" TEXT,
@@ -13538,8 +13591,8 @@ CREATE TABLE "UcoObject_description" (
 	PRIMARY KEY ("UcoObject_id", description),
 	FOREIGN KEY("UcoObject_id") REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_UcoObject_description_description" ON "UcoObject_description" (description);
 CREATE INDEX "ix_UcoObject_description_UcoObject_id" ON "UcoObject_description" ("UcoObject_id");
+CREATE INDEX "ix_UcoObject_description_description" ON "UcoObject_description" (description);
 
 CREATE TABLE "UcoObject_modifiedTime" (
 	"UcoObject_id" TEXT,
@@ -13547,8 +13600,8 @@ CREATE TABLE "UcoObject_modifiedTime" (
 	PRIMARY KEY ("UcoObject_id", "modifiedTime"),
 	FOREIGN KEY("UcoObject_id") REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_UcoObject_modifiedTime_UcoObject_id" ON "UcoObject_modifiedTime" ("UcoObject_id");
 CREATE INDEX "ix_UcoObject_modifiedTime_modifiedTime" ON "UcoObject_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_UcoObject_modifiedTime_UcoObject_id" ON "UcoObject_modifiedTime" ("UcoObject_id");
 
 CREATE TABLE "UcoObject_objectMarking" (
 	"UcoObject_id" TEXT,
@@ -13575,8 +13628,8 @@ CREATE TABLE "Configuration_usageContextAssumptions" (
 	PRIMARY KEY ("Configuration_id", "usageContextAssumptions"),
 	FOREIGN KEY("Configuration_id") REFERENCES "Configuration" (id)
 );
-CREATE INDEX "ix_Configuration_usageContextAssumptions_usageContextAssumptions" ON "Configuration_usageContextAssumptions" ("usageContextAssumptions");
 CREATE INDEX "ix_Configuration_usageContextAssumptions_Configuration_id" ON "Configuration_usageContextAssumptions" ("Configuration_id");
+CREATE INDEX "ix_Configuration_usageContextAssumptions_usageContextAssumptions" ON "Configuration_usageContextAssumptions" ("usageContextAssumptions");
 
 CREATE TABLE "Configuration_description" (
 	"Configuration_id" TEXT,
@@ -13584,8 +13637,8 @@ CREATE TABLE "Configuration_description" (
 	PRIMARY KEY ("Configuration_id", description),
 	FOREIGN KEY("Configuration_id") REFERENCES "Configuration" (id)
 );
-CREATE INDEX "ix_Configuration_description_Configuration_id" ON "Configuration_description" ("Configuration_id");
 CREATE INDEX "ix_Configuration_description_description" ON "Configuration_description" (description);
+CREATE INDEX "ix_Configuration_description_Configuration_id" ON "Configuration_description" ("Configuration_id");
 
 CREATE TABLE "Configuration_modifiedTime" (
 	"Configuration_id" TEXT,
@@ -13603,8 +13656,8 @@ CREATE TABLE "Configuration_objectMarking" (
 	FOREIGN KEY("Configuration_id") REFERENCES "Configuration" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Configuration_objectMarking_Configuration_id" ON "Configuration_objectMarking" ("Configuration_id");
 CREATE INDEX "ix_Configuration_objectMarking_objectMarking_id" ON "Configuration_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Configuration_objectMarking_Configuration_id" ON "Configuration_objectMarking" ("Configuration_id");
 
 CREATE TABLE "Configuration_tag" (
 	"Configuration_id" TEXT,
@@ -13630,8 +13683,8 @@ CREATE TABLE "Location_modifiedTime" (
 	PRIMARY KEY ("Location_id", "modifiedTime"),
 	FOREIGN KEY("Location_id") REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_Location_modifiedTime_modifiedTime" ON "Location_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Location_modifiedTime_Location_id" ON "Location_modifiedTime" ("Location_id");
+CREATE INDEX "ix_Location_modifiedTime_modifiedTime" ON "Location_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Location_objectMarking" (
 	"Location_id" TEXT,
@@ -13640,8 +13693,8 @@ CREATE TABLE "Location_objectMarking" (
 	FOREIGN KEY("Location_id") REFERENCES "Location" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Location_objectMarking_objectMarking_id" ON "Location_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Location_objectMarking_Location_id" ON "Location_objectMarking" ("Location_id");
+CREATE INDEX "ix_Location_objectMarking_objectMarking_id" ON "Location_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Location_tag" (
 	"Location_id" TEXT,
@@ -13667,8 +13720,8 @@ CREATE TABLE "Identity_modifiedTime" (
 	PRIMARY KEY ("Identity_id", "modifiedTime"),
 	FOREIGN KEY("Identity_id") REFERENCES "Identity" (id)
 );
-CREATE INDEX "ix_Identity_modifiedTime_modifiedTime" ON "Identity_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Identity_modifiedTime_Identity_id" ON "Identity_modifiedTime" ("Identity_id");
+CREATE INDEX "ix_Identity_modifiedTime_modifiedTime" ON "Identity_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Identity_objectMarking" (
 	"Identity_id" TEXT,
@@ -13677,8 +13730,8 @@ CREATE TABLE "Identity_objectMarking" (
 	FOREIGN KEY("Identity_id") REFERENCES "Identity" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Identity_objectMarking_objectMarking_id" ON "Identity_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Identity_objectMarking_Identity_id" ON "Identity_objectMarking" ("Identity_id");
+CREATE INDEX "ix_Identity_objectMarking_objectMarking_id" ON "Identity_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Identity_tag" (
 	"Identity_id" TEXT,
@@ -13704,8 +13757,8 @@ CREATE TABLE "Organization_modifiedTime" (
 	PRIMARY KEY ("Organization_id", "modifiedTime"),
 	FOREIGN KEY("Organization_id") REFERENCES "Organization" (id)
 );
-CREATE INDEX "ix_Organization_modifiedTime_modifiedTime" ON "Organization_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Organization_modifiedTime_Organization_id" ON "Organization_modifiedTime" ("Organization_id");
+CREATE INDEX "ix_Organization_modifiedTime_modifiedTime" ON "Organization_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Organization_objectMarking" (
 	"Organization_id" TEXT,
@@ -13714,8 +13767,8 @@ CREATE TABLE "Organization_objectMarking" (
 	FOREIGN KEY("Organization_id") REFERENCES "Organization" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Organization_objectMarking_objectMarking_id" ON "Organization_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Organization_objectMarking_Organization_id" ON "Organization_objectMarking" ("Organization_id");
+CREATE INDEX "ix_Organization_objectMarking_objectMarking_id" ON "Organization_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Organization_tag" (
 	"Organization_id" TEXT,
@@ -13732,8 +13785,8 @@ CREATE TABLE "Person_description" (
 	PRIMARY KEY ("Person_id", description),
 	FOREIGN KEY("Person_id") REFERENCES "Person" (id)
 );
-CREATE INDEX "ix_Person_description_Person_id" ON "Person_description" ("Person_id");
 CREATE INDEX "ix_Person_description_description" ON "Person_description" (description);
+CREATE INDEX "ix_Person_description_Person_id" ON "Person_description" ("Person_id");
 
 CREATE TABLE "Person_modifiedTime" (
 	"Person_id" TEXT,
@@ -13751,8 +13804,8 @@ CREATE TABLE "Person_objectMarking" (
 	FOREIGN KEY("Person_id") REFERENCES "Person" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Person_objectMarking_objectMarking_id" ON "Person_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Person_objectMarking_Person_id" ON "Person_objectMarking" ("Person_id");
+CREATE INDEX "ix_Person_objectMarking_objectMarking_id" ON "Person_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Person_tag" (
 	"Person_id" TEXT,
@@ -13779,8 +13832,8 @@ CREATE TABLE "MarkingDefinition_description" (
 	PRIMARY KEY ("MarkingDefinition_id", description),
 	FOREIGN KEY("MarkingDefinition_id") REFERENCES "MarkingDefinition" (id)
 );
-CREATE INDEX "ix_MarkingDefinition_description_description" ON "MarkingDefinition_description" (description);
 CREATE INDEX "ix_MarkingDefinition_description_MarkingDefinition_id" ON "MarkingDefinition_description" ("MarkingDefinition_id");
+CREATE INDEX "ix_MarkingDefinition_description_description" ON "MarkingDefinition_description" (description);
 
 CREATE TABLE "MarkingDefinition_modifiedTime" (
 	"MarkingDefinition_id" TEXT,
@@ -13798,8 +13851,8 @@ CREATE TABLE "MarkingDefinition_objectMarking" (
 	FOREIGN KEY("MarkingDefinition_id") REFERENCES "MarkingDefinition" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MarkingDefinition_objectMarking_MarkingDefinition_id" ON "MarkingDefinition_objectMarking" ("MarkingDefinition_id");
 CREATE INDEX "ix_MarkingDefinition_objectMarking_objectMarking_id" ON "MarkingDefinition_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_MarkingDefinition_objectMarking_MarkingDefinition_id" ON "MarkingDefinition_objectMarking" ("MarkingDefinition_id");
 
 CREATE TABLE "MarkingDefinition_tag" (
 	"MarkingDefinition_id" TEXT,
@@ -13816,8 +13869,8 @@ CREATE TABLE "LogicalPattern_description" (
 	PRIMARY KEY ("LogicalPattern_id", description),
 	FOREIGN KEY("LogicalPattern_id") REFERENCES "LogicalPattern" (id)
 );
-CREATE INDEX "ix_LogicalPattern_description_description" ON "LogicalPattern_description" (description);
 CREATE INDEX "ix_LogicalPattern_description_LogicalPattern_id" ON "LogicalPattern_description" ("LogicalPattern_id");
+CREATE INDEX "ix_LogicalPattern_description_description" ON "LogicalPattern_description" (description);
 
 CREATE TABLE "LogicalPattern_modifiedTime" (
 	"LogicalPattern_id" TEXT,
@@ -13825,8 +13878,8 @@ CREATE TABLE "LogicalPattern_modifiedTime" (
 	PRIMARY KEY ("LogicalPattern_id", "modifiedTime"),
 	FOREIGN KEY("LogicalPattern_id") REFERENCES "LogicalPattern" (id)
 );
-CREATE INDEX "ix_LogicalPattern_modifiedTime_LogicalPattern_id" ON "LogicalPattern_modifiedTime" ("LogicalPattern_id");
 CREATE INDEX "ix_LogicalPattern_modifiedTime_modifiedTime" ON "LogicalPattern_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_LogicalPattern_modifiedTime_LogicalPattern_id" ON "LogicalPattern_modifiedTime" ("LogicalPattern_id");
 
 CREATE TABLE "LogicalPattern_objectMarking" (
 	"LogicalPattern_id" TEXT,
@@ -13853,8 +13906,8 @@ CREATE TABLE "Pattern_description" (
 	PRIMARY KEY ("Pattern_id", description),
 	FOREIGN KEY("Pattern_id") REFERENCES "Pattern" (id)
 );
-CREATE INDEX "ix_Pattern_description_description" ON "Pattern_description" (description);
 CREATE INDEX "ix_Pattern_description_Pattern_id" ON "Pattern_description" ("Pattern_id");
+CREATE INDEX "ix_Pattern_description_description" ON "Pattern_description" (description);
 
 CREATE TABLE "Pattern_modifiedTime" (
 	"Pattern_id" TEXT,
@@ -13862,8 +13915,8 @@ CREATE TABLE "Pattern_modifiedTime" (
 	PRIMARY KEY ("Pattern_id", "modifiedTime"),
 	FOREIGN KEY("Pattern_id") REFERENCES "Pattern" (id)
 );
-CREATE INDEX "ix_Pattern_modifiedTime_Pattern_id" ON "Pattern_modifiedTime" ("Pattern_id");
 CREATE INDEX "ix_Pattern_modifiedTime_modifiedTime" ON "Pattern_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Pattern_modifiedTime_Pattern_id" ON "Pattern_modifiedTime" ("Pattern_id");
 
 CREATE TABLE "Pattern_objectMarking" (
 	"Pattern_id" TEXT,
@@ -13890,8 +13943,8 @@ CREATE TABLE "BenevolentRole_description" (
 	PRIMARY KEY ("BenevolentRole_id", description),
 	FOREIGN KEY("BenevolentRole_id") REFERENCES "BenevolentRole" (id)
 );
-CREATE INDEX "ix_BenevolentRole_description_description" ON "BenevolentRole_description" (description);
 CREATE INDEX "ix_BenevolentRole_description_BenevolentRole_id" ON "BenevolentRole_description" ("BenevolentRole_id");
+CREATE INDEX "ix_BenevolentRole_description_description" ON "BenevolentRole_description" (description);
 
 CREATE TABLE "BenevolentRole_modifiedTime" (
 	"BenevolentRole_id" TEXT,
@@ -13899,8 +13952,8 @@ CREATE TABLE "BenevolentRole_modifiedTime" (
 	PRIMARY KEY ("BenevolentRole_id", "modifiedTime"),
 	FOREIGN KEY("BenevolentRole_id") REFERENCES "BenevolentRole" (id)
 );
-CREATE INDEX "ix_BenevolentRole_modifiedTime_BenevolentRole_id" ON "BenevolentRole_modifiedTime" ("BenevolentRole_id");
 CREATE INDEX "ix_BenevolentRole_modifiedTime_modifiedTime" ON "BenevolentRole_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_BenevolentRole_modifiedTime_BenevolentRole_id" ON "BenevolentRole_modifiedTime" ("BenevolentRole_id");
 
 CREATE TABLE "BenevolentRole_objectMarking" (
 	"BenevolentRole_id" TEXT,
@@ -13927,8 +13980,8 @@ CREATE TABLE "MaliciousRole_description" (
 	PRIMARY KEY ("MaliciousRole_id", description),
 	FOREIGN KEY("MaliciousRole_id") REFERENCES "MaliciousRole" (id)
 );
-CREATE INDEX "ix_MaliciousRole_description_description" ON "MaliciousRole_description" (description);
 CREATE INDEX "ix_MaliciousRole_description_MaliciousRole_id" ON "MaliciousRole_description" ("MaliciousRole_id");
+CREATE INDEX "ix_MaliciousRole_description_description" ON "MaliciousRole_description" (description);
 
 CREATE TABLE "MaliciousRole_modifiedTime" (
 	"MaliciousRole_id" TEXT,
@@ -13936,8 +13989,8 @@ CREATE TABLE "MaliciousRole_modifiedTime" (
 	PRIMARY KEY ("MaliciousRole_id", "modifiedTime"),
 	FOREIGN KEY("MaliciousRole_id") REFERENCES "MaliciousRole" (id)
 );
-CREATE INDEX "ix_MaliciousRole_modifiedTime_MaliciousRole_id" ON "MaliciousRole_modifiedTime" ("MaliciousRole_id");
 CREATE INDEX "ix_MaliciousRole_modifiedTime_modifiedTime" ON "MaliciousRole_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_MaliciousRole_modifiedTime_MaliciousRole_id" ON "MaliciousRole_modifiedTime" ("MaliciousRole_id");
 
 CREATE TABLE "MaliciousRole_objectMarking" (
 	"MaliciousRole_id" TEXT,
@@ -13964,8 +14017,8 @@ CREATE TABLE "NeutralRole_description" (
 	PRIMARY KEY ("NeutralRole_id", description),
 	FOREIGN KEY("NeutralRole_id") REFERENCES "NeutralRole" (id)
 );
-CREATE INDEX "ix_NeutralRole_description_description" ON "NeutralRole_description" (description);
 CREATE INDEX "ix_NeutralRole_description_NeutralRole_id" ON "NeutralRole_description" ("NeutralRole_id");
+CREATE INDEX "ix_NeutralRole_description_description" ON "NeutralRole_description" (description);
 
 CREATE TABLE "NeutralRole_modifiedTime" (
 	"NeutralRole_id" TEXT,
@@ -13973,8 +14026,8 @@ CREATE TABLE "NeutralRole_modifiedTime" (
 	PRIMARY KEY ("NeutralRole_id", "modifiedTime"),
 	FOREIGN KEY("NeutralRole_id") REFERENCES "NeutralRole" (id)
 );
-CREATE INDEX "ix_NeutralRole_modifiedTime_NeutralRole_id" ON "NeutralRole_modifiedTime" ("NeutralRole_id");
 CREATE INDEX "ix_NeutralRole_modifiedTime_modifiedTime" ON "NeutralRole_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_NeutralRole_modifiedTime_NeutralRole_id" ON "NeutralRole_modifiedTime" ("NeutralRole_id");
 
 CREATE TABLE "NeutralRole_objectMarking" (
 	"NeutralRole_id" TEXT,
@@ -14001,8 +14054,8 @@ CREATE TABLE "Role_description" (
 	PRIMARY KEY ("Role_id", description),
 	FOREIGN KEY("Role_id") REFERENCES "Role" (id)
 );
-CREATE INDEX "ix_Role_description_description" ON "Role_description" (description);
 CREATE INDEX "ix_Role_description_Role_id" ON "Role_description" ("Role_id");
+CREATE INDEX "ix_Role_description_description" ON "Role_description" (description);
 
 CREATE TABLE "Role_modifiedTime" (
 	"Role_id" TEXT,
@@ -14010,8 +14063,8 @@ CREATE TABLE "Role_modifiedTime" (
 	PRIMARY KEY ("Role_id", "modifiedTime"),
 	FOREIGN KEY("Role_id") REFERENCES "Role" (id)
 );
-CREATE INDEX "ix_Role_modifiedTime_Role_id" ON "Role_modifiedTime" ("Role_id");
 CREATE INDEX "ix_Role_modifiedTime_modifiedTime" ON "Role_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Role_modifiedTime_Role_id" ON "Role_modifiedTime" ("Role_id");
 
 CREATE TABLE "Role_objectMarking" (
 	"Role_id" TEXT,
@@ -14047,8 +14100,8 @@ CREATE TABLE "Victim_modifiedTime" (
 	PRIMARY KEY ("Victim_id", "modifiedTime"),
 	FOREIGN KEY("Victim_id") REFERENCES "Victim" (id)
 );
-CREATE INDEX "ix_Victim_modifiedTime_modifiedTime" ON "Victim_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Victim_modifiedTime_Victim_id" ON "Victim_modifiedTime" ("Victim_id");
+CREATE INDEX "ix_Victim_modifiedTime_modifiedTime" ON "Victim_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Victim_objectMarking" (
 	"Victim_id" TEXT,
@@ -14057,8 +14110,8 @@ CREATE TABLE "Victim_objectMarking" (
 	FOREIGN KEY("Victim_id") REFERENCES "Victim" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Victim_objectMarking_objectMarking_id" ON "Victim_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Victim_objectMarking_Victim_id" ON "Victim_objectMarking" ("Victim_id");
+CREATE INDEX "ix_Victim_objectMarking_objectMarking_id" ON "Victim_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Victim_tag" (
 	"Victim_id" TEXT,
@@ -14084,8 +14137,8 @@ CREATE TABLE "VictimTargeting_modifiedTime" (
 	PRIMARY KEY ("VictimTargeting_id", "modifiedTime"),
 	FOREIGN KEY("VictimTargeting_id") REFERENCES "VictimTargeting" (id)
 );
-CREATE INDEX "ix_VictimTargeting_modifiedTime_modifiedTime" ON "VictimTargeting_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_VictimTargeting_modifiedTime_VictimTargeting_id" ON "VictimTargeting_modifiedTime" ("VictimTargeting_id");
+CREATE INDEX "ix_VictimTargeting_modifiedTime_modifiedTime" ON "VictimTargeting_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "VictimTargeting_objectMarking" (
 	"VictimTargeting_id" TEXT,
@@ -14094,8 +14147,8 @@ CREATE TABLE "VictimTargeting_objectMarking" (
 	FOREIGN KEY("VictimTargeting_id") REFERENCES "VictimTargeting" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_VictimTargeting_objectMarking_objectMarking_id" ON "VictimTargeting_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_VictimTargeting_objectMarking_VictimTargeting_id" ON "VictimTargeting_objectMarking" ("VictimTargeting_id");
+CREATE INDEX "ix_VictimTargeting_objectMarking_objectMarking_id" ON "VictimTargeting_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "VictimTargeting_tag" (
 	"VictimTargeting_id" TEXT,
@@ -14121,8 +14174,8 @@ CREATE TABLE "API_description" (
 	PRIMARY KEY ("API_id", description),
 	FOREIGN KEY("API_id") REFERENCES "API" (id)
 );
-CREATE INDEX "ix_API_description_API_id" ON "API_description" ("API_id");
 CREATE INDEX "ix_API_description_description" ON "API_description" (description);
+CREATE INDEX "ix_API_description_API_id" ON "API_description" ("API_id");
 
 CREATE TABLE "API_modifiedTime" (
 	"API_id" TEXT,
@@ -14158,8 +14211,8 @@ CREATE TABLE "ARPCache_description" (
 	PRIMARY KEY ("ARPCache_id", description),
 	FOREIGN KEY("ARPCache_id") REFERENCES "ARPCache" (id)
 );
-CREATE INDEX "ix_ARPCache_description_ARPCache_id" ON "ARPCache_description" ("ARPCache_id");
 CREATE INDEX "ix_ARPCache_description_description" ON "ARPCache_description" (description);
+CREATE INDEX "ix_ARPCache_description_ARPCache_id" ON "ARPCache_description" ("ARPCache_id");
 
 CREATE TABLE "ARPCache_modifiedTime" (
 	"ARPCache_id" TEXT,
@@ -14167,8 +14220,8 @@ CREATE TABLE "ARPCache_modifiedTime" (
 	PRIMARY KEY ("ARPCache_id", "modifiedTime"),
 	FOREIGN KEY("ARPCache_id") REFERENCES "ARPCache" (id)
 );
-CREATE INDEX "ix_ARPCache_modifiedTime_modifiedTime" ON "ARPCache_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ARPCache_modifiedTime_ARPCache_id" ON "ARPCache_modifiedTime" ("ARPCache_id");
+CREATE INDEX "ix_ARPCache_modifiedTime_modifiedTime" ON "ARPCache_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ARPCache_objectMarking" (
 	"ARPCache_id" TEXT,
@@ -14195,8 +14248,8 @@ CREATE TABLE "ARPCacheEntry_description" (
 	PRIMARY KEY ("ARPCacheEntry_id", description),
 	FOREIGN KEY("ARPCacheEntry_id") REFERENCES "ARPCacheEntry" (id)
 );
-CREATE INDEX "ix_ARPCacheEntry_description_ARPCacheEntry_id" ON "ARPCacheEntry_description" ("ARPCacheEntry_id");
 CREATE INDEX "ix_ARPCacheEntry_description_description" ON "ARPCacheEntry_description" (description);
+CREATE INDEX "ix_ARPCacheEntry_description_ARPCacheEntry_id" ON "ARPCacheEntry_description" ("ARPCacheEntry_id");
 
 CREATE TABLE "ARPCacheEntry_modifiedTime" (
 	"ARPCacheEntry_id" TEXT,
@@ -14204,8 +14257,8 @@ CREATE TABLE "ARPCacheEntry_modifiedTime" (
 	PRIMARY KEY ("ARPCacheEntry_id", "modifiedTime"),
 	FOREIGN KEY("ARPCacheEntry_id") REFERENCES "ARPCacheEntry" (id)
 );
-CREATE INDEX "ix_ARPCacheEntry_modifiedTime_modifiedTime" ON "ARPCacheEntry_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ARPCacheEntry_modifiedTime_ARPCacheEntry_id" ON "ARPCacheEntry_modifiedTime" ("ARPCacheEntry_id");
+CREATE INDEX "ix_ARPCacheEntry_modifiedTime_modifiedTime" ON "ARPCacheEntry_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ARPCacheEntry_objectMarking" (
 	"ARPCacheEntry_id" TEXT,
@@ -14223,8 +14276,8 @@ CREATE TABLE "ARPCacheEntry_tag" (
 	PRIMARY KEY ("ARPCacheEntry_id", tag),
 	FOREIGN KEY("ARPCacheEntry_id") REFERENCES "ARPCacheEntry" (id)
 );
-CREATE INDEX "ix_ARPCacheEntry_tag_ARPCacheEntry_id" ON "ARPCacheEntry_tag" ("ARPCacheEntry_id");
 CREATE INDEX "ix_ARPCacheEntry_tag_tag" ON "ARPCacheEntry_tag" (tag);
+CREATE INDEX "ix_ARPCacheEntry_tag_ARPCacheEntry_id" ON "ARPCacheEntry_tag" ("ARPCacheEntry_id");
 
 CREATE TABLE "Account_description" (
 	"Account_id" TEXT,
@@ -14232,8 +14285,8 @@ CREATE TABLE "Account_description" (
 	PRIMARY KEY ("Account_id", description),
 	FOREIGN KEY("Account_id") REFERENCES "Account" (id)
 );
-CREATE INDEX "ix_Account_description_Account_id" ON "Account_description" ("Account_id");
 CREATE INDEX "ix_Account_description_description" ON "Account_description" (description);
+CREATE INDEX "ix_Account_description_Account_id" ON "Account_description" ("Account_id");
 
 CREATE TABLE "Account_modifiedTime" (
 	"Account_id" TEXT,
@@ -14251,8 +14304,8 @@ CREATE TABLE "Account_objectMarking" (
 	FOREIGN KEY("Account_id") REFERENCES "Account" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Account_objectMarking_Account_id" ON "Account_objectMarking" ("Account_id");
 CREATE INDEX "ix_Account_objectMarking_objectMarking_id" ON "Account_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Account_objectMarking_Account_id" ON "Account_objectMarking" ("Account_id");
 
 CREATE TABLE "Account_tag" (
 	"Account_id" TEXT,
@@ -14269,8 +14322,8 @@ CREATE TABLE "Adaptor_description" (
 	PRIMARY KEY ("Adaptor_id", description),
 	FOREIGN KEY("Adaptor_id") REFERENCES "Adaptor" (id)
 );
-CREATE INDEX "ix_Adaptor_description_Adaptor_id" ON "Adaptor_description" ("Adaptor_id");
 CREATE INDEX "ix_Adaptor_description_description" ON "Adaptor_description" (description);
+CREATE INDEX "ix_Adaptor_description_Adaptor_id" ON "Adaptor_description" ("Adaptor_id");
 
 CREATE TABLE "Adaptor_modifiedTime" (
 	"Adaptor_id" TEXT,
@@ -14288,8 +14341,8 @@ CREATE TABLE "Adaptor_objectMarking" (
 	FOREIGN KEY("Adaptor_id") REFERENCES "Adaptor" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Adaptor_objectMarking_Adaptor_id" ON "Adaptor_objectMarking" ("Adaptor_id");
 CREATE INDEX "ix_Adaptor_objectMarking_objectMarking_id" ON "Adaptor_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Adaptor_objectMarking_Adaptor_id" ON "Adaptor_objectMarking" ("Adaptor_id");
 
 CREATE TABLE "Adaptor_tag" (
 	"Adaptor_id" TEXT,
@@ -14306,8 +14359,8 @@ CREATE TABLE "Address_description" (
 	PRIMARY KEY ("Address_id", description),
 	FOREIGN KEY("Address_id") REFERENCES "Address" (id)
 );
-CREATE INDEX "ix_Address_description_Address_id" ON "Address_description" ("Address_id");
 CREATE INDEX "ix_Address_description_description" ON "Address_description" (description);
+CREATE INDEX "ix_Address_description_Address_id" ON "Address_description" ("Address_id");
 
 CREATE TABLE "Address_modifiedTime" (
 	"Address_id" TEXT,
@@ -14325,8 +14378,8 @@ CREATE TABLE "Address_objectMarking" (
 	FOREIGN KEY("Address_id") REFERENCES "Address" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Address_objectMarking_Address_id" ON "Address_objectMarking" ("Address_id");
 CREATE INDEX "ix_Address_objectMarking_objectMarking_id" ON "Address_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Address_objectMarking_Address_id" ON "Address_objectMarking" ("Address_id");
 
 CREATE TABLE "Address_tag" (
 	"Address_id" TEXT,
@@ -14343,8 +14396,8 @@ CREATE TABLE "AlternateDataStream_description" (
 	PRIMARY KEY ("AlternateDataStream_id", description),
 	FOREIGN KEY("AlternateDataStream_id") REFERENCES "AlternateDataStream" (id)
 );
-CREATE INDEX "ix_AlternateDataStream_description_AlternateDataStream_id" ON "AlternateDataStream_description" ("AlternateDataStream_id");
 CREATE INDEX "ix_AlternateDataStream_description_description" ON "AlternateDataStream_description" (description);
+CREATE INDEX "ix_AlternateDataStream_description_AlternateDataStream_id" ON "AlternateDataStream_description" ("AlternateDataStream_id");
 
 CREATE TABLE "AlternateDataStream_modifiedTime" (
 	"AlternateDataStream_id" TEXT,
@@ -14362,8 +14415,8 @@ CREATE TABLE "AlternateDataStream_objectMarking" (
 	FOREIGN KEY("AlternateDataStream_id") REFERENCES "AlternateDataStream" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AlternateDataStream_objectMarking_AlternateDataStream_id" ON "AlternateDataStream_objectMarking" ("AlternateDataStream_id");
 CREATE INDEX "ix_AlternateDataStream_objectMarking_objectMarking_id" ON "AlternateDataStream_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_AlternateDataStream_objectMarking_AlternateDataStream_id" ON "AlternateDataStream_objectMarking" ("AlternateDataStream_id");
 
 CREATE TABLE "AlternateDataStream_tag" (
 	"AlternateDataStream_id" TEXT,
@@ -14380,8 +14433,8 @@ CREATE TABLE "AndroidDevice_description" (
 	PRIMARY KEY ("AndroidDevice_id", description),
 	FOREIGN KEY("AndroidDevice_id") REFERENCES "AndroidDevice" (id)
 );
-CREATE INDEX "ix_AndroidDevice_description_AndroidDevice_id" ON "AndroidDevice_description" ("AndroidDevice_id");
 CREATE INDEX "ix_AndroidDevice_description_description" ON "AndroidDevice_description" (description);
+CREATE INDEX "ix_AndroidDevice_description_AndroidDevice_id" ON "AndroidDevice_description" ("AndroidDevice_id");
 
 CREATE TABLE "AndroidDevice_modifiedTime" (
 	"AndroidDevice_id" TEXT,
@@ -14399,8 +14452,8 @@ CREATE TABLE "AndroidDevice_objectMarking" (
 	FOREIGN KEY("AndroidDevice_id") REFERENCES "AndroidDevice" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AndroidDevice_objectMarking_AndroidDevice_id" ON "AndroidDevice_objectMarking" ("AndroidDevice_id");
 CREATE INDEX "ix_AndroidDevice_objectMarking_objectMarking_id" ON "AndroidDevice_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_AndroidDevice_objectMarking_AndroidDevice_id" ON "AndroidDevice_objectMarking" ("AndroidDevice_id");
 
 CREATE TABLE "AndroidDevice_tag" (
 	"AndroidDevice_id" TEXT,
@@ -14417,8 +14470,8 @@ CREATE TABLE "AndroidPhone_description" (
 	PRIMARY KEY ("AndroidPhone_id", description),
 	FOREIGN KEY("AndroidPhone_id") REFERENCES "AndroidPhone" (id)
 );
-CREATE INDEX "ix_AndroidPhone_description_AndroidPhone_id" ON "AndroidPhone_description" ("AndroidPhone_id");
 CREATE INDEX "ix_AndroidPhone_description_description" ON "AndroidPhone_description" (description);
+CREATE INDEX "ix_AndroidPhone_description_AndroidPhone_id" ON "AndroidPhone_description" ("AndroidPhone_id");
 
 CREATE TABLE "AndroidPhone_modifiedTime" (
 	"AndroidPhone_id" TEXT,
@@ -14436,8 +14489,8 @@ CREATE TABLE "AndroidPhone_objectMarking" (
 	FOREIGN KEY("AndroidPhone_id") REFERENCES "AndroidPhone" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AndroidPhone_objectMarking_AndroidPhone_id" ON "AndroidPhone_objectMarking" ("AndroidPhone_id");
 CREATE INDEX "ix_AndroidPhone_objectMarking_objectMarking_id" ON "AndroidPhone_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_AndroidPhone_objectMarking_AndroidPhone_id" ON "AndroidPhone_objectMarking" ("AndroidPhone_id");
 
 CREATE TABLE "AndroidPhone_tag" (
 	"AndroidPhone_id" TEXT,
@@ -14454,8 +14507,8 @@ CREATE TABLE "AppleDevice_description" (
 	PRIMARY KEY ("AppleDevice_id", description),
 	FOREIGN KEY("AppleDevice_id") REFERENCES "AppleDevice" (id)
 );
-CREATE INDEX "ix_AppleDevice_description_AppleDevice_id" ON "AppleDevice_description" ("AppleDevice_id");
 CREATE INDEX "ix_AppleDevice_description_description" ON "AppleDevice_description" (description);
+CREATE INDEX "ix_AppleDevice_description_AppleDevice_id" ON "AppleDevice_description" ("AppleDevice_id");
 
 CREATE TABLE "AppleDevice_modifiedTime" (
 	"AppleDevice_id" TEXT,
@@ -14473,8 +14526,8 @@ CREATE TABLE "AppleDevice_objectMarking" (
 	FOREIGN KEY("AppleDevice_id") REFERENCES "AppleDevice" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AppleDevice_objectMarking_AppleDevice_id" ON "AppleDevice_objectMarking" ("AppleDevice_id");
 CREATE INDEX "ix_AppleDevice_objectMarking_objectMarking_id" ON "AppleDevice_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_AppleDevice_objectMarking_AppleDevice_id" ON "AppleDevice_objectMarking" ("AppleDevice_id");
 
 CREATE TABLE "AppleDevice_tag" (
 	"AppleDevice_id" TEXT,
@@ -14491,8 +14544,8 @@ CREATE TABLE "Appliance_description" (
 	PRIMARY KEY ("Appliance_id", description),
 	FOREIGN KEY("Appliance_id") REFERENCES "Appliance" (id)
 );
-CREATE INDEX "ix_Appliance_description_Appliance_id" ON "Appliance_description" ("Appliance_id");
 CREATE INDEX "ix_Appliance_description_description" ON "Appliance_description" (description);
+CREATE INDEX "ix_Appliance_description_Appliance_id" ON "Appliance_description" ("Appliance_id");
 
 CREATE TABLE "Appliance_modifiedTime" (
 	"Appliance_id" TEXT,
@@ -14510,8 +14563,8 @@ CREATE TABLE "Appliance_objectMarking" (
 	FOREIGN KEY("Appliance_id") REFERENCES "Appliance" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Appliance_objectMarking_Appliance_id" ON "Appliance_objectMarking" ("Appliance_id");
 CREATE INDEX "ix_Appliance_objectMarking_objectMarking_id" ON "Appliance_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Appliance_objectMarking_Appliance_id" ON "Appliance_objectMarking" ("Appliance_id");
 
 CREATE TABLE "Appliance_tag" (
 	"Appliance_id" TEXT,
@@ -14528,8 +14581,8 @@ CREATE TABLE "Application_description" (
 	PRIMARY KEY ("Application_id", description),
 	FOREIGN KEY("Application_id") REFERENCES "Application" (id)
 );
-CREATE INDEX "ix_Application_description_Application_id" ON "Application_description" ("Application_id");
 CREATE INDEX "ix_Application_description_description" ON "Application_description" (description);
+CREATE INDEX "ix_Application_description_Application_id" ON "Application_description" ("Application_id");
 
 CREATE TABLE "Application_modifiedTime" (
 	"Application_id" TEXT,
@@ -14547,8 +14600,8 @@ CREATE TABLE "Application_objectMarking" (
 	FOREIGN KEY("Application_id") REFERENCES "Application" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Application_objectMarking_Application_id" ON "Application_objectMarking" ("Application_id");
 CREATE INDEX "ix_Application_objectMarking_objectMarking_id" ON "Application_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Application_objectMarking_Application_id" ON "Application_objectMarking" ("Application_id");
 
 CREATE TABLE "Application_tag" (
 	"Application_id" TEXT,
@@ -14556,8 +14609,8 @@ CREATE TABLE "Application_tag" (
 	PRIMARY KEY ("Application_id", tag),
 	FOREIGN KEY("Application_id") REFERENCES "Application" (id)
 );
-CREATE INDEX "ix_Application_tag_tag" ON "Application_tag" (tag);
 CREATE INDEX "ix_Application_tag_Application_id" ON "Application_tag" ("Application_id");
+CREATE INDEX "ix_Application_tag_tag" ON "Application_tag" (tag);
 
 CREATE TABLE "ApplicationAccount_description" (
 	"ApplicationAccount_id" TEXT,
@@ -14648,8 +14701,8 @@ CREATE TABLE "Audio_modifiedTime" (
 	PRIMARY KEY ("Audio_id", "modifiedTime"),
 	FOREIGN KEY("Audio_id") REFERENCES "Audio" (id)
 );
-CREATE INDEX "ix_Audio_modifiedTime_modifiedTime" ON "Audio_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Audio_modifiedTime_Audio_id" ON "Audio_modifiedTime" ("Audio_id");
+CREATE INDEX "ix_Audio_modifiedTime_modifiedTime" ON "Audio_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Audio_objectMarking" (
 	"Audio_id" TEXT,
@@ -14685,8 +14738,8 @@ CREATE TABLE "AutonomousSystem_modifiedTime" (
 	PRIMARY KEY ("AutonomousSystem_id", "modifiedTime"),
 	FOREIGN KEY("AutonomousSystem_id") REFERENCES "AutonomousSystem" (id)
 );
-CREATE INDEX "ix_AutonomousSystem_modifiedTime_modifiedTime" ON "AutonomousSystem_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_AutonomousSystem_modifiedTime_AutonomousSystem_id" ON "AutonomousSystem_modifiedTime" ("AutonomousSystem_id");
+CREATE INDEX "ix_AutonomousSystem_modifiedTime_modifiedTime" ON "AutonomousSystem_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "AutonomousSystem_objectMarking" (
 	"AutonomousSystem_id" TEXT,
@@ -14722,8 +14775,8 @@ CREATE TABLE "BlackberryPhone_modifiedTime" (
 	PRIMARY KEY ("BlackberryPhone_id", "modifiedTime"),
 	FOREIGN KEY("BlackberryPhone_id") REFERENCES "BlackberryPhone" (id)
 );
-CREATE INDEX "ix_BlackberryPhone_modifiedTime_modifiedTime" ON "BlackberryPhone_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_BlackberryPhone_modifiedTime_BlackberryPhone_id" ON "BlackberryPhone_modifiedTime" ("BlackberryPhone_id");
+CREATE INDEX "ix_BlackberryPhone_modifiedTime_modifiedTime" ON "BlackberryPhone_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "BlackberryPhone_objectMarking" (
 	"BlackberryPhone_id" TEXT,
@@ -14732,8 +14785,8 @@ CREATE TABLE "BlackberryPhone_objectMarking" (
 	FOREIGN KEY("BlackberryPhone_id") REFERENCES "BlackberryPhone" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BlackberryPhone_objectMarking_objectMarking_id" ON "BlackberryPhone_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BlackberryPhone_objectMarking_BlackberryPhone_id" ON "BlackberryPhone_objectMarking" ("BlackberryPhone_id");
+CREATE INDEX "ix_BlackberryPhone_objectMarking_objectMarking_id" ON "BlackberryPhone_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BlackberryPhone_tag" (
 	"BlackberryPhone_id" TEXT,
@@ -14759,8 +14812,8 @@ CREATE TABLE "BlockDeviceNode_modifiedTime" (
 	PRIMARY KEY ("BlockDeviceNode_id", "modifiedTime"),
 	FOREIGN KEY("BlockDeviceNode_id") REFERENCES "BlockDeviceNode" (id)
 );
-CREATE INDEX "ix_BlockDeviceNode_modifiedTime_modifiedTime" ON "BlockDeviceNode_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_BlockDeviceNode_modifiedTime_BlockDeviceNode_id" ON "BlockDeviceNode_modifiedTime" ("BlockDeviceNode_id");
+CREATE INDEX "ix_BlockDeviceNode_modifiedTime_modifiedTime" ON "BlockDeviceNode_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "BlockDeviceNode_objectMarking" (
 	"BlockDeviceNode_id" TEXT,
@@ -14769,8 +14822,8 @@ CREATE TABLE "BlockDeviceNode_objectMarking" (
 	FOREIGN KEY("BlockDeviceNode_id") REFERENCES "BlockDeviceNode" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BlockDeviceNode_objectMarking_objectMarking_id" ON "BlockDeviceNode_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BlockDeviceNode_objectMarking_BlockDeviceNode_id" ON "BlockDeviceNode_objectMarking" ("BlockDeviceNode_id");
+CREATE INDEX "ix_BlockDeviceNode_objectMarking_objectMarking_id" ON "BlockDeviceNode_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BlockDeviceNode_tag" (
 	"BlockDeviceNode_id" TEXT,
@@ -14796,8 +14849,8 @@ CREATE TABLE "BluetoothAddress_modifiedTime" (
 	PRIMARY KEY ("BluetoothAddress_id", "modifiedTime"),
 	FOREIGN KEY("BluetoothAddress_id") REFERENCES "BluetoothAddress" (id)
 );
-CREATE INDEX "ix_BluetoothAddress_modifiedTime_modifiedTime" ON "BluetoothAddress_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_BluetoothAddress_modifiedTime_BluetoothAddress_id" ON "BluetoothAddress_modifiedTime" ("BluetoothAddress_id");
+CREATE INDEX "ix_BluetoothAddress_modifiedTime_modifiedTime" ON "BluetoothAddress_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "BluetoothAddress_objectMarking" (
 	"BluetoothAddress_id" TEXT,
@@ -14806,8 +14859,8 @@ CREATE TABLE "BluetoothAddress_objectMarking" (
 	FOREIGN KEY("BluetoothAddress_id") REFERENCES "BluetoothAddress" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BluetoothAddress_objectMarking_objectMarking_id" ON "BluetoothAddress_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BluetoothAddress_objectMarking_BluetoothAddress_id" ON "BluetoothAddress_objectMarking" ("BluetoothAddress_id");
+CREATE INDEX "ix_BluetoothAddress_objectMarking_objectMarking_id" ON "BluetoothAddress_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BluetoothAddress_tag" (
 	"BluetoothAddress_id" TEXT,
@@ -14833,8 +14886,8 @@ CREATE TABLE "BotConfiguration_modifiedTime" (
 	PRIMARY KEY ("BotConfiguration_id", "modifiedTime"),
 	FOREIGN KEY("BotConfiguration_id") REFERENCES "BotConfiguration" (id)
 );
-CREATE INDEX "ix_BotConfiguration_modifiedTime_modifiedTime" ON "BotConfiguration_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_BotConfiguration_modifiedTime_BotConfiguration_id" ON "BotConfiguration_modifiedTime" ("BotConfiguration_id");
+CREATE INDEX "ix_BotConfiguration_modifiedTime_modifiedTime" ON "BotConfiguration_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "BotConfiguration_objectMarking" (
 	"BotConfiguration_id" TEXT,
@@ -14843,8 +14896,8 @@ CREATE TABLE "BotConfiguration_objectMarking" (
 	FOREIGN KEY("BotConfiguration_id") REFERENCES "BotConfiguration" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BotConfiguration_objectMarking_objectMarking_id" ON "BotConfiguration_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BotConfiguration_objectMarking_BotConfiguration_id" ON "BotConfiguration_objectMarking" ("BotConfiguration_id");
+CREATE INDEX "ix_BotConfiguration_objectMarking_objectMarking_id" ON "BotConfiguration_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BotConfiguration_tag" (
 	"BotConfiguration_id" TEXT,
@@ -14870,8 +14923,8 @@ CREATE TABLE "BrowserBookmark_modifiedTime" (
 	PRIMARY KEY ("BrowserBookmark_id", "modifiedTime"),
 	FOREIGN KEY("BrowserBookmark_id") REFERENCES "BrowserBookmark" (id)
 );
-CREATE INDEX "ix_BrowserBookmark_modifiedTime_modifiedTime" ON "BrowserBookmark_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_BrowserBookmark_modifiedTime_BrowserBookmark_id" ON "BrowserBookmark_modifiedTime" ("BrowserBookmark_id");
+CREATE INDEX "ix_BrowserBookmark_modifiedTime_modifiedTime" ON "BrowserBookmark_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "BrowserBookmark_objectMarking" (
 	"BrowserBookmark_id" TEXT,
@@ -14880,8 +14933,8 @@ CREATE TABLE "BrowserBookmark_objectMarking" (
 	FOREIGN KEY("BrowserBookmark_id") REFERENCES "BrowserBookmark" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BrowserBookmark_objectMarking_objectMarking_id" ON "BrowserBookmark_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BrowserBookmark_objectMarking_BrowserBookmark_id" ON "BrowserBookmark_objectMarking" ("BrowserBookmark_id");
+CREATE INDEX "ix_BrowserBookmark_objectMarking_objectMarking_id" ON "BrowserBookmark_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BrowserBookmark_tag" (
 	"BrowserBookmark_id" TEXT,
@@ -14898,8 +14951,8 @@ CREATE TABLE "BrowserCookie_description" (
 	PRIMARY KEY ("BrowserCookie_id", description),
 	FOREIGN KEY("BrowserCookie_id") REFERENCES "BrowserCookie" (id)
 );
-CREATE INDEX "ix_BrowserCookie_description_description" ON "BrowserCookie_description" (description);
 CREATE INDEX "ix_BrowserCookie_description_BrowserCookie_id" ON "BrowserCookie_description" ("BrowserCookie_id");
+CREATE INDEX "ix_BrowserCookie_description_description" ON "BrowserCookie_description" (description);
 
 CREATE TABLE "BrowserCookie_modifiedTime" (
 	"BrowserCookie_id" TEXT,
@@ -14907,8 +14960,8 @@ CREATE TABLE "BrowserCookie_modifiedTime" (
 	PRIMARY KEY ("BrowserCookie_id", "modifiedTime"),
 	FOREIGN KEY("BrowserCookie_id") REFERENCES "BrowserCookie" (id)
 );
-CREATE INDEX "ix_BrowserCookie_modifiedTime_BrowserCookie_id" ON "BrowserCookie_modifiedTime" ("BrowserCookie_id");
 CREATE INDEX "ix_BrowserCookie_modifiedTime_modifiedTime" ON "BrowserCookie_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_BrowserCookie_modifiedTime_BrowserCookie_id" ON "BrowserCookie_modifiedTime" ("BrowserCookie_id");
 
 CREATE TABLE "BrowserCookie_objectMarking" (
 	"BrowserCookie_id" TEXT,
@@ -14917,8 +14970,8 @@ CREATE TABLE "BrowserCookie_objectMarking" (
 	FOREIGN KEY("BrowserCookie_id") REFERENCES "BrowserCookie" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_BrowserCookie_objectMarking_objectMarking_id" ON "BrowserCookie_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_BrowserCookie_objectMarking_BrowserCookie_id" ON "BrowserCookie_objectMarking" ("BrowserCookie_id");
+CREATE INDEX "ix_BrowserCookie_objectMarking_objectMarking_id" ON "BrowserCookie_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "BrowserCookie_tag" (
 	"BrowserCookie_id" TEXT,
@@ -14935,8 +14988,8 @@ CREATE TABLE "Calendar_description" (
 	PRIMARY KEY ("Calendar_id", description),
 	FOREIGN KEY("Calendar_id") REFERENCES "Calendar" (id)
 );
-CREATE INDEX "ix_Calendar_description_description" ON "Calendar_description" (description);
 CREATE INDEX "ix_Calendar_description_Calendar_id" ON "Calendar_description" ("Calendar_id");
+CREATE INDEX "ix_Calendar_description_description" ON "Calendar_description" (description);
 
 CREATE TABLE "Calendar_modifiedTime" (
 	"Calendar_id" TEXT,
@@ -14944,8 +14997,8 @@ CREATE TABLE "Calendar_modifiedTime" (
 	PRIMARY KEY ("Calendar_id", "modifiedTime"),
 	FOREIGN KEY("Calendar_id") REFERENCES "Calendar" (id)
 );
-CREATE INDEX "ix_Calendar_modifiedTime_Calendar_id" ON "Calendar_modifiedTime" ("Calendar_id");
 CREATE INDEX "ix_Calendar_modifiedTime_modifiedTime" ON "Calendar_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Calendar_modifiedTime_Calendar_id" ON "Calendar_modifiedTime" ("Calendar_id");
 
 CREATE TABLE "Calendar_objectMarking" (
 	"Calendar_id" TEXT,
@@ -14963,8 +15016,8 @@ CREATE TABLE "Calendar_tag" (
 	PRIMARY KEY ("Calendar_id", tag),
 	FOREIGN KEY("Calendar_id") REFERENCES "Calendar" (id)
 );
-CREATE INDEX "ix_Calendar_tag_tag" ON "Calendar_tag" (tag);
 CREATE INDEX "ix_Calendar_tag_Calendar_id" ON "Calendar_tag" ("Calendar_id");
+CREATE INDEX "ix_Calendar_tag_tag" ON "Calendar_tag" (tag);
 
 CREATE TABLE "CalendarEntry_description" (
 	"CalendarEntry_id" TEXT,
@@ -14972,8 +15025,8 @@ CREATE TABLE "CalendarEntry_description" (
 	PRIMARY KEY ("CalendarEntry_id", description),
 	FOREIGN KEY("CalendarEntry_id") REFERENCES "CalendarEntry" (id)
 );
-CREATE INDEX "ix_CalendarEntry_description_description" ON "CalendarEntry_description" (description);
 CREATE INDEX "ix_CalendarEntry_description_CalendarEntry_id" ON "CalendarEntry_description" ("CalendarEntry_id");
+CREATE INDEX "ix_CalendarEntry_description_description" ON "CalendarEntry_description" (description);
 
 CREATE TABLE "CalendarEntry_modifiedTime" (
 	"CalendarEntry_id" TEXT,
@@ -14991,8 +15044,8 @@ CREATE TABLE "CalendarEntry_objectMarking" (
 	FOREIGN KEY("CalendarEntry_id") REFERENCES "CalendarEntry" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CalendarEntry_objectMarking_objectMarking_id" ON "CalendarEntry_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_CalendarEntry_objectMarking_CalendarEntry_id" ON "CalendarEntry_objectMarking" ("CalendarEntry_id");
+CREATE INDEX "ix_CalendarEntry_objectMarking_objectMarking_id" ON "CalendarEntry_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "CalendarEntry_tag" (
 	"CalendarEntry_id" TEXT,
@@ -15028,8 +15081,8 @@ CREATE TABLE "Call_objectMarking" (
 	FOREIGN KEY("Call_id") REFERENCES "Call" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Call_objectMarking_Call_id" ON "Call_objectMarking" ("Call_id");
 CREATE INDEX "ix_Call_objectMarking_objectMarking_id" ON "Call_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Call_objectMarking_Call_id" ON "Call_objectMarking" ("Call_id");
 
 CREATE TABLE "Call_tag" (
 	"Call_id" TEXT,
@@ -15065,8 +15118,8 @@ CREATE TABLE "CapturedTelecommunicationsInformation_objectMarking" (
 	FOREIGN KEY("CapturedTelecommunicationsInformation_id") REFERENCES "CapturedTelecommunicationsInformation" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CapturedTelecommunicationsInformation_objectMarking_CapturedTelecommunicationsInformation_id" ON "CapturedTelecommunicationsInformation_objectMarking" ("CapturedTelecommunicationsInformation_id");
 CREATE INDEX "ix_CapturedTelecommunicationsInformation_objectMarking_objectMarking_id" ON "CapturedTelecommunicationsInformation_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_CapturedTelecommunicationsInformation_objectMarking_CapturedTelecommunicationsInformation_id" ON "CapturedTelecommunicationsInformation_objectMarking" ("CapturedTelecommunicationsInformation_id");
 
 CREATE TABLE "CapturedTelecommunicationsInformation_tag" (
 	"CapturedTelecommunicationsInformation_id" TEXT,
@@ -15083,8 +15136,8 @@ CREATE TABLE "CellSite_description" (
 	PRIMARY KEY ("CellSite_id", description),
 	FOREIGN KEY("CellSite_id") REFERENCES "CellSite" (id)
 );
-CREATE INDEX "ix_CellSite_description_CellSite_id" ON "CellSite_description" ("CellSite_id");
 CREATE INDEX "ix_CellSite_description_description" ON "CellSite_description" (description);
+CREATE INDEX "ix_CellSite_description_CellSite_id" ON "CellSite_description" ("CellSite_id");
 
 CREATE TABLE "CellSite_modifiedTime" (
 	"CellSite_id" TEXT,
@@ -15102,8 +15155,8 @@ CREATE TABLE "CellSite_objectMarking" (
 	FOREIGN KEY("CellSite_id") REFERENCES "CellSite" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CellSite_objectMarking_CellSite_id" ON "CellSite_objectMarking" ("CellSite_id");
 CREATE INDEX "ix_CellSite_objectMarking_objectMarking_id" ON "CellSite_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_CellSite_objectMarking_CellSite_id" ON "CellSite_objectMarking" ("CellSite_id");
 
 CREATE TABLE "CellSite_tag" (
 	"CellSite_id" TEXT,
@@ -15120,8 +15173,8 @@ CREATE TABLE "CharacterDeviceNode_description" (
 	PRIMARY KEY ("CharacterDeviceNode_id", description),
 	FOREIGN KEY("CharacterDeviceNode_id") REFERENCES "CharacterDeviceNode" (id)
 );
-CREATE INDEX "ix_CharacterDeviceNode_description_CharacterDeviceNode_id" ON "CharacterDeviceNode_description" ("CharacterDeviceNode_id");
 CREATE INDEX "ix_CharacterDeviceNode_description_description" ON "CharacterDeviceNode_description" (description);
+CREATE INDEX "ix_CharacterDeviceNode_description_CharacterDeviceNode_id" ON "CharacterDeviceNode_description" ("CharacterDeviceNode_id");
 
 CREATE TABLE "CharacterDeviceNode_modifiedTime" (
 	"CharacterDeviceNode_id" TEXT,
@@ -15139,8 +15192,8 @@ CREATE TABLE "CharacterDeviceNode_objectMarking" (
 	FOREIGN KEY("CharacterDeviceNode_id") REFERENCES "CharacterDeviceNode" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CharacterDeviceNode_objectMarking_CharacterDeviceNode_id" ON "CharacterDeviceNode_objectMarking" ("CharacterDeviceNode_id");
 CREATE INDEX "ix_CharacterDeviceNode_objectMarking_objectMarking_id" ON "CharacterDeviceNode_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_CharacterDeviceNode_objectMarking_CharacterDeviceNode_id" ON "CharacterDeviceNode_objectMarking" ("CharacterDeviceNode_id");
 
 CREATE TABLE "CharacterDeviceNode_tag" (
 	"CharacterDeviceNode_id" TEXT,
@@ -15157,8 +15210,8 @@ CREATE TABLE "Code_description" (
 	PRIMARY KEY ("Code_id", description),
 	FOREIGN KEY("Code_id") REFERENCES "Code" (id)
 );
-CREATE INDEX "ix_Code_description_Code_id" ON "Code_description" ("Code_id");
 CREATE INDEX "ix_Code_description_description" ON "Code_description" (description);
+CREATE INDEX "ix_Code_description_Code_id" ON "Code_description" ("Code_id");
 
 CREATE TABLE "Code_modifiedTime" (
 	"Code_id" TEXT,
@@ -15176,8 +15229,8 @@ CREATE TABLE "Code_objectMarking" (
 	FOREIGN KEY("Code_id") REFERENCES "Code" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Code_objectMarking_Code_id" ON "Code_objectMarking" ("Code_id");
 CREATE INDEX "ix_Code_objectMarking_objectMarking_id" ON "Code_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Code_objectMarking_Code_id" ON "Code_objectMarking" ("Code_id");
 
 CREATE TABLE "Code_tag" (
 	"Code_id" TEXT,
@@ -15194,8 +15247,8 @@ CREATE TABLE "Computer_description" (
 	PRIMARY KEY ("Computer_id", description),
 	FOREIGN KEY("Computer_id") REFERENCES "Computer" (id)
 );
-CREATE INDEX "ix_Computer_description_Computer_id" ON "Computer_description" ("Computer_id");
 CREATE INDEX "ix_Computer_description_description" ON "Computer_description" (description);
+CREATE INDEX "ix_Computer_description_Computer_id" ON "Computer_description" ("Computer_id");
 
 CREATE TABLE "Computer_modifiedTime" (
 	"Computer_id" TEXT,
@@ -15213,8 +15266,8 @@ CREATE TABLE "Computer_objectMarking" (
 	FOREIGN KEY("Computer_id") REFERENCES "Computer" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Computer_objectMarking_Computer_id" ON "Computer_objectMarking" ("Computer_id");
 CREATE INDEX "ix_Computer_objectMarking_objectMarking_id" ON "Computer_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Computer_objectMarking_Computer_id" ON "Computer_objectMarking" ("Computer_id");
 
 CREATE TABLE "Computer_tag" (
 	"Computer_id" TEXT,
@@ -15231,8 +15284,8 @@ CREATE TABLE "ComputerSpecification_description" (
 	PRIMARY KEY ("ComputerSpecification_id", description),
 	FOREIGN KEY("ComputerSpecification_id") REFERENCES "ComputerSpecification" (id)
 );
-CREATE INDEX "ix_ComputerSpecification_description_ComputerSpecification_id" ON "ComputerSpecification_description" ("ComputerSpecification_id");
 CREATE INDEX "ix_ComputerSpecification_description_description" ON "ComputerSpecification_description" (description);
+CREATE INDEX "ix_ComputerSpecification_description_ComputerSpecification_id" ON "ComputerSpecification_description" ("ComputerSpecification_id");
 
 CREATE TABLE "ComputerSpecification_modifiedTime" (
 	"ComputerSpecification_id" TEXT,
@@ -15250,8 +15303,8 @@ CREATE TABLE "ComputerSpecification_objectMarking" (
 	FOREIGN KEY("ComputerSpecification_id") REFERENCES "ComputerSpecification" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ComputerSpecification_objectMarking_ComputerSpecification_id" ON "ComputerSpecification_objectMarking" ("ComputerSpecification_id");
 CREATE INDEX "ix_ComputerSpecification_objectMarking_objectMarking_id" ON "ComputerSpecification_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ComputerSpecification_objectMarking_ComputerSpecification_id" ON "ComputerSpecification_objectMarking" ("ComputerSpecification_id");
 
 CREATE TABLE "ComputerSpecification_tag" (
 	"ComputerSpecification_id" TEXT,
@@ -15334,8 +15387,8 @@ CREATE TABLE "ContactList_objectMarking" (
 	FOREIGN KEY("ContactList_id") REFERENCES "ContactList" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ContactList_objectMarking_ContactList_id" ON "ContactList_objectMarking" ("ContactList_id");
 CREATE INDEX "ix_ContactList_objectMarking_objectMarking_id" ON "ContactList_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ContactList_objectMarking_ContactList_id" ON "ContactList_objectMarking" ("ContactList_id");
 
 CREATE TABLE "ContactList_tag" (
 	"ContactList_id" TEXT,
@@ -15352,8 +15405,8 @@ CREATE TABLE "ContentData_description" (
 	PRIMARY KEY ("ContentData_id", description),
 	FOREIGN KEY("ContentData_id") REFERENCES "ContentData" (id)
 );
-CREATE INDEX "ix_ContentData_description_description" ON "ContentData_description" (description);
 CREATE INDEX "ix_ContentData_description_ContentData_id" ON "ContentData_description" ("ContentData_id");
+CREATE INDEX "ix_ContentData_description_description" ON "ContentData_description" (description);
 
 CREATE TABLE "ContentData_modifiedTime" (
 	"ContentData_id" TEXT,
@@ -15398,8 +15451,8 @@ CREATE TABLE "CookieHistory_modifiedTime" (
 	PRIMARY KEY ("CookieHistory_id", "modifiedTime"),
 	FOREIGN KEY("CookieHistory_id") REFERENCES "CookieHistory" (id)
 );
-CREATE INDEX "ix_CookieHistory_modifiedTime_modifiedTime" ON "CookieHistory_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_CookieHistory_modifiedTime_CookieHistory_id" ON "CookieHistory_modifiedTime" ("CookieHistory_id");
+CREATE INDEX "ix_CookieHistory_modifiedTime_modifiedTime" ON "CookieHistory_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "CookieHistory_objectMarking" (
 	"CookieHistory_id" TEXT,
@@ -15408,8 +15461,8 @@ CREATE TABLE "CookieHistory_objectMarking" (
 	FOREIGN KEY("CookieHistory_id") REFERENCES "CookieHistory" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CookieHistory_objectMarking_CookieHistory_id" ON "CookieHistory_objectMarking" ("CookieHistory_id");
 CREATE INDEX "ix_CookieHistory_objectMarking_objectMarking_id" ON "CookieHistory_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_CookieHistory_objectMarking_CookieHistory_id" ON "CookieHistory_objectMarking" ("CookieHistory_id");
 
 CREATE TABLE "CookieHistory_tag" (
 	"CookieHistory_id" TEXT,
@@ -15426,8 +15479,8 @@ CREATE TABLE "Credential_description" (
 	PRIMARY KEY ("Credential_id", description),
 	FOREIGN KEY("Credential_id") REFERENCES "Credential" (id)
 );
-CREATE INDEX "ix_Credential_description_Credential_id" ON "Credential_description" ("Credential_id");
 CREATE INDEX "ix_Credential_description_description" ON "Credential_description" (description);
+CREATE INDEX "ix_Credential_description_Credential_id" ON "Credential_description" ("Credential_id");
 
 CREATE TABLE "Credential_modifiedTime" (
 	"Credential_id" TEXT,
@@ -15445,8 +15498,8 @@ CREATE TABLE "Credential_objectMarking" (
 	FOREIGN KEY("Credential_id") REFERENCES "Credential" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Credential_objectMarking_Credential_id" ON "Credential_objectMarking" ("Credential_id");
 CREATE INDEX "ix_Credential_objectMarking_objectMarking_id" ON "Credential_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Credential_objectMarking_Credential_id" ON "Credential_objectMarking" ("Credential_id");
 
 CREATE TABLE "Credential_tag" (
 	"Credential_id" TEXT,
@@ -15463,8 +15516,8 @@ CREATE TABLE "CredentialDump_description" (
 	PRIMARY KEY ("CredentialDump_id", description),
 	FOREIGN KEY("CredentialDump_id") REFERENCES "CredentialDump" (id)
 );
-CREATE INDEX "ix_CredentialDump_description_CredentialDump_id" ON "CredentialDump_description" ("CredentialDump_id");
 CREATE INDEX "ix_CredentialDump_description_description" ON "CredentialDump_description" (description);
+CREATE INDEX "ix_CredentialDump_description_CredentialDump_id" ON "CredentialDump_description" ("CredentialDump_id");
 
 CREATE TABLE "CredentialDump_modifiedTime" (
 	"CredentialDump_id" TEXT,
@@ -15482,8 +15535,8 @@ CREATE TABLE "CredentialDump_objectMarking" (
 	FOREIGN KEY("CredentialDump_id") REFERENCES "CredentialDump" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_CredentialDump_objectMarking_CredentialDump_id" ON "CredentialDump_objectMarking" ("CredentialDump_id");
 CREATE INDEX "ix_CredentialDump_objectMarking_objectMarking_id" ON "CredentialDump_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_CredentialDump_objectMarking_CredentialDump_id" ON "CredentialDump_objectMarking" ("CredentialDump_id");
 
 CREATE TABLE "CredentialDump_tag" (
 	"CredentialDump_id" TEXT,
@@ -15500,8 +15553,8 @@ CREATE TABLE "DNSCache_description" (
 	PRIMARY KEY ("DNSCache_id", description),
 	FOREIGN KEY("DNSCache_id") REFERENCES "DNSCache" (id)
 );
-CREATE INDEX "ix_DNSCache_description_DNSCache_id" ON "DNSCache_description" ("DNSCache_id");
 CREATE INDEX "ix_DNSCache_description_description" ON "DNSCache_description" (description);
+CREATE INDEX "ix_DNSCache_description_DNSCache_id" ON "DNSCache_description" ("DNSCache_id");
 
 CREATE TABLE "DNSCache_modifiedTime" (
 	"DNSCache_id" TEXT,
@@ -15519,8 +15572,8 @@ CREATE TABLE "DNSCache_objectMarking" (
 	FOREIGN KEY("DNSCache_id") REFERENCES "DNSCache" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DNSCache_objectMarking_DNSCache_id" ON "DNSCache_objectMarking" ("DNSCache_id");
 CREATE INDEX "ix_DNSCache_objectMarking_objectMarking_id" ON "DNSCache_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DNSCache_objectMarking_DNSCache_id" ON "DNSCache_objectMarking" ("DNSCache_id");
 
 CREATE TABLE "DNSCache_tag" (
 	"DNSCache_id" TEXT,
@@ -15537,8 +15590,8 @@ CREATE TABLE "DNSRecord_description" (
 	PRIMARY KEY ("DNSRecord_id", description),
 	FOREIGN KEY("DNSRecord_id") REFERENCES "DNSRecord" (id)
 );
-CREATE INDEX "ix_DNSRecord_description_DNSRecord_id" ON "DNSRecord_description" ("DNSRecord_id");
 CREATE INDEX "ix_DNSRecord_description_description" ON "DNSRecord_description" (description);
+CREATE INDEX "ix_DNSRecord_description_DNSRecord_id" ON "DNSRecord_description" ("DNSRecord_id");
 
 CREATE TABLE "DNSRecord_modifiedTime" (
 	"DNSRecord_id" TEXT,
@@ -15556,8 +15609,8 @@ CREATE TABLE "DNSRecord_objectMarking" (
 	FOREIGN KEY("DNSRecord_id") REFERENCES "DNSRecord" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DNSRecord_objectMarking_DNSRecord_id" ON "DNSRecord_objectMarking" ("DNSRecord_id");
 CREATE INDEX "ix_DNSRecord_objectMarking_objectMarking_id" ON "DNSRecord_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DNSRecord_objectMarking_DNSRecord_id" ON "DNSRecord_objectMarking" ("DNSRecord_id");
 
 CREATE TABLE "DNSRecord_tag" (
 	"DNSRecord_id" TEXT,
@@ -15574,8 +15627,8 @@ CREATE TABLE "Device_description" (
 	PRIMARY KEY ("Device_id", description),
 	FOREIGN KEY("Device_id") REFERENCES "Device" (id)
 );
-CREATE INDEX "ix_Device_description_Device_id" ON "Device_description" ("Device_id");
 CREATE INDEX "ix_Device_description_description" ON "Device_description" (description);
+CREATE INDEX "ix_Device_description_Device_id" ON "Device_description" ("Device_id");
 
 CREATE TABLE "Device_modifiedTime" (
 	"Device_id" TEXT,
@@ -15593,8 +15646,8 @@ CREATE TABLE "Device_objectMarking" (
 	FOREIGN KEY("Device_id") REFERENCES "Device" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Device_objectMarking_Device_id" ON "Device_objectMarking" ("Device_id");
 CREATE INDEX "ix_Device_objectMarking_objectMarking_id" ON "Device_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Device_objectMarking_Device_id" ON "Device_objectMarking" ("Device_id");
 
 CREATE TABLE "Device_tag" (
 	"Device_id" TEXT,
@@ -15611,8 +15664,8 @@ CREATE TABLE "DigitalAccount_description" (
 	PRIMARY KEY ("DigitalAccount_id", description),
 	FOREIGN KEY("DigitalAccount_id") REFERENCES "DigitalAccount" (id)
 );
-CREATE INDEX "ix_DigitalAccount_description_DigitalAccount_id" ON "DigitalAccount_description" ("DigitalAccount_id");
 CREATE INDEX "ix_DigitalAccount_description_description" ON "DigitalAccount_description" (description);
+CREATE INDEX "ix_DigitalAccount_description_DigitalAccount_id" ON "DigitalAccount_description" ("DigitalAccount_id");
 
 CREATE TABLE "DigitalAccount_modifiedTime" (
 	"DigitalAccount_id" TEXT,
@@ -15630,8 +15683,8 @@ CREATE TABLE "DigitalAccount_objectMarking" (
 	FOREIGN KEY("DigitalAccount_id") REFERENCES "DigitalAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DigitalAccount_objectMarking_DigitalAccount_id" ON "DigitalAccount_objectMarking" ("DigitalAccount_id");
 CREATE INDEX "ix_DigitalAccount_objectMarking_objectMarking_id" ON "DigitalAccount_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DigitalAccount_objectMarking_DigitalAccount_id" ON "DigitalAccount_objectMarking" ("DigitalAccount_id");
 
 CREATE TABLE "DigitalAccount_tag" (
 	"DigitalAccount_id" TEXT,
@@ -15694,8 +15747,8 @@ CREATE TABLE "DigitalCamera_modifiedTime" (
 	PRIMARY KEY ("DigitalCamera_id", "modifiedTime"),
 	FOREIGN KEY("DigitalCamera_id") REFERENCES "DigitalCamera" (id)
 );
-CREATE INDEX "ix_DigitalCamera_modifiedTime_DigitalCamera_id" ON "DigitalCamera_modifiedTime" ("DigitalCamera_id");
 CREATE INDEX "ix_DigitalCamera_modifiedTime_modifiedTime" ON "DigitalCamera_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_DigitalCamera_modifiedTime_DigitalCamera_id" ON "DigitalCamera_modifiedTime" ("DigitalCamera_id");
 
 CREATE TABLE "DigitalCamera_objectMarking" (
 	"DigitalCamera_id" TEXT,
@@ -15704,8 +15757,8 @@ CREATE TABLE "DigitalCamera_objectMarking" (
 	FOREIGN KEY("DigitalCamera_id") REFERENCES "DigitalCamera" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DigitalCamera_objectMarking_DigitalCamera_id" ON "DigitalCamera_objectMarking" ("DigitalCamera_id");
 CREATE INDEX "ix_DigitalCamera_objectMarking_objectMarking_id" ON "DigitalCamera_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DigitalCamera_objectMarking_DigitalCamera_id" ON "DigitalCamera_objectMarking" ("DigitalCamera_id");
 
 CREATE TABLE "DigitalCamera_tag" (
 	"DigitalCamera_id" TEXT,
@@ -15713,8 +15766,8 @@ CREATE TABLE "DigitalCamera_tag" (
 	PRIMARY KEY ("DigitalCamera_id", tag),
 	FOREIGN KEY("DigitalCamera_id") REFERENCES "DigitalCamera" (id)
 );
-CREATE INDEX "ix_DigitalCamera_tag_tag" ON "DigitalCamera_tag" (tag);
 CREATE INDEX "ix_DigitalCamera_tag_DigitalCamera_id" ON "DigitalCamera_tag" ("DigitalCamera_id");
+CREATE INDEX "ix_DigitalCamera_tag_tag" ON "DigitalCamera_tag" (tag);
 
 CREATE TABLE "DigitalSignatureInfo_description" (
 	"DigitalSignatureInfo_id" TEXT,
@@ -15731,8 +15784,8 @@ CREATE TABLE "DigitalSignatureInfo_modifiedTime" (
 	PRIMARY KEY ("DigitalSignatureInfo_id", "modifiedTime"),
 	FOREIGN KEY("DigitalSignatureInfo_id") REFERENCES "DigitalSignatureInfo" (id)
 );
-CREATE INDEX "ix_DigitalSignatureInfo_modifiedTime_DigitalSignatureInfo_id" ON "DigitalSignatureInfo_modifiedTime" ("DigitalSignatureInfo_id");
 CREATE INDEX "ix_DigitalSignatureInfo_modifiedTime_modifiedTime" ON "DigitalSignatureInfo_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_DigitalSignatureInfo_modifiedTime_DigitalSignatureInfo_id" ON "DigitalSignatureInfo_modifiedTime" ("DigitalSignatureInfo_id");
 
 CREATE TABLE "DigitalSignatureInfo_objectMarking" (
 	"DigitalSignatureInfo_id" TEXT,
@@ -15741,8 +15794,8 @@ CREATE TABLE "DigitalSignatureInfo_objectMarking" (
 	FOREIGN KEY("DigitalSignatureInfo_id") REFERENCES "DigitalSignatureInfo" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DigitalSignatureInfo_objectMarking_DigitalSignatureInfo_id" ON "DigitalSignatureInfo_objectMarking" ("DigitalSignatureInfo_id");
 CREATE INDEX "ix_DigitalSignatureInfo_objectMarking_objectMarking_id" ON "DigitalSignatureInfo_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DigitalSignatureInfo_objectMarking_DigitalSignatureInfo_id" ON "DigitalSignatureInfo_objectMarking" ("DigitalSignatureInfo_id");
 
 CREATE TABLE "DigitalSignatureInfo_tag" (
 	"DigitalSignatureInfo_id" TEXT,
@@ -15768,8 +15821,8 @@ CREATE TABLE "Directory_modifiedTime" (
 	PRIMARY KEY ("Directory_id", "modifiedTime"),
 	FOREIGN KEY("Directory_id") REFERENCES "Directory" (id)
 );
-CREATE INDEX "ix_Directory_modifiedTime_Directory_id" ON "Directory_modifiedTime" ("Directory_id");
 CREATE INDEX "ix_Directory_modifiedTime_modifiedTime" ON "Directory_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Directory_modifiedTime_Directory_id" ON "Directory_modifiedTime" ("Directory_id");
 
 CREATE TABLE "Directory_objectMarking" (
 	"Directory_id" TEXT,
@@ -15778,8 +15831,8 @@ CREATE TABLE "Directory_objectMarking" (
 	FOREIGN KEY("Directory_id") REFERENCES "Directory" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Directory_objectMarking_Directory_id" ON "Directory_objectMarking" ("Directory_id");
 CREATE INDEX "ix_Directory_objectMarking_objectMarking_id" ON "Directory_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Directory_objectMarking_Directory_id" ON "Directory_objectMarking" ("Directory_id");
 
 CREATE TABLE "Directory_tag" (
 	"Directory_id" TEXT,
@@ -15796,8 +15849,8 @@ CREATE TABLE "Disk_description" (
 	PRIMARY KEY ("Disk_id", description),
 	FOREIGN KEY("Disk_id") REFERENCES "Disk" (id)
 );
-CREATE INDEX "ix_Disk_description_description" ON "Disk_description" (description);
 CREATE INDEX "ix_Disk_description_Disk_id" ON "Disk_description" ("Disk_id");
+CREATE INDEX "ix_Disk_description_description" ON "Disk_description" (description);
 
 CREATE TABLE "Disk_modifiedTime" (
 	"Disk_id" TEXT,
@@ -15805,8 +15858,8 @@ CREATE TABLE "Disk_modifiedTime" (
 	PRIMARY KEY ("Disk_id", "modifiedTime"),
 	FOREIGN KEY("Disk_id") REFERENCES "Disk" (id)
 );
-CREATE INDEX "ix_Disk_modifiedTime_Disk_id" ON "Disk_modifiedTime" ("Disk_id");
 CREATE INDEX "ix_Disk_modifiedTime_modifiedTime" ON "Disk_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Disk_modifiedTime_Disk_id" ON "Disk_modifiedTime" ("Disk_id");
 
 CREATE TABLE "Disk_objectMarking" (
 	"Disk_id" TEXT,
@@ -15862,8 +15915,8 @@ CREATE TABLE "DiskPartition_objectMarking" (
 	FOREIGN KEY("DiskPartition_id") REFERENCES "DiskPartition" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DiskPartition_objectMarking_DiskPartition_id" ON "DiskPartition_objectMarking" ("DiskPartition_id");
 CREATE INDEX "ix_DiskPartition_objectMarking_objectMarking_id" ON "DiskPartition_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DiskPartition_objectMarking_DiskPartition_id" ON "DiskPartition_objectMarking" ("DiskPartition_id");
 
 CREATE TABLE "DiskPartition_tag" (
 	"DiskPartition_id" TEXT,
@@ -15880,8 +15933,8 @@ CREATE TABLE "DomainName_description" (
 	PRIMARY KEY ("DomainName_id", description),
 	FOREIGN KEY("DomainName_id") REFERENCES "DomainName" (id)
 );
-CREATE INDEX "ix_DomainName_description_DomainName_id" ON "DomainName_description" ("DomainName_id");
 CREATE INDEX "ix_DomainName_description_description" ON "DomainName_description" (description);
+CREATE INDEX "ix_DomainName_description_DomainName_id" ON "DomainName_description" ("DomainName_id");
 
 CREATE TABLE "DomainName_modifiedTime" (
 	"DomainName_id" TEXT,
@@ -15899,8 +15952,8 @@ CREATE TABLE "DomainName_objectMarking" (
 	FOREIGN KEY("DomainName_id") REFERENCES "DomainName" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DomainName_objectMarking_DomainName_id" ON "DomainName_objectMarking" ("DomainName_id");
 CREATE INDEX "ix_DomainName_objectMarking_objectMarking_id" ON "DomainName_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DomainName_objectMarking_DomainName_id" ON "DomainName_objectMarking" ("DomainName_id");
 
 CREATE TABLE "DomainName_tag" (
 	"DomainName_id" TEXT,
@@ -15917,8 +15970,8 @@ CREATE TABLE "Drone_description" (
 	PRIMARY KEY ("Drone_id", description),
 	FOREIGN KEY("Drone_id") REFERENCES "Drone" (id)
 );
-CREATE INDEX "ix_Drone_description_Drone_id" ON "Drone_description" ("Drone_id");
 CREATE INDEX "ix_Drone_description_description" ON "Drone_description" (description);
+CREATE INDEX "ix_Drone_description_Drone_id" ON "Drone_description" ("Drone_id");
 
 CREATE TABLE "Drone_modifiedTime" (
 	"Drone_id" TEXT,
@@ -15936,8 +15989,8 @@ CREATE TABLE "Drone_objectMarking" (
 	FOREIGN KEY("Drone_id") REFERENCES "Drone" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Drone_objectMarking_Drone_id" ON "Drone_objectMarking" ("Drone_id");
 CREATE INDEX "ix_Drone_objectMarking_objectMarking_id" ON "Drone_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Drone_objectMarking_Drone_id" ON "Drone_objectMarking" ("Drone_id");
 
 CREATE TABLE "Drone_tag" (
 	"Drone_id" TEXT,
@@ -15954,8 +16007,8 @@ CREATE TABLE "EmailAccount_description" (
 	PRIMARY KEY ("EmailAccount_id", description),
 	FOREIGN KEY("EmailAccount_id") REFERENCES "EmailAccount" (id)
 );
-CREATE INDEX "ix_EmailAccount_description_EmailAccount_id" ON "EmailAccount_description" ("EmailAccount_id");
 CREATE INDEX "ix_EmailAccount_description_description" ON "EmailAccount_description" (description);
+CREATE INDEX "ix_EmailAccount_description_EmailAccount_id" ON "EmailAccount_description" ("EmailAccount_id");
 
 CREATE TABLE "EmailAccount_modifiedTime" (
 	"EmailAccount_id" TEXT,
@@ -15973,8 +16026,8 @@ CREATE TABLE "EmailAccount_objectMarking" (
 	FOREIGN KEY("EmailAccount_id") REFERENCES "EmailAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EmailAccount_objectMarking_EmailAccount_id" ON "EmailAccount_objectMarking" ("EmailAccount_id");
 CREATE INDEX "ix_EmailAccount_objectMarking_objectMarking_id" ON "EmailAccount_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_EmailAccount_objectMarking_EmailAccount_id" ON "EmailAccount_objectMarking" ("EmailAccount_id");
 
 CREATE TABLE "EmailAccount_tag" (
 	"EmailAccount_id" TEXT,
@@ -15991,8 +16044,8 @@ CREATE TABLE "EmailAddress_description" (
 	PRIMARY KEY ("EmailAddress_id", description),
 	FOREIGN KEY("EmailAddress_id") REFERENCES "EmailAddress" (id)
 );
-CREATE INDEX "ix_EmailAddress_description_EmailAddress_id" ON "EmailAddress_description" ("EmailAddress_id");
 CREATE INDEX "ix_EmailAddress_description_description" ON "EmailAddress_description" (description);
+CREATE INDEX "ix_EmailAddress_description_EmailAddress_id" ON "EmailAddress_description" ("EmailAddress_id");
 
 CREATE TABLE "EmailAddress_modifiedTime" (
 	"EmailAddress_id" TEXT,
@@ -16010,8 +16063,8 @@ CREATE TABLE "EmailAddress_objectMarking" (
 	FOREIGN KEY("EmailAddress_id") REFERENCES "EmailAddress" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EmailAddress_objectMarking_EmailAddress_id" ON "EmailAddress_objectMarking" ("EmailAddress_id");
 CREATE INDEX "ix_EmailAddress_objectMarking_objectMarking_id" ON "EmailAddress_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_EmailAddress_objectMarking_EmailAddress_id" ON "EmailAddress_objectMarking" ("EmailAddress_id");
 
 CREATE TABLE "EmailAddress_tag" (
 	"EmailAddress_id" TEXT,
@@ -16028,8 +16081,8 @@ CREATE TABLE "EmailMessage_description" (
 	PRIMARY KEY ("EmailMessage_id", description),
 	FOREIGN KEY("EmailMessage_id") REFERENCES "EmailMessage" (id)
 );
-CREATE INDEX "ix_EmailMessage_description_EmailMessage_id" ON "EmailMessage_description" ("EmailMessage_id");
 CREATE INDEX "ix_EmailMessage_description_description" ON "EmailMessage_description" (description);
+CREATE INDEX "ix_EmailMessage_description_EmailMessage_id" ON "EmailMessage_description" ("EmailMessage_id");
 
 CREATE TABLE "EmailMessage_modifiedTime" (
 	"EmailMessage_id" TEXT,
@@ -16047,8 +16100,8 @@ CREATE TABLE "EmailMessage_objectMarking" (
 	FOREIGN KEY("EmailMessage_id") REFERENCES "EmailMessage" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EmailMessage_objectMarking_EmailMessage_id" ON "EmailMessage_objectMarking" ("EmailMessage_id");
 CREATE INDEX "ix_EmailMessage_objectMarking_objectMarking_id" ON "EmailMessage_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_EmailMessage_objectMarking_EmailMessage_id" ON "EmailMessage_objectMarking" ("EmailMessage_id");
 
 CREATE TABLE "EmailMessage_tag" (
 	"EmailMessage_id" TEXT,
@@ -16065,8 +16118,8 @@ CREATE TABLE "EmbeddedDevice_description" (
 	PRIMARY KEY ("EmbeddedDevice_id", description),
 	FOREIGN KEY("EmbeddedDevice_id") REFERENCES "EmbeddedDevice" (id)
 );
-CREATE INDEX "ix_EmbeddedDevice_description_description" ON "EmbeddedDevice_description" (description);
 CREATE INDEX "ix_EmbeddedDevice_description_EmbeddedDevice_id" ON "EmbeddedDevice_description" ("EmbeddedDevice_id");
+CREATE INDEX "ix_EmbeddedDevice_description_description" ON "EmbeddedDevice_description" (description);
 
 CREATE TABLE "EmbeddedDevice_modifiedTime" (
 	"EmbeddedDevice_id" TEXT,
@@ -16084,8 +16137,8 @@ CREATE TABLE "EmbeddedDevice_objectMarking" (
 	FOREIGN KEY("EmbeddedDevice_id") REFERENCES "EmbeddedDevice" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EmbeddedDevice_objectMarking_objectMarking_id" ON "EmbeddedDevice_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_EmbeddedDevice_objectMarking_EmbeddedDevice_id" ON "EmbeddedDevice_objectMarking" ("EmbeddedDevice_id");
+CREATE INDEX "ix_EmbeddedDevice_objectMarking_objectMarking_id" ON "EmbeddedDevice_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "EmbeddedDevice_tag" (
 	"EmbeddedDevice_id" TEXT,
@@ -16102,8 +16155,8 @@ CREATE TABLE "EventLog_description" (
 	PRIMARY KEY ("EventLog_id", description),
 	FOREIGN KEY("EventLog_id") REFERENCES "EventLog" (id)
 );
-CREATE INDEX "ix_EventLog_description_description" ON "EventLog_description" (description);
 CREATE INDEX "ix_EventLog_description_EventLog_id" ON "EventLog_description" ("EventLog_id");
+CREATE INDEX "ix_EventLog_description_description" ON "EventLog_description" (description);
 
 CREATE TABLE "EventLog_modifiedTime" (
 	"EventLog_id" TEXT,
@@ -16139,8 +16192,8 @@ CREATE TABLE "EventRecord_description" (
 	PRIMARY KEY ("EventRecord_id", description),
 	FOREIGN KEY("EventRecord_id") REFERENCES "EventRecord" (id)
 );
-CREATE INDEX "ix_EventRecord_description_description" ON "EventRecord_description" (description);
 CREATE INDEX "ix_EventRecord_description_EventRecord_id" ON "EventRecord_description" ("EventRecord_id");
+CREATE INDEX "ix_EventRecord_description_description" ON "EventRecord_description" (description);
 
 CREATE TABLE "EventRecord_modifiedTime" (
 	"EventRecord_id" TEXT,
@@ -16158,8 +16211,8 @@ CREATE TABLE "EventRecord_objectMarking" (
 	FOREIGN KEY("EventRecord_id") REFERENCES "EventRecord" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_EventRecord_objectMarking_EventRecord_id" ON "EventRecord_objectMarking" ("EventRecord_id");
 CREATE INDEX "ix_EventRecord_objectMarking_objectMarking_id" ON "EventRecord_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_EventRecord_objectMarking_EventRecord_id" ON "EventRecord_objectMarking" ("EventRecord_id");
 
 CREATE TABLE "EventRecord_tag" (
 	"EventRecord_id" TEXT,
@@ -16176,8 +16229,8 @@ CREATE TABLE "File_description" (
 	PRIMARY KEY ("File_id", description),
 	FOREIGN KEY("File_id") REFERENCES "File" (id)
 );
-CREATE INDEX "ix_File_description_description" ON "File_description" (description);
 CREATE INDEX "ix_File_description_File_id" ON "File_description" ("File_id");
+CREATE INDEX "ix_File_description_description" ON "File_description" (description);
 
 CREATE TABLE "File_modifiedTime" (
 	"File_id" TEXT,
@@ -16185,8 +16238,8 @@ CREATE TABLE "File_modifiedTime" (
 	PRIMARY KEY ("File_id", "modifiedTime"),
 	FOREIGN KEY("File_id") REFERENCES "File" (id)
 );
-CREATE INDEX "ix_File_modifiedTime_File_id" ON "File_modifiedTime" ("File_id");
 CREATE INDEX "ix_File_modifiedTime_modifiedTime" ON "File_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_File_modifiedTime_File_id" ON "File_modifiedTime" ("File_id");
 
 CREATE TABLE "File_objectMarking" (
 	"File_id" TEXT,
@@ -16222,8 +16275,8 @@ CREATE TABLE "FileSystem_modifiedTime" (
 	PRIMARY KEY ("FileSystem_id", "modifiedTime"),
 	FOREIGN KEY("FileSystem_id") REFERENCES "FileSystem" (id)
 );
-CREATE INDEX "ix_FileSystem_modifiedTime_modifiedTime" ON "FileSystem_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_FileSystem_modifiedTime_FileSystem_id" ON "FileSystem_modifiedTime" ("FileSystem_id");
+CREATE INDEX "ix_FileSystem_modifiedTime_modifiedTime" ON "FileSystem_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "FileSystem_objectMarking" (
 	"FileSystem_id" TEXT,
@@ -16259,8 +16312,8 @@ CREATE TABLE "FileSystemObject_modifiedTime" (
 	PRIMARY KEY ("FileSystemObject_id", "modifiedTime"),
 	FOREIGN KEY("FileSystemObject_id") REFERENCES "FileSystemObject" (id)
 );
-CREATE INDEX "ix_FileSystemObject_modifiedTime_modifiedTime" ON "FileSystemObject_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_FileSystemObject_modifiedTime_FileSystemObject_id" ON "FileSystemObject_modifiedTime" ("FileSystemObject_id");
+CREATE INDEX "ix_FileSystemObject_modifiedTime_modifiedTime" ON "FileSystemObject_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "FileSystemObject_objectMarking" (
 	"FileSystemObject_id" TEXT,
@@ -16269,8 +16322,8 @@ CREATE TABLE "FileSystemObject_objectMarking" (
 	FOREIGN KEY("FileSystemObject_id") REFERENCES "FileSystemObject" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_FileSystemObject_objectMarking_objectMarking_id" ON "FileSystemObject_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_FileSystemObject_objectMarking_FileSystemObject_id" ON "FileSystemObject_objectMarking" ("FileSystemObject_id");
+CREATE INDEX "ix_FileSystemObject_objectMarking_objectMarking_id" ON "FileSystemObject_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "FileSystemObject_tag" (
 	"FileSystemObject_id" TEXT,
@@ -16296,8 +16349,8 @@ CREATE TABLE "ForumPost_modifiedTime" (
 	PRIMARY KEY ("ForumPost_id", "modifiedTime"),
 	FOREIGN KEY("ForumPost_id") REFERENCES "ForumPost" (id)
 );
-CREATE INDEX "ix_ForumPost_modifiedTime_modifiedTime" ON "ForumPost_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ForumPost_modifiedTime_ForumPost_id" ON "ForumPost_modifiedTime" ("ForumPost_id");
+CREATE INDEX "ix_ForumPost_modifiedTime_modifiedTime" ON "ForumPost_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ForumPost_objectMarking" (
 	"ForumPost_id" TEXT,
@@ -16306,8 +16359,8 @@ CREATE TABLE "ForumPost_objectMarking" (
 	FOREIGN KEY("ForumPost_id") REFERENCES "ForumPost" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ForumPost_objectMarking_objectMarking_id" ON "ForumPost_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ForumPost_objectMarking_ForumPost_id" ON "ForumPost_objectMarking" ("ForumPost_id");
+CREATE INDEX "ix_ForumPost_objectMarking_objectMarking_id" ON "ForumPost_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ForumPost_tag" (
 	"ForumPost_id" TEXT,
@@ -16333,8 +16386,8 @@ CREATE TABLE "ForumPrivateMessage_modifiedTime" (
 	PRIMARY KEY ("ForumPrivateMessage_id", "modifiedTime"),
 	FOREIGN KEY("ForumPrivateMessage_id") REFERENCES "ForumPrivateMessage" (id)
 );
-CREATE INDEX "ix_ForumPrivateMessage_modifiedTime_modifiedTime" ON "ForumPrivateMessage_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ForumPrivateMessage_modifiedTime_ForumPrivateMessage_id" ON "ForumPrivateMessage_modifiedTime" ("ForumPrivateMessage_id");
+CREATE INDEX "ix_ForumPrivateMessage_modifiedTime_modifiedTime" ON "ForumPrivateMessage_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ForumPrivateMessage_objectMarking" (
 	"ForumPrivateMessage_id" TEXT,
@@ -16343,8 +16396,8 @@ CREATE TABLE "ForumPrivateMessage_objectMarking" (
 	FOREIGN KEY("ForumPrivateMessage_id") REFERENCES "ForumPrivateMessage" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ForumPrivateMessage_objectMarking_objectMarking_id" ON "ForumPrivateMessage_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ForumPrivateMessage_objectMarking_ForumPrivateMessage_id" ON "ForumPrivateMessage_objectMarking" ("ForumPrivateMessage_id");
+CREATE INDEX "ix_ForumPrivateMessage_objectMarking_objectMarking_id" ON "ForumPrivateMessage_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ForumPrivateMessage_tag" (
 	"ForumPrivateMessage_id" TEXT,
@@ -16380,8 +16433,8 @@ CREATE TABLE "GUI_objectMarking" (
 	FOREIGN KEY("GUI_id") REFERENCES "GUI" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_GUI_objectMarking_GUI_id" ON "GUI_objectMarking" ("GUI_id");
 CREATE INDEX "ix_GUI_objectMarking_objectMarking_id" ON "GUI_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_GUI_objectMarking_GUI_id" ON "GUI_objectMarking" ("GUI_id");
 
 CREATE TABLE "GUI_tag" (
 	"GUI_id" TEXT,
@@ -16389,8 +16442,8 @@ CREATE TABLE "GUI_tag" (
 	PRIMARY KEY ("GUI_id", tag),
 	FOREIGN KEY("GUI_id") REFERENCES "GUI" (id)
 );
-CREATE INDEX "ix_GUI_tag_tag" ON "GUI_tag" (tag);
 CREATE INDEX "ix_GUI_tag_GUI_id" ON "GUI_tag" ("GUI_id");
+CREATE INDEX "ix_GUI_tag_tag" ON "GUI_tag" (tag);
 
 CREATE TABLE "GamingConsole_description" (
 	"GamingConsole_id" TEXT,
@@ -16398,8 +16451,8 @@ CREATE TABLE "GamingConsole_description" (
 	PRIMARY KEY ("GamingConsole_id", description),
 	FOREIGN KEY("GamingConsole_id") REFERENCES "GamingConsole" (id)
 );
-CREATE INDEX "ix_GamingConsole_description_GamingConsole_id" ON "GamingConsole_description" ("GamingConsole_id");
 CREATE INDEX "ix_GamingConsole_description_description" ON "GamingConsole_description" (description);
+CREATE INDEX "ix_GamingConsole_description_GamingConsole_id" ON "GamingConsole_description" ("GamingConsole_id");
 
 CREATE TABLE "GamingConsole_modifiedTime" (
 	"GamingConsole_id" TEXT,
@@ -16417,8 +16470,8 @@ CREATE TABLE "GamingConsole_objectMarking" (
 	FOREIGN KEY("GamingConsole_id") REFERENCES "GamingConsole" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_GamingConsole_objectMarking_GamingConsole_id" ON "GamingConsole_objectMarking" ("GamingConsole_id");
 CREATE INDEX "ix_GamingConsole_objectMarking_objectMarking_id" ON "GamingConsole_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_GamingConsole_objectMarking_GamingConsole_id" ON "GamingConsole_objectMarking" ("GamingConsole_id");
 
 CREATE TABLE "GamingConsole_tag" (
 	"GamingConsole_id" TEXT,
@@ -16426,8 +16479,8 @@ CREATE TABLE "GamingConsole_tag" (
 	PRIMARY KEY ("GamingConsole_id", tag),
 	FOREIGN KEY("GamingConsole_id") REFERENCES "GamingConsole" (id)
 );
-CREATE INDEX "ix_GamingConsole_tag_tag" ON "GamingConsole_tag" (tag);
 CREATE INDEX "ix_GamingConsole_tag_GamingConsole_id" ON "GamingConsole_tag" ("GamingConsole_id");
+CREATE INDEX "ix_GamingConsole_tag_tag" ON "GamingConsole_tag" (tag);
 
 CREATE TABLE "GenericObservableObject_description" (
 	"GenericObservableObject_id" TEXT,
@@ -16454,8 +16507,8 @@ CREATE TABLE "GenericObservableObject_objectMarking" (
 	FOREIGN KEY("GenericObservableObject_id") REFERENCES "GenericObservableObject" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_GenericObservableObject_objectMarking_GenericObservableObject_id" ON "GenericObservableObject_objectMarking" ("GenericObservableObject_id");
 CREATE INDEX "ix_GenericObservableObject_objectMarking_objectMarking_id" ON "GenericObservableObject_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_GenericObservableObject_objectMarking_GenericObservableObject_id" ON "GenericObservableObject_objectMarking" ("GenericObservableObject_id");
 
 CREATE TABLE "GenericObservableObject_tag" (
 	"GenericObservableObject_id" TEXT,
@@ -16518,8 +16571,8 @@ CREATE TABLE "GeoLocationLog_modifiedTime" (
 	PRIMARY KEY ("GeoLocationLog_id", "modifiedTime"),
 	FOREIGN KEY("GeoLocationLog_id") REFERENCES "GeoLocationLog" (id)
 );
-CREATE INDEX "ix_GeoLocationLog_modifiedTime_modifiedTime" ON "GeoLocationLog_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_GeoLocationLog_modifiedTime_GeoLocationLog_id" ON "GeoLocationLog_modifiedTime" ("GeoLocationLog_id");
+CREATE INDEX "ix_GeoLocationLog_modifiedTime_modifiedTime" ON "GeoLocationLog_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "GeoLocationLog_objectMarking" (
 	"GeoLocationLog_id" TEXT,
@@ -16528,8 +16581,8 @@ CREATE TABLE "GeoLocationLog_objectMarking" (
 	FOREIGN KEY("GeoLocationLog_id") REFERENCES "GeoLocationLog" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_GeoLocationLog_objectMarking_objectMarking_id" ON "GeoLocationLog_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_GeoLocationLog_objectMarking_GeoLocationLog_id" ON "GeoLocationLog_objectMarking" ("GeoLocationLog_id");
+CREATE INDEX "ix_GeoLocationLog_objectMarking_objectMarking_id" ON "GeoLocationLog_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "GeoLocationLog_tag" (
 	"GeoLocationLog_id" TEXT,
@@ -16537,8 +16590,8 @@ CREATE TABLE "GeoLocationLog_tag" (
 	PRIMARY KEY ("GeoLocationLog_id", tag),
 	FOREIGN KEY("GeoLocationLog_id") REFERENCES "GeoLocationLog" (id)
 );
-CREATE INDEX "ix_GeoLocationLog_tag_GeoLocationLog_id" ON "GeoLocationLog_tag" ("GeoLocationLog_id");
 CREATE INDEX "ix_GeoLocationLog_tag_tag" ON "GeoLocationLog_tag" (tag);
+CREATE INDEX "ix_GeoLocationLog_tag_GeoLocationLog_id" ON "GeoLocationLog_tag" ("GeoLocationLog_id");
 
 CREATE TABLE "GeoLocationTrack_description" (
 	"GeoLocationTrack_id" TEXT,
@@ -16555,8 +16608,8 @@ CREATE TABLE "GeoLocationTrack_modifiedTime" (
 	PRIMARY KEY ("GeoLocationTrack_id", "modifiedTime"),
 	FOREIGN KEY("GeoLocationTrack_id") REFERENCES "GeoLocationTrack" (id)
 );
-CREATE INDEX "ix_GeoLocationTrack_modifiedTime_modifiedTime" ON "GeoLocationTrack_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_GeoLocationTrack_modifiedTime_GeoLocationTrack_id" ON "GeoLocationTrack_modifiedTime" ("GeoLocationTrack_id");
+CREATE INDEX "ix_GeoLocationTrack_modifiedTime_modifiedTime" ON "GeoLocationTrack_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "GeoLocationTrack_objectMarking" (
 	"GeoLocationTrack_id" TEXT,
@@ -16565,8 +16618,8 @@ CREATE TABLE "GeoLocationTrack_objectMarking" (
 	FOREIGN KEY("GeoLocationTrack_id") REFERENCES "GeoLocationTrack" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_GeoLocationTrack_objectMarking_objectMarking_id" ON "GeoLocationTrack_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_GeoLocationTrack_objectMarking_GeoLocationTrack_id" ON "GeoLocationTrack_objectMarking" ("GeoLocationTrack_id");
+CREATE INDEX "ix_GeoLocationTrack_objectMarking_objectMarking_id" ON "GeoLocationTrack_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "GeoLocationTrack_tag" (
 	"GeoLocationTrack_id" TEXT,
@@ -16583,8 +16636,8 @@ CREATE TABLE "HTTPConnection_description" (
 	PRIMARY KEY ("HTTPConnection_id", description),
 	FOREIGN KEY("HTTPConnection_id") REFERENCES "HTTPConnection" (id)
 );
-CREATE INDEX "ix_HTTPConnection_description_HTTPConnection_id" ON "HTTPConnection_description" ("HTTPConnection_id");
 CREATE INDEX "ix_HTTPConnection_description_description" ON "HTTPConnection_description" (description);
+CREATE INDEX "ix_HTTPConnection_description_HTTPConnection_id" ON "HTTPConnection_description" ("HTTPConnection_id");
 
 CREATE TABLE "HTTPConnection_modifiedTime" (
 	"HTTPConnection_id" TEXT,
@@ -16620,8 +16673,8 @@ CREATE TABLE "Hostname_description" (
 	PRIMARY KEY ("Hostname_id", description),
 	FOREIGN KEY("Hostname_id") REFERENCES "Hostname" (id)
 );
-CREATE INDEX "ix_Hostname_description_Hostname_id" ON "Hostname_description" ("Hostname_id");
 CREATE INDEX "ix_Hostname_description_description" ON "Hostname_description" (description);
+CREATE INDEX "ix_Hostname_description_Hostname_id" ON "Hostname_description" ("Hostname_id");
 
 CREATE TABLE "Hostname_modifiedTime" (
 	"Hostname_id" TEXT,
@@ -16639,8 +16692,8 @@ CREATE TABLE "Hostname_objectMarking" (
 	FOREIGN KEY("Hostname_id") REFERENCES "Hostname" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Hostname_objectMarking_Hostname_id" ON "Hostname_objectMarking" ("Hostname_id");
 CREATE INDEX "ix_Hostname_objectMarking_objectMarking_id" ON "Hostname_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Hostname_objectMarking_Hostname_id" ON "Hostname_objectMarking" ("Hostname_id");
 
 CREATE TABLE "Hostname_tag" (
 	"Hostname_id" TEXT,
@@ -16657,8 +16710,8 @@ CREATE TABLE "ICMPConnection_description" (
 	PRIMARY KEY ("ICMPConnection_id", description),
 	FOREIGN KEY("ICMPConnection_id") REFERENCES "ICMPConnection" (id)
 );
-CREATE INDEX "ix_ICMPConnection_description_ICMPConnection_id" ON "ICMPConnection_description" ("ICMPConnection_id");
 CREATE INDEX "ix_ICMPConnection_description_description" ON "ICMPConnection_description" (description);
+CREATE INDEX "ix_ICMPConnection_description_ICMPConnection_id" ON "ICMPConnection_description" ("ICMPConnection_id");
 
 CREATE TABLE "ICMPConnection_modifiedTime" (
 	"ICMPConnection_id" TEXT,
@@ -16676,8 +16729,8 @@ CREATE TABLE "ICMPConnection_objectMarking" (
 	FOREIGN KEY("ICMPConnection_id") REFERENCES "ICMPConnection" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ICMPConnection_objectMarking_ICMPConnection_id" ON "ICMPConnection_objectMarking" ("ICMPConnection_id");
 CREATE INDEX "ix_ICMPConnection_objectMarking_objectMarking_id" ON "ICMPConnection_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ICMPConnection_objectMarking_ICMPConnection_id" ON "ICMPConnection_objectMarking" ("ICMPConnection_id");
 
 CREATE TABLE "ICMPConnection_tag" (
 	"ICMPConnection_id" TEXT,
@@ -16703,8 +16756,8 @@ CREATE TABLE "IPAddress_modifiedTime" (
 	PRIMARY KEY ("IPAddress_id", "modifiedTime"),
 	FOREIGN KEY("IPAddress_id") REFERENCES "IPAddress" (id)
 );
-CREATE INDEX "ix_IPAddress_modifiedTime_modifiedTime" ON "IPAddress_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IPAddress_modifiedTime_IPAddress_id" ON "IPAddress_modifiedTime" ("IPAddress_id");
+CREATE INDEX "ix_IPAddress_modifiedTime_modifiedTime" ON "IPAddress_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IPAddress_objectMarking" (
 	"IPAddress_id" TEXT,
@@ -16740,8 +16793,8 @@ CREATE TABLE "IPNetmask_modifiedTime" (
 	PRIMARY KEY ("IPNetmask_id", "modifiedTime"),
 	FOREIGN KEY("IPNetmask_id") REFERENCES "IPNetmask" (id)
 );
-CREATE INDEX "ix_IPNetmask_modifiedTime_modifiedTime" ON "IPNetmask_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IPNetmask_modifiedTime_IPNetmask_id" ON "IPNetmask_modifiedTime" ("IPNetmask_id");
+CREATE INDEX "ix_IPNetmask_modifiedTime_modifiedTime" ON "IPNetmask_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IPNetmask_objectMarking" (
 	"IPNetmask_id" TEXT,
@@ -16750,8 +16803,8 @@ CREATE TABLE "IPNetmask_objectMarking" (
 	FOREIGN KEY("IPNetmask_id") REFERENCES "IPNetmask" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_IPNetmask_objectMarking_objectMarking_id" ON "IPNetmask_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_IPNetmask_objectMarking_IPNetmask_id" ON "IPNetmask_objectMarking" ("IPNetmask_id");
+CREATE INDEX "ix_IPNetmask_objectMarking_objectMarking_id" ON "IPNetmask_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "IPNetmask_tag" (
 	"IPNetmask_id" TEXT,
@@ -16777,8 +16830,8 @@ CREATE TABLE "IPhone_modifiedTime" (
 	PRIMARY KEY ("IPhone_id", "modifiedTime"),
 	FOREIGN KEY("IPhone_id") REFERENCES "IPhone" (id)
 );
-CREATE INDEX "ix_IPhone_modifiedTime_modifiedTime" ON "IPhone_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IPhone_modifiedTime_IPhone_id" ON "IPhone_modifiedTime" ("IPhone_id");
+CREATE INDEX "ix_IPhone_modifiedTime_modifiedTime" ON "IPhone_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IPhone_objectMarking" (
 	"IPhone_id" TEXT,
@@ -16787,8 +16840,8 @@ CREATE TABLE "IPhone_objectMarking" (
 	FOREIGN KEY("IPhone_id") REFERENCES "IPhone" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_IPhone_objectMarking_objectMarking_id" ON "IPhone_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_IPhone_objectMarking_IPhone_id" ON "IPhone_objectMarking" ("IPhone_id");
+CREATE INDEX "ix_IPhone_objectMarking_objectMarking_id" ON "IPhone_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "IPhone_tag" (
 	"IPhone_id" TEXT,
@@ -16805,8 +16858,8 @@ CREATE TABLE "IPv4Address_description" (
 	PRIMARY KEY ("IPv4Address_id", description),
 	FOREIGN KEY("IPv4Address_id") REFERENCES "IPv4Address" (id)
 );
-CREATE INDEX "ix_IPv4Address_description_IPv4Address_id" ON "IPv4Address_description" ("IPv4Address_id");
 CREATE INDEX "ix_IPv4Address_description_description" ON "IPv4Address_description" (description);
+CREATE INDEX "ix_IPv4Address_description_IPv4Address_id" ON "IPv4Address_description" ("IPv4Address_id");
 
 CREATE TABLE "IPv4Address_modifiedTime" (
 	"IPv4Address_id" TEXT,
@@ -16814,8 +16867,8 @@ CREATE TABLE "IPv4Address_modifiedTime" (
 	PRIMARY KEY ("IPv4Address_id", "modifiedTime"),
 	FOREIGN KEY("IPv4Address_id") REFERENCES "IPv4Address" (id)
 );
-CREATE INDEX "ix_IPv4Address_modifiedTime_modifiedTime" ON "IPv4Address_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IPv4Address_modifiedTime_IPv4Address_id" ON "IPv4Address_modifiedTime" ("IPv4Address_id");
+CREATE INDEX "ix_IPv4Address_modifiedTime_modifiedTime" ON "IPv4Address_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IPv4Address_objectMarking" (
 	"IPv4Address_id" TEXT,
@@ -16842,8 +16895,8 @@ CREATE TABLE "IPv6Address_description" (
 	PRIMARY KEY ("IPv6Address_id", description),
 	FOREIGN KEY("IPv6Address_id") REFERENCES "IPv6Address" (id)
 );
-CREATE INDEX "ix_IPv6Address_description_IPv6Address_id" ON "IPv6Address_description" ("IPv6Address_id");
 CREATE INDEX "ix_IPv6Address_description_description" ON "IPv6Address_description" (description);
+CREATE INDEX "ix_IPv6Address_description_IPv6Address_id" ON "IPv6Address_description" ("IPv6Address_id");
 
 CREATE TABLE "IPv6Address_modifiedTime" (
 	"IPv6Address_id" TEXT,
@@ -16851,8 +16904,8 @@ CREATE TABLE "IPv6Address_modifiedTime" (
 	PRIMARY KEY ("IPv6Address_id", "modifiedTime"),
 	FOREIGN KEY("IPv6Address_id") REFERENCES "IPv6Address" (id)
 );
-CREATE INDEX "ix_IPv6Address_modifiedTime_modifiedTime" ON "IPv6Address_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_IPv6Address_modifiedTime_IPv6Address_id" ON "IPv6Address_modifiedTime" ("IPv6Address_id");
+CREATE INDEX "ix_IPv6Address_modifiedTime_modifiedTime" ON "IPv6Address_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "IPv6Address_objectMarking" (
 	"IPv6Address_id" TEXT,
@@ -16879,8 +16932,8 @@ CREATE TABLE "Image_description" (
 	PRIMARY KEY ("Image_id", description),
 	FOREIGN KEY("Image_id") REFERENCES "Image" (id)
 );
-CREATE INDEX "ix_Image_description_Image_id" ON "Image_description" ("Image_id");
 CREATE INDEX "ix_Image_description_description" ON "Image_description" (description);
+CREATE INDEX "ix_Image_description_Image_id" ON "Image_description" ("Image_id");
 
 CREATE TABLE "Image_modifiedTime" (
 	"Image_id" TEXT,
@@ -16888,8 +16941,8 @@ CREATE TABLE "Image_modifiedTime" (
 	PRIMARY KEY ("Image_id", "modifiedTime"),
 	FOREIGN KEY("Image_id") REFERENCES "Image" (id)
 );
-CREATE INDEX "ix_Image_modifiedTime_modifiedTime" ON "Image_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Image_modifiedTime_Image_id" ON "Image_modifiedTime" ("Image_id");
+CREATE INDEX "ix_Image_modifiedTime_modifiedTime" ON "Image_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Image_objectMarking" (
 	"Image_id" TEXT,
@@ -16907,8 +16960,8 @@ CREATE TABLE "Image_tag" (
 	PRIMARY KEY ("Image_id", tag),
 	FOREIGN KEY("Image_id") REFERENCES "Image" (id)
 );
-CREATE INDEX "ix_Image_tag_Image_id" ON "Image_tag" ("Image_id");
 CREATE INDEX "ix_Image_tag_tag" ON "Image_tag" (tag);
+CREATE INDEX "ix_Image_tag_Image_id" ON "Image_tag" ("Image_id");
 
 CREATE TABLE "InstantMessagingAddress_description" (
 	"InstantMessagingAddress_id" TEXT,
@@ -16925,8 +16978,8 @@ CREATE TABLE "InstantMessagingAddress_modifiedTime" (
 	PRIMARY KEY ("InstantMessagingAddress_id", "modifiedTime"),
 	FOREIGN KEY("InstantMessagingAddress_id") REFERENCES "InstantMessagingAddress" (id)
 );
-CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_modifiedTime" ON "InstantMessagingAddress_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_InstantMessagingAddress_id" ON "InstantMessagingAddress_modifiedTime" ("InstantMessagingAddress_id");
+CREATE INDEX "ix_InstantMessagingAddress_modifiedTime_modifiedTime" ON "InstantMessagingAddress_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "InstantMessagingAddress_objectMarking" (
 	"InstantMessagingAddress_id" TEXT,
@@ -16935,8 +16988,8 @@ CREATE TABLE "InstantMessagingAddress_objectMarking" (
 	FOREIGN KEY("InstantMessagingAddress_id") REFERENCES "InstantMessagingAddress" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_InstantMessagingAddress_objectMarking_InstantMessagingAddress_id" ON "InstantMessagingAddress_objectMarking" ("InstantMessagingAddress_id");
 CREATE INDEX "ix_InstantMessagingAddress_objectMarking_objectMarking_id" ON "InstantMessagingAddress_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_InstantMessagingAddress_objectMarking_InstantMessagingAddress_id" ON "InstantMessagingAddress_objectMarking" ("InstantMessagingAddress_id");
 
 CREATE TABLE "InstantMessagingAddress_tag" (
 	"InstantMessagingAddress_id" TEXT,
@@ -16953,8 +17006,8 @@ CREATE TABLE "Junction_description" (
 	PRIMARY KEY ("Junction_id", description),
 	FOREIGN KEY("Junction_id") REFERENCES "Junction" (id)
 );
-CREATE INDEX "ix_Junction_description_Junction_id" ON "Junction_description" ("Junction_id");
 CREATE INDEX "ix_Junction_description_description" ON "Junction_description" (description);
+CREATE INDEX "ix_Junction_description_Junction_id" ON "Junction_description" ("Junction_id");
 
 CREATE TABLE "Junction_modifiedTime" (
 	"Junction_id" TEXT,
@@ -16972,8 +17025,8 @@ CREATE TABLE "Junction_objectMarking" (
 	FOREIGN KEY("Junction_id") REFERENCES "Junction" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Junction_objectMarking_Junction_id" ON "Junction_objectMarking" ("Junction_id");
 CREATE INDEX "ix_Junction_objectMarking_objectMarking_id" ON "Junction_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Junction_objectMarking_Junction_id" ON "Junction_objectMarking" ("Junction_id");
 
 CREATE TABLE "Junction_tag" (
 	"Junction_id" TEXT,
@@ -16990,8 +17043,8 @@ CREATE TABLE "Laptop_description" (
 	PRIMARY KEY ("Laptop_id", description),
 	FOREIGN KEY("Laptop_id") REFERENCES "Laptop" (id)
 );
-CREATE INDEX "ix_Laptop_description_Laptop_id" ON "Laptop_description" ("Laptop_id");
 CREATE INDEX "ix_Laptop_description_description" ON "Laptop_description" (description);
+CREATE INDEX "ix_Laptop_description_Laptop_id" ON "Laptop_description" ("Laptop_id");
 
 CREATE TABLE "Laptop_modifiedTime" (
 	"Laptop_id" TEXT,
@@ -17009,8 +17062,8 @@ CREATE TABLE "Laptop_objectMarking" (
 	FOREIGN KEY("Laptop_id") REFERENCES "Laptop" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Laptop_objectMarking_Laptop_id" ON "Laptop_objectMarking" ("Laptop_id");
 CREATE INDEX "ix_Laptop_objectMarking_objectMarking_id" ON "Laptop_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Laptop_objectMarking_Laptop_id" ON "Laptop_objectMarking" ("Laptop_id");
 
 CREATE TABLE "Laptop_tag" (
 	"Laptop_id" TEXT,
@@ -17027,8 +17080,8 @@ CREATE TABLE "Library_description" (
 	PRIMARY KEY ("Library_id", description),
 	FOREIGN KEY("Library_id") REFERENCES "Library" (id)
 );
-CREATE INDEX "ix_Library_description_Library_id" ON "Library_description" ("Library_id");
 CREATE INDEX "ix_Library_description_description" ON "Library_description" (description);
+CREATE INDEX "ix_Library_description_Library_id" ON "Library_description" ("Library_id");
 
 CREATE TABLE "Library_modifiedTime" (
 	"Library_id" TEXT,
@@ -17046,8 +17099,8 @@ CREATE TABLE "Library_objectMarking" (
 	FOREIGN KEY("Library_id") REFERENCES "Library" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Library_objectMarking_Library_id" ON "Library_objectMarking" ("Library_id");
 CREATE INDEX "ix_Library_objectMarking_objectMarking_id" ON "Library_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Library_objectMarking_Library_id" ON "Library_objectMarking" ("Library_id");
 
 CREATE TABLE "Library_tag" (
 	"Library_id" TEXT,
@@ -17064,8 +17117,8 @@ CREATE TABLE "MACAddress_description" (
 	PRIMARY KEY ("MACAddress_id", description),
 	FOREIGN KEY("MACAddress_id") REFERENCES "MACAddress" (id)
 );
-CREATE INDEX "ix_MACAddress_description_MACAddress_id" ON "MACAddress_description" ("MACAddress_id");
 CREATE INDEX "ix_MACAddress_description_description" ON "MACAddress_description" (description);
+CREATE INDEX "ix_MACAddress_description_MACAddress_id" ON "MACAddress_description" ("MACAddress_id");
 
 CREATE TABLE "MACAddress_modifiedTime" (
 	"MACAddress_id" TEXT,
@@ -17083,8 +17136,8 @@ CREATE TABLE "MACAddress_objectMarking" (
 	FOREIGN KEY("MACAddress_id") REFERENCES "MACAddress" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MACAddress_objectMarking_MACAddress_id" ON "MACAddress_objectMarking" ("MACAddress_id");
 CREATE INDEX "ix_MACAddress_objectMarking_objectMarking_id" ON "MACAddress_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_MACAddress_objectMarking_MACAddress_id" ON "MACAddress_objectMarking" ("MACAddress_id");
 
 CREATE TABLE "MACAddress_tag" (
 	"MACAddress_id" TEXT,
@@ -17101,8 +17154,8 @@ CREATE TABLE "Memory_description" (
 	PRIMARY KEY ("Memory_id", description),
 	FOREIGN KEY("Memory_id") REFERENCES "Memory" (id)
 );
-CREATE INDEX "ix_Memory_description_Memory_id" ON "Memory_description" ("Memory_id");
 CREATE INDEX "ix_Memory_description_description" ON "Memory_description" (description);
+CREATE INDEX "ix_Memory_description_Memory_id" ON "Memory_description" ("Memory_id");
 
 CREATE TABLE "Memory_modifiedTime" (
 	"Memory_id" TEXT,
@@ -17120,8 +17173,8 @@ CREATE TABLE "Memory_objectMarking" (
 	FOREIGN KEY("Memory_id") REFERENCES "Memory" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Memory_objectMarking_Memory_id" ON "Memory_objectMarking" ("Memory_id");
 CREATE INDEX "ix_Memory_objectMarking_objectMarking_id" ON "Memory_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Memory_objectMarking_Memory_id" ON "Memory_objectMarking" ("Memory_id");
 
 CREATE TABLE "Memory_tag" (
 	"Memory_id" TEXT,
@@ -17147,8 +17200,8 @@ CREATE TABLE "Message_modifiedTime" (
 	PRIMARY KEY ("Message_id", "modifiedTime"),
 	FOREIGN KEY("Message_id") REFERENCES "Message" (id)
 );
-CREATE INDEX "ix_Message_modifiedTime_modifiedTime" ON "Message_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Message_modifiedTime_Message_id" ON "Message_modifiedTime" ("Message_id");
+CREATE INDEX "ix_Message_modifiedTime_modifiedTime" ON "Message_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Message_objectMarking" (
 	"Message_id" TEXT,
@@ -17184,8 +17237,8 @@ CREATE TABLE "MessageThread_modifiedTime" (
 	PRIMARY KEY ("MessageThread_id", "modifiedTime"),
 	FOREIGN KEY("MessageThread_id") REFERENCES "MessageThread" (id)
 );
-CREATE INDEX "ix_MessageThread_modifiedTime_MessageThread_id" ON "MessageThread_modifiedTime" ("MessageThread_id");
 CREATE INDEX "ix_MessageThread_modifiedTime_modifiedTime" ON "MessageThread_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_MessageThread_modifiedTime_MessageThread_id" ON "MessageThread_modifiedTime" ("MessageThread_id");
 
 CREATE TABLE "MessageThread_objectMarking" (
 	"MessageThread_id" TEXT,
@@ -17203,8 +17256,8 @@ CREATE TABLE "MessageThread_tag" (
 	PRIMARY KEY ("MessageThread_id", tag),
 	FOREIGN KEY("MessageThread_id") REFERENCES "MessageThread" (id)
 );
-CREATE INDEX "ix_MessageThread_tag_tag" ON "MessageThread_tag" (tag);
 CREATE INDEX "ix_MessageThread_tag_MessageThread_id" ON "MessageThread_tag" ("MessageThread_id");
+CREATE INDEX "ix_MessageThread_tag_tag" ON "MessageThread_tag" (tag);
 
 CREATE TABLE "MessageThreadFacet_observable_participant" (
 	"MessageThreadFacet_id" INTEGER,
@@ -17222,8 +17275,8 @@ CREATE TABLE "MobileAccount_description" (
 	PRIMARY KEY ("MobileAccount_id", description),
 	FOREIGN KEY("MobileAccount_id") REFERENCES "MobileAccount" (id)
 );
-CREATE INDEX "ix_MobileAccount_description_description" ON "MobileAccount_description" (description);
 CREATE INDEX "ix_MobileAccount_description_MobileAccount_id" ON "MobileAccount_description" ("MobileAccount_id");
+CREATE INDEX "ix_MobileAccount_description_description" ON "MobileAccount_description" (description);
 
 CREATE TABLE "MobileAccount_modifiedTime" (
 	"MobileAccount_id" TEXT,
@@ -17231,8 +17284,8 @@ CREATE TABLE "MobileAccount_modifiedTime" (
 	PRIMARY KEY ("MobileAccount_id", "modifiedTime"),
 	FOREIGN KEY("MobileAccount_id") REFERENCES "MobileAccount" (id)
 );
-CREATE INDEX "ix_MobileAccount_modifiedTime_MobileAccount_id" ON "MobileAccount_modifiedTime" ("MobileAccount_id");
 CREATE INDEX "ix_MobileAccount_modifiedTime_modifiedTime" ON "MobileAccount_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_MobileAccount_modifiedTime_MobileAccount_id" ON "MobileAccount_modifiedTime" ("MobileAccount_id");
 
 CREATE TABLE "MobileAccount_objectMarking" (
 	"MobileAccount_id" TEXT,
@@ -17241,8 +17294,8 @@ CREATE TABLE "MobileAccount_objectMarking" (
 	FOREIGN KEY("MobileAccount_id") REFERENCES "MobileAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MobileAccount_objectMarking_MobileAccount_id" ON "MobileAccount_objectMarking" ("MobileAccount_id");
 CREATE INDEX "ix_MobileAccount_objectMarking_objectMarking_id" ON "MobileAccount_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_MobileAccount_objectMarking_MobileAccount_id" ON "MobileAccount_objectMarking" ("MobileAccount_id");
 
 CREATE TABLE "MobileAccount_tag" (
 	"MobileAccount_id" TEXT,
@@ -17250,8 +17303,8 @@ CREATE TABLE "MobileAccount_tag" (
 	PRIMARY KEY ("MobileAccount_id", tag),
 	FOREIGN KEY("MobileAccount_id") REFERENCES "MobileAccount" (id)
 );
-CREATE INDEX "ix_MobileAccount_tag_tag" ON "MobileAccount_tag" (tag);
 CREATE INDEX "ix_MobileAccount_tag_MobileAccount_id" ON "MobileAccount_tag" ("MobileAccount_id");
+CREATE INDEX "ix_MobileAccount_tag_tag" ON "MobileAccount_tag" (tag);
 
 CREATE TABLE "MobileDevice_description" (
 	"MobileDevice_id" TEXT,
@@ -17296,8 +17349,8 @@ CREATE TABLE "MobilePhone_description" (
 	PRIMARY KEY ("MobilePhone_id", description),
 	FOREIGN KEY("MobilePhone_id") REFERENCES "MobilePhone" (id)
 );
-CREATE INDEX "ix_MobilePhone_description_description" ON "MobilePhone_description" (description);
 CREATE INDEX "ix_MobilePhone_description_MobilePhone_id" ON "MobilePhone_description" ("MobilePhone_id");
+CREATE INDEX "ix_MobilePhone_description_description" ON "MobilePhone_description" (description);
 
 CREATE TABLE "MobilePhone_modifiedTime" (
 	"MobilePhone_id" TEXT,
@@ -17333,8 +17386,8 @@ CREATE TABLE "Mutex_description" (
 	PRIMARY KEY ("Mutex_id", description),
 	FOREIGN KEY("Mutex_id") REFERENCES "Mutex" (id)
 );
-CREATE INDEX "ix_Mutex_description_description" ON "Mutex_description" (description);
 CREATE INDEX "ix_Mutex_description_Mutex_id" ON "Mutex_description" ("Mutex_id");
+CREATE INDEX "ix_Mutex_description_description" ON "Mutex_description" (description);
 
 CREATE TABLE "Mutex_modifiedTime" (
 	"Mutex_id" TEXT,
@@ -17342,8 +17395,8 @@ CREATE TABLE "Mutex_modifiedTime" (
 	PRIMARY KEY ("Mutex_id", "modifiedTime"),
 	FOREIGN KEY("Mutex_id") REFERENCES "Mutex" (id)
 );
-CREATE INDEX "ix_Mutex_modifiedTime_Mutex_id" ON "Mutex_modifiedTime" ("Mutex_id");
 CREATE INDEX "ix_Mutex_modifiedTime_modifiedTime" ON "Mutex_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Mutex_modifiedTime_Mutex_id" ON "Mutex_modifiedTime" ("Mutex_id");
 
 CREATE TABLE "Mutex_objectMarking" (
 	"Mutex_id" TEXT,
@@ -17370,8 +17423,8 @@ CREATE TABLE "NTFSFile_description" (
 	PRIMARY KEY ("NTFSFile_id", description),
 	FOREIGN KEY("NTFSFile_id") REFERENCES "NTFSFile" (id)
 );
-CREATE INDEX "ix_NTFSFile_description_description" ON "NTFSFile_description" (description);
 CREATE INDEX "ix_NTFSFile_description_NTFSFile_id" ON "NTFSFile_description" ("NTFSFile_id");
+CREATE INDEX "ix_NTFSFile_description_description" ON "NTFSFile_description" (description);
 
 CREATE TABLE "NTFSFile_modifiedTime" (
 	"NTFSFile_id" TEXT,
@@ -17379,8 +17432,8 @@ CREATE TABLE "NTFSFile_modifiedTime" (
 	PRIMARY KEY ("NTFSFile_id", "modifiedTime"),
 	FOREIGN KEY("NTFSFile_id") REFERENCES "NTFSFile" (id)
 );
-CREATE INDEX "ix_NTFSFile_modifiedTime_NTFSFile_id" ON "NTFSFile_modifiedTime" ("NTFSFile_id");
 CREATE INDEX "ix_NTFSFile_modifiedTime_modifiedTime" ON "NTFSFile_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_NTFSFile_modifiedTime_NTFSFile_id" ON "NTFSFile_modifiedTime" ("NTFSFile_id");
 
 CREATE TABLE "NTFSFile_objectMarking" (
 	"NTFSFile_id" TEXT,
@@ -17436,8 +17489,8 @@ CREATE TABLE "NamedPipe_objectMarking" (
 	FOREIGN KEY("NamedPipe_id") REFERENCES "NamedPipe" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NamedPipe_objectMarking_NamedPipe_id" ON "NamedPipe_objectMarking" ("NamedPipe_id");
 CREATE INDEX "ix_NamedPipe_objectMarking_objectMarking_id" ON "NamedPipe_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_NamedPipe_objectMarking_NamedPipe_id" ON "NamedPipe_objectMarking" ("NamedPipe_id");
 
 CREATE TABLE "NamedPipe_tag" (
 	"NamedPipe_id" TEXT,
@@ -17454,8 +17507,8 @@ CREATE TABLE "NetworkAppliance_description" (
 	PRIMARY KEY ("NetworkAppliance_id", description),
 	FOREIGN KEY("NetworkAppliance_id") REFERENCES "NetworkAppliance" (id)
 );
-CREATE INDEX "ix_NetworkAppliance_description_NetworkAppliance_id" ON "NetworkAppliance_description" ("NetworkAppliance_id");
 CREATE INDEX "ix_NetworkAppliance_description_description" ON "NetworkAppliance_description" (description);
+CREATE INDEX "ix_NetworkAppliance_description_NetworkAppliance_id" ON "NetworkAppliance_description" ("NetworkAppliance_id");
 
 CREATE TABLE "NetworkAppliance_modifiedTime" (
 	"NetworkAppliance_id" TEXT,
@@ -17473,8 +17526,8 @@ CREATE TABLE "NetworkAppliance_objectMarking" (
 	FOREIGN KEY("NetworkAppliance_id") REFERENCES "NetworkAppliance" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NetworkAppliance_objectMarking_NetworkAppliance_id" ON "NetworkAppliance_objectMarking" ("NetworkAppliance_id");
 CREATE INDEX "ix_NetworkAppliance_objectMarking_objectMarking_id" ON "NetworkAppliance_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_NetworkAppliance_objectMarking_NetworkAppliance_id" ON "NetworkAppliance_objectMarking" ("NetworkAppliance_id");
 
 CREATE TABLE "NetworkAppliance_tag" (
 	"NetworkAppliance_id" TEXT,
@@ -17491,8 +17544,8 @@ CREATE TABLE "NetworkConnection_description" (
 	PRIMARY KEY ("NetworkConnection_id", description),
 	FOREIGN KEY("NetworkConnection_id") REFERENCES "NetworkConnection" (id)
 );
-CREATE INDEX "ix_NetworkConnection_description_NetworkConnection_id" ON "NetworkConnection_description" ("NetworkConnection_id");
 CREATE INDEX "ix_NetworkConnection_description_description" ON "NetworkConnection_description" (description);
+CREATE INDEX "ix_NetworkConnection_description_NetworkConnection_id" ON "NetworkConnection_description" ("NetworkConnection_id");
 
 CREATE TABLE "NetworkConnection_modifiedTime" (
 	"NetworkConnection_id" TEXT,
@@ -17510,8 +17563,8 @@ CREATE TABLE "NetworkConnection_objectMarking" (
 	FOREIGN KEY("NetworkConnection_id") REFERENCES "NetworkConnection" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NetworkConnection_objectMarking_NetworkConnection_id" ON "NetworkConnection_objectMarking" ("NetworkConnection_id");
 CREATE INDEX "ix_NetworkConnection_objectMarking_objectMarking_id" ON "NetworkConnection_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_NetworkConnection_objectMarking_NetworkConnection_id" ON "NetworkConnection_objectMarking" ("NetworkConnection_id");
 
 CREATE TABLE "NetworkConnection_tag" (
 	"NetworkConnection_id" TEXT,
@@ -17537,8 +17590,8 @@ CREATE TABLE "NetworkFlow_modifiedTime" (
 	PRIMARY KEY ("NetworkFlow_id", "modifiedTime"),
 	FOREIGN KEY("NetworkFlow_id") REFERENCES "NetworkFlow" (id)
 );
-CREATE INDEX "ix_NetworkFlow_modifiedTime_modifiedTime" ON "NetworkFlow_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_NetworkFlow_modifiedTime_NetworkFlow_id" ON "NetworkFlow_modifiedTime" ("NetworkFlow_id");
+CREATE INDEX "ix_NetworkFlow_modifiedTime_modifiedTime" ON "NetworkFlow_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "NetworkFlow_objectMarking" (
 	"NetworkFlow_id" TEXT,
@@ -17574,8 +17627,8 @@ CREATE TABLE "NetworkInterface_modifiedTime" (
 	PRIMARY KEY ("NetworkInterface_id", "modifiedTime"),
 	FOREIGN KEY("NetworkInterface_id") REFERENCES "NetworkInterface" (id)
 );
-CREATE INDEX "ix_NetworkInterface_modifiedTime_modifiedTime" ON "NetworkInterface_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_NetworkInterface_modifiedTime_NetworkInterface_id" ON "NetworkInterface_modifiedTime" ("NetworkInterface_id");
+CREATE INDEX "ix_NetworkInterface_modifiedTime_modifiedTime" ON "NetworkInterface_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "NetworkInterface_objectMarking" (
 	"NetworkInterface_id" TEXT,
@@ -17584,8 +17637,8 @@ CREATE TABLE "NetworkInterface_objectMarking" (
 	FOREIGN KEY("NetworkInterface_id") REFERENCES "NetworkInterface" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NetworkInterface_objectMarking_objectMarking_id" ON "NetworkInterface_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_NetworkInterface_objectMarking_NetworkInterface_id" ON "NetworkInterface_objectMarking" ("NetworkInterface_id");
+CREATE INDEX "ix_NetworkInterface_objectMarking_objectMarking_id" ON "NetworkInterface_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "NetworkInterface_tag" (
 	"NetworkInterface_id" TEXT,
@@ -17602,8 +17655,8 @@ CREATE TABLE "NetworkProtocol_description" (
 	PRIMARY KEY ("NetworkProtocol_id", description),
 	FOREIGN KEY("NetworkProtocol_id") REFERENCES "NetworkProtocol" (id)
 );
-CREATE INDEX "ix_NetworkProtocol_description_NetworkProtocol_id" ON "NetworkProtocol_description" ("NetworkProtocol_id");
 CREATE INDEX "ix_NetworkProtocol_description_description" ON "NetworkProtocol_description" (description);
+CREATE INDEX "ix_NetworkProtocol_description_NetworkProtocol_id" ON "NetworkProtocol_description" ("NetworkProtocol_id");
 
 CREATE TABLE "NetworkProtocol_modifiedTime" (
 	"NetworkProtocol_id" TEXT,
@@ -17611,8 +17664,8 @@ CREATE TABLE "NetworkProtocol_modifiedTime" (
 	PRIMARY KEY ("NetworkProtocol_id", "modifiedTime"),
 	FOREIGN KEY("NetworkProtocol_id") REFERENCES "NetworkProtocol" (id)
 );
-CREATE INDEX "ix_NetworkProtocol_modifiedTime_NetworkProtocol_id" ON "NetworkProtocol_modifiedTime" ("NetworkProtocol_id");
 CREATE INDEX "ix_NetworkProtocol_modifiedTime_modifiedTime" ON "NetworkProtocol_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_NetworkProtocol_modifiedTime_NetworkProtocol_id" ON "NetworkProtocol_modifiedTime" ("NetworkProtocol_id");
 
 CREATE TABLE "NetworkProtocol_objectMarking" (
 	"NetworkProtocol_id" TEXT,
@@ -17648,8 +17701,8 @@ CREATE TABLE "NetworkRoute_modifiedTime" (
 	PRIMARY KEY ("NetworkRoute_id", "modifiedTime"),
 	FOREIGN KEY("NetworkRoute_id") REFERENCES "NetworkRoute" (id)
 );
-CREATE INDEX "ix_NetworkRoute_modifiedTime_NetworkRoute_id" ON "NetworkRoute_modifiedTime" ("NetworkRoute_id");
 CREATE INDEX "ix_NetworkRoute_modifiedTime_modifiedTime" ON "NetworkRoute_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_NetworkRoute_modifiedTime_NetworkRoute_id" ON "NetworkRoute_modifiedTime" ("NetworkRoute_id");
 
 CREATE TABLE "NetworkRoute_objectMarking" (
 	"NetworkRoute_id" TEXT,
@@ -17658,8 +17711,8 @@ CREATE TABLE "NetworkRoute_objectMarking" (
 	FOREIGN KEY("NetworkRoute_id") REFERENCES "NetworkRoute" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NetworkRoute_objectMarking_NetworkRoute_id" ON "NetworkRoute_objectMarking" ("NetworkRoute_id");
 CREATE INDEX "ix_NetworkRoute_objectMarking_objectMarking_id" ON "NetworkRoute_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_NetworkRoute_objectMarking_NetworkRoute_id" ON "NetworkRoute_objectMarking" ("NetworkRoute_id");
 
 CREATE TABLE "NetworkRoute_tag" (
 	"NetworkRoute_id" TEXT,
@@ -17676,8 +17729,8 @@ CREATE TABLE "NetworkSubnet_description" (
 	PRIMARY KEY ("NetworkSubnet_id", description),
 	FOREIGN KEY("NetworkSubnet_id") REFERENCES "NetworkSubnet" (id)
 );
-CREATE INDEX "ix_NetworkSubnet_description_description" ON "NetworkSubnet_description" (description);
 CREATE INDEX "ix_NetworkSubnet_description_NetworkSubnet_id" ON "NetworkSubnet_description" ("NetworkSubnet_id");
+CREATE INDEX "ix_NetworkSubnet_description_description" ON "NetworkSubnet_description" (description);
 
 CREATE TABLE "NetworkSubnet_modifiedTime" (
 	"NetworkSubnet_id" TEXT,
@@ -17685,8 +17738,8 @@ CREATE TABLE "NetworkSubnet_modifiedTime" (
 	PRIMARY KEY ("NetworkSubnet_id", "modifiedTime"),
 	FOREIGN KEY("NetworkSubnet_id") REFERENCES "NetworkSubnet" (id)
 );
-CREATE INDEX "ix_NetworkSubnet_modifiedTime_NetworkSubnet_id" ON "NetworkSubnet_modifiedTime" ("NetworkSubnet_id");
 CREATE INDEX "ix_NetworkSubnet_modifiedTime_modifiedTime" ON "NetworkSubnet_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_NetworkSubnet_modifiedTime_NetworkSubnet_id" ON "NetworkSubnet_modifiedTime" ("NetworkSubnet_id");
 
 CREATE TABLE "NetworkSubnet_objectMarking" (
 	"NetworkSubnet_id" TEXT,
@@ -17695,8 +17748,8 @@ CREATE TABLE "NetworkSubnet_objectMarking" (
 	FOREIGN KEY("NetworkSubnet_id") REFERENCES "NetworkSubnet" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_NetworkSubnet_objectMarking_NetworkSubnet_id" ON "NetworkSubnet_objectMarking" ("NetworkSubnet_id");
 CREATE INDEX "ix_NetworkSubnet_objectMarking_objectMarking_id" ON "NetworkSubnet_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_NetworkSubnet_objectMarking_NetworkSubnet_id" ON "NetworkSubnet_objectMarking" ("NetworkSubnet_id");
 
 CREATE TABLE "NetworkSubnet_tag" (
 	"NetworkSubnet_id" TEXT,
@@ -17713,8 +17766,8 @@ CREATE TABLE "Note_description" (
 	PRIMARY KEY ("Note_id", description),
 	FOREIGN KEY("Note_id") REFERENCES "Note" (id)
 );
-CREATE INDEX "ix_Note_description_description" ON "Note_description" (description);
 CREATE INDEX "ix_Note_description_Note_id" ON "Note_description" ("Note_id");
+CREATE INDEX "ix_Note_description_description" ON "Note_description" (description);
 
 CREATE TABLE "Note_modifiedTime" (
 	"Note_id" TEXT,
@@ -17722,8 +17775,8 @@ CREATE TABLE "Note_modifiedTime" (
 	PRIMARY KEY ("Note_id", "modifiedTime"),
 	FOREIGN KEY("Note_id") REFERENCES "Note" (id)
 );
-CREATE INDEX "ix_Note_modifiedTime_Note_id" ON "Note_modifiedTime" ("Note_id");
 CREATE INDEX "ix_Note_modifiedTime_modifiedTime" ON "Note_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Note_modifiedTime_Note_id" ON "Note_modifiedTime" ("Note_id");
 
 CREATE TABLE "Note_objectMarking" (
 	"Note_id" TEXT,
@@ -17750,8 +17803,8 @@ CREATE TABLE "Observable_description" (
 	PRIMARY KEY ("Observable_id", description),
 	FOREIGN KEY("Observable_id") REFERENCES "Observable" (id)
 );
-CREATE INDEX "ix_Observable_description_description" ON "Observable_description" (description);
 CREATE INDEX "ix_Observable_description_Observable_id" ON "Observable_description" ("Observable_id");
+CREATE INDEX "ix_Observable_description_description" ON "Observable_description" (description);
 
 CREATE TABLE "Observable_modifiedTime" (
 	"Observable_id" TEXT,
@@ -17759,8 +17812,8 @@ CREATE TABLE "Observable_modifiedTime" (
 	PRIMARY KEY ("Observable_id", "modifiedTime"),
 	FOREIGN KEY("Observable_id") REFERENCES "Observable" (id)
 );
-CREATE INDEX "ix_Observable_modifiedTime_Observable_id" ON "Observable_modifiedTime" ("Observable_id");
 CREATE INDEX "ix_Observable_modifiedTime_modifiedTime" ON "Observable_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Observable_modifiedTime_Observable_id" ON "Observable_modifiedTime" ("Observable_id");
 
 CREATE TABLE "Observable_objectMarking" (
 	"Observable_id" TEXT,
@@ -17796,8 +17849,8 @@ CREATE TABLE "ObservableObject_modifiedTime" (
 	PRIMARY KEY ("ObservableObject_id", "modifiedTime"),
 	FOREIGN KEY("ObservableObject_id") REFERENCES "ObservableObject" (id)
 );
-CREATE INDEX "ix_ObservableObject_modifiedTime_modifiedTime" ON "ObservableObject_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ObservableObject_modifiedTime_ObservableObject_id" ON "ObservableObject_modifiedTime" ("ObservableObject_id");
+CREATE INDEX "ix_ObservableObject_modifiedTime_modifiedTime" ON "ObservableObject_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ObservableObject_objectMarking" (
 	"ObservableObject_id" TEXT,
@@ -17806,8 +17859,8 @@ CREATE TABLE "ObservableObject_objectMarking" (
 	FOREIGN KEY("ObservableObject_id") REFERENCES "ObservableObject" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ObservableObject_objectMarking_objectMarking_id" ON "ObservableObject_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ObservableObject_objectMarking_ObservableObject_id" ON "ObservableObject_objectMarking" ("ObservableObject_id");
+CREATE INDEX "ix_ObservableObject_objectMarking_objectMarking_id" ON "ObservableObject_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ObservableObject_tag" (
 	"ObservableObject_id" TEXT,
@@ -17833,8 +17886,8 @@ CREATE TABLE "ObservablePattern_modifiedTime" (
 	PRIMARY KEY ("ObservablePattern_id", "modifiedTime"),
 	FOREIGN KEY("ObservablePattern_id") REFERENCES "ObservablePattern" (id)
 );
-CREATE INDEX "ix_ObservablePattern_modifiedTime_modifiedTime" ON "ObservablePattern_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ObservablePattern_modifiedTime_ObservablePattern_id" ON "ObservablePattern_modifiedTime" ("ObservablePattern_id");
+CREATE INDEX "ix_ObservablePattern_modifiedTime_modifiedTime" ON "ObservablePattern_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ObservablePattern_objectMarking" (
 	"ObservablePattern_id" TEXT,
@@ -17843,8 +17896,8 @@ CREATE TABLE "ObservablePattern_objectMarking" (
 	FOREIGN KEY("ObservablePattern_id") REFERENCES "ObservablePattern" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ObservablePattern_objectMarking_objectMarking_id" ON "ObservablePattern_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ObservablePattern_objectMarking_ObservablePattern_id" ON "ObservablePattern_objectMarking" ("ObservablePattern_id");
+CREATE INDEX "ix_ObservablePattern_objectMarking_objectMarking_id" ON "ObservablePattern_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ObservablePattern_tag" (
 	"ObservablePattern_id" TEXT,
@@ -17870,8 +17923,8 @@ CREATE TABLE "OnlineService_modifiedTime" (
 	PRIMARY KEY ("OnlineService_id", "modifiedTime"),
 	FOREIGN KEY("OnlineService_id") REFERENCES "OnlineService" (id)
 );
-CREATE INDEX "ix_OnlineService_modifiedTime_modifiedTime" ON "OnlineService_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_OnlineService_modifiedTime_OnlineService_id" ON "OnlineService_modifiedTime" ("OnlineService_id");
+CREATE INDEX "ix_OnlineService_modifiedTime_modifiedTime" ON "OnlineService_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "OnlineService_objectMarking" (
 	"OnlineService_id" TEXT,
@@ -17880,8 +17933,8 @@ CREATE TABLE "OnlineService_objectMarking" (
 	FOREIGN KEY("OnlineService_id") REFERENCES "OnlineService" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_OnlineService_objectMarking_objectMarking_id" ON "OnlineService_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_OnlineService_objectMarking_OnlineService_id" ON "OnlineService_objectMarking" ("OnlineService_id");
+CREATE INDEX "ix_OnlineService_objectMarking_objectMarking_id" ON "OnlineService_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "OnlineService_tag" (
 	"OnlineService_id" TEXT,
@@ -17918,8 +17971,8 @@ CREATE TABLE "OperatingSystem_description" (
 	PRIMARY KEY ("OperatingSystem_id", description),
 	FOREIGN KEY("OperatingSystem_id") REFERENCES "OperatingSystem" (id)
 );
-CREATE INDEX "ix_OperatingSystem_description_OperatingSystem_id" ON "OperatingSystem_description" ("OperatingSystem_id");
 CREATE INDEX "ix_OperatingSystem_description_description" ON "OperatingSystem_description" (description);
+CREATE INDEX "ix_OperatingSystem_description_OperatingSystem_id" ON "OperatingSystem_description" ("OperatingSystem_id");
 
 CREATE TABLE "OperatingSystem_modifiedTime" (
 	"OperatingSystem_id" TEXT,
@@ -17937,8 +17990,8 @@ CREATE TABLE "OperatingSystem_objectMarking" (
 	FOREIGN KEY("OperatingSystem_id") REFERENCES "OperatingSystem" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_OperatingSystem_objectMarking_OperatingSystem_id" ON "OperatingSystem_objectMarking" ("OperatingSystem_id");
 CREATE INDEX "ix_OperatingSystem_objectMarking_objectMarking_id" ON "OperatingSystem_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_OperatingSystem_objectMarking_OperatingSystem_id" ON "OperatingSystem_objectMarking" ("OperatingSystem_id");
 
 CREATE TABLE "OperatingSystem_tag" (
 	"OperatingSystem_id" TEXT,
@@ -17992,8 +18045,8 @@ CREATE TABLE "PaymentCard_description" (
 	PRIMARY KEY ("PaymentCard_id", description),
 	FOREIGN KEY("PaymentCard_id") REFERENCES "PaymentCard" (id)
 );
-CREATE INDEX "ix_PaymentCard_description_description" ON "PaymentCard_description" (description);
 CREATE INDEX "ix_PaymentCard_description_PaymentCard_id" ON "PaymentCard_description" ("PaymentCard_id");
+CREATE INDEX "ix_PaymentCard_description_description" ON "PaymentCard_description" (description);
 
 CREATE TABLE "PaymentCard_modifiedTime" (
 	"PaymentCard_id" TEXT,
@@ -18001,8 +18054,8 @@ CREATE TABLE "PaymentCard_modifiedTime" (
 	PRIMARY KEY ("PaymentCard_id", "modifiedTime"),
 	FOREIGN KEY("PaymentCard_id") REFERENCES "PaymentCard" (id)
 );
-CREATE INDEX "ix_PaymentCard_modifiedTime_PaymentCard_id" ON "PaymentCard_modifiedTime" ("PaymentCard_id");
 CREATE INDEX "ix_PaymentCard_modifiedTime_modifiedTime" ON "PaymentCard_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_PaymentCard_modifiedTime_PaymentCard_id" ON "PaymentCard_modifiedTime" ("PaymentCard_id");
 
 CREATE TABLE "PaymentCard_objectMarking" (
 	"PaymentCard_id" TEXT,
@@ -18029,8 +18082,8 @@ CREATE TABLE "PhoneAccount_description" (
 	PRIMARY KEY ("PhoneAccount_id", description),
 	FOREIGN KEY("PhoneAccount_id") REFERENCES "PhoneAccount" (id)
 );
-CREATE INDEX "ix_PhoneAccount_description_description" ON "PhoneAccount_description" (description);
 CREATE INDEX "ix_PhoneAccount_description_PhoneAccount_id" ON "PhoneAccount_description" ("PhoneAccount_id");
+CREATE INDEX "ix_PhoneAccount_description_description" ON "PhoneAccount_description" (description);
 
 CREATE TABLE "PhoneAccount_modifiedTime" (
 	"PhoneAccount_id" TEXT,
@@ -18038,8 +18091,8 @@ CREATE TABLE "PhoneAccount_modifiedTime" (
 	PRIMARY KEY ("PhoneAccount_id", "modifiedTime"),
 	FOREIGN KEY("PhoneAccount_id") REFERENCES "PhoneAccount" (id)
 );
-CREATE INDEX "ix_PhoneAccount_modifiedTime_PhoneAccount_id" ON "PhoneAccount_modifiedTime" ("PhoneAccount_id");
 CREATE INDEX "ix_PhoneAccount_modifiedTime_modifiedTime" ON "PhoneAccount_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_PhoneAccount_modifiedTime_PhoneAccount_id" ON "PhoneAccount_modifiedTime" ("PhoneAccount_id");
 
 CREATE TABLE "PhoneAccount_objectMarking" (
 	"PhoneAccount_id" TEXT,
@@ -18066,8 +18119,8 @@ CREATE TABLE "Pipe_description" (
 	PRIMARY KEY ("Pipe_id", description),
 	FOREIGN KEY("Pipe_id") REFERENCES "Pipe" (id)
 );
-CREATE INDEX "ix_Pipe_description_description" ON "Pipe_description" (description);
 CREATE INDEX "ix_Pipe_description_Pipe_id" ON "Pipe_description" ("Pipe_id");
+CREATE INDEX "ix_Pipe_description_description" ON "Pipe_description" (description);
 
 CREATE TABLE "Pipe_modifiedTime" (
 	"Pipe_id" TEXT,
@@ -18075,8 +18128,8 @@ CREATE TABLE "Pipe_modifiedTime" (
 	PRIMARY KEY ("Pipe_id", "modifiedTime"),
 	FOREIGN KEY("Pipe_id") REFERENCES "Pipe" (id)
 );
-CREATE INDEX "ix_Pipe_modifiedTime_Pipe_id" ON "Pipe_modifiedTime" ("Pipe_id");
 CREATE INDEX "ix_Pipe_modifiedTime_modifiedTime" ON "Pipe_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Pipe_modifiedTime_Pipe_id" ON "Pipe_modifiedTime" ("Pipe_id");
 
 CREATE TABLE "Pipe_objectMarking" (
 	"Pipe_id" TEXT,
@@ -18103,8 +18156,8 @@ CREATE TABLE "Post_description" (
 	PRIMARY KEY ("Post_id", description),
 	FOREIGN KEY("Post_id") REFERENCES "Post" (id)
 );
-CREATE INDEX "ix_Post_description_description" ON "Post_description" (description);
 CREATE INDEX "ix_Post_description_Post_id" ON "Post_description" ("Post_id");
+CREATE INDEX "ix_Post_description_description" ON "Post_description" (description);
 
 CREATE TABLE "Post_modifiedTime" (
 	"Post_id" TEXT,
@@ -18112,8 +18165,8 @@ CREATE TABLE "Post_modifiedTime" (
 	PRIMARY KEY ("Post_id", "modifiedTime"),
 	FOREIGN KEY("Post_id") REFERENCES "Post" (id)
 );
-CREATE INDEX "ix_Post_modifiedTime_Post_id" ON "Post_modifiedTime" ("Post_id");
 CREATE INDEX "ix_Post_modifiedTime_modifiedTime" ON "Post_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Post_modifiedTime_Post_id" ON "Post_modifiedTime" ("Post_id");
 
 CREATE TABLE "Post_objectMarking" (
 	"Post_id" TEXT,
@@ -18131,8 +18184,8 @@ CREATE TABLE "Post_tag" (
 	PRIMARY KEY ("Post_id", tag),
 	FOREIGN KEY("Post_id") REFERENCES "Post" (id)
 );
-CREATE INDEX "ix_Post_tag_tag" ON "Post_tag" (tag);
 CREATE INDEX "ix_Post_tag_Post_id" ON "Post_tag" ("Post_id");
+CREATE INDEX "ix_Post_tag_tag" ON "Post_tag" (tag);
 
 CREATE TABLE "Process_description" (
 	"Process_id" TEXT,
@@ -18149,8 +18202,8 @@ CREATE TABLE "Process_modifiedTime" (
 	PRIMARY KEY ("Process_id", "modifiedTime"),
 	FOREIGN KEY("Process_id") REFERENCES "Process" (id)
 );
-CREATE INDEX "ix_Process_modifiedTime_Process_id" ON "Process_modifiedTime" ("Process_id");
 CREATE INDEX "ix_Process_modifiedTime_modifiedTime" ON "Process_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Process_modifiedTime_Process_id" ON "Process_modifiedTime" ("Process_id");
 
 CREATE TABLE "Process_objectMarking" (
 	"Process_id" TEXT,
@@ -18159,8 +18212,8 @@ CREATE TABLE "Process_objectMarking" (
 	FOREIGN KEY("Process_id") REFERENCES "Process" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Process_objectMarking_objectMarking_id" ON "Process_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Process_objectMarking_Process_id" ON "Process_objectMarking" ("Process_id");
+CREATE INDEX "ix_Process_objectMarking_objectMarking_id" ON "Process_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Process_tag" (
 	"Process_id" TEXT,
@@ -18223,8 +18276,8 @@ CREATE TABLE "Profile_modifiedTime" (
 	PRIMARY KEY ("Profile_id", "modifiedTime"),
 	FOREIGN KEY("Profile_id") REFERENCES "Profile" (id)
 );
-CREATE INDEX "ix_Profile_modifiedTime_modifiedTime" ON "Profile_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Profile_modifiedTime_Profile_id" ON "Profile_modifiedTime" ("Profile_id");
+CREATE INDEX "ix_Profile_modifiedTime_modifiedTime" ON "Profile_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Profile_objectMarking" (
 	"Profile_id" TEXT,
@@ -18233,8 +18286,8 @@ CREATE TABLE "Profile_objectMarking" (
 	FOREIGN KEY("Profile_id") REFERENCES "Profile" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Profile_objectMarking_objectMarking_id" ON "Profile_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Profile_objectMarking_Profile_id" ON "Profile_objectMarking" ("Profile_id");
+CREATE INDEX "ix_Profile_objectMarking_objectMarking_id" ON "Profile_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Profile_tag" (
 	"Profile_id" TEXT,
@@ -18242,8 +18295,8 @@ CREATE TABLE "Profile_tag" (
 	PRIMARY KEY ("Profile_id", tag),
 	FOREIGN KEY("Profile_id") REFERENCES "Profile" (id)
 );
-CREATE INDEX "ix_Profile_tag_Profile_id" ON "Profile_tag" ("Profile_id");
 CREATE INDEX "ix_Profile_tag_tag" ON "Profile_tag" (tag);
+CREATE INDEX "ix_Profile_tag_Profile_id" ON "Profile_tag" ("Profile_id");
 
 CREATE TABLE "ProtocolConverter_description" (
 	"ProtocolConverter_id" TEXT,
@@ -18260,8 +18313,8 @@ CREATE TABLE "ProtocolConverter_modifiedTime" (
 	PRIMARY KEY ("ProtocolConverter_id", "modifiedTime"),
 	FOREIGN KEY("ProtocolConverter_id") REFERENCES "ProtocolConverter" (id)
 );
-CREATE INDEX "ix_ProtocolConverter_modifiedTime_ProtocolConverter_id" ON "ProtocolConverter_modifiedTime" ("ProtocolConverter_id");
 CREATE INDEX "ix_ProtocolConverter_modifiedTime_modifiedTime" ON "ProtocolConverter_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ProtocolConverter_modifiedTime_ProtocolConverter_id" ON "ProtocolConverter_modifiedTime" ("ProtocolConverter_id");
 
 CREATE TABLE "ProtocolConverter_objectMarking" (
 	"ProtocolConverter_id" TEXT,
@@ -18270,8 +18323,8 @@ CREATE TABLE "ProtocolConverter_objectMarking" (
 	FOREIGN KEY("ProtocolConverter_id") REFERENCES "ProtocolConverter" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ProtocolConverter_objectMarking_ProtocolConverter_id" ON "ProtocolConverter_objectMarking" ("ProtocolConverter_id");
 CREATE INDEX "ix_ProtocolConverter_objectMarking_objectMarking_id" ON "ProtocolConverter_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_ProtocolConverter_objectMarking_ProtocolConverter_id" ON "ProtocolConverter_objectMarking" ("ProtocolConverter_id");
 
 CREATE TABLE "ProtocolConverter_tag" (
 	"ProtocolConverter_id" TEXT,
@@ -18288,8 +18341,8 @@ CREATE TABLE "RasterPicture_description" (
 	PRIMARY KEY ("RasterPicture_id", description),
 	FOREIGN KEY("RasterPicture_id") REFERENCES "RasterPicture" (id)
 );
-CREATE INDEX "ix_RasterPicture_description_description" ON "RasterPicture_description" (description);
 CREATE INDEX "ix_RasterPicture_description_RasterPicture_id" ON "RasterPicture_description" ("RasterPicture_id");
+CREATE INDEX "ix_RasterPicture_description_description" ON "RasterPicture_description" (description);
 
 CREATE TABLE "RasterPicture_modifiedTime" (
 	"RasterPicture_id" TEXT,
@@ -18297,8 +18350,8 @@ CREATE TABLE "RasterPicture_modifiedTime" (
 	PRIMARY KEY ("RasterPicture_id", "modifiedTime"),
 	FOREIGN KEY("RasterPicture_id") REFERENCES "RasterPicture" (id)
 );
-CREATE INDEX "ix_RasterPicture_modifiedTime_RasterPicture_id" ON "RasterPicture_modifiedTime" ("RasterPicture_id");
 CREATE INDEX "ix_RasterPicture_modifiedTime_modifiedTime" ON "RasterPicture_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_RasterPicture_modifiedTime_RasterPicture_id" ON "RasterPicture_modifiedTime" ("RasterPicture_id");
 
 CREATE TABLE "RasterPicture_objectMarking" (
 	"RasterPicture_id" TEXT,
@@ -18325,8 +18378,8 @@ CREATE TABLE "RecoveredObject_description" (
 	PRIMARY KEY ("RecoveredObject_id", description),
 	FOREIGN KEY("RecoveredObject_id") REFERENCES "RecoveredObject" (id)
 );
-CREATE INDEX "ix_RecoveredObject_description_description" ON "RecoveredObject_description" (description);
 CREATE INDEX "ix_RecoveredObject_description_RecoveredObject_id" ON "RecoveredObject_description" ("RecoveredObject_id");
+CREATE INDEX "ix_RecoveredObject_description_description" ON "RecoveredObject_description" (description);
 
 CREATE TABLE "RecoveredObject_modifiedTime" (
 	"RecoveredObject_id" TEXT,
@@ -18334,8 +18387,8 @@ CREATE TABLE "RecoveredObject_modifiedTime" (
 	PRIMARY KEY ("RecoveredObject_id", "modifiedTime"),
 	FOREIGN KEY("RecoveredObject_id") REFERENCES "RecoveredObject" (id)
 );
-CREATE INDEX "ix_RecoveredObject_modifiedTime_RecoveredObject_id" ON "RecoveredObject_modifiedTime" ("RecoveredObject_id");
 CREATE INDEX "ix_RecoveredObject_modifiedTime_modifiedTime" ON "RecoveredObject_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_RecoveredObject_modifiedTime_RecoveredObject_id" ON "RecoveredObject_modifiedTime" ("RecoveredObject_id");
 
 CREATE TABLE "RecoveredObject_objectMarking" (
 	"RecoveredObject_id" TEXT,
@@ -18362,8 +18415,8 @@ CREATE TABLE "ReparsePoint_description" (
 	PRIMARY KEY ("ReparsePoint_id", description),
 	FOREIGN KEY("ReparsePoint_id") REFERENCES "ReparsePoint" (id)
 );
-CREATE INDEX "ix_ReparsePoint_description_description" ON "ReparsePoint_description" (description);
 CREATE INDEX "ix_ReparsePoint_description_ReparsePoint_id" ON "ReparsePoint_description" ("ReparsePoint_id");
+CREATE INDEX "ix_ReparsePoint_description_description" ON "ReparsePoint_description" (description);
 
 CREATE TABLE "ReparsePoint_modifiedTime" (
 	"ReparsePoint_id" TEXT,
@@ -18371,8 +18424,8 @@ CREATE TABLE "ReparsePoint_modifiedTime" (
 	PRIMARY KEY ("ReparsePoint_id", "modifiedTime"),
 	FOREIGN KEY("ReparsePoint_id") REFERENCES "ReparsePoint" (id)
 );
-CREATE INDEX "ix_ReparsePoint_modifiedTime_ReparsePoint_id" ON "ReparsePoint_modifiedTime" ("ReparsePoint_id");
 CREATE INDEX "ix_ReparsePoint_modifiedTime_modifiedTime" ON "ReparsePoint_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ReparsePoint_modifiedTime_ReparsePoint_id" ON "ReparsePoint_modifiedTime" ("ReparsePoint_id");
 
 CREATE TABLE "ReparsePoint_objectMarking" (
 	"ReparsePoint_id" TEXT,
@@ -18399,8 +18452,8 @@ CREATE TABLE "SIMCard_description" (
 	PRIMARY KEY ("SIMCard_id", description),
 	FOREIGN KEY("SIMCard_id") REFERENCES "SIMCard" (id)
 );
-CREATE INDEX "ix_SIMCard_description_description" ON "SIMCard_description" (description);
 CREATE INDEX "ix_SIMCard_description_SIMCard_id" ON "SIMCard_description" ("SIMCard_id");
+CREATE INDEX "ix_SIMCard_description_description" ON "SIMCard_description" (description);
 
 CREATE TABLE "SIMCard_modifiedTime" (
 	"SIMCard_id" TEXT,
@@ -18408,8 +18461,8 @@ CREATE TABLE "SIMCard_modifiedTime" (
 	PRIMARY KEY ("SIMCard_id", "modifiedTime"),
 	FOREIGN KEY("SIMCard_id") REFERENCES "SIMCard" (id)
 );
-CREATE INDEX "ix_SIMCard_modifiedTime_SIMCard_id" ON "SIMCard_modifiedTime" ("SIMCard_id");
 CREATE INDEX "ix_SIMCard_modifiedTime_modifiedTime" ON "SIMCard_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_SIMCard_modifiedTime_SIMCard_id" ON "SIMCard_modifiedTime" ("SIMCard_id");
 
 CREATE TABLE "SIMCard_objectMarking" (
 	"SIMCard_id" TEXT,
@@ -18436,8 +18489,8 @@ CREATE TABLE "SIPAddress_description" (
 	PRIMARY KEY ("SIPAddress_id", description),
 	FOREIGN KEY("SIPAddress_id") REFERENCES "SIPAddress" (id)
 );
-CREATE INDEX "ix_SIPAddress_description_description" ON "SIPAddress_description" (description);
 CREATE INDEX "ix_SIPAddress_description_SIPAddress_id" ON "SIPAddress_description" ("SIPAddress_id");
+CREATE INDEX "ix_SIPAddress_description_description" ON "SIPAddress_description" (description);
 
 CREATE TABLE "SIPAddress_modifiedTime" (
 	"SIPAddress_id" TEXT,
@@ -18445,8 +18498,8 @@ CREATE TABLE "SIPAddress_modifiedTime" (
 	PRIMARY KEY ("SIPAddress_id", "modifiedTime"),
 	FOREIGN KEY("SIPAddress_id") REFERENCES "SIPAddress" (id)
 );
-CREATE INDEX "ix_SIPAddress_modifiedTime_SIPAddress_id" ON "SIPAddress_modifiedTime" ("SIPAddress_id");
 CREATE INDEX "ix_SIPAddress_modifiedTime_modifiedTime" ON "SIPAddress_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_SIPAddress_modifiedTime_SIPAddress_id" ON "SIPAddress_modifiedTime" ("SIPAddress_id");
 
 CREATE TABLE "SIPAddress_objectMarking" (
 	"SIPAddress_id" TEXT,
@@ -18473,8 +18526,8 @@ CREATE TABLE "SMSMessage_description" (
 	PRIMARY KEY ("SMSMessage_id", description),
 	FOREIGN KEY("SMSMessage_id") REFERENCES "SMSMessage" (id)
 );
-CREATE INDEX "ix_SMSMessage_description_description" ON "SMSMessage_description" (description);
 CREATE INDEX "ix_SMSMessage_description_SMSMessage_id" ON "SMSMessage_description" ("SMSMessage_id");
+CREATE INDEX "ix_SMSMessage_description_description" ON "SMSMessage_description" (description);
 
 CREATE TABLE "SMSMessage_modifiedTime" (
 	"SMSMessage_id" TEXT,
@@ -18482,8 +18535,8 @@ CREATE TABLE "SMSMessage_modifiedTime" (
 	PRIMARY KEY ("SMSMessage_id", "modifiedTime"),
 	FOREIGN KEY("SMSMessage_id") REFERENCES "SMSMessage" (id)
 );
-CREATE INDEX "ix_SMSMessage_modifiedTime_SMSMessage_id" ON "SMSMessage_modifiedTime" ("SMSMessage_id");
 CREATE INDEX "ix_SMSMessage_modifiedTime_modifiedTime" ON "SMSMessage_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_SMSMessage_modifiedTime_SMSMessage_id" ON "SMSMessage_modifiedTime" ("SMSMessage_id");
 
 CREATE TABLE "SMSMessage_objectMarking" (
 	"SMSMessage_id" TEXT,
@@ -18510,8 +18563,8 @@ CREATE TABLE "SQLiteBlob_description" (
 	PRIMARY KEY ("SQLiteBlob_id", description),
 	FOREIGN KEY("SQLiteBlob_id") REFERENCES "SQLiteBlob" (id)
 );
-CREATE INDEX "ix_SQLiteBlob_description_description" ON "SQLiteBlob_description" (description);
 CREATE INDEX "ix_SQLiteBlob_description_SQLiteBlob_id" ON "SQLiteBlob_description" ("SQLiteBlob_id");
+CREATE INDEX "ix_SQLiteBlob_description_description" ON "SQLiteBlob_description" (description);
 
 CREATE TABLE "SQLiteBlob_modifiedTime" (
 	"SQLiteBlob_id" TEXT,
@@ -18519,8 +18572,8 @@ CREATE TABLE "SQLiteBlob_modifiedTime" (
 	PRIMARY KEY ("SQLiteBlob_id", "modifiedTime"),
 	FOREIGN KEY("SQLiteBlob_id") REFERENCES "SQLiteBlob" (id)
 );
-CREATE INDEX "ix_SQLiteBlob_modifiedTime_SQLiteBlob_id" ON "SQLiteBlob_modifiedTime" ("SQLiteBlob_id");
 CREATE INDEX "ix_SQLiteBlob_modifiedTime_modifiedTime" ON "SQLiteBlob_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_SQLiteBlob_modifiedTime_SQLiteBlob_id" ON "SQLiteBlob_modifiedTime" ("SQLiteBlob_id");
 
 CREATE TABLE "SQLiteBlob_objectMarking" (
 	"SQLiteBlob_id" TEXT,
@@ -18538,8 +18591,8 @@ CREATE TABLE "SQLiteBlob_tag" (
 	PRIMARY KEY ("SQLiteBlob_id", tag),
 	FOREIGN KEY("SQLiteBlob_id") REFERENCES "SQLiteBlob" (id)
 );
-CREATE INDEX "ix_SQLiteBlob_tag_tag" ON "SQLiteBlob_tag" (tag);
 CREATE INDEX "ix_SQLiteBlob_tag_SQLiteBlob_id" ON "SQLiteBlob_tag" ("SQLiteBlob_id");
+CREATE INDEX "ix_SQLiteBlob_tag_tag" ON "SQLiteBlob_tag" (tag);
 
 CREATE TABLE "SecurityAppliance_description" (
 	"SecurityAppliance_id" TEXT,
@@ -18566,8 +18619,8 @@ CREATE TABLE "SecurityAppliance_objectMarking" (
 	FOREIGN KEY("SecurityAppliance_id") REFERENCES "SecurityAppliance" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_SecurityAppliance_objectMarking_SecurityAppliance_id" ON "SecurityAppliance_objectMarking" ("SecurityAppliance_id");
 CREATE INDEX "ix_SecurityAppliance_objectMarking_objectMarking_id" ON "SecurityAppliance_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_SecurityAppliance_objectMarking_SecurityAppliance_id" ON "SecurityAppliance_objectMarking" ("SecurityAppliance_id");
 
 CREATE TABLE "SecurityAppliance_tag" (
 	"SecurityAppliance_id" TEXT,
@@ -18630,8 +18683,8 @@ CREATE TABLE "Server_modifiedTime" (
 	PRIMARY KEY ("Server_id", "modifiedTime"),
 	FOREIGN KEY("Server_id") REFERENCES "Server" (id)
 );
-CREATE INDEX "ix_Server_modifiedTime_modifiedTime" ON "Server_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Server_modifiedTime_Server_id" ON "Server_modifiedTime" ("Server_id");
+CREATE INDEX "ix_Server_modifiedTime_modifiedTime" ON "Server_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Server_objectMarking" (
 	"Server_id" TEXT,
@@ -18640,8 +18693,8 @@ CREATE TABLE "Server_objectMarking" (
 	FOREIGN KEY("Server_id") REFERENCES "Server" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Server_objectMarking_objectMarking_id" ON "Server_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Server_objectMarking_Server_id" ON "Server_objectMarking" ("Server_id");
+CREATE INDEX "ix_Server_objectMarking_objectMarking_id" ON "Server_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Server_tag" (
 	"Server_id" TEXT,
@@ -18649,8 +18702,8 @@ CREATE TABLE "Server_tag" (
 	PRIMARY KEY ("Server_id", tag),
 	FOREIGN KEY("Server_id") REFERENCES "Server" (id)
 );
-CREATE INDEX "ix_Server_tag_Server_id" ON "Server_tag" ("Server_id");
 CREATE INDEX "ix_Server_tag_tag" ON "Server_tag" (tag);
+CREATE INDEX "ix_Server_tag_Server_id" ON "Server_tag" ("Server_id");
 
 CREATE TABLE "ShopListing_description" (
 	"ShopListing_id" TEXT,
@@ -18667,8 +18720,8 @@ CREATE TABLE "ShopListing_modifiedTime" (
 	PRIMARY KEY ("ShopListing_id", "modifiedTime"),
 	FOREIGN KEY("ShopListing_id") REFERENCES "ShopListing" (id)
 );
-CREATE INDEX "ix_ShopListing_modifiedTime_modifiedTime" ON "ShopListing_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ShopListing_modifiedTime_ShopListing_id" ON "ShopListing_modifiedTime" ("ShopListing_id");
+CREATE INDEX "ix_ShopListing_modifiedTime_modifiedTime" ON "ShopListing_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ShopListing_objectMarking" (
 	"ShopListing_id" TEXT,
@@ -18677,8 +18730,8 @@ CREATE TABLE "ShopListing_objectMarking" (
 	FOREIGN KEY("ShopListing_id") REFERENCES "ShopListing" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ShopListing_objectMarking_objectMarking_id" ON "ShopListing_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ShopListing_objectMarking_ShopListing_id" ON "ShopListing_objectMarking" ("ShopListing_id");
+CREATE INDEX "ix_ShopListing_objectMarking_objectMarking_id" ON "ShopListing_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ShopListing_tag" (
 	"ShopListing_id" TEXT,
@@ -18704,8 +18757,8 @@ CREATE TABLE "SmartDevice_modifiedTime" (
 	PRIMARY KEY ("SmartDevice_id", "modifiedTime"),
 	FOREIGN KEY("SmartDevice_id") REFERENCES "SmartDevice" (id)
 );
-CREATE INDEX "ix_SmartDevice_modifiedTime_modifiedTime" ON "SmartDevice_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_SmartDevice_modifiedTime_SmartDevice_id" ON "SmartDevice_modifiedTime" ("SmartDevice_id");
+CREATE INDEX "ix_SmartDevice_modifiedTime_modifiedTime" ON "SmartDevice_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "SmartDevice_objectMarking" (
 	"SmartDevice_id" TEXT,
@@ -18714,8 +18767,8 @@ CREATE TABLE "SmartDevice_objectMarking" (
 	FOREIGN KEY("SmartDevice_id") REFERENCES "SmartDevice" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_SmartDevice_objectMarking_objectMarking_id" ON "SmartDevice_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_SmartDevice_objectMarking_SmartDevice_id" ON "SmartDevice_objectMarking" ("SmartDevice_id");
+CREATE INDEX "ix_SmartDevice_objectMarking_objectMarking_id" ON "SmartDevice_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "SmartDevice_tag" (
 	"SmartDevice_id" TEXT,
@@ -18741,8 +18794,8 @@ CREATE TABLE "SmartPhone_modifiedTime" (
 	PRIMARY KEY ("SmartPhone_id", "modifiedTime"),
 	FOREIGN KEY("SmartPhone_id") REFERENCES "SmartPhone" (id)
 );
-CREATE INDEX "ix_SmartPhone_modifiedTime_modifiedTime" ON "SmartPhone_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_SmartPhone_modifiedTime_SmartPhone_id" ON "SmartPhone_modifiedTime" ("SmartPhone_id");
+CREATE INDEX "ix_SmartPhone_modifiedTime_modifiedTime" ON "SmartPhone_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "SmartPhone_objectMarking" (
 	"SmartPhone_id" TEXT,
@@ -18751,8 +18804,8 @@ CREATE TABLE "SmartPhone_objectMarking" (
 	FOREIGN KEY("SmartPhone_id") REFERENCES "SmartPhone" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_SmartPhone_objectMarking_objectMarking_id" ON "SmartPhone_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_SmartPhone_objectMarking_SmartPhone_id" ON "SmartPhone_objectMarking" ("SmartPhone_id");
+CREATE INDEX "ix_SmartPhone_objectMarking_objectMarking_id" ON "SmartPhone_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "SmartPhone_tag" (
 	"SmartPhone_id" TEXT,
@@ -18778,8 +18831,8 @@ CREATE TABLE "Snapshot_modifiedTime" (
 	PRIMARY KEY ("Snapshot_id", "modifiedTime"),
 	FOREIGN KEY("Snapshot_id") REFERENCES "Snapshot" (id)
 );
-CREATE INDEX "ix_Snapshot_modifiedTime_modifiedTime" ON "Snapshot_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Snapshot_modifiedTime_Snapshot_id" ON "Snapshot_modifiedTime" ("Snapshot_id");
+CREATE INDEX "ix_Snapshot_modifiedTime_modifiedTime" ON "Snapshot_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Snapshot_objectMarking" (
 	"Snapshot_id" TEXT,
@@ -18788,8 +18841,8 @@ CREATE TABLE "Snapshot_objectMarking" (
 	FOREIGN KEY("Snapshot_id") REFERENCES "Snapshot" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Snapshot_objectMarking_objectMarking_id" ON "Snapshot_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Snapshot_objectMarking_Snapshot_id" ON "Snapshot_objectMarking" ("Snapshot_id");
+CREATE INDEX "ix_Snapshot_objectMarking_objectMarking_id" ON "Snapshot_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Snapshot_tag" (
 	"Snapshot_id" TEXT,
@@ -18815,8 +18868,8 @@ CREATE TABLE "Socket_modifiedTime" (
 	PRIMARY KEY ("Socket_id", "modifiedTime"),
 	FOREIGN KEY("Socket_id") REFERENCES "Socket" (id)
 );
-CREATE INDEX "ix_Socket_modifiedTime_modifiedTime" ON "Socket_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Socket_modifiedTime_Socket_id" ON "Socket_modifiedTime" ("Socket_id");
+CREATE INDEX "ix_Socket_modifiedTime_modifiedTime" ON "Socket_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Socket_objectMarking" (
 	"Socket_id" TEXT,
@@ -18825,8 +18878,8 @@ CREATE TABLE "Socket_objectMarking" (
 	FOREIGN KEY("Socket_id") REFERENCES "Socket" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Socket_objectMarking_objectMarking_id" ON "Socket_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Socket_objectMarking_Socket_id" ON "Socket_objectMarking" ("Socket_id");
+CREATE INDEX "ix_Socket_objectMarking_objectMarking_id" ON "Socket_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Socket_tag" (
 	"Socket_id" TEXT,
@@ -18852,8 +18905,8 @@ CREATE TABLE "SocketAddress_modifiedTime" (
 	PRIMARY KEY ("SocketAddress_id", "modifiedTime"),
 	FOREIGN KEY("SocketAddress_id") REFERENCES "SocketAddress" (id)
 );
-CREATE INDEX "ix_SocketAddress_modifiedTime_modifiedTime" ON "SocketAddress_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_SocketAddress_modifiedTime_SocketAddress_id" ON "SocketAddress_modifiedTime" ("SocketAddress_id");
+CREATE INDEX "ix_SocketAddress_modifiedTime_modifiedTime" ON "SocketAddress_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "SocketAddress_objectMarking" (
 	"SocketAddress_id" TEXT,
@@ -18862,8 +18915,8 @@ CREATE TABLE "SocketAddress_objectMarking" (
 	FOREIGN KEY("SocketAddress_id") REFERENCES "SocketAddress" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_SocketAddress_objectMarking_objectMarking_id" ON "SocketAddress_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_SocketAddress_objectMarking_SocketAddress_id" ON "SocketAddress_objectMarking" ("SocketAddress_id");
+CREATE INDEX "ix_SocketAddress_objectMarking_objectMarking_id" ON "SocketAddress_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "SocketAddress_tag" (
 	"SocketAddress_id" TEXT,
@@ -18889,8 +18942,8 @@ CREATE TABLE "Software_modifiedTime" (
 	PRIMARY KEY ("Software_id", "modifiedTime"),
 	FOREIGN KEY("Software_id") REFERENCES "Software" (id)
 );
-CREATE INDEX "ix_Software_modifiedTime_modifiedTime" ON "Software_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Software_modifiedTime_Software_id" ON "Software_modifiedTime" ("Software_id");
+CREATE INDEX "ix_Software_modifiedTime_modifiedTime" ON "Software_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Software_objectMarking" (
 	"Software_id" TEXT,
@@ -18899,8 +18952,8 @@ CREATE TABLE "Software_objectMarking" (
 	FOREIGN KEY("Software_id") REFERENCES "Software" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Software_objectMarking_objectMarking_id" ON "Software_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Software_objectMarking_Software_id" ON "Software_objectMarking" ("Software_id");
+CREATE INDEX "ix_Software_objectMarking_objectMarking_id" ON "Software_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Software_tag" (
 	"Software_id" TEXT,
@@ -18926,8 +18979,8 @@ CREATE TABLE "StorageMedium_modifiedTime" (
 	PRIMARY KEY ("StorageMedium_id", "modifiedTime"),
 	FOREIGN KEY("StorageMedium_id") REFERENCES "StorageMedium" (id)
 );
-CREATE INDEX "ix_StorageMedium_modifiedTime_modifiedTime" ON "StorageMedium_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_StorageMedium_modifiedTime_StorageMedium_id" ON "StorageMedium_modifiedTime" ("StorageMedium_id");
+CREATE INDEX "ix_StorageMedium_modifiedTime_modifiedTime" ON "StorageMedium_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "StorageMedium_objectMarking" (
 	"StorageMedium_id" TEXT,
@@ -18936,8 +18989,8 @@ CREATE TABLE "StorageMedium_objectMarking" (
 	FOREIGN KEY("StorageMedium_id") REFERENCES "StorageMedium" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_StorageMedium_objectMarking_objectMarking_id" ON "StorageMedium_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_StorageMedium_objectMarking_StorageMedium_id" ON "StorageMedium_objectMarking" ("StorageMedium_id");
+CREATE INDEX "ix_StorageMedium_objectMarking_objectMarking_id" ON "StorageMedium_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "StorageMedium_tag" (
 	"StorageMedium_id" TEXT,
@@ -18954,8 +19007,8 @@ CREATE TABLE "SymbolicLink_description" (
 	PRIMARY KEY ("SymbolicLink_id", description),
 	FOREIGN KEY("SymbolicLink_id") REFERENCES "SymbolicLink" (id)
 );
-CREATE INDEX "ix_SymbolicLink_description_SymbolicLink_id" ON "SymbolicLink_description" ("SymbolicLink_id");
 CREATE INDEX "ix_SymbolicLink_description_description" ON "SymbolicLink_description" (description);
+CREATE INDEX "ix_SymbolicLink_description_SymbolicLink_id" ON "SymbolicLink_description" ("SymbolicLink_id");
 
 CREATE TABLE "SymbolicLink_modifiedTime" (
 	"SymbolicLink_id" TEXT,
@@ -18963,8 +19016,8 @@ CREATE TABLE "SymbolicLink_modifiedTime" (
 	PRIMARY KEY ("SymbolicLink_id", "modifiedTime"),
 	FOREIGN KEY("SymbolicLink_id") REFERENCES "SymbolicLink" (id)
 );
-CREATE INDEX "ix_SymbolicLink_modifiedTime_modifiedTime" ON "SymbolicLink_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_SymbolicLink_modifiedTime_SymbolicLink_id" ON "SymbolicLink_modifiedTime" ("SymbolicLink_id");
+CREATE INDEX "ix_SymbolicLink_modifiedTime_modifiedTime" ON "SymbolicLink_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "SymbolicLink_objectMarking" (
 	"SymbolicLink_id" TEXT,
@@ -18991,8 +19044,8 @@ CREATE TABLE "TCPConnection_description" (
 	PRIMARY KEY ("TCPConnection_id", description),
 	FOREIGN KEY("TCPConnection_id") REFERENCES "TCPConnection" (id)
 );
-CREATE INDEX "ix_TCPConnection_description_TCPConnection_id" ON "TCPConnection_description" ("TCPConnection_id");
 CREATE INDEX "ix_TCPConnection_description_description" ON "TCPConnection_description" (description);
+CREATE INDEX "ix_TCPConnection_description_TCPConnection_id" ON "TCPConnection_description" ("TCPConnection_id");
 
 CREATE TABLE "TCPConnection_modifiedTime" (
 	"TCPConnection_id" TEXT,
@@ -19000,8 +19053,8 @@ CREATE TABLE "TCPConnection_modifiedTime" (
 	PRIMARY KEY ("TCPConnection_id", "modifiedTime"),
 	FOREIGN KEY("TCPConnection_id") REFERENCES "TCPConnection" (id)
 );
-CREATE INDEX "ix_TCPConnection_modifiedTime_modifiedTime" ON "TCPConnection_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_TCPConnection_modifiedTime_TCPConnection_id" ON "TCPConnection_modifiedTime" ("TCPConnection_id");
+CREATE INDEX "ix_TCPConnection_modifiedTime_modifiedTime" ON "TCPConnection_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "TCPConnection_objectMarking" (
 	"TCPConnection_id" TEXT,
@@ -19074,8 +19127,8 @@ CREATE TABLE "Tablet_modifiedTime" (
 	PRIMARY KEY ("Tablet_id", "modifiedTime"),
 	FOREIGN KEY("Tablet_id") REFERENCES "Tablet" (id)
 );
-CREATE INDEX "ix_Tablet_modifiedTime_modifiedTime" ON "Tablet_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Tablet_modifiedTime_Tablet_id" ON "Tablet_modifiedTime" ("Tablet_id");
+CREATE INDEX "ix_Tablet_modifiedTime_modifiedTime" ON "Tablet_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Tablet_objectMarking" (
 	"Tablet_id" TEXT,
@@ -19084,8 +19137,8 @@ CREATE TABLE "Tablet_objectMarking" (
 	FOREIGN KEY("Tablet_id") REFERENCES "Tablet" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Tablet_objectMarking_objectMarking_id" ON "Tablet_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Tablet_objectMarking_Tablet_id" ON "Tablet_objectMarking" ("Tablet_id");
+CREATE INDEX "ix_Tablet_objectMarking_objectMarking_id" ON "Tablet_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Tablet_tag" (
 	"Tablet_id" TEXT,
@@ -19111,8 +19164,8 @@ CREATE TABLE "Tweet_modifiedTime" (
 	PRIMARY KEY ("Tweet_id", "modifiedTime"),
 	FOREIGN KEY("Tweet_id") REFERENCES "Tweet" (id)
 );
-CREATE INDEX "ix_Tweet_modifiedTime_modifiedTime" ON "Tweet_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Tweet_modifiedTime_Tweet_id" ON "Tweet_modifiedTime" ("Tweet_id");
+CREATE INDEX "ix_Tweet_modifiedTime_modifiedTime" ON "Tweet_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Tweet_objectMarking" (
 	"Tweet_id" TEXT,
@@ -19121,8 +19174,8 @@ CREATE TABLE "Tweet_objectMarking" (
 	FOREIGN KEY("Tweet_id") REFERENCES "Tweet" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Tweet_objectMarking_objectMarking_id" ON "Tweet_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_Tweet_objectMarking_Tweet_id" ON "Tweet_objectMarking" ("Tweet_id");
+CREATE INDEX "ix_Tweet_objectMarking_objectMarking_id" ON "Tweet_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "Tweet_tag" (
 	"Tweet_id" TEXT,
@@ -19148,8 +19201,8 @@ CREATE TABLE "UNIXAccount_modifiedTime" (
 	PRIMARY KEY ("UNIXAccount_id", "modifiedTime"),
 	FOREIGN KEY("UNIXAccount_id") REFERENCES "UNIXAccount" (id)
 );
-CREATE INDEX "ix_UNIXAccount_modifiedTime_modifiedTime" ON "UNIXAccount_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_UNIXAccount_modifiedTime_UNIXAccount_id" ON "UNIXAccount_modifiedTime" ("UNIXAccount_id");
+CREATE INDEX "ix_UNIXAccount_modifiedTime_modifiedTime" ON "UNIXAccount_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "UNIXAccount_objectMarking" (
 	"UNIXAccount_id" TEXT,
@@ -19158,8 +19211,8 @@ CREATE TABLE "UNIXAccount_objectMarking" (
 	FOREIGN KEY("UNIXAccount_id") REFERENCES "UNIXAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_UNIXAccount_objectMarking_objectMarking_id" ON "UNIXAccount_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_UNIXAccount_objectMarking_UNIXAccount_id" ON "UNIXAccount_objectMarking" ("UNIXAccount_id");
+CREATE INDEX "ix_UNIXAccount_objectMarking_objectMarking_id" ON "UNIXAccount_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "UNIXAccount_tag" (
 	"UNIXAccount_id" TEXT,
@@ -19185,8 +19238,8 @@ CREATE TABLE "UNIXFile_modifiedTime" (
 	PRIMARY KEY ("UNIXFile_id", "modifiedTime"),
 	FOREIGN KEY("UNIXFile_id") REFERENCES "UNIXFile" (id)
 );
-CREATE INDEX "ix_UNIXFile_modifiedTime_modifiedTime" ON "UNIXFile_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_UNIXFile_modifiedTime_UNIXFile_id" ON "UNIXFile_modifiedTime" ("UNIXFile_id");
+CREATE INDEX "ix_UNIXFile_modifiedTime_modifiedTime" ON "UNIXFile_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "UNIXFile_objectMarking" (
 	"UNIXFile_id" TEXT,
@@ -19195,8 +19248,8 @@ CREATE TABLE "UNIXFile_objectMarking" (
 	FOREIGN KEY("UNIXFile_id") REFERENCES "UNIXFile" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_UNIXFile_objectMarking_objectMarking_id" ON "UNIXFile_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_UNIXFile_objectMarking_UNIXFile_id" ON "UNIXFile_objectMarking" ("UNIXFile_id");
+CREATE INDEX "ix_UNIXFile_objectMarking_objectMarking_id" ON "UNIXFile_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "UNIXFile_tag" (
 	"UNIXFile_id" TEXT,
@@ -19222,8 +19275,8 @@ CREATE TABLE "UNIXProcess_modifiedTime" (
 	PRIMARY KEY ("UNIXProcess_id", "modifiedTime"),
 	FOREIGN KEY("UNIXProcess_id") REFERENCES "UNIXProcess" (id)
 );
-CREATE INDEX "ix_UNIXProcess_modifiedTime_modifiedTime" ON "UNIXProcess_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_UNIXProcess_modifiedTime_UNIXProcess_id" ON "UNIXProcess_modifiedTime" ("UNIXProcess_id");
+CREATE INDEX "ix_UNIXProcess_modifiedTime_modifiedTime" ON "UNIXProcess_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "UNIXProcess_objectMarking" (
 	"UNIXProcess_id" TEXT,
@@ -19232,8 +19285,8 @@ CREATE TABLE "UNIXProcess_objectMarking" (
 	FOREIGN KEY("UNIXProcess_id") REFERENCES "UNIXProcess" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_UNIXProcess_objectMarking_objectMarking_id" ON "UNIXProcess_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_UNIXProcess_objectMarking_UNIXProcess_id" ON "UNIXProcess_objectMarking" ("UNIXProcess_id");
+CREATE INDEX "ix_UNIXProcess_objectMarking_objectMarking_id" ON "UNIXProcess_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "UNIXProcess_tag" (
 	"UNIXProcess_id" TEXT,
@@ -19250,8 +19303,8 @@ CREATE TABLE "URL_description" (
 	PRIMARY KEY ("URL_id", description),
 	FOREIGN KEY("URL_id") REFERENCES "URL" (id)
 );
-CREATE INDEX "ix_URL_description_URL_id" ON "URL_description" ("URL_id");
 CREATE INDEX "ix_URL_description_description" ON "URL_description" (description);
+CREATE INDEX "ix_URL_description_URL_id" ON "URL_description" ("URL_id");
 
 CREATE TABLE "URL_modifiedTime" (
 	"URL_id" TEXT,
@@ -19269,8 +19322,8 @@ CREATE TABLE "URL_objectMarking" (
 	FOREIGN KEY("URL_id") REFERENCES "URL" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_URL_objectMarking_URL_id" ON "URL_objectMarking" ("URL_id");
 CREATE INDEX "ix_URL_objectMarking_objectMarking_id" ON "URL_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_URL_objectMarking_URL_id" ON "URL_objectMarking" ("URL_id");
 
 CREATE TABLE "URL_tag" (
 	"URL_id" TEXT,
@@ -19287,8 +19340,8 @@ CREATE TABLE "URLHistory_description" (
 	PRIMARY KEY ("URLHistory_id", description),
 	FOREIGN KEY("URLHistory_id") REFERENCES "URLHistory" (id)
 );
-CREATE INDEX "ix_URLHistory_description_URLHistory_id" ON "URLHistory_description" ("URLHistory_id");
 CREATE INDEX "ix_URLHistory_description_description" ON "URLHistory_description" (description);
+CREATE INDEX "ix_URLHistory_description_URLHistory_id" ON "URLHistory_description" ("URLHistory_id");
 
 CREATE TABLE "URLHistory_modifiedTime" (
 	"URLHistory_id" TEXT,
@@ -19306,8 +19359,8 @@ CREATE TABLE "URLHistory_objectMarking" (
 	FOREIGN KEY("URLHistory_id") REFERENCES "URLHistory" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_URLHistory_objectMarking_URLHistory_id" ON "URLHistory_objectMarking" ("URLHistory_id");
 CREATE INDEX "ix_URLHistory_objectMarking_objectMarking_id" ON "URLHistory_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_URLHistory_objectMarking_URLHistory_id" ON "URLHistory_objectMarking" ("URLHistory_id");
 
 CREATE TABLE "URLHistory_tag" (
 	"URLHistory_id" TEXT,
@@ -19343,8 +19396,8 @@ CREATE TABLE "URLVisit_objectMarking" (
 	FOREIGN KEY("URLVisit_id") REFERENCES "URLVisit" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_URLVisit_objectMarking_objectMarking_id" ON "URLVisit_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_URLVisit_objectMarking_URLVisit_id" ON "URLVisit_objectMarking" ("URLVisit_id");
+CREATE INDEX "ix_URLVisit_objectMarking_objectMarking_id" ON "URLVisit_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "URLVisit_tag" (
 	"URLVisit_id" TEXT,
@@ -19361,8 +19414,8 @@ CREATE TABLE "UserAccount_description" (
 	PRIMARY KEY ("UserAccount_id", description),
 	FOREIGN KEY("UserAccount_id") REFERENCES "UserAccount" (id)
 );
-CREATE INDEX "ix_UserAccount_description_UserAccount_id" ON "UserAccount_description" ("UserAccount_id");
 CREATE INDEX "ix_UserAccount_description_description" ON "UserAccount_description" (description);
+CREATE INDEX "ix_UserAccount_description_UserAccount_id" ON "UserAccount_description" ("UserAccount_id");
 
 CREATE TABLE "UserAccount_modifiedTime" (
 	"UserAccount_id" TEXT,
@@ -19370,8 +19423,8 @@ CREATE TABLE "UserAccount_modifiedTime" (
 	PRIMARY KEY ("UserAccount_id", "modifiedTime"),
 	FOREIGN KEY("UserAccount_id") REFERENCES "UserAccount" (id)
 );
-CREATE INDEX "ix_UserAccount_modifiedTime_modifiedTime" ON "UserAccount_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_UserAccount_modifiedTime_UserAccount_id" ON "UserAccount_modifiedTime" ("UserAccount_id");
+CREATE INDEX "ix_UserAccount_modifiedTime_modifiedTime" ON "UserAccount_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "UserAccount_objectMarking" (
 	"UserAccount_id" TEXT,
@@ -19398,8 +19451,8 @@ CREATE TABLE "UserSession_description" (
 	PRIMARY KEY ("UserSession_id", description),
 	FOREIGN KEY("UserSession_id") REFERENCES "UserSession" (id)
 );
-CREATE INDEX "ix_UserSession_description_UserSession_id" ON "UserSession_description" ("UserSession_id");
 CREATE INDEX "ix_UserSession_description_description" ON "UserSession_description" (description);
+CREATE INDEX "ix_UserSession_description_UserSession_id" ON "UserSession_description" ("UserSession_id");
 
 CREATE TABLE "UserSession_modifiedTime" (
 	"UserSession_id" TEXT,
@@ -19407,8 +19460,8 @@ CREATE TABLE "UserSession_modifiedTime" (
 	PRIMARY KEY ("UserSession_id", "modifiedTime"),
 	FOREIGN KEY("UserSession_id") REFERENCES "UserSession" (id)
 );
-CREATE INDEX "ix_UserSession_modifiedTime_modifiedTime" ON "UserSession_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_UserSession_modifiedTime_UserSession_id" ON "UserSession_modifiedTime" ("UserSession_id");
+CREATE INDEX "ix_UserSession_modifiedTime_modifiedTime" ON "UserSession_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "UserSession_objectMarking" (
 	"UserSession_id" TEXT,
@@ -19426,8 +19479,8 @@ CREATE TABLE "UserSession_tag" (
 	PRIMARY KEY ("UserSession_id", tag),
 	FOREIGN KEY("UserSession_id") REFERENCES "UserSession" (id)
 );
-CREATE INDEX "ix_UserSession_tag_UserSession_id" ON "UserSession_tag" ("UserSession_id");
 CREATE INDEX "ix_UserSession_tag_tag" ON "UserSession_tag" (tag);
+CREATE INDEX "ix_UserSession_tag_UserSession_id" ON "UserSession_tag" ("UserSession_id");
 
 CREATE TABLE "Volume_description" (
 	"Volume_id" TEXT,
@@ -19435,8 +19488,8 @@ CREATE TABLE "Volume_description" (
 	PRIMARY KEY ("Volume_id", description),
 	FOREIGN KEY("Volume_id") REFERENCES "Volume" (id)
 );
-CREATE INDEX "ix_Volume_description_Volume_id" ON "Volume_description" ("Volume_id");
 CREATE INDEX "ix_Volume_description_description" ON "Volume_description" (description);
+CREATE INDEX "ix_Volume_description_Volume_id" ON "Volume_description" ("Volume_id");
 
 CREATE TABLE "Volume_modifiedTime" (
 	"Volume_id" TEXT,
@@ -19454,8 +19507,8 @@ CREATE TABLE "Volume_objectMarking" (
 	FOREIGN KEY("Volume_id") REFERENCES "Volume" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_Volume_objectMarking_Volume_id" ON "Volume_objectMarking" ("Volume_id");
 CREATE INDEX "ix_Volume_objectMarking_objectMarking_id" ON "Volume_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_Volume_objectMarking_Volume_id" ON "Volume_objectMarking" ("Volume_id");
 
 CREATE TABLE "Volume_tag" (
 	"Volume_id" TEXT,
@@ -19472,8 +19525,8 @@ CREATE TABLE "WearableDevice_description" (
 	PRIMARY KEY ("WearableDevice_id", description),
 	FOREIGN KEY("WearableDevice_id") REFERENCES "WearableDevice" (id)
 );
-CREATE INDEX "ix_WearableDevice_description_WearableDevice_id" ON "WearableDevice_description" ("WearableDevice_id");
 CREATE INDEX "ix_WearableDevice_description_description" ON "WearableDevice_description" (description);
+CREATE INDEX "ix_WearableDevice_description_WearableDevice_id" ON "WearableDevice_description" ("WearableDevice_id");
 
 CREATE TABLE "WearableDevice_modifiedTime" (
 	"WearableDevice_id" TEXT,
@@ -19491,8 +19544,8 @@ CREATE TABLE "WearableDevice_objectMarking" (
 	FOREIGN KEY("WearableDevice_id") REFERENCES "WearableDevice" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WearableDevice_objectMarking_WearableDevice_id" ON "WearableDevice_objectMarking" ("WearableDevice_id");
 CREATE INDEX "ix_WearableDevice_objectMarking_objectMarking_id" ON "WearableDevice_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WearableDevice_objectMarking_WearableDevice_id" ON "WearableDevice_objectMarking" ("WearableDevice_id");
 
 CREATE TABLE "WearableDevice_tag" (
 	"WearableDevice_id" TEXT,
@@ -19509,8 +19562,8 @@ CREATE TABLE "WebPage_description" (
 	PRIMARY KEY ("WebPage_id", description),
 	FOREIGN KEY("WebPage_id") REFERENCES "WebPage" (id)
 );
-CREATE INDEX "ix_WebPage_description_WebPage_id" ON "WebPage_description" ("WebPage_id");
 CREATE INDEX "ix_WebPage_description_description" ON "WebPage_description" (description);
+CREATE INDEX "ix_WebPage_description_WebPage_id" ON "WebPage_description" ("WebPage_id");
 
 CREATE TABLE "WebPage_modifiedTime" (
 	"WebPage_id" TEXT,
@@ -19528,8 +19581,8 @@ CREATE TABLE "WebPage_objectMarking" (
 	FOREIGN KEY("WebPage_id") REFERENCES "WebPage" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WebPage_objectMarking_WebPage_id" ON "WebPage_objectMarking" ("WebPage_id");
 CREATE INDEX "ix_WebPage_objectMarking_objectMarking_id" ON "WebPage_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WebPage_objectMarking_WebPage_id" ON "WebPage_objectMarking" ("WebPage_id");
 
 CREATE TABLE "WebPage_tag" (
 	"WebPage_id" TEXT,
@@ -19546,8 +19599,8 @@ CREATE TABLE "WhoIs_description" (
 	PRIMARY KEY ("WhoIs_id", description),
 	FOREIGN KEY("WhoIs_id") REFERENCES "WhoIs" (id)
 );
-CREATE INDEX "ix_WhoIs_description_WhoIs_id" ON "WhoIs_description" ("WhoIs_id");
 CREATE INDEX "ix_WhoIs_description_description" ON "WhoIs_description" (description);
+CREATE INDEX "ix_WhoIs_description_WhoIs_id" ON "WhoIs_description" ("WhoIs_id");
 
 CREATE TABLE "WhoIs_modifiedTime" (
 	"WhoIs_id" TEXT,
@@ -19565,8 +19618,8 @@ CREATE TABLE "WhoIs_objectMarking" (
 	FOREIGN KEY("WhoIs_id") REFERENCES "WhoIs" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WhoIs_objectMarking_WhoIs_id" ON "WhoIs_objectMarking" ("WhoIs_id");
 CREATE INDEX "ix_WhoIs_objectMarking_objectMarking_id" ON "WhoIs_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WhoIs_objectMarking_WhoIs_id" ON "WhoIs_objectMarking" ("WhoIs_id");
 
 CREATE TABLE "WhoIs_tag" (
 	"WhoIs_id" TEXT,
@@ -19583,8 +19636,8 @@ CREATE TABLE "WifiAddress_description" (
 	PRIMARY KEY ("WifiAddress_id", description),
 	FOREIGN KEY("WifiAddress_id") REFERENCES "WifiAddress" (id)
 );
-CREATE INDEX "ix_WifiAddress_description_description" ON "WifiAddress_description" (description);
 CREATE INDEX "ix_WifiAddress_description_WifiAddress_id" ON "WifiAddress_description" ("WifiAddress_id");
+CREATE INDEX "ix_WifiAddress_description_description" ON "WifiAddress_description" (description);
 
 CREATE TABLE "WifiAddress_modifiedTime" (
 	"WifiAddress_id" TEXT,
@@ -19703,8 +19756,8 @@ CREATE TABLE "WindowsAccount_modifiedTime" (
 	PRIMARY KEY ("WindowsAccount_id", "modifiedTime"),
 	FOREIGN KEY("WindowsAccount_id") REFERENCES "WindowsAccount" (id)
 );
-CREATE INDEX "ix_WindowsAccount_modifiedTime_WindowsAccount_id" ON "WindowsAccount_modifiedTime" ("WindowsAccount_id");
 CREATE INDEX "ix_WindowsAccount_modifiedTime_modifiedTime" ON "WindowsAccount_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_WindowsAccount_modifiedTime_WindowsAccount_id" ON "WindowsAccount_modifiedTime" ("WindowsAccount_id");
 
 CREATE TABLE "WindowsAccount_objectMarking" (
 	"WindowsAccount_id" TEXT,
@@ -19713,8 +19766,8 @@ CREATE TABLE "WindowsAccount_objectMarking" (
 	FOREIGN KEY("WindowsAccount_id") REFERENCES "WindowsAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsAccount_objectMarking_WindowsAccount_id" ON "WindowsAccount_objectMarking" ("WindowsAccount_id");
 CREATE INDEX "ix_WindowsAccount_objectMarking_objectMarking_id" ON "WindowsAccount_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WindowsAccount_objectMarking_WindowsAccount_id" ON "WindowsAccount_objectMarking" ("WindowsAccount_id");
 
 CREATE TABLE "WindowsAccount_tag" (
 	"WindowsAccount_id" TEXT,
@@ -19722,8 +19775,8 @@ CREATE TABLE "WindowsAccount_tag" (
 	PRIMARY KEY ("WindowsAccount_id", tag),
 	FOREIGN KEY("WindowsAccount_id") REFERENCES "WindowsAccount" (id)
 );
-CREATE INDEX "ix_WindowsAccount_tag_tag" ON "WindowsAccount_tag" (tag);
 CREATE INDEX "ix_WindowsAccount_tag_WindowsAccount_id" ON "WindowsAccount_tag" ("WindowsAccount_id");
+CREATE INDEX "ix_WindowsAccount_tag_tag" ON "WindowsAccount_tag" (tag);
 
 CREATE TABLE "WindowsActiveDirectoryAccount_description" (
 	"WindowsActiveDirectoryAccount_id" TEXT,
@@ -19731,8 +19784,8 @@ CREATE TABLE "WindowsActiveDirectoryAccount_description" (
 	PRIMARY KEY ("WindowsActiveDirectoryAccount_id", description),
 	FOREIGN KEY("WindowsActiveDirectoryAccount_id") REFERENCES "WindowsActiveDirectoryAccount" (id)
 );
-CREATE INDEX "ix_WindowsActiveDirectoryAccount_description_WindowsActiveDirectoryAccount_id" ON "WindowsActiveDirectoryAccount_description" ("WindowsActiveDirectoryAccount_id");
 CREATE INDEX "ix_WindowsActiveDirectoryAccount_description_description" ON "WindowsActiveDirectoryAccount_description" (description);
+CREATE INDEX "ix_WindowsActiveDirectoryAccount_description_WindowsActiveDirectoryAccount_id" ON "WindowsActiveDirectoryAccount_description" ("WindowsActiveDirectoryAccount_id");
 
 CREATE TABLE "WindowsActiveDirectoryAccount_modifiedTime" (
 	"WindowsActiveDirectoryAccount_id" TEXT,
@@ -19740,8 +19793,8 @@ CREATE TABLE "WindowsActiveDirectoryAccount_modifiedTime" (
 	PRIMARY KEY ("WindowsActiveDirectoryAccount_id", "modifiedTime"),
 	FOREIGN KEY("WindowsActiveDirectoryAccount_id") REFERENCES "WindowsActiveDirectoryAccount" (id)
 );
-CREATE INDEX "ix_WindowsActiveDirectoryAccount_modifiedTime_modifiedTime" ON "WindowsActiveDirectoryAccount_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsActiveDirectoryAccount_modifiedTime_WindowsActiveDirectoryAccount_id" ON "WindowsActiveDirectoryAccount_modifiedTime" ("WindowsActiveDirectoryAccount_id");
+CREATE INDEX "ix_WindowsActiveDirectoryAccount_modifiedTime_modifiedTime" ON "WindowsActiveDirectoryAccount_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsActiveDirectoryAccount_objectMarking" (
 	"WindowsActiveDirectoryAccount_id" TEXT,
@@ -19750,8 +19803,8 @@ CREATE TABLE "WindowsActiveDirectoryAccount_objectMarking" (
 	FOREIGN KEY("WindowsActiveDirectoryAccount_id") REFERENCES "WindowsActiveDirectoryAccount" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsActiveDirectoryAccount_objectMarking_WindowsActiveDirectoryAccount_id" ON "WindowsActiveDirectoryAccount_objectMarking" ("WindowsActiveDirectoryAccount_id");
 CREATE INDEX "ix_WindowsActiveDirectoryAccount_objectMarking_objectMarking_id" ON "WindowsActiveDirectoryAccount_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WindowsActiveDirectoryAccount_objectMarking_WindowsActiveDirectoryAccount_id" ON "WindowsActiveDirectoryAccount_objectMarking" ("WindowsActiveDirectoryAccount_id");
 
 CREATE TABLE "WindowsActiveDirectoryAccount_tag" (
 	"WindowsActiveDirectoryAccount_id" TEXT,
@@ -19768,8 +19821,8 @@ CREATE TABLE "WindowsComputerSpecification_description" (
 	PRIMARY KEY ("WindowsComputerSpecification_id", description),
 	FOREIGN KEY("WindowsComputerSpecification_id") REFERENCES "WindowsComputerSpecification" (id)
 );
-CREATE INDEX "ix_WindowsComputerSpecification_description_description" ON "WindowsComputerSpecification_description" (description);
 CREATE INDEX "ix_WindowsComputerSpecification_description_WindowsComputerSpecification_id" ON "WindowsComputerSpecification_description" ("WindowsComputerSpecification_id");
+CREATE INDEX "ix_WindowsComputerSpecification_description_description" ON "WindowsComputerSpecification_description" (description);
 
 CREATE TABLE "WindowsComputerSpecification_modifiedTime" (
 	"WindowsComputerSpecification_id" TEXT,
@@ -19787,8 +19840,8 @@ CREATE TABLE "WindowsComputerSpecification_objectMarking" (
 	FOREIGN KEY("WindowsComputerSpecification_id") REFERENCES "WindowsComputerSpecification" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsComputerSpecification_objectMarking_objectMarking_id" ON "WindowsComputerSpecification_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsComputerSpecification_objectMarking_WindowsComputerSpecification_id" ON "WindowsComputerSpecification_objectMarking" ("WindowsComputerSpecification_id");
+CREATE INDEX "ix_WindowsComputerSpecification_objectMarking_objectMarking_id" ON "WindowsComputerSpecification_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsComputerSpecification_tag" (
 	"WindowsComputerSpecification_id" TEXT,
@@ -19814,8 +19867,8 @@ CREATE TABLE "WindowsCriticalSection_modifiedTime" (
 	PRIMARY KEY ("WindowsCriticalSection_id", "modifiedTime"),
 	FOREIGN KEY("WindowsCriticalSection_id") REFERENCES "WindowsCriticalSection" (id)
 );
-CREATE INDEX "ix_WindowsCriticalSection_modifiedTime_modifiedTime" ON "WindowsCriticalSection_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsCriticalSection_modifiedTime_WindowsCriticalSection_id" ON "WindowsCriticalSection_modifiedTime" ("WindowsCriticalSection_id");
+CREATE INDEX "ix_WindowsCriticalSection_modifiedTime_modifiedTime" ON "WindowsCriticalSection_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsCriticalSection_objectMarking" (
 	"WindowsCriticalSection_id" TEXT,
@@ -19851,8 +19904,8 @@ CREATE TABLE "WindowsEvent_modifiedTime" (
 	PRIMARY KEY ("WindowsEvent_id", "modifiedTime"),
 	FOREIGN KEY("WindowsEvent_id") REFERENCES "WindowsEvent" (id)
 );
-CREATE INDEX "ix_WindowsEvent_modifiedTime_modifiedTime" ON "WindowsEvent_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsEvent_modifiedTime_WindowsEvent_id" ON "WindowsEvent_modifiedTime" ("WindowsEvent_id");
+CREATE INDEX "ix_WindowsEvent_modifiedTime_modifiedTime" ON "WindowsEvent_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsEvent_objectMarking" (
 	"WindowsEvent_id" TEXT,
@@ -19861,8 +19914,8 @@ CREATE TABLE "WindowsEvent_objectMarking" (
 	FOREIGN KEY("WindowsEvent_id") REFERENCES "WindowsEvent" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsEvent_objectMarking_objectMarking_id" ON "WindowsEvent_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsEvent_objectMarking_WindowsEvent_id" ON "WindowsEvent_objectMarking" ("WindowsEvent_id");
+CREATE INDEX "ix_WindowsEvent_objectMarking_objectMarking_id" ON "WindowsEvent_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsEvent_tag" (
 	"WindowsEvent_id" TEXT,
@@ -19888,8 +19941,8 @@ CREATE TABLE "WindowsFilemapping_modifiedTime" (
 	PRIMARY KEY ("WindowsFilemapping_id", "modifiedTime"),
 	FOREIGN KEY("WindowsFilemapping_id") REFERENCES "WindowsFilemapping" (id)
 );
-CREATE INDEX "ix_WindowsFilemapping_modifiedTime_modifiedTime" ON "WindowsFilemapping_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsFilemapping_modifiedTime_WindowsFilemapping_id" ON "WindowsFilemapping_modifiedTime" ("WindowsFilemapping_id");
+CREATE INDEX "ix_WindowsFilemapping_modifiedTime_modifiedTime" ON "WindowsFilemapping_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsFilemapping_objectMarking" (
 	"WindowsFilemapping_id" TEXT,
@@ -19898,8 +19951,8 @@ CREATE TABLE "WindowsFilemapping_objectMarking" (
 	FOREIGN KEY("WindowsFilemapping_id") REFERENCES "WindowsFilemapping" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsFilemapping_objectMarking_objectMarking_id" ON "WindowsFilemapping_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsFilemapping_objectMarking_WindowsFilemapping_id" ON "WindowsFilemapping_objectMarking" ("WindowsFilemapping_id");
+CREATE INDEX "ix_WindowsFilemapping_objectMarking_objectMarking_id" ON "WindowsFilemapping_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsFilemapping_tag" (
 	"WindowsFilemapping_id" TEXT,
@@ -19925,8 +19978,8 @@ CREATE TABLE "WindowsHandle_modifiedTime" (
 	PRIMARY KEY ("WindowsHandle_id", "modifiedTime"),
 	FOREIGN KEY("WindowsHandle_id") REFERENCES "WindowsHandle" (id)
 );
-CREATE INDEX "ix_WindowsHandle_modifiedTime_modifiedTime" ON "WindowsHandle_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsHandle_modifiedTime_WindowsHandle_id" ON "WindowsHandle_modifiedTime" ("WindowsHandle_id");
+CREATE INDEX "ix_WindowsHandle_modifiedTime_modifiedTime" ON "WindowsHandle_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsHandle_objectMarking" (
 	"WindowsHandle_id" TEXT,
@@ -19935,8 +19988,8 @@ CREATE TABLE "WindowsHandle_objectMarking" (
 	FOREIGN KEY("WindowsHandle_id") REFERENCES "WindowsHandle" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsHandle_objectMarking_objectMarking_id" ON "WindowsHandle_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsHandle_objectMarking_WindowsHandle_id" ON "WindowsHandle_objectMarking" ("WindowsHandle_id");
+CREATE INDEX "ix_WindowsHandle_objectMarking_objectMarking_id" ON "WindowsHandle_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsHandle_tag" (
 	"WindowsHandle_id" TEXT,
@@ -19962,8 +20015,8 @@ CREATE TABLE "WindowsHook_modifiedTime" (
 	PRIMARY KEY ("WindowsHook_id", "modifiedTime"),
 	FOREIGN KEY("WindowsHook_id") REFERENCES "WindowsHook" (id)
 );
-CREATE INDEX "ix_WindowsHook_modifiedTime_modifiedTime" ON "WindowsHook_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsHook_modifiedTime_WindowsHook_id" ON "WindowsHook_modifiedTime" ("WindowsHook_id");
+CREATE INDEX "ix_WindowsHook_modifiedTime_modifiedTime" ON "WindowsHook_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsHook_objectMarking" (
 	"WindowsHook_id" TEXT,
@@ -19972,8 +20025,8 @@ CREATE TABLE "WindowsHook_objectMarking" (
 	FOREIGN KEY("WindowsHook_id") REFERENCES "WindowsHook" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsHook_objectMarking_objectMarking_id" ON "WindowsHook_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsHook_objectMarking_WindowsHook_id" ON "WindowsHook_objectMarking" ("WindowsHook_id");
+CREATE INDEX "ix_WindowsHook_objectMarking_objectMarking_id" ON "WindowsHook_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsHook_tag" (
 	"WindowsHook_id" TEXT,
@@ -19999,8 +20052,8 @@ CREATE TABLE "WindowsMailslot_modifiedTime" (
 	PRIMARY KEY ("WindowsMailslot_id", "modifiedTime"),
 	FOREIGN KEY("WindowsMailslot_id") REFERENCES "WindowsMailslot" (id)
 );
-CREATE INDEX "ix_WindowsMailslot_modifiedTime_modifiedTime" ON "WindowsMailslot_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsMailslot_modifiedTime_WindowsMailslot_id" ON "WindowsMailslot_modifiedTime" ("WindowsMailslot_id");
+CREATE INDEX "ix_WindowsMailslot_modifiedTime_modifiedTime" ON "WindowsMailslot_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsMailslot_objectMarking" (
 	"WindowsMailslot_id" TEXT,
@@ -20009,8 +20062,8 @@ CREATE TABLE "WindowsMailslot_objectMarking" (
 	FOREIGN KEY("WindowsMailslot_id") REFERENCES "WindowsMailslot" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsMailslot_objectMarking_objectMarking_id" ON "WindowsMailslot_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsMailslot_objectMarking_WindowsMailslot_id" ON "WindowsMailslot_objectMarking" ("WindowsMailslot_id");
+CREATE INDEX "ix_WindowsMailslot_objectMarking_objectMarking_id" ON "WindowsMailslot_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsMailslot_tag" (
 	"WindowsMailslot_id" TEXT,
@@ -20036,8 +20089,8 @@ CREATE TABLE "WindowsNetworkShare_modifiedTime" (
 	PRIMARY KEY ("WindowsNetworkShare_id", "modifiedTime"),
 	FOREIGN KEY("WindowsNetworkShare_id") REFERENCES "WindowsNetworkShare" (id)
 );
-CREATE INDEX "ix_WindowsNetworkShare_modifiedTime_modifiedTime" ON "WindowsNetworkShare_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsNetworkShare_modifiedTime_WindowsNetworkShare_id" ON "WindowsNetworkShare_modifiedTime" ("WindowsNetworkShare_id");
+CREATE INDEX "ix_WindowsNetworkShare_modifiedTime_modifiedTime" ON "WindowsNetworkShare_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsNetworkShare_objectMarking" (
 	"WindowsNetworkShare_id" TEXT,
@@ -20046,8 +20099,8 @@ CREATE TABLE "WindowsNetworkShare_objectMarking" (
 	FOREIGN KEY("WindowsNetworkShare_id") REFERENCES "WindowsNetworkShare" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsNetworkShare_objectMarking_objectMarking_id" ON "WindowsNetworkShare_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsNetworkShare_objectMarking_WindowsNetworkShare_id" ON "WindowsNetworkShare_objectMarking" ("WindowsNetworkShare_id");
+CREATE INDEX "ix_WindowsNetworkShare_objectMarking_objectMarking_id" ON "WindowsNetworkShare_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsNetworkShare_tag" (
 	"WindowsNetworkShare_id" TEXT,
@@ -20073,8 +20126,8 @@ CREATE TABLE "WindowsPEBinaryFile_modifiedTime" (
 	PRIMARY KEY ("WindowsPEBinaryFile_id", "modifiedTime"),
 	FOREIGN KEY("WindowsPEBinaryFile_id") REFERENCES "WindowsPEBinaryFile" (id)
 );
-CREATE INDEX "ix_WindowsPEBinaryFile_modifiedTime_modifiedTime" ON "WindowsPEBinaryFile_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsPEBinaryFile_modifiedTime_WindowsPEBinaryFile_id" ON "WindowsPEBinaryFile_modifiedTime" ("WindowsPEBinaryFile_id");
+CREATE INDEX "ix_WindowsPEBinaryFile_modifiedTime_modifiedTime" ON "WindowsPEBinaryFile_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsPEBinaryFile_objectMarking" (
 	"WindowsPEBinaryFile_id" TEXT,
@@ -20083,8 +20136,8 @@ CREATE TABLE "WindowsPEBinaryFile_objectMarking" (
 	FOREIGN KEY("WindowsPEBinaryFile_id") REFERENCES "WindowsPEBinaryFile" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsPEBinaryFile_objectMarking_objectMarking_id" ON "WindowsPEBinaryFile_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsPEBinaryFile_objectMarking_WindowsPEBinaryFile_id" ON "WindowsPEBinaryFile_objectMarking" ("WindowsPEBinaryFile_id");
+CREATE INDEX "ix_WindowsPEBinaryFile_objectMarking_objectMarking_id" ON "WindowsPEBinaryFile_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsPEBinaryFile_tag" (
 	"WindowsPEBinaryFile_id" TEXT,
@@ -20101,8 +20154,8 @@ CREATE TABLE "WindowsPEBinaryFileFacet_characteristics" (
 	PRIMARY KEY ("WindowsPEBinaryFileFacet_id", characteristics),
 	FOREIGN KEY("WindowsPEBinaryFileFacet_id") REFERENCES "WindowsPEBinaryFileFacet" (id)
 );
-CREATE INDEX "ix_WindowsPEBinaryFileFacet_characteristics_WindowsPEBinaryFileFacet_id" ON "WindowsPEBinaryFileFacet_characteristics" ("WindowsPEBinaryFileFacet_id");
 CREATE INDEX "ix_WindowsPEBinaryFileFacet_characteristics_characteristics" ON "WindowsPEBinaryFileFacet_characteristics" (characteristics);
+CREATE INDEX "ix_WindowsPEBinaryFileFacet_characteristics_WindowsPEBinaryFileFacet_id" ON "WindowsPEBinaryFileFacet_characteristics" ("WindowsPEBinaryFileFacet_id");
 
 CREATE TABLE "WindowsPEBinaryFileFacet_machine" (
 	"WindowsPEBinaryFileFacet_id" INTEGER,
@@ -20119,8 +20172,8 @@ CREATE TABLE "WindowsPEBinaryFileFacet_pointerToSymbolTable" (
 	PRIMARY KEY ("WindowsPEBinaryFileFacet_id", "pointerToSymbolTable"),
 	FOREIGN KEY("WindowsPEBinaryFileFacet_id") REFERENCES "WindowsPEBinaryFileFacet" (id)
 );
-CREATE INDEX "ix_WindowsPEBinaryFileFacet_pointerToSymbolTable_WindowsPEBinaryFileFacet_id" ON "WindowsPEBinaryFileFacet_pointerToSymbolTable" ("WindowsPEBinaryFileFacet_id");
 CREATE INDEX "ix_WindowsPEBinaryFileFacet_pointerToSymbolTable_pointerToSymbolTable" ON "WindowsPEBinaryFileFacet_pointerToSymbolTable" ("pointerToSymbolTable");
+CREATE INDEX "ix_WindowsPEBinaryFileFacet_pointerToSymbolTable_WindowsPEBinaryFileFacet_id" ON "WindowsPEBinaryFileFacet_pointerToSymbolTable" ("WindowsPEBinaryFileFacet_id");
 
 CREATE TABLE "WindowsPrefetch_description" (
 	"WindowsPrefetch_id" TEXT,
@@ -20128,8 +20181,8 @@ CREATE TABLE "WindowsPrefetch_description" (
 	PRIMARY KEY ("WindowsPrefetch_id", description),
 	FOREIGN KEY("WindowsPrefetch_id") REFERENCES "WindowsPrefetch" (id)
 );
-CREATE INDEX "ix_WindowsPrefetch_description_WindowsPrefetch_id" ON "WindowsPrefetch_description" ("WindowsPrefetch_id");
 CREATE INDEX "ix_WindowsPrefetch_description_description" ON "WindowsPrefetch_description" (description);
+CREATE INDEX "ix_WindowsPrefetch_description_WindowsPrefetch_id" ON "WindowsPrefetch_description" ("WindowsPrefetch_id");
 
 CREATE TABLE "WindowsPrefetch_modifiedTime" (
 	"WindowsPrefetch_id" TEXT,
@@ -20147,8 +20200,8 @@ CREATE TABLE "WindowsPrefetch_objectMarking" (
 	FOREIGN KEY("WindowsPrefetch_id") REFERENCES "WindowsPrefetch" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsPrefetch_objectMarking_WindowsPrefetch_id" ON "WindowsPrefetch_objectMarking" ("WindowsPrefetch_id");
 CREATE INDEX "ix_WindowsPrefetch_objectMarking_objectMarking_id" ON "WindowsPrefetch_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WindowsPrefetch_objectMarking_WindowsPrefetch_id" ON "WindowsPrefetch_objectMarking" ("WindowsPrefetch_id");
 
 CREATE TABLE "WindowsPrefetch_tag" (
 	"WindowsPrefetch_id" TEXT,
@@ -20211,8 +20264,8 @@ CREATE TABLE "WindowsRegistryHive_modifiedTime" (
 	PRIMARY KEY ("WindowsRegistryHive_id", "modifiedTime"),
 	FOREIGN KEY("WindowsRegistryHive_id") REFERENCES "WindowsRegistryHive" (id)
 );
-CREATE INDEX "ix_WindowsRegistryHive_modifiedTime_modifiedTime" ON "WindowsRegistryHive_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsRegistryHive_modifiedTime_WindowsRegistryHive_id" ON "WindowsRegistryHive_modifiedTime" ("WindowsRegistryHive_id");
+CREATE INDEX "ix_WindowsRegistryHive_modifiedTime_modifiedTime" ON "WindowsRegistryHive_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsRegistryHive_objectMarking" (
 	"WindowsRegistryHive_id" TEXT,
@@ -20221,8 +20274,8 @@ CREATE TABLE "WindowsRegistryHive_objectMarking" (
 	FOREIGN KEY("WindowsRegistryHive_id") REFERENCES "WindowsRegistryHive" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsRegistryHive_objectMarking_objectMarking_id" ON "WindowsRegistryHive_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsRegistryHive_objectMarking_WindowsRegistryHive_id" ON "WindowsRegistryHive_objectMarking" ("WindowsRegistryHive_id");
+CREATE INDEX "ix_WindowsRegistryHive_objectMarking_objectMarking_id" ON "WindowsRegistryHive_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsRegistryHive_tag" (
 	"WindowsRegistryHive_id" TEXT,
@@ -20239,8 +20292,8 @@ CREATE TABLE "WindowsRegistryKey_description" (
 	PRIMARY KEY ("WindowsRegistryKey_id", description),
 	FOREIGN KEY("WindowsRegistryKey_id") REFERENCES "WindowsRegistryKey" (id)
 );
-CREATE INDEX "ix_WindowsRegistryKey_description_WindowsRegistryKey_id" ON "WindowsRegistryKey_description" ("WindowsRegistryKey_id");
 CREATE INDEX "ix_WindowsRegistryKey_description_description" ON "WindowsRegistryKey_description" (description);
+CREATE INDEX "ix_WindowsRegistryKey_description_WindowsRegistryKey_id" ON "WindowsRegistryKey_description" ("WindowsRegistryKey_id");
 
 CREATE TABLE "WindowsRegistryKey_modifiedTime" (
 	"WindowsRegistryKey_id" TEXT,
@@ -20248,8 +20301,8 @@ CREATE TABLE "WindowsRegistryKey_modifiedTime" (
 	PRIMARY KEY ("WindowsRegistryKey_id", "modifiedTime"),
 	FOREIGN KEY("WindowsRegistryKey_id") REFERENCES "WindowsRegistryKey" (id)
 );
-CREATE INDEX "ix_WindowsRegistryKey_modifiedTime_modifiedTime" ON "WindowsRegistryKey_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsRegistryKey_modifiedTime_WindowsRegistryKey_id" ON "WindowsRegistryKey_modifiedTime" ("WindowsRegistryKey_id");
+CREATE INDEX "ix_WindowsRegistryKey_modifiedTime_modifiedTime" ON "WindowsRegistryKey_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsRegistryKey_objectMarking" (
 	"WindowsRegistryKey_id" TEXT,
@@ -20276,8 +20329,8 @@ CREATE TABLE "WindowsService_description" (
 	PRIMARY KEY ("WindowsService_id", description),
 	FOREIGN KEY("WindowsService_id") REFERENCES "WindowsService" (id)
 );
-CREATE INDEX "ix_WindowsService_description_WindowsService_id" ON "WindowsService_description" ("WindowsService_id");
 CREATE INDEX "ix_WindowsService_description_description" ON "WindowsService_description" (description);
+CREATE INDEX "ix_WindowsService_description_WindowsService_id" ON "WindowsService_description" ("WindowsService_id");
 
 CREATE TABLE "WindowsService_modifiedTime" (
 	"WindowsService_id" TEXT,
@@ -20285,8 +20338,8 @@ CREATE TABLE "WindowsService_modifiedTime" (
 	PRIMARY KEY ("WindowsService_id", "modifiedTime"),
 	FOREIGN KEY("WindowsService_id") REFERENCES "WindowsService" (id)
 );
-CREATE INDEX "ix_WindowsService_modifiedTime_modifiedTime" ON "WindowsService_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsService_modifiedTime_WindowsService_id" ON "WindowsService_modifiedTime" ("WindowsService_id");
+CREATE INDEX "ix_WindowsService_modifiedTime_modifiedTime" ON "WindowsService_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsService_objectMarking" (
 	"WindowsService_id" TEXT,
@@ -20313,8 +20366,8 @@ CREATE TABLE "WindowsSystemRestore_description" (
 	PRIMARY KEY ("WindowsSystemRestore_id", description),
 	FOREIGN KEY("WindowsSystemRestore_id") REFERENCES "WindowsSystemRestore" (id)
 );
-CREATE INDEX "ix_WindowsSystemRestore_description_WindowsSystemRestore_id" ON "WindowsSystemRestore_description" ("WindowsSystemRestore_id");
 CREATE INDEX "ix_WindowsSystemRestore_description_description" ON "WindowsSystemRestore_description" (description);
+CREATE INDEX "ix_WindowsSystemRestore_description_WindowsSystemRestore_id" ON "WindowsSystemRestore_description" ("WindowsSystemRestore_id");
 
 CREATE TABLE "WindowsSystemRestore_modifiedTime" (
 	"WindowsSystemRestore_id" TEXT,
@@ -20332,8 +20385,8 @@ CREATE TABLE "WindowsSystemRestore_objectMarking" (
 	FOREIGN KEY("WindowsSystemRestore_id") REFERENCES "WindowsSystemRestore" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsSystemRestore_objectMarking_objectMarking_id" ON "WindowsSystemRestore_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsSystemRestore_objectMarking_WindowsSystemRestore_id" ON "WindowsSystemRestore_objectMarking" ("WindowsSystemRestore_id");
+CREATE INDEX "ix_WindowsSystemRestore_objectMarking_objectMarking_id" ON "WindowsSystemRestore_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsSystemRestore_tag" (
 	"WindowsSystemRestore_id" TEXT,
@@ -20341,8 +20394,8 @@ CREATE TABLE "WindowsSystemRestore_tag" (
 	PRIMARY KEY ("WindowsSystemRestore_id", tag),
 	FOREIGN KEY("WindowsSystemRestore_id") REFERENCES "WindowsSystemRestore" (id)
 );
-CREATE INDEX "ix_WindowsSystemRestore_tag_WindowsSystemRestore_id" ON "WindowsSystemRestore_tag" ("WindowsSystemRestore_id");
 CREATE INDEX "ix_WindowsSystemRestore_tag_tag" ON "WindowsSystemRestore_tag" (tag);
+CREATE INDEX "ix_WindowsSystemRestore_tag_WindowsSystemRestore_id" ON "WindowsSystemRestore_tag" ("WindowsSystemRestore_id");
 
 CREATE TABLE "WindowsTask_description" (
 	"WindowsTask_id" TEXT,
@@ -20369,8 +20422,8 @@ CREATE TABLE "WindowsTask_objectMarking" (
 	FOREIGN KEY("WindowsTask_id") REFERENCES "WindowsTask" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsTask_objectMarking_objectMarking_id" ON "WindowsTask_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_WindowsTask_objectMarking_WindowsTask_id" ON "WindowsTask_objectMarking" ("WindowsTask_id");
+CREATE INDEX "ix_WindowsTask_objectMarking_objectMarking_id" ON "WindowsTask_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "WindowsTask_tag" (
 	"WindowsTask_id" TEXT,
@@ -20396,8 +20449,8 @@ CREATE TABLE "WindowsThread_modifiedTime" (
 	PRIMARY KEY ("WindowsThread_id", "modifiedTime"),
 	FOREIGN KEY("WindowsThread_id") REFERENCES "WindowsThread" (id)
 );
-CREATE INDEX "ix_WindowsThread_modifiedTime_modifiedTime" ON "WindowsThread_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_WindowsThread_modifiedTime_WindowsThread_id" ON "WindowsThread_modifiedTime" ("WindowsThread_id");
+CREATE INDEX "ix_WindowsThread_modifiedTime_modifiedTime" ON "WindowsThread_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "WindowsThread_objectMarking" (
 	"WindowsThread_id" TEXT,
@@ -20424,8 +20477,8 @@ CREATE TABLE "WindowsWaitableTime_description" (
 	PRIMARY KEY ("WindowsWaitableTime_id", description),
 	FOREIGN KEY("WindowsWaitableTime_id") REFERENCES "WindowsWaitableTime" (id)
 );
-CREATE INDEX "ix_WindowsWaitableTime_description_WindowsWaitableTime_id" ON "WindowsWaitableTime_description" ("WindowsWaitableTime_id");
 CREATE INDEX "ix_WindowsWaitableTime_description_description" ON "WindowsWaitableTime_description" (description);
+CREATE INDEX "ix_WindowsWaitableTime_description_WindowsWaitableTime_id" ON "WindowsWaitableTime_description" ("WindowsWaitableTime_id");
 
 CREATE TABLE "WindowsWaitableTime_modifiedTime" (
 	"WindowsWaitableTime_id" TEXT,
@@ -20443,8 +20496,8 @@ CREATE TABLE "WindowsWaitableTime_objectMarking" (
 	FOREIGN KEY("WindowsWaitableTime_id") REFERENCES "WindowsWaitableTime" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WindowsWaitableTime_objectMarking_WindowsWaitableTime_id" ON "WindowsWaitableTime_objectMarking" ("WindowsWaitableTime_id");
 CREATE INDEX "ix_WindowsWaitableTime_objectMarking_objectMarking_id" ON "WindowsWaitableTime_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WindowsWaitableTime_objectMarking_WindowsWaitableTime_id" ON "WindowsWaitableTime_objectMarking" ("WindowsWaitableTime_id");
 
 CREATE TABLE "WindowsWaitableTime_tag" (
 	"WindowsWaitableTime_id" TEXT,
@@ -20461,8 +20514,8 @@ CREATE TABLE "WirelessNetworkConnection_description" (
 	PRIMARY KEY ("WirelessNetworkConnection_id", description),
 	FOREIGN KEY("WirelessNetworkConnection_id") REFERENCES "WirelessNetworkConnection" (id)
 );
-CREATE INDEX "ix_WirelessNetworkConnection_description_WirelessNetworkConnection_id" ON "WirelessNetworkConnection_description" ("WirelessNetworkConnection_id");
 CREATE INDEX "ix_WirelessNetworkConnection_description_description" ON "WirelessNetworkConnection_description" (description);
+CREATE INDEX "ix_WirelessNetworkConnection_description_WirelessNetworkConnection_id" ON "WirelessNetworkConnection_description" ("WirelessNetworkConnection_id");
 
 CREATE TABLE "WirelessNetworkConnection_modifiedTime" (
 	"WirelessNetworkConnection_id" TEXT,
@@ -20480,8 +20533,8 @@ CREATE TABLE "WirelessNetworkConnection_objectMarking" (
 	FOREIGN KEY("WirelessNetworkConnection_id") REFERENCES "WirelessNetworkConnection" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WirelessNetworkConnection_objectMarking_WirelessNetworkConnection_id" ON "WirelessNetworkConnection_objectMarking" ("WirelessNetworkConnection_id");
 CREATE INDEX "ix_WirelessNetworkConnection_objectMarking_objectMarking_id" ON "WirelessNetworkConnection_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WirelessNetworkConnection_objectMarking_WirelessNetworkConnection_id" ON "WirelessNetworkConnection_objectMarking" ("WirelessNetworkConnection_id");
 
 CREATE TABLE "WirelessNetworkConnection_tag" (
 	"WirelessNetworkConnection_id" TEXT,
@@ -20498,8 +20551,8 @@ CREATE TABLE "WriteBlocker_description" (
 	PRIMARY KEY ("WriteBlocker_id", description),
 	FOREIGN KEY("WriteBlocker_id") REFERENCES "WriteBlocker" (id)
 );
-CREATE INDEX "ix_WriteBlocker_description_WriteBlocker_id" ON "WriteBlocker_description" ("WriteBlocker_id");
 CREATE INDEX "ix_WriteBlocker_description_description" ON "WriteBlocker_description" (description);
+CREATE INDEX "ix_WriteBlocker_description_WriteBlocker_id" ON "WriteBlocker_description" ("WriteBlocker_id");
 
 CREATE TABLE "WriteBlocker_modifiedTime" (
 	"WriteBlocker_id" TEXT,
@@ -20517,8 +20570,8 @@ CREATE TABLE "WriteBlocker_objectMarking" (
 	FOREIGN KEY("WriteBlocker_id") REFERENCES "WriteBlocker" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_WriteBlocker_objectMarking_WriteBlocker_id" ON "WriteBlocker_objectMarking" ("WriteBlocker_id");
 CREATE INDEX "ix_WriteBlocker_objectMarking_objectMarking_id" ON "WriteBlocker_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_WriteBlocker_objectMarking_WriteBlocker_id" ON "WriteBlocker_objectMarking" ("WriteBlocker_id");
 
 CREATE TABLE "WriteBlocker_tag" (
 	"WriteBlocker_id" TEXT,
@@ -20535,8 +20588,8 @@ CREATE TABLE "X509Certificate_description" (
 	PRIMARY KEY ("X509Certificate_id", description),
 	FOREIGN KEY("X509Certificate_id") REFERENCES "X509Certificate" (id)
 );
-CREATE INDEX "ix_X509Certificate_description_X509Certificate_id" ON "X509Certificate_description" ("X509Certificate_id");
 CREATE INDEX "ix_X509Certificate_description_description" ON "X509Certificate_description" (description);
+CREATE INDEX "ix_X509Certificate_description_X509Certificate_id" ON "X509Certificate_description" ("X509Certificate_id");
 
 CREATE TABLE "X509Certificate_modifiedTime" (
 	"X509Certificate_id" TEXT,
@@ -20554,8 +20607,8 @@ CREATE TABLE "X509Certificate_objectMarking" (
 	FOREIGN KEY("X509Certificate_id") REFERENCES "X509Certificate" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_X509Certificate_objectMarking_X509Certificate_id" ON "X509Certificate_objectMarking" ("X509Certificate_id");
 CREATE INDEX "ix_X509Certificate_objectMarking_objectMarking_id" ON "X509Certificate_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_X509Certificate_objectMarking_X509Certificate_id" ON "X509Certificate_objectMarking" ("X509Certificate_id");
 
 CREATE TABLE "X509Certificate_tag" (
 	"X509Certificate_id" TEXT,
@@ -20572,8 +20625,8 @@ CREATE TABLE "X509V3Certificate_description" (
 	PRIMARY KEY ("X509V3Certificate_id", description),
 	FOREIGN KEY("X509V3Certificate_id") REFERENCES "X509V3Certificate" (id)
 );
-CREATE INDEX "ix_X509V3Certificate_description_X509V3Certificate_id" ON "X509V3Certificate_description" ("X509V3Certificate_id");
 CREATE INDEX "ix_X509V3Certificate_description_description" ON "X509V3Certificate_description" (description);
+CREATE INDEX "ix_X509V3Certificate_description_X509V3Certificate_id" ON "X509V3Certificate_description" ("X509V3Certificate_id");
 
 CREATE TABLE "X509V3Certificate_modifiedTime" (
 	"X509V3Certificate_id" TEXT,
@@ -20591,8 +20644,8 @@ CREATE TABLE "X509V3Certificate_objectMarking" (
 	FOREIGN KEY("X509V3Certificate_id") REFERENCES "X509V3Certificate" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_X509V3Certificate_objectMarking_X509V3Certificate_id" ON "X509V3Certificate_objectMarking" ("X509V3Certificate_id");
 CREATE INDEX "ix_X509V3Certificate_objectMarking_objectMarking_id" ON "X509V3Certificate_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_X509V3Certificate_objectMarking_X509V3Certificate_id" ON "X509V3Certificate_objectMarking" ("X509V3Certificate_id");
 
 CREATE TABLE "X509V3Certificate_tag" (
 	"X509V3Certificate_id" TEXT,
@@ -21010,8 +21063,8 @@ CREATE TABLE "Relationship_endTime" (
 	PRIMARY KEY ("Relationship_id", "endTime"),
 	FOREIGN KEY("Relationship_id") REFERENCES "Relationship" (id)
 );
-CREATE INDEX "ix_Relationship_endTime_Relationship_id" ON "Relationship_endTime" ("Relationship_id");
 CREATE INDEX "ix_Relationship_endTime_endTime" ON "Relationship_endTime" ("endTime");
+CREATE INDEX "ix_Relationship_endTime_Relationship_id" ON "Relationship_endTime" ("Relationship_id");
 
 CREATE TABLE "Relationship_source" (
 	"Relationship_id" TEXT,
@@ -21038,8 +21091,8 @@ CREATE TABLE "Relationship_description" (
 	PRIMARY KEY ("Relationship_id", description),
 	FOREIGN KEY("Relationship_id") REFERENCES "Relationship" (id)
 );
-CREATE INDEX "ix_Relationship_description_description" ON "Relationship_description" (description);
 CREATE INDEX "ix_Relationship_description_Relationship_id" ON "Relationship_description" ("Relationship_id");
+CREATE INDEX "ix_Relationship_description_description" ON "Relationship_description" (description);
 
 CREATE TABLE "Relationship_modifiedTime" (
 	"Relationship_id" TEXT,
@@ -21047,8 +21100,8 @@ CREATE TABLE "Relationship_modifiedTime" (
 	PRIMARY KEY ("Relationship_id", "modifiedTime"),
 	FOREIGN KEY("Relationship_id") REFERENCES "Relationship" (id)
 );
-CREATE INDEX "ix_Relationship_modifiedTime_Relationship_id" ON "Relationship_modifiedTime" ("Relationship_id");
 CREATE INDEX "ix_Relationship_modifiedTime_modifiedTime" ON "Relationship_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Relationship_modifiedTime_Relationship_id" ON "Relationship_modifiedTime" ("Relationship_id");
 
 CREATE TABLE "Relationship_objectMarking" (
 	"Relationship_id" TEXT,
@@ -21094,8 +21147,8 @@ CREATE TABLE "AnalyticTool_references" (
 	PRIMARY KEY ("AnalyticTool_id", "references"),
 	FOREIGN KEY("AnalyticTool_id") REFERENCES "AnalyticTool" (id)
 );
-CREATE INDEX "ix_AnalyticTool_references_references" ON "AnalyticTool_references" ("references");
 CREATE INDEX "ix_AnalyticTool_references_AnalyticTool_id" ON "AnalyticTool_references" ("AnalyticTool_id");
+CREATE INDEX "ix_AnalyticTool_references_references" ON "AnalyticTool_references" ("references");
 
 CREATE TABLE "AnalyticTool_description" (
 	"AnalyticTool_id" TEXT,
@@ -21103,8 +21156,8 @@ CREATE TABLE "AnalyticTool_description" (
 	PRIMARY KEY ("AnalyticTool_id", description),
 	FOREIGN KEY("AnalyticTool_id") REFERENCES "AnalyticTool" (id)
 );
-CREATE INDEX "ix_AnalyticTool_description_AnalyticTool_id" ON "AnalyticTool_description" ("AnalyticTool_id");
 CREATE INDEX "ix_AnalyticTool_description_description" ON "AnalyticTool_description" (description);
+CREATE INDEX "ix_AnalyticTool_description_AnalyticTool_id" ON "AnalyticTool_description" ("AnalyticTool_id");
 
 CREATE TABLE "AnalyticTool_modifiedTime" (
 	"AnalyticTool_id" TEXT,
@@ -21122,8 +21175,8 @@ CREATE TABLE "AnalyticTool_objectMarking" (
 	FOREIGN KEY("AnalyticTool_id") REFERENCES "AnalyticTool" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_AnalyticTool_objectMarking_AnalyticTool_id" ON "AnalyticTool_objectMarking" ("AnalyticTool_id");
 CREATE INDEX "ix_AnalyticTool_objectMarking_objectMarking_id" ON "AnalyticTool_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_AnalyticTool_objectMarking_AnalyticTool_id" ON "AnalyticTool_objectMarking" ("AnalyticTool_id");
 
 CREATE TABLE "AnalyticTool_tag" (
 	"AnalyticTool_id" TEXT,
@@ -21149,8 +21202,8 @@ CREATE TABLE "DefensiveTool_description" (
 	PRIMARY KEY ("DefensiveTool_id", description),
 	FOREIGN KEY("DefensiveTool_id") REFERENCES "DefensiveTool" (id)
 );
-CREATE INDEX "ix_DefensiveTool_description_DefensiveTool_id" ON "DefensiveTool_description" ("DefensiveTool_id");
 CREATE INDEX "ix_DefensiveTool_description_description" ON "DefensiveTool_description" (description);
+CREATE INDEX "ix_DefensiveTool_description_DefensiveTool_id" ON "DefensiveTool_description" ("DefensiveTool_id");
 
 CREATE TABLE "DefensiveTool_modifiedTime" (
 	"DefensiveTool_id" TEXT,
@@ -21158,8 +21211,8 @@ CREATE TABLE "DefensiveTool_modifiedTime" (
 	PRIMARY KEY ("DefensiveTool_id", "modifiedTime"),
 	FOREIGN KEY("DefensiveTool_id") REFERENCES "DefensiveTool" (id)
 );
-CREATE INDEX "ix_DefensiveTool_modifiedTime_modifiedTime" ON "DefensiveTool_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_DefensiveTool_modifiedTime_DefensiveTool_id" ON "DefensiveTool_modifiedTime" ("DefensiveTool_id");
+CREATE INDEX "ix_DefensiveTool_modifiedTime_modifiedTime" ON "DefensiveTool_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "DefensiveTool_objectMarking" (
 	"DefensiveTool_id" TEXT,
@@ -21168,8 +21221,8 @@ CREATE TABLE "DefensiveTool_objectMarking" (
 	FOREIGN KEY("DefensiveTool_id") REFERENCES "DefensiveTool" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_DefensiveTool_objectMarking_DefensiveTool_id" ON "DefensiveTool_objectMarking" ("DefensiveTool_id");
 CREATE INDEX "ix_DefensiveTool_objectMarking_objectMarking_id" ON "DefensiveTool_objectMarking" ("objectMarking_id");
+CREATE INDEX "ix_DefensiveTool_objectMarking_DefensiveTool_id" ON "DefensiveTool_objectMarking" ("DefensiveTool_id");
 
 CREATE TABLE "DefensiveTool_tag" (
 	"DefensiveTool_id" TEXT,
@@ -21177,8 +21230,8 @@ CREATE TABLE "DefensiveTool_tag" (
 	PRIMARY KEY ("DefensiveTool_id", tag),
 	FOREIGN KEY("DefensiveTool_id") REFERENCES "DefensiveTool" (id)
 );
-CREATE INDEX "ix_DefensiveTool_tag_DefensiveTool_id" ON "DefensiveTool_tag" ("DefensiveTool_id");
 CREATE INDEX "ix_DefensiveTool_tag_tag" ON "DefensiveTool_tag" (tag);
+CREATE INDEX "ix_DefensiveTool_tag_DefensiveTool_id" ON "DefensiveTool_tag" ("DefensiveTool_id");
 
 CREATE TABLE "MaliciousTool_references" (
 	"MaliciousTool_id" TEXT,
@@ -21186,8 +21239,8 @@ CREATE TABLE "MaliciousTool_references" (
 	PRIMARY KEY ("MaliciousTool_id", "references"),
 	FOREIGN KEY("MaliciousTool_id") REFERENCES "MaliciousTool" (id)
 );
-CREATE INDEX "ix_MaliciousTool_references_MaliciousTool_id" ON "MaliciousTool_references" ("MaliciousTool_id");
 CREATE INDEX "ix_MaliciousTool_references_references" ON "MaliciousTool_references" ("references");
+CREATE INDEX "ix_MaliciousTool_references_MaliciousTool_id" ON "MaliciousTool_references" ("MaliciousTool_id");
 
 CREATE TABLE "MaliciousTool_description" (
 	"MaliciousTool_id" TEXT,
@@ -21214,8 +21267,8 @@ CREATE TABLE "MaliciousTool_objectMarking" (
 	FOREIGN KEY("MaliciousTool_id") REFERENCES "MaliciousTool" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_MaliciousTool_objectMarking_objectMarking_id" ON "MaliciousTool_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_MaliciousTool_objectMarking_MaliciousTool_id" ON "MaliciousTool_objectMarking" ("MaliciousTool_id");
+CREATE INDEX "ix_MaliciousTool_objectMarking_objectMarking_id" ON "MaliciousTool_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "MaliciousTool_tag" (
 	"MaliciousTool_id" TEXT,
@@ -21250,8 +21303,8 @@ CREATE TABLE "Tool_modifiedTime" (
 	PRIMARY KEY ("Tool_id", "modifiedTime"),
 	FOREIGN KEY("Tool_id") REFERENCES "Tool" (id)
 );
-CREATE INDEX "ix_Tool_modifiedTime_modifiedTime" ON "Tool_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Tool_modifiedTime_Tool_id" ON "Tool_modifiedTime" ("Tool_id");
+CREATE INDEX "ix_Tool_modifiedTime_modifiedTime" ON "Tool_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Tool_objectMarking" (
 	"Tool_id" TEXT,
@@ -21279,8 +21332,8 @@ CREATE TABLE "Thread_item" (
 	FOREIGN KEY("Thread_id") REFERENCES "Thread" (id),
 	FOREIGN KEY(item_id) REFERENCES "ThreadItem" (id)
 );
-CREATE INDEX "ix_Thread_item_item_id" ON "Thread_item" (item_id);
 CREATE INDEX "ix_Thread_item_Thread_id" ON "Thread_item" ("Thread_id");
+CREATE INDEX "ix_Thread_item_item_id" ON "Thread_item" (item_id);
 
 CREATE TABLE "Thread_threadOriginItem" (
 	"Thread_id" TEXT,
@@ -21299,8 +21352,8 @@ CREATE TABLE "Thread_threadTerminalItem" (
 	FOREIGN KEY("Thread_id") REFERENCES "Thread" (id),
 	FOREIGN KEY("threadTerminalItem_id") REFERENCES "ThreadItem" (id)
 );
-CREATE INDEX "ix_Thread_threadTerminalItem_threadTerminalItem_id" ON "Thread_threadTerminalItem" ("threadTerminalItem_id");
 CREATE INDEX "ix_Thread_threadTerminalItem_Thread_id" ON "Thread_threadTerminalItem" ("Thread_id");
+CREATE INDEX "ix_Thread_threadTerminalItem_threadTerminalItem_id" ON "Thread_threadTerminalItem" ("threadTerminalItem_id");
 
 CREATE TABLE "ThreadItem_threadNextItem" (
 	"ThreadItem_id" TEXT,
@@ -21329,8 +21382,8 @@ CREATE TABLE "ThreadItem_threadPreviousItem" (
 	FOREIGN KEY("ThreadItem_id") REFERENCES "ThreadItem" (id),
 	FOREIGN KEY("threadPreviousItem_id") REFERENCES "ThreadItem" (id)
 );
-CREATE INDEX "ix_ThreadItem_threadPreviousItem_threadPreviousItem_id" ON "ThreadItem_threadPreviousItem" ("threadPreviousItem_id");
 CREATE INDEX "ix_ThreadItem_threadPreviousItem_ThreadItem_id" ON "ThreadItem_threadPreviousItem" ("ThreadItem_id");
+CREATE INDEX "ix_ThreadItem_threadPreviousItem_threadPreviousItem_id" ON "ThreadItem_threadPreviousItem" ("threadPreviousItem_id");
 
 CREATE TABLE "ThreadItem_threadSuccessor" (
 	"ThreadItem_id" TEXT,
@@ -21339,8 +21392,8 @@ CREATE TABLE "ThreadItem_threadSuccessor" (
 	FOREIGN KEY("ThreadItem_id") REFERENCES "ThreadItem" (id),
 	FOREIGN KEY("threadSuccessor_id") REFERENCES "ThreadItem" (id)
 );
-CREATE INDEX "ix_ThreadItem_threadSuccessor_ThreadItem_id" ON "ThreadItem_threadSuccessor" ("ThreadItem_id");
 CREATE INDEX "ix_ThreadItem_threadSuccessor_threadSuccessor_id" ON "ThreadItem_threadSuccessor" ("threadSuccessor_id");
+CREATE INDEX "ix_ThreadItem_threadSuccessor_ThreadItem_id" ON "ThreadItem_threadSuccessor" ("ThreadItem_id");
 
 CREATE TABLE "Action_action_object" (
 	"Action_id" TEXT,
@@ -21369,8 +21422,8 @@ CREATE TABLE "Action_instrument" (
 	FOREIGN KEY("Action_id") REFERENCES "Action" (id),
 	FOREIGN KEY(instrument_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Action_instrument_instrument_id" ON "Action_instrument" (instrument_id);
 CREATE INDEX "ix_Action_instrument_Action_id" ON "Action_instrument" ("Action_id");
+CREATE INDEX "ix_Action_instrument_instrument_id" ON "Action_instrument" (instrument_id);
 
 CREATE TABLE "Action_location" (
 	"Action_id" TEXT,
@@ -21379,8 +21432,8 @@ CREATE TABLE "Action_location" (
 	FOREIGN KEY("Action_id") REFERENCES "Action" (id),
 	FOREIGN KEY(location_id) REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_Action_location_Action_id" ON "Action_location" ("Action_id");
 CREATE INDEX "ix_Action_location_location_id" ON "Action_location" (location_id);
+CREATE INDEX "ix_Action_location_Action_id" ON "Action_location" ("Action_id");
 
 CREATE TABLE "Action_participant" (
 	"Action_id" TEXT,
@@ -21409,8 +21462,8 @@ CREATE TABLE "Action_subaction" (
 	FOREIGN KEY("Action_id") REFERENCES "Action" (id),
 	FOREIGN KEY(subaction_id) REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_Action_subaction_subaction_id" ON "Action_subaction" (subaction_id);
 CREATE INDEX "ix_Action_subaction_Action_id" ON "Action_subaction" ("Action_id");
+CREATE INDEX "ix_Action_subaction_subaction_id" ON "Action_subaction" (subaction_id);
 
 CREATE TABLE "Action_description" (
 	"Action_id" TEXT,
@@ -21418,8 +21471,8 @@ CREATE TABLE "Action_description" (
 	PRIMARY KEY ("Action_id", description),
 	FOREIGN KEY("Action_id") REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_Action_description_description" ON "Action_description" (description);
 CREATE INDEX "ix_Action_description_Action_id" ON "Action_description" ("Action_id");
+CREATE INDEX "ix_Action_description_description" ON "Action_description" (description);
 
 CREATE TABLE "Action_modifiedTime" (
 	"Action_id" TEXT,
@@ -21427,8 +21480,8 @@ CREATE TABLE "Action_modifiedTime" (
 	PRIMARY KEY ("Action_id", "modifiedTime"),
 	FOREIGN KEY("Action_id") REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_Action_modifiedTime_modifiedTime" ON "Action_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Action_modifiedTime_Action_id" ON "Action_modifiedTime" ("Action_id");
+CREATE INDEX "ix_Action_modifiedTime_modifiedTime" ON "Action_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Action_objectMarking" (
 	"Action_id" TEXT,
@@ -21476,8 +21529,8 @@ CREATE TABLE "ActionLifecycle_instrument" (
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id),
 	FOREIGN KEY(instrument_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_instrument_ActionLifecycle_id" ON "ActionLifecycle_instrument" ("ActionLifecycle_id");
 CREATE INDEX "ix_ActionLifecycle_instrument_instrument_id" ON "ActionLifecycle_instrument" (instrument_id);
+CREATE INDEX "ix_ActionLifecycle_instrument_ActionLifecycle_id" ON "ActionLifecycle_instrument" ("ActionLifecycle_id");
 
 CREATE TABLE "ActionLifecycle_location" (
 	"ActionLifecycle_id" TEXT,
@@ -21486,8 +21539,8 @@ CREATE TABLE "ActionLifecycle_location" (
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id),
 	FOREIGN KEY(location_id) REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_location_location_id" ON "ActionLifecycle_location" (location_id);
 CREATE INDEX "ix_ActionLifecycle_location_ActionLifecycle_id" ON "ActionLifecycle_location" ("ActionLifecycle_id");
+CREATE INDEX "ix_ActionLifecycle_location_location_id" ON "ActionLifecycle_location" (location_id);
 
 CREATE TABLE "ActionLifecycle_participant" (
 	"ActionLifecycle_id" TEXT,
@@ -21516,8 +21569,8 @@ CREATE TABLE "ActionLifecycle_subaction" (
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id),
 	FOREIGN KEY(subaction_id) REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_subaction_ActionLifecycle_id" ON "ActionLifecycle_subaction" ("ActionLifecycle_id");
 CREATE INDEX "ix_ActionLifecycle_subaction_subaction_id" ON "ActionLifecycle_subaction" (subaction_id);
+CREATE INDEX "ix_ActionLifecycle_subaction_ActionLifecycle_id" ON "ActionLifecycle_subaction" ("ActionLifecycle_id");
 
 CREATE TABLE "ActionLifecycle_description" (
 	"ActionLifecycle_id" TEXT,
@@ -21525,8 +21578,8 @@ CREATE TABLE "ActionLifecycle_description" (
 	PRIMARY KEY ("ActionLifecycle_id", description),
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_description_ActionLifecycle_id" ON "ActionLifecycle_description" ("ActionLifecycle_id");
 CREATE INDEX "ix_ActionLifecycle_description_description" ON "ActionLifecycle_description" (description);
+CREATE INDEX "ix_ActionLifecycle_description_ActionLifecycle_id" ON "ActionLifecycle_description" ("ActionLifecycle_id");
 
 CREATE TABLE "ActionLifecycle_modifiedTime" (
 	"ActionLifecycle_id" TEXT,
@@ -21534,8 +21587,8 @@ CREATE TABLE "ActionLifecycle_modifiedTime" (
 	PRIMARY KEY ("ActionLifecycle_id", "modifiedTime"),
 	FOREIGN KEY("ActionLifecycle_id") REFERENCES "ActionLifecycle" (id)
 );
-CREATE INDEX "ix_ActionLifecycle_modifiedTime_ActionLifecycle_id" ON "ActionLifecycle_modifiedTime" ("ActionLifecycle_id");
 CREATE INDEX "ix_ActionLifecycle_modifiedTime_modifiedTime" ON "ActionLifecycle_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ActionLifecycle_modifiedTime_ActionLifecycle_id" ON "ActionLifecycle_modifiedTime" ("ActionLifecycle_id");
 
 CREATE TABLE "ActionLifecycle_objectMarking" (
 	"ActionLifecycle_id" TEXT,
@@ -21583,8 +21636,8 @@ CREATE TABLE "ActionPattern_instrument" (
 	FOREIGN KEY("ActionPattern_id") REFERENCES "ActionPattern" (id),
 	FOREIGN KEY(instrument_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_ActionPattern_instrument_instrument_id" ON "ActionPattern_instrument" (instrument_id);
 CREATE INDEX "ix_ActionPattern_instrument_ActionPattern_id" ON "ActionPattern_instrument" ("ActionPattern_id");
+CREATE INDEX "ix_ActionPattern_instrument_instrument_id" ON "ActionPattern_instrument" (instrument_id);
 
 CREATE TABLE "ActionPattern_location" (
 	"ActionPattern_id" TEXT,
@@ -21593,8 +21646,8 @@ CREATE TABLE "ActionPattern_location" (
 	FOREIGN KEY("ActionPattern_id") REFERENCES "ActionPattern" (id),
 	FOREIGN KEY(location_id) REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_ActionPattern_location_ActionPattern_id" ON "ActionPattern_location" ("ActionPattern_id");
 CREATE INDEX "ix_ActionPattern_location_location_id" ON "ActionPattern_location" (location_id);
+CREATE INDEX "ix_ActionPattern_location_ActionPattern_id" ON "ActionPattern_location" ("ActionPattern_id");
 
 CREATE TABLE "ActionPattern_participant" (
 	"ActionPattern_id" TEXT,
@@ -21623,8 +21676,8 @@ CREATE TABLE "ActionPattern_subaction" (
 	FOREIGN KEY("ActionPattern_id") REFERENCES "ActionPattern" (id),
 	FOREIGN KEY(subaction_id) REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_ActionPattern_subaction_subaction_id" ON "ActionPattern_subaction" (subaction_id);
 CREATE INDEX "ix_ActionPattern_subaction_ActionPattern_id" ON "ActionPattern_subaction" ("ActionPattern_id");
+CREATE INDEX "ix_ActionPattern_subaction_subaction_id" ON "ActionPattern_subaction" (subaction_id);
 
 CREATE TABLE "ActionPattern_description" (
 	"ActionPattern_id" TEXT,
@@ -21632,8 +21685,8 @@ CREATE TABLE "ActionPattern_description" (
 	PRIMARY KEY ("ActionPattern_id", description),
 	FOREIGN KEY("ActionPattern_id") REFERENCES "ActionPattern" (id)
 );
-CREATE INDEX "ix_ActionPattern_description_description" ON "ActionPattern_description" (description);
 CREATE INDEX "ix_ActionPattern_description_ActionPattern_id" ON "ActionPattern_description" ("ActionPattern_id");
+CREATE INDEX "ix_ActionPattern_description_description" ON "ActionPattern_description" (description);
 
 CREATE TABLE "ActionPattern_modifiedTime" (
 	"ActionPattern_id" TEXT,
@@ -21641,8 +21694,8 @@ CREATE TABLE "ActionPattern_modifiedTime" (
 	PRIMARY KEY ("ActionPattern_id", "modifiedTime"),
 	FOREIGN KEY("ActionPattern_id") REFERENCES "ActionPattern" (id)
 );
-CREATE INDEX "ix_ActionPattern_modifiedTime_modifiedTime" ON "ActionPattern_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ActionPattern_modifiedTime_ActionPattern_id" ON "ActionPattern_modifiedTime" ("ActionPattern_id");
+CREATE INDEX "ix_ActionPattern_modifiedTime_modifiedTime" ON "ActionPattern_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ActionPattern_objectMarking" (
 	"ActionPattern_id" TEXT,
@@ -21680,8 +21733,8 @@ CREATE TABLE "Analysis_error" (
 	FOREIGN KEY("Analysis_id") REFERENCES "Analysis" (id),
 	FOREIGN KEY(error_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Analysis_error_error_id" ON "Analysis_error" (error_id);
 CREATE INDEX "ix_Analysis_error_Analysis_id" ON "Analysis_error" ("Analysis_id");
+CREATE INDEX "ix_Analysis_error_error_id" ON "Analysis_error" (error_id);
 
 CREATE TABLE "Analysis_instrument" (
 	"Analysis_id" TEXT,
@@ -21690,8 +21743,8 @@ CREATE TABLE "Analysis_instrument" (
 	FOREIGN KEY("Analysis_id") REFERENCES "Analysis" (id),
 	FOREIGN KEY(instrument_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Analysis_instrument_Analysis_id" ON "Analysis_instrument" ("Analysis_id");
 CREATE INDEX "ix_Analysis_instrument_instrument_id" ON "Analysis_instrument" (instrument_id);
+CREATE INDEX "ix_Analysis_instrument_Analysis_id" ON "Analysis_instrument" ("Analysis_id");
 
 CREATE TABLE "Analysis_location" (
 	"Analysis_id" TEXT,
@@ -21720,8 +21773,8 @@ CREATE TABLE "Analysis_result" (
 	FOREIGN KEY("Analysis_id") REFERENCES "Analysis" (id),
 	FOREIGN KEY(result_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Analysis_result_result_id" ON "Analysis_result" (result_id);
 CREATE INDEX "ix_Analysis_result_Analysis_id" ON "Analysis_result" ("Analysis_id");
+CREATE INDEX "ix_Analysis_result_result_id" ON "Analysis_result" (result_id);
 
 CREATE TABLE "Analysis_subaction" (
 	"Analysis_id" TEXT,
@@ -21730,8 +21783,8 @@ CREATE TABLE "Analysis_subaction" (
 	FOREIGN KEY("Analysis_id") REFERENCES "Analysis" (id),
 	FOREIGN KEY(subaction_id) REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_Analysis_subaction_Analysis_id" ON "Analysis_subaction" ("Analysis_id");
 CREATE INDEX "ix_Analysis_subaction_subaction_id" ON "Analysis_subaction" (subaction_id);
+CREATE INDEX "ix_Analysis_subaction_Analysis_id" ON "Analysis_subaction" ("Analysis_id");
 
 CREATE TABLE "Analysis_description" (
 	"Analysis_id" TEXT,
@@ -21748,8 +21801,8 @@ CREATE TABLE "Analysis_modifiedTime" (
 	PRIMARY KEY ("Analysis_id", "modifiedTime"),
 	FOREIGN KEY("Analysis_id") REFERENCES "Analysis" (id)
 );
-CREATE INDEX "ix_Analysis_modifiedTime_Analysis_id" ON "Analysis_modifiedTime" ("Analysis_id");
 CREATE INDEX "ix_Analysis_modifiedTime_modifiedTime" ON "Analysis_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_Analysis_modifiedTime_Analysis_id" ON "Analysis_modifiedTime" ("Analysis_id");
 
 CREATE TABLE "Analysis_objectMarking" (
 	"Analysis_id" TEXT,
@@ -21806,8 +21859,8 @@ CREATE TABLE "CallFacet_to" (
 	FOREIGN KEY("CallFacet_id") REFERENCES "CallFacet" (id),
 	FOREIGN KEY(to_id) REFERENCES "ObservableObject" (id)
 );
-CREATE INDEX "ix_CallFacet_to_to_id" ON "CallFacet_to" (to_id);
 CREATE INDEX "ix_CallFacet_to_CallFacet_id" ON "CallFacet_to" ("CallFacet_id");
+CREATE INDEX "ix_CallFacet_to_to_id" ON "CallFacet_to" (to_id);
 
 CREATE TABLE "ConfiguredSoftware_description" (
 	"ConfiguredSoftware_id" TEXT,
@@ -21834,8 +21887,8 @@ CREATE TABLE "ConfiguredSoftware_objectMarking" (
 	FOREIGN KEY("ConfiguredSoftware_id") REFERENCES "ConfiguredSoftware" (id),
 	FOREIGN KEY("objectMarking_id") REFERENCES "MarkingDefinitionAbstraction" (id)
 );
-CREATE INDEX "ix_ConfiguredSoftware_objectMarking_objectMarking_id" ON "ConfiguredSoftware_objectMarking" ("objectMarking_id");
 CREATE INDEX "ix_ConfiguredSoftware_objectMarking_ConfiguredSoftware_id" ON "ConfiguredSoftware_objectMarking" ("ConfiguredSoftware_id");
+CREATE INDEX "ix_ConfiguredSoftware_objectMarking_objectMarking_id" ON "ConfiguredSoftware_objectMarking" ("objectMarking_id");
 
 CREATE TABLE "ConfiguredSoftware_tag" (
 	"ConfiguredSoftware_id" TEXT,
@@ -21870,8 +21923,8 @@ CREATE TABLE "ContactFacet_nickname" (
 	PRIMARY KEY ("ContactFacet_id", nickname),
 	FOREIGN KEY("ContactFacet_id") REFERENCES "ContactFacet" (id)
 );
-CREATE INDEX "ix_ContactFacet_nickname_nickname" ON "ContactFacet_nickname" (nickname);
 CREATE INDEX "ix_ContactFacet_nickname_ContactFacet_id" ON "ContactFacet_nickname" ("ContactFacet_id");
+CREATE INDEX "ix_ContactFacet_nickname_nickname" ON "ContactFacet_nickname" (nickname);
 
 CREATE TABLE "ContactListFacet_contact" (
 	"ContactListFacet_id" INTEGER,
@@ -21889,8 +21942,8 @@ CREATE TABLE "ContentDataFacet_mimeType" (
 	PRIMARY KEY ("ContentDataFacet_id", "mimeType"),
 	FOREIGN KEY("ContentDataFacet_id") REFERENCES "ContentDataFacet" (id)
 );
-CREATE INDEX "ix_ContentDataFacet_mimeType_mimeType" ON "ContentDataFacet_mimeType" ("mimeType");
 CREATE INDEX "ix_ContentDataFacet_mimeType_ContentDataFacet_id" ON "ContentDataFacet_mimeType" ("ContentDataFacet_id");
+CREATE INDEX "ix_ContentDataFacet_mimeType_mimeType" ON "ContentDataFacet_mimeType" ("mimeType");
 
 CREATE TABLE "GeoLocationTrackFacet_geoLocationEntry" (
 	"GeoLocationTrackFacet_id" INTEGER,
@@ -21929,8 +21982,8 @@ CREATE TABLE "NetworkConnectionFacet_src" (
 	FOREIGN KEY("NetworkConnectionFacet_id") REFERENCES "NetworkConnectionFacet" (id),
 	FOREIGN KEY(src_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_NetworkConnectionFacet_src_src_id" ON "NetworkConnectionFacet_src" (src_id);
 CREATE INDEX "ix_NetworkConnectionFacet_src_NetworkConnectionFacet_id" ON "NetworkConnectionFacet_src" ("NetworkConnectionFacet_id");
+CREATE INDEX "ix_NetworkConnectionFacet_src_src_id" ON "NetworkConnectionFacet_src" (src_id);
 
 CREATE TABLE "NetworkInterfaceFacet_dhcpServer" (
 	"NetworkInterfaceFacet_id" INTEGER,
@@ -21959,8 +22012,8 @@ CREATE TABLE "NetworkInterfaceFacet_ipGateway" (
 	FOREIGN KEY("NetworkInterfaceFacet_id") REFERENCES "NetworkInterfaceFacet" (id),
 	FOREIGN KEY("ipGateway_id") REFERENCES "ObservableObject" (id)
 );
-CREATE INDEX "ix_NetworkInterfaceFacet_ipGateway_NetworkInterfaceFacet_id" ON "NetworkInterfaceFacet_ipGateway" ("NetworkInterfaceFacet_id");
 CREATE INDEX "ix_NetworkInterfaceFacet_ipGateway_ipGateway_id" ON "NetworkInterfaceFacet_ipGateway" ("ipGateway_id");
+CREATE INDEX "ix_NetworkInterfaceFacet_ipGateway_NetworkInterfaceFacet_id" ON "NetworkInterfaceFacet_ipGateway" ("NetworkInterfaceFacet_id");
 
 CREATE TABLE "ObservableAction_action_object" (
 	"ObservableAction_id" TEXT,
@@ -21989,8 +22042,8 @@ CREATE TABLE "ObservableAction_instrument" (
 	FOREIGN KEY("ObservableAction_id") REFERENCES "ObservableAction" (id),
 	FOREIGN KEY(instrument_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_ObservableAction_instrument_instrument_id" ON "ObservableAction_instrument" (instrument_id);
 CREATE INDEX "ix_ObservableAction_instrument_ObservableAction_id" ON "ObservableAction_instrument" ("ObservableAction_id");
+CREATE INDEX "ix_ObservableAction_instrument_instrument_id" ON "ObservableAction_instrument" (instrument_id);
 
 CREATE TABLE "ObservableAction_location" (
 	"ObservableAction_id" TEXT,
@@ -21999,8 +22052,8 @@ CREATE TABLE "ObservableAction_location" (
 	FOREIGN KEY("ObservableAction_id") REFERENCES "ObservableAction" (id),
 	FOREIGN KEY(location_id) REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_ObservableAction_location_ObservableAction_id" ON "ObservableAction_location" ("ObservableAction_id");
 CREATE INDEX "ix_ObservableAction_location_location_id" ON "ObservableAction_location" (location_id);
+CREATE INDEX "ix_ObservableAction_location_ObservableAction_id" ON "ObservableAction_location" ("ObservableAction_id");
 
 CREATE TABLE "ObservableAction_participant" (
 	"ObservableAction_id" TEXT,
@@ -22029,8 +22082,8 @@ CREATE TABLE "ObservableAction_subaction" (
 	FOREIGN KEY("ObservableAction_id") REFERENCES "ObservableAction" (id),
 	FOREIGN KEY(subaction_id) REFERENCES "Action" (id)
 );
-CREATE INDEX "ix_ObservableAction_subaction_subaction_id" ON "ObservableAction_subaction" (subaction_id);
 CREATE INDEX "ix_ObservableAction_subaction_ObservableAction_id" ON "ObservableAction_subaction" ("ObservableAction_id");
+CREATE INDEX "ix_ObservableAction_subaction_subaction_id" ON "ObservableAction_subaction" (subaction_id);
 
 CREATE TABLE "ObservableAction_description" (
 	"ObservableAction_id" TEXT,
@@ -22038,8 +22091,8 @@ CREATE TABLE "ObservableAction_description" (
 	PRIMARY KEY ("ObservableAction_id", description),
 	FOREIGN KEY("ObservableAction_id") REFERENCES "ObservableAction" (id)
 );
-CREATE INDEX "ix_ObservableAction_description_description" ON "ObservableAction_description" (description);
 CREATE INDEX "ix_ObservableAction_description_ObservableAction_id" ON "ObservableAction_description" ("ObservableAction_id");
+CREATE INDEX "ix_ObservableAction_description_description" ON "ObservableAction_description" (description);
 
 CREATE TABLE "ObservableAction_modifiedTime" (
 	"ObservableAction_id" TEXT,
@@ -22047,8 +22100,8 @@ CREATE TABLE "ObservableAction_modifiedTime" (
 	PRIMARY KEY ("ObservableAction_id", "modifiedTime"),
 	FOREIGN KEY("ObservableAction_id") REFERENCES "ObservableAction" (id)
 );
-CREATE INDEX "ix_ObservableAction_modifiedTime_modifiedTime" ON "ObservableAction_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_ObservableAction_modifiedTime_ObservableAction_id" ON "ObservableAction_modifiedTime" ("ObservableAction_id");
+CREATE INDEX "ix_ObservableAction_modifiedTime_modifiedTime" ON "ObservableAction_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "ObservableAction_objectMarking" (
 	"ObservableAction_id" TEXT,
@@ -22085,8 +22138,8 @@ CREATE TABLE "ObservableRelationship_source" (
 	FOREIGN KEY("ObservableRelationship_id") REFERENCES "ObservableRelationship" (id),
 	FOREIGN KEY(source_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_ObservableRelationship_source_source_id" ON "ObservableRelationship_source" (source_id);
 CREATE INDEX "ix_ObservableRelationship_source_ObservableRelationship_id" ON "ObservableRelationship_source" ("ObservableRelationship_id");
+CREATE INDEX "ix_ObservableRelationship_source_source_id" ON "ObservableRelationship_source" (source_id);
 
 CREATE TABLE "ObservableRelationship_startTime" (
 	"ObservableRelationship_id" TEXT,
@@ -22112,8 +22165,8 @@ CREATE TABLE "ObservableRelationship_modifiedTime" (
 	PRIMARY KEY ("ObservableRelationship_id", "modifiedTime"),
 	FOREIGN KEY("ObservableRelationship_id") REFERENCES "ObservableRelationship" (id)
 );
-CREATE INDEX "ix_ObservableRelationship_modifiedTime_ObservableRelationship_id" ON "ObservableRelationship_modifiedTime" ("ObservableRelationship_id");
 CREATE INDEX "ix_ObservableRelationship_modifiedTime_modifiedTime" ON "ObservableRelationship_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ObservableRelationship_modifiedTime_ObservableRelationship_id" ON "ObservableRelationship_modifiedTime" ("ObservableRelationship_id");
 
 CREATE TABLE "ObservableRelationship_objectMarking" (
 	"ObservableRelationship_id" TEXT,
@@ -22171,8 +22224,8 @@ CREATE TABLE "Observation_location" (
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id),
 	FOREIGN KEY(location_id) REFERENCES "Location" (id)
 );
-CREATE INDEX "ix_Observation_location_Observation_id" ON "Observation_location" ("Observation_id");
 CREATE INDEX "ix_Observation_location_location_id" ON "Observation_location" (location_id);
+CREATE INDEX "ix_Observation_location_Observation_id" ON "Observation_location" ("Observation_id");
 
 CREATE TABLE "Observation_participant" (
 	"Observation_id" TEXT,
@@ -22181,8 +22234,8 @@ CREATE TABLE "Observation_participant" (
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id),
 	FOREIGN KEY(participant_id) REFERENCES "UcoObject" (id)
 );
-CREATE INDEX "ix_Observation_participant_participant_id" ON "Observation_participant" (participant_id);
 CREATE INDEX "ix_Observation_participant_Observation_id" ON "Observation_participant" ("Observation_id");
+CREATE INDEX "ix_Observation_participant_participant_id" ON "Observation_participant" (participant_id);
 
 CREATE TABLE "Observation_result" (
 	"Observation_id" TEXT,
@@ -22219,8 +22272,8 @@ CREATE TABLE "Observation_modifiedTime" (
 	PRIMARY KEY ("Observation_id", "modifiedTime"),
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id)
 );
-CREATE INDEX "ix_Observation_modifiedTime_modifiedTime" ON "Observation_modifiedTime" ("modifiedTime");
 CREATE INDEX "ix_Observation_modifiedTime_Observation_id" ON "Observation_modifiedTime" ("Observation_id");
+CREATE INDEX "ix_Observation_modifiedTime_modifiedTime" ON "Observation_modifiedTime" ("modifiedTime");
 
 CREATE TABLE "Observation_objectMarking" (
 	"Observation_id" TEXT,
@@ -22238,8 +22291,8 @@ CREATE TABLE "Observation_tag" (
 	PRIMARY KEY ("Observation_id", tag),
 	FOREIGN KEY("Observation_id") REFERENCES "Observation" (id)
 );
-CREATE INDEX "ix_Observation_tag_Observation_id" ON "Observation_tag" ("Observation_id");
 CREATE INDEX "ix_Observation_tag_tag" ON "Observation_tag" (tag);
+CREATE INDEX "ix_Observation_tag_Observation_id" ON "Observation_tag" ("Observation_id");
 
 CREATE TABLE "PDFFileFacet_pdfId0" (
 	"PDFFileFacet_id" INTEGER,
@@ -22283,8 +22336,8 @@ CREATE TABLE "WindowsComputerSpecificationFacet_domain" (
 	PRIMARY KEY ("WindowsComputerSpecificationFacet_id", domain),
 	FOREIGN KEY("WindowsComputerSpecificationFacet_id") REFERENCES "WindowsComputerSpecificationFacet" (id)
 );
-CREATE INDEX "ix_WindowsComputerSpecificationFacet_domain_domain" ON "WindowsComputerSpecificationFacet_domain" (domain);
 CREATE INDEX "ix_WindowsComputerSpecificationFacet_domain_WindowsComputerSpecificationFacet_id" ON "WindowsComputerSpecificationFacet_domain" ("WindowsComputerSpecificationFacet_id");
+CREATE INDEX "ix_WindowsComputerSpecificationFacet_domain_domain" ON "WindowsComputerSpecificationFacet_domain" (domain);
 
 CREATE TABLE "WindowsPrefetchFacet_accessedDirectory" (
 	"WindowsPrefetchFacet_id" INTEGER,
@@ -23356,8 +23409,8 @@ CREATE TABLE "ConfiguredTool_references" (
 	PRIMARY KEY ("ConfiguredTool_id", "references"),
 	FOREIGN KEY("ConfiguredTool_id") REFERENCES "ConfiguredTool" (id)
 );
-CREATE INDEX "ix_ConfiguredTool_references_ConfiguredTool_id" ON "ConfiguredTool_references" ("ConfiguredTool_id");
 CREATE INDEX "ix_ConfiguredTool_references_references" ON "ConfiguredTool_references" ("references");
+CREATE INDEX "ix_ConfiguredTool_references_ConfiguredTool_id" ON "ConfiguredTool_references" ("ConfiguredTool_id");
 
 CREATE TABLE "ConfiguredTool_description" (
 	"ConfiguredTool_id" TEXT,
@@ -23374,8 +23427,8 @@ CREATE TABLE "ConfiguredTool_modifiedTime" (
 	PRIMARY KEY ("ConfiguredTool_id", "modifiedTime"),
 	FOREIGN KEY("ConfiguredTool_id") REFERENCES "ConfiguredTool" (id)
 );
-CREATE INDEX "ix_ConfiguredTool_modifiedTime_ConfiguredTool_id" ON "ConfiguredTool_modifiedTime" ("ConfiguredTool_id");
 CREATE INDEX "ix_ConfiguredTool_modifiedTime_modifiedTime" ON "ConfiguredTool_modifiedTime" ("modifiedTime");
+CREATE INDEX "ix_ConfiguredTool_modifiedTime_ConfiguredTool_id" ON "ConfiguredTool_modifiedTime" ("ConfiguredTool_id");
 
 CREATE TABLE "ConfiguredTool_objectMarking" (
 	"ConfiguredTool_id" TEXT,
@@ -23516,8 +23569,8 @@ CREATE TABLE "EmailMessageFacet_receivedLines" (
 	PRIMARY KEY ("EmailMessageFacet_id", "receivedLines"),
 	FOREIGN KEY("EmailMessageFacet_id") REFERENCES "EmailMessageFacet" (id)
 );
-CREATE INDEX "ix_EmailMessageFacet_receivedLines_receivedLines" ON "EmailMessageFacet_receivedLines" ("receivedLines");
 CREATE INDEX "ix_EmailMessageFacet_receivedLines_EmailMessageFacet_id" ON "EmailMessageFacet_receivedLines" ("EmailMessageFacet_id");
+CREATE INDEX "ix_EmailMessageFacet_receivedLines_receivedLines" ON "EmailMessageFacet_receivedLines" ("receivedLines");
 
 CREATE TABLE "EmailMessageFacet_to" (
 	"EmailMessageFacet_id" INTEGER,
@@ -23526,8 +23579,8 @@ CREATE TABLE "EmailMessageFacet_to" (
 	FOREIGN KEY("EmailMessageFacet_id") REFERENCES "EmailMessageFacet" (id),
 	FOREIGN KEY(to_id) REFERENCES "ObservableObject" (id)
 );
-CREATE INDEX "ix_EmailMessageFacet_to_to_id" ON "EmailMessageFacet_to" (to_id);
 CREATE INDEX "ix_EmailMessageFacet_to_EmailMessageFacet_id" ON "EmailMessageFacet_to" ("EmailMessageFacet_id");
+CREATE INDEX "ix_EmailMessageFacet_to_to_id" ON "EmailMessageFacet_to" (to_id);
 
 CREATE TABLE "GlobalFlagType_hexadecimalValue" (
 	"GlobalFlagType_id" INTEGER,
@@ -23535,8 +23588,8 @@ CREATE TABLE "GlobalFlagType_hexadecimalValue" (
 	PRIMARY KEY ("GlobalFlagType_id", "hexadecimalValue"),
 	FOREIGN KEY("GlobalFlagType_id") REFERENCES "GlobalFlagType" (id)
 );
-CREATE INDEX "ix_GlobalFlagType_hexadecimalValue_hexadecimalValue" ON "GlobalFlagType_hexadecimalValue" ("hexadecimalValue");
 CREATE INDEX "ix_GlobalFlagType_hexadecimalValue_GlobalFlagType_id" ON "GlobalFlagType_hexadecimalValue" ("GlobalFlagType_id");
+CREATE INDEX "ix_GlobalFlagType_hexadecimalValue_hexadecimalValue" ON "GlobalFlagType_hexadecimalValue" ("hexadecimalValue");
 
 CREATE TABLE "OperatingSystemFacet_advertisingID" (
 	"OperatingSystemFacet_id" INTEGER,
@@ -23544,8 +23597,8 @@ CREATE TABLE "OperatingSystemFacet_advertisingID" (
 	PRIMARY KEY ("OperatingSystemFacet_id", "advertisingID"),
 	FOREIGN KEY("OperatingSystemFacet_id") REFERENCES "OperatingSystemFacet" (id)
 );
-CREATE INDEX "ix_OperatingSystemFacet_advertisingID_OperatingSystemFacet_id" ON "OperatingSystemFacet_advertisingID" ("OperatingSystemFacet_id");
 CREATE INDEX "ix_OperatingSystemFacet_advertisingID_advertisingID" ON "OperatingSystemFacet_advertisingID" ("advertisingID");
+CREATE INDEX "ix_OperatingSystemFacet_advertisingID_OperatingSystemFacet_id" ON "OperatingSystemFacet_advertisingID" ("OperatingSystemFacet_id");
 
 CREATE TABLE "ProcessFacet_arguments" (
 	"ProcessFacet_id" INTEGER,
@@ -23553,8 +23606,8 @@ CREATE TABLE "ProcessFacet_arguments" (
 	PRIMARY KEY ("ProcessFacet_id", arguments),
 	FOREIGN KEY("ProcessFacet_id") REFERENCES "ProcessFacet" (id)
 );
-CREATE INDEX "ix_ProcessFacet_arguments_arguments" ON "ProcessFacet_arguments" (arguments);
 CREATE INDEX "ix_ProcessFacet_arguments_ProcessFacet_id" ON "ProcessFacet_arguments" ("ProcessFacet_id");
+CREATE INDEX "ix_ProcessFacet_arguments_arguments" ON "ProcessFacet_arguments" (arguments);
 
 CREATE TABLE "URLHistoryEntry_keywordSearchTerm" (
 	"URLHistoryEntry_id" INTEGER,

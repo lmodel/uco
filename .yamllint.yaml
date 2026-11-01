@@ -13,6 +13,8 @@ ignore:
   - .lokf/lokf.yaml
   - .lokf/uco.yaml
   - tests/neighbours/*.yaml
+  # lmodel/collections' module, copied unchanged.
+  - src/uco/schema/collections/*.yaml
 
 rules:
   document-start: disable  # Don't check if document has a start marker (---).

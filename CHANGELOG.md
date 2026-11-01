@@ -6,6 +6,10 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+### Changed
+
+- **The schema imports lmodel/collections v0.1.0 for the Collections Ontology (CO) terms UCO uses, in place of its own `uco_co` module.** Every CO term keeps its IRI, CO's `index` is now `co_index`, and the schema gains CO's `Collection`, `Set` and inverse slots. Threads keep UCO's rules: a thread names its items by IRI, and an item's content stays optional.
+
 ## [0.1.0] - 2026-10-31
 
 ### Added

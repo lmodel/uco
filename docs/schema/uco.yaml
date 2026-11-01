@@ -1,13 +1,16 @@
 name: uco
 description: 'A LinkML rendering of the Unified Cyber Ontology (UCO) 1.5.0: one module
-  per UCO namespace and one for the Collections Ontology terms UCO uses, with every
-  class, property and vocabulary keeping its UCO IRI.'
+  per UCO namespace, with every class, property and vocabulary keeping its UCO IRI,
+  and lmodel/collections'' schema for the Collections Ontology terms UCO uses.'
 title: Unified Cyber Ontology (UCO)
 comments:
 - scripts/uco_to_linkml.py writes every YAML file in this folder from UCO's files
   in upstream/. Change the script or the copy, never the files.
 - Each module imports the modules its UCO file imports, and this file imports them
   in that order, so an importer can import one module alone.
+- collections/collections.yaml is lmodel/collections' schema at its v0.1.0 release,
+  copied unchanged. It renders the Collections Ontology (CO) 2.0 with CO's names and
+  IRIs, and UCO's threads build on its Bag and CoItem.
 - The descriptions are UCO's rdfs:comment texts, which the UCO Community publishes
   under the Apache License 2.0.
 - 'Where UCO defines one local name in more than one namespace, the namespace that
@@ -33,7 +36,7 @@ id: https://w3id.org/lmodel/uco
 version: 1.5.0
 imports:
 - linkml:types
-- ./uco_co
+- ./collections/collections
 - ./uco_core
 - ./uco_configuration
 - ./uco_location
@@ -2683,146 +2686,288 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  co_size:
-    name: co_size
-    definition_uri: https://w3id.org/lmodel/uco/co_size
-    description: How many items the collection holds.
-    from_schema: https://w3id.org/lmodel/uco-co
-    mappings:
-    - coll:size
-    slot_uri: coll:size
-    owner: Bag
-    domain_of:
-    - Bag
-    range: integer
-    minimum_value: 0
   element:
     name: element
-    definition_uri: https://w3id.org/lmodel/uco/element
-    description: A member of the collection, which one of its items wraps.
-    from_schema: https://w3id.org/lmodel/uco-co
+    definition_uri: https://w3id.org/lmodel/collections/element
+    description: A thing the collection holds, named by its IRI.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:element
+    domain: Collection
     slot_uri: coll:element
-    owner: Bag
+    owner: Collection
     domain_of:
-    - Bag
+    - Collection
     range: uriorcurie
     multivalued: true
-  firstItem:
-    name: firstItem
-    definition_uri: https://w3id.org/lmodel/uco/firstItem
-    description: The first item of the list.
-    from_schema: https://w3id.org/lmodel/uco-co
+  elementOf:
+    name: elementOf
+    definition_uri: https://w3id.org/lmodel/collections/elementOf
+    description: A collection that holds the thing as an element.
+    notes:
+    - CO declares it the inverse of element. LinkML's Python generator states an inverse
+      only between slots that range over classes, and element ranges over any thing
+      named by its IRI, so the inverse is not stated here.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
-    - coll:firstItem
-    slot_uri: coll:firstItem
-    owner: List
-    domain_of:
-    - List
-    range: ListItem
+    - coll:elementOf
+    slot_uri: coll:elementOf
+    range: Collection
+    multivalued: true
     inlined: true
     inlined_as_list: true
-  followedBy:
-    name: followedBy
-    definition_uri: https://w3id.org/lmodel/uco/followedBy
-    description: An item that comes somewhere after this one.
-    from_schema: https://w3id.org/lmodel/uco-co
+  co_size:
+    name: co_size
+    definition_uri: https://w3id.org/lmodel/collections/co_size
+    description: 'How many times the collection holds a thing, counting each repeat:
+      the number of elements of a set, or of items of a bag or a list.'
+    notes:
+    - CO gives every collection exactly one size. The schema leaves it optional, since
+      a reader can count; where it is given, the tests check that it equals the count.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
-    - coll:followedBy
-    slot_uri: coll:followedBy
-    owner: ListItem
+    - coll:size
+    domain: Collection
+    slot_uri: coll:size
+    owner: Collection
     domain_of:
-    - ListItem
+    - Collection
+    range: integer
+    minimum_value: 0
+  item:
+    name: item
+    definition_uri: https://w3id.org/lmodel/collections/item
+    description: An item of the bag, which holds one of its elements.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:item
+    domain: Bag
+    slot_uri: coll:item
+    owner: Thread
+    domain_of:
+    - Bag
+    - Thread
+    inverse: itemOf
     range: CoItem
     multivalued: true
     inlined: true
     inlined_as_list: true
-  index:
-    name: index
-    definition_uri: https://w3id.org/lmodel/uco/index
-    description: The place of the item in its list, counting from 1.
-    from_schema: https://w3id.org/lmodel/uco-co
+  itemOf:
+    name: itemOf
+    definition_uri: https://w3id.org/lmodel/collections/itemOf
+    description: A bag that holds the item.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
-    - coll:index
-    slot_uri: coll:index
-    owner: ListItem
-    domain_of:
-    - ListItem
-    range: integer
-    minimum_value: 1
-  item:
-    name: item
-    definition_uri: https://w3id.org/lmodel/uco/item
-    description: An item of the collection.
-    from_schema: https://w3id.org/lmodel/uco-co
-    mappings:
-    - coll:item
-    slot_uri: coll:item
-    owner: Thread
-    domain_of:
-    - List
-    - Thread
-    range: string
+    - coll:itemOf
+    domain: CoItem
+    slot_uri: coll:itemOf
+    owner: itemOf
+    inverse: item
+    range: Bag
     multivalued: true
+    inlined: true
+    inlined_as_list: true
   itemContent:
     name: itemContent
-    definition_uri: https://w3id.org/lmodel/uco/itemContent
+    definition_uri: https://w3id.org/lmodel/collections/itemContent
     description: The element that the item wraps.
-    from_schema: https://w3id.org/lmodel/uco-co
+    notes:
+    - CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps
+      at most one element, and CO's wiki page StructureBag says that an item links
+      exactly one resource.
+    from_schema: https://w3id.org/lmodel/collections
+    see_also:
+    - https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md
     mappings:
     - coll:itemContent
+    domain: CoItem
     slot_uri: coll:itemContent
     owner: ThreadItem
     domain_of:
     - CoItem
     - ThreadItem
     range: uriorcurie
+  itemContentOf:
+    name: itemContentOf
+    definition_uri: https://w3id.org/lmodel/collections/itemContentOf
+    description: An item that wraps the thing.
+    notes:
+    - CO declares it the inverse of itemContent, which is not stated here for the
+      reason given on elementOf.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:itemContentOf
+    slot_uri: coll:itemContentOf
+    range: CoItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  co_index:
+    name: co_index
+    definition_uri: https://w3id.org/lmodel/collections/co_index
+    description: The place of the item in its list, counting from 1.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:index
+    domain: ListItem
+    slot_uri: coll:index
+    owner: ListItem
+    domain_of:
+    - ListItem
+    range: integer
+    minimum_value: 1
+  firstItem:
+    name: firstItem
+    definition_uri: https://w3id.org/lmodel/collections/firstItem
+    description: The first item of the list.
+    notes:
+    - 'CO makes it a narrower form of item, which is not stated here: a LinkML slot
+      inherits its parent''s multivalued, and this one is single.'
+    comments:
+    - It holds a copy of the item with index 1, which has no previous item.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:firstItem
+    domain: List
+    slot_uri: coll:firstItem
+    owner: List
+    domain_of:
+    - List
+    inverse: firstItemOf
+    range: ListItem
+    inlined: true
+    inlined_as_list: true
+  firstItemOf:
+    name: firstItemOf
+    definition_uri: https://w3id.org/lmodel/collections/firstItemOf
+    description: A list whose first item this is.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:firstItemOf
+    domain: ListItem
+    slot_uri: coll:firstItemOf
+    owner: firstItemOf
+    inverse: firstItem
+    range: List
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
   lastItem:
     name: lastItem
-    definition_uri: https://w3id.org/lmodel/uco/lastItem
+    definition_uri: https://w3id.org/lmodel/collections/lastItem
     description: The last item of the list.
-    from_schema: https://w3id.org/lmodel/uco-co
+    notes:
+    - CO makes it a narrower form of item, which is not stated here for the reason
+      given on firstItem.
+    comments:
+    - It holds a copy of the item with the highest index, which has no next item.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:lastItem
+    domain: List
     slot_uri: coll:lastItem
     owner: List
     domain_of:
     - List
+    inverse: lastItemOf
     range: ListItem
+    inlined: true
+    inlined_as_list: true
+  lastItemOf:
+    name: lastItemOf
+    definition_uri: https://w3id.org/lmodel/collections/lastItemOf
+    description: A list whose last item this is.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:lastItemOf
+    domain: ListItem
+    slot_uri: coll:lastItemOf
+    owner: lastItemOf
+    inverse: lastItem
+    range: List
+    multivalued: true
     inlined: true
     inlined_as_list: true
   nextItem:
     name: nextItem
-    definition_uri: https://w3id.org/lmodel/uco/nextItem
+    definition_uri: https://w3id.org/lmodel/collections/nextItem
     description: The item that comes straight after this one.
-    from_schema: https://w3id.org/lmodel/uco-co
+    notes:
+    - CO makes it a narrower form of followedBy, which is not stated here for the
+      reason given on firstItem.
+    comments:
+    - It holds a copy of the item whose index is one higher.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:nextItem
+    domain: ListItem
     slot_uri: coll:nextItem
-    range: CoItem
-    inlined: true
-    inlined_as_list: true
-  precededBy:
-    name: precededBy
-    definition_uri: https://w3id.org/lmodel/uco/precededBy
-    description: An item that comes somewhere before this one.
-    from_schema: https://w3id.org/lmodel/uco-co
-    mappings:
-    - coll:precededBy
-    slot_uri: coll:precededBy
-    range: CoItem
+    owner: ListItem
+    domain_of:
+    - ListItem
+    inverse: previousItem
+    range: ListItem
     inlined: true
     inlined_as_list: true
   previousItem:
     name: previousItem
-    definition_uri: https://w3id.org/lmodel/uco/previousItem
+    definition_uri: https://w3id.org/lmodel/collections/previousItem
     description: The item that comes straight before this one.
-    from_schema: https://w3id.org/lmodel/uco-co
+    notes:
+    - CO makes it a narrower form of precededBy, which is not stated here for the
+      reason given on firstItem.
+    comments:
+    - It holds a copy of the item whose index is one lower.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:previousItem
+    domain: ListItem
     slot_uri: coll:previousItem
-    range: CoItem
+    owner: ListItem
+    domain_of:
+    - ListItem
+    inverse: nextItem
+    range: ListItem
+    inlined: true
+    inlined_as_list: true
+  followedBy:
+    name: followedBy
+    definition_uri: https://w3id.org/lmodel/collections/followedBy
+    description: An item that comes somewhere after this one.
+    comments:
+    - It holds copies of items whose index is higher.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:followedBy
+    domain: ListItem
+    slot_uri: coll:followedBy
+    owner: ListItem
+    domain_of:
+    - ListItem
+    transitive: true
+    inverse: precededBy
+    range: ListItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  precededBy:
+    name: precededBy
+    definition_uri: https://w3id.org/lmodel/collections/precededBy
+    description: An item that comes somewhere before this one.
+    comments:
+    - It holds copies of items whose index is lower.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:precededBy
+    domain: ListItem
+    slot_uri: coll:precededBy
+    owner: ListItem
+    domain_of:
+    - ListItem
+    transitive: true
+    inverse: followedBy
+    range: ListItem
+    multivalued: true
     inlined: true
     inlined_as_list: true
   confidence:
@@ -4291,7 +4436,8 @@ slots:
     - Thread
     range: ThreadItem
     multivalued: true
-    inlined: false
+    inlined: true
+    inlined_as_list: true
   threadPredecessor:
     name: threadPredecessor
     definition_uri: https://w3id.org/lmodel/uco/threadPredecessor
@@ -4366,7 +4512,8 @@ slots:
     - Thread
     range: ThreadItem
     multivalued: true
-    inlined: false
+    inlined: true
+    inlined_as_list: true
   action:
     name: action
     definition_uri: https://w3id.org/lmodel/uco/action
@@ -13133,11 +13280,30 @@ slots:
     - EmailMessageFacet
     range: ObservableObject
     inlined: false
+  Set_element:
+    name: Set_element
+    definition_uri: https://w3id.org/lmodel/collections/element
+    description: A thing the collection holds, named by its IRI.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:element
+    is_a: element
+    domain: Set
+    slot_uri: coll:element
+    list_elements_unique: true
+    alias: element
+    owner: Set
+    domain_of:
+    - Set
+    is_usage_slot: true
+    usage_slot_name: element
+    range: uriorcurie
+    multivalued: true
   List_item:
     name: List_item
-    definition_uri: https://w3id.org/lmodel/uco/item
-    description: An item of the collection.
-    from_schema: https://w3id.org/lmodel/uco-co
+    definition_uri: https://w3id.org/lmodel/collections/item
+    description: An item of the bag, which holds one of its elements.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:item
     is_a: item
@@ -13153,6 +13319,49 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  CoItem_itemContent:
+    name: CoItem_itemContent
+    definition_uri: https://w3id.org/lmodel/collections/itemContent
+    description: The element that the item wraps.
+    notes:
+    - CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps
+      at most one element, and CO's wiki page StructureBag says that an item links
+      exactly one resource.
+    from_schema: https://w3id.org/lmodel/collections
+    see_also:
+    - https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md
+    mappings:
+    - coll:itemContent
+    is_a: itemContent
+    domain: CoItem
+    slot_uri: coll:itemContent
+    alias: itemContent
+    owner: CoItem
+    domain_of:
+    - CoItem
+    is_usage_slot: true
+    usage_slot_name: itemContent
+    range: uriorcurie
+    required: true
+  ListItem_co_index:
+    name: ListItem_co_index
+    definition_uri: https://w3id.org/lmodel/collections/co_index
+    description: The place of the item in its list, counting from 1.
+    from_schema: https://w3id.org/lmodel/collections
+    mappings:
+    - coll:index
+    is_a: co_index
+    domain: ListItem
+    slot_uri: coll:index
+    alias: co_index
+    owner: ListItem
+    domain_of:
+    - ListItem
+    is_usage_slot: true
+    usage_slot_name: co_index
+    range: integer
+    required: true
+    minimum_value: 1
   Annotation_object:
     name: Annotation_object
     definition_uri: https://w3id.org/lmodel/uco/object
@@ -13335,9 +13544,9 @@ slots:
     inlined_as_list: true
   Thread_item:
     name: Thread_item
-    definition_uri: https://w3id.org/lmodel/uco/item
-    description: An item of the collection.
-    from_schema: https://w3id.org/lmodel/uco-co
+    definition_uri: https://w3id.org/lmodel/collections/item
+    description: An item of the bag, which holds one of its elements.
+    from_schema: https://w3id.org/lmodel/collections
     mappings:
     - coll:item
     is_a: item
@@ -13351,15 +13560,66 @@ slots:
     usage_slot_name: item
     range: ThreadItem
     multivalued: true
-    inlined: false
+    inlined: true
+    inlined_as_list: true
+  Thread_threadOriginItem:
+    name: Thread_threadOriginItem
+    definition_uri: https://w3id.org/lmodel/uco/threadOriginItem
+    description: A link to an item of the thread known to have no predecessor.
+    from_schema: https://w3id.org/lmodel/uco-types
+    see_also:
+    - coll:firstItem
+    mappings:
+    - uco-types:threadOriginItem
+    is_a: threadOriginItem
+    domain: Thread
+    slot_uri: uco-types:threadOriginItem
+    alias: threadOriginItem
+    owner: Thread
+    domain_of:
+    - Thread
+    is_usage_slot: true
+    usage_slot_name: threadOriginItem
+    range: ThreadItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  Thread_threadTerminalItem:
+    name: Thread_threadTerminalItem
+    definition_uri: https://w3id.org/lmodel/uco/threadTerminalItem
+    description: A link to an item of the thread known to have no successor.
+    from_schema: https://w3id.org/lmodel/uco-types
+    see_also:
+    - coll:lastItem
+    mappings:
+    - uco-types:threadTerminalItem
+    is_a: threadTerminalItem
+    domain: Thread
+    slot_uri: uco-types:threadTerminalItem
+    alias: threadTerminalItem
+    owner: Thread
+    domain_of:
+    - Thread
+    is_usage_slot: true
+    usage_slot_name: threadTerminalItem
+    range: ThreadItem
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
   ThreadItem_itemContent:
     name: ThreadItem_itemContent
-    definition_uri: https://w3id.org/lmodel/uco/itemContent
+    definition_uri: https://w3id.org/lmodel/collections/itemContent
     description: The element that the item wraps.
-    from_schema: https://w3id.org/lmodel/uco-co
+    notes:
+    - CoItem requires it. CO's OWL file makes itemContent functional, so an item wraps
+      at most one element, and CO's wiki page StructureBag says that an item links
+      exactly one resource.
+    from_schema: https://w3id.org/lmodel/collections
+    see_also:
+    - https://github.com/collections-ontology/collections-ontology/blob/58e55d956991878307d430eede7790d5e5da206f/StructureBag.md
     mappings:
     - coll:itemContent
-    is_a: itemContent
+    is_a: CoItem_itemContent
     domain: ThreadItem
     slot_uri: coll:itemContent
     alias: itemContent
@@ -13369,6 +13629,7 @@ slots:
     is_usage_slot: true
     usage_slot_name: itemContent
     range: UcoObject
+    required: false
     inlined: false
   ActionLifecycle_phase:
     name: ActionLifecycle_phase
@@ -13768,33 +14029,62 @@ classes:
     - graph
     class_uri: uco_linkml:UcoDocument
     tree_root: true
-  Bag:
-    name: Bag
-    definition_uri: https://w3id.org/lmodel/uco/Bag
-    description: A collection that may hold one element more than once, in no order.
-    from_schema: https://w3id.org/lmodel/uco-co
+  Collection:
+    name: Collection
+    definition_uri: https://w3id.org/lmodel/collections/Collection
+    description: A group of things that is taken as a whole.
+    from_schema: https://w3id.org/lmodel/collections
     exact_mappings:
-    - coll:Bag
+    - coll:Collection
     slots:
     - co_size
     - element
-    class_uri: coll:Bag
-  CoItem:
-    name: CoItem
-    definition_uri: https://w3id.org/lmodel/uco/CoItem
-    description: An entry of a collection, which wraps one element of the collection's
-      content.
-    from_schema: https://w3id.org/lmodel/uco-co
+    class_uri: coll:Collection
+    disjoint_with:
+    - CoItem
+  Set:
+    name: Set
+    definition_uri: https://w3id.org/lmodel/collections/Set
+    description: A collection that holds each of its elements once.
+    comments:
+    - 'No validator checks that the elements differ: LinkML 1.12.1''s generators drop
+      list_elements_unique, so the tests check it.'
+    from_schema: https://w3id.org/lmodel/collections
     exact_mappings:
-    - coll:Item
+    - coll:Set
+    is_a: Collection
     slots:
-    - itemContent
-    class_uri: coll:Item
+    - co_size
+    - Set_element
+    slot_usage:
+      element:
+        name: element
+        list_elements_unique: true
+    class_uri: coll:Set
+  Bag:
+    name: Bag
+    definition_uri: https://w3id.org/lmodel/collections/Bag
+    description: A collection that may hold one element more than once, in no order.
+    from_schema: https://w3id.org/lmodel/collections
+    exact_mappings:
+    - coll:Bag
+    is_a: Collection
+    slots:
+    - co_size
+    - element
+    - item
+    class_uri: coll:Bag
+    disjoint_with:
+    - Set
   List:
     name: List
-    definition_uri: https://w3id.org/lmodel/uco/List
+    definition_uri: https://w3id.org/lmodel/collections/List
     description: A collection whose items come in order, one after another.
-    from_schema: https://w3id.org/lmodel/uco-co
+    comments:
+    - 'No validator checks the order: that the indexes count from 1 with no gap or
+      repeat, and that firstItem, lastItem and each item''s links agree with them.
+      The tests check it.'
+    from_schema: https://w3id.org/lmodel/collections
     exact_mappings:
     - coll:List
     is_a: Bag
@@ -13802,27 +14092,46 @@ classes:
     - co_size
     - element
     - firstItem
-    - List_item
     - lastItem
+    - List_item
     slot_usage:
       item:
         name: item
         range: ListItem
-        inlined: true
-        inlined_as_list: true
     class_uri: coll:List
+  CoItem:
+    name: CoItem
+    definition_uri: https://w3id.org/lmodel/collections/CoItem
+    description: An entry of a bag, which wraps one of the bag's elements.
+    from_schema: https://w3id.org/lmodel/collections
+    exact_mappings:
+    - coll:Item
+    slots:
+    - CoItem_itemContent
+    slot_usage:
+      itemContent:
+        name: itemContent
+        required: true
+    class_uri: coll:Item
   ListItem:
     name: ListItem
-    definition_uri: https://w3id.org/lmodel/uco/ListItem
+    definition_uri: https://w3id.org/lmodel/collections/ListItem
     description: An item of a list, which has a place in the list's order.
-    from_schema: https://w3id.org/lmodel/uco-co
+    from_schema: https://w3id.org/lmodel/collections
     exact_mappings:
     - coll:ListItem
     is_a: CoItem
     slots:
-    - itemContent
+    - CoItem_itemContent
+    - ListItem_co_index
+    - nextItem
+    - previousItem
     - followedBy
-    - index
+    - precededBy
+    slot_usage:
+      co_index:
+        name: co_index
+        required: true
     class_uri: coll:ListItem
   Annotation:
     name: Annotation
@@ -15475,8 +15784,8 @@ classes:
     - type
     - id
     - Thread_item
-    - threadOriginItem
-    - threadTerminalItem
+    - Thread_threadOriginItem
+    - Thread_threadTerminalItem
     - co_size
     - element
     slot_usage:
@@ -15484,6 +15793,15 @@ classes:
         name: item
         range: ThreadItem
         inlined: false
+        inlined_as_list: false
+      threadOriginItem:
+        name: threadOriginItem
+        inlined: false
+        inlined_as_list: false
+      threadTerminalItem:
+        name: threadTerminalItem
+        inlined: false
+        inlined_as_list: false
     class_uri: uco-types:Thread
     disjoint_with:
     - List
@@ -15509,6 +15827,7 @@ classes:
       itemContent:
         name: itemContent
         range: UcoObject
+        required: false
         inlined: false
     class_uri: uco-types:ThreadItem
     disjoint_with:
@@ -23363,6 +23682,6 @@ classes:
     class_uri: uco-observable:X509V3ExtensionsFacet
 metamodel_version: 1.12.0
 source_file: uco.yaml
-source_file_date: '2026-10-31T10:36:57'
-source_file_size: 4296
+source_file_date: '2026-10-31T22:56:19'
+source_file_size: 4576
 

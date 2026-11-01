@@ -13,13 +13,13 @@ sources:
     title: the docstring and main
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-10-31T23:09:51Z"
 status: draft
 ---
 
 # The UCO converter
 
-`scripts/uco_to_linkml.py` reads the Turtle files under `src/uco/schema/upstream/ontology/` with rdflib and writes the sixteen modules and the umbrella into `src/uco/schema/`. Its docstring gives each rule it applies, and it prints a note for each part of the ontology it leaves out, renames or moves.[^uco_to_linkml.py]
+`scripts/uco_to_linkml.py` reads the Turtle files under `src/uco/schema/upstream/ontology/` with rdflib and writes the fifteen modules and the umbrella into `src/uco/schema/`. The Collections Ontology terms come from lmodel/collections' module in `src/uco/schema/collections/`, which the converter reads and does not write. Its docstring gives each rule it applies, and it prints a note for each part of the ontology it leaves out, renames or moves.[^uco_to_linkml.py]
 
 Run it with `uv run python scripts/uco_to_linkml.py` after a change to the script or to the copy. With `--check`, it writes to a temporary folder and exits 1 when the output differs from the committed modules, which `tests/test_schema_is_generated.py` runs.
 

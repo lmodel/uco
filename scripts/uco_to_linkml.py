@@ -6,10 +6,11 @@
 """Render the Unified Cyber Ontology's OWL and SHACL in Turtle as LinkML modules.
 
 The script reads UCO's files, copied under ``src/uco/schema/upstream/``, and
-writes into ``src/uco/schema/`` one LinkML module per UCO namespace, one for
-the Collections Ontology (CO) terms UCO uses, and the umbrella ``uco.yaml``.
-Every YAML file in that folder is its output: change the script, or the copy,
-and run it again.
+writes into ``src/uco/schema/`` one LinkML module per UCO namespace and the
+umbrella ``uco.yaml``. Every YAML file in that folder is its output: change
+the script, or the copy, and run it again. The Collections Ontology (CO)
+terms UCO uses come from lmodel/collections' schema, a copy of whose release
+sits in ``collections/`` beside the modules, which the modules import.
 
 Usage::
 
@@ -32,12 +33,12 @@ The rules, each applied the same way to every element:
   imports them in that order). Each other one takes its namespace and an
   underscore as a prefix (``observable_endTime``).
 - The Collections Ontology (CO) terms UCO's files name, in a shape's path or
-  elsewhere, keep CO's IRIs, under Bioregistry's prefix ``coll``. One whose
-  local name UCO also defines takes ``Co`` or ``co_`` (``CoItem``). CO states
-  no licence, so their descriptions are this project's own. CO's own
-  ontology gives what UCO's files leave out: that a list is a bag, the class
-  each CO property belongs to, and an IRI as the range of the two that name
-  any thing.
+  elsewhere, are lmodel/collections' classes and slots, under its names
+  (``CoItem``, ``co_size``, ``co_index``) and CO's IRIs, with Bioregistry's
+  prefix ``coll``. A module whose UCO file imports UCO's ``co.ttl`` imports
+  that schema, and a UCO class under a CO class states, in ``slot_usage``,
+  where its slots differ from what the schema gives them. UCO's ``co.ttl``
+  shapes on CO's terms say nothing the schema does not state as strictly.
 - ``rdfs:subClassOf`` gives ``is_a``. Where a class has more than one parent,
   a parent that is an ancestor of another is dropped. ``is_a`` is the UCO
   parent with the most ancestors, a tie going to the class's own namespace,
@@ -88,8 +89,7 @@ The rules, each applied the same way to every element:
 - Descriptions are UCO's ``rdfs:comment`` texts, with a Windows-1252
   misreading of their UTF-8 undone (``file’s`` for ``fileâ€™s``).
 - XSD datatypes become LinkML types: the built-in ones where they match,
-  else a ``uco_`` type in the core module with XSD's bounds or pattern. The
-  CO module, which imports no other, bounds its integers on the slot.
+  else a ``uco_`` type in the core module with XSD's bounds or pattern.
 """
 
 from __future__ import annotations
@@ -99,7 +99,7 @@ import difflib
 import sys
 import tempfile
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import yaml
@@ -119,6 +119,10 @@ OWN_PREFIX = "uco_linkml"
 OWN_NS = SCHEMA_ID + "/"
 UMBRELLA = "uco"
 CO = "co"
+# lmodel/collections' schema, which renders CO 2.0 with CO's IRIs. The copy is
+# its v0.1.0 release, unchanged, and the modules import it by this path.
+COLLECTIONS = DEFAULT_OUT / "collections" / "collections.yaml"
+COLLECTIONS_MODULE = "collections/collections"
 # Bioregistry's prefix for the Collections Ontology; UCO's files write co.
 CO_PREFIX = "coll"
 CORE = "core"
@@ -229,10 +233,6 @@ XSD_TYPES = {
     ),
 }
 
-# Integer datatypes the CO module renders as bounds on a slot, since it
-# imports no module that declares the types above.
-CO_BOUNDS = {XSD.positiveInteger: 1, XSD.nonNegativeInteger: 0}
-
 # The OWL property characteristics LinkML has a key for. A slot whose
 # property is owl:InverseFunctionalProperty, such as hasFacet, has none.
 CHARACTERISTICS = {
@@ -246,56 +246,17 @@ CHARACTERISTICS = {
 # The datatype facets a restriction may carry, as LinkML's bound keys.
 FACETS = {XSD.minInclusive: "minimum_value", XSD.maxInclusive: "maximum_value"}
 
-# CO states no licence, so the CO terms carry descriptions written here.
-CO_DESCRIPTIONS = {
-    "Bag": "A collection that may hold one element more than once, in no order.",
-    "Item": "An entry of a collection, which wraps one element of the collection's content.",
-    "List": "A collection whose items come in order, one after another.",
-    "ListItem": "An item of a list, which has a place in the list's order.",
-    "element": "A member of the collection, which one of its items wraps.",
-    "item": "An item of the collection.",
-    "itemContent": "The element that the item wraps.",
-    "index": "The place of the item in its list, counting from 1.",
-    "size": "How many items the collection holds.",
-    "firstItem": "The first item of the list.",
-    "lastItem": "The last item of the list.",
-    "nextItem": "The item that comes straight after this one.",
-    "previousItem": "The item that comes straight before this one.",
-    "followedBy": "An item that comes somewhere after this one.",
-    "precededBy": "An item that comes somewhere before this one.",
-}
-
-# The parents CO 2.0's own ontology gives the CO classes UCO's files name and
-# do not place: a list is a bag whose items are list items.
-CO_PARENTS = {"List": "Bag"}
-
-# The domains CO 2.0's own ontology gives the CO properties UCO's files use,
-# as the CO classes rendered here: CO's Collection, which UCO's files do not
-# name, is Bag. Each property is a slot of its domain, and of any class a UCO
-# shape gives it to.
-#
-# item is not listed. It stays on the classes UCO's shapes give it to, List
-# and Thread: a list holds its items inline and a thread names them by IRI,
-# and LinkML cannot undo on Thread an inlining its parent Bag states.
-#
-# CO states no domain for nextItem, previousItem and precededBy, which hold
-# on a list item through followedBy. They stay on no class: a list item here
-# has no IRI, so an item that names the next, and is named back by it, would
-# nest without end.
-CO_DOMAINS = {
-    "size": "Bag",
-    "element": "Bag",
-    "itemContent": "Item",
-    "index": "ListItem",
-    "firstItem": "List",
-    "lastItem": "List",
-    "followedBy": "ListItem",
-}
-
-# The CO properties whose range in CO 2.0 is any thing (owl:Thing, or what is
-# not an item), and which UCO's shapes leave without a class. Each holds the
-# thing's IRI, so RDF written from the data names the thing, not a string.
-CO_RANGES = {"element": "uriorcurie", "itemContent": "uriorcurie"}
+# The keys of a slot, or of a slot_usage, of lmodel/collections that the
+# converter reads to know what a UCO class inherits from a CO class.
+CO_KEYS = (
+    "range",
+    "required",
+    "multivalued",
+    "inlined",
+    "inlined_as_list",
+    "minimum_value",
+    "maximum_value",
+)
 
 # What a property shape may say that the converter reads, or knows to pass.
 SHAPE_KEYS = {
@@ -429,7 +390,7 @@ def repaired(value: str) -> str:
 
 
 class Converter:
-    def __init__(self, upstream: Path) -> None:
+    def __init__(self, upstream: Path, collections: Path = COLLECTIONS) -> None:
         self.report: list[str] = []
         self.repairs: set[str] = set()
         self.literal_classes: set[URIRef] = set()
@@ -445,6 +406,7 @@ class Converter:
         self.namespaces = sorted(ns for ns in self.files if ns != CO)
         self._read_version()
         self._read_imports()
+        self._read_collections(collections)
         self._collect()
         self._name()
         self._structure()
@@ -504,6 +466,86 @@ class Converter:
 
     def visible(self, frm: str, to: str) -> bool:
         return frm == to or to in self.closure[frm]
+
+    def _read_collections(self, path: Path) -> None:
+        """lmodel/collections' classes and slots, each by its CO IRI."""
+        doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+        prefixes = doc["prefixes"]
+
+        def expand(curie: str) -> URIRef:
+            prefix, _, local = curie.partition(":")
+            return URIRef(prefixes[prefix] + local)
+
+        self.co_doc = doc
+        self.co_classes = {
+            expand(c["class_uri"]): name for name, c in doc["classes"].items()
+        }
+        self.co_slots = {
+            expand(f["slot_uri"]): name for name, f in doc["slots"].items()
+        }
+
+    def _co_names(self, name: str) -> list[str]:
+        """A class of lmodel/collections and its is_a ancestors, nearest first."""
+        out = []
+        while name is not None:
+            out.append(name)
+            name = self.co_doc["classes"][name].get("is_a")
+        return out
+
+    def _co_chain(self, name: str) -> list[URIRef]:
+        """The IRIs of _co_names."""
+        iri = {n: i for i, n in self.co_classes.items()}
+        return [iri[n] for n in self._co_names(name)]
+
+    def _co_constraint(self, f: dict, with_range: bool) -> Constraint:
+        """A slot of lmodel/collections, or a slot_usage over it, as a
+        constraint. The range counts only where it narrows the slot's own."""
+        bounds = tuple(
+            sorted((k, f[k]) for k in ("minimum_value", "maximum_value") if k in f)
+        )
+        return Constraint(
+            range=(f["range"],) if with_range and "range" in f else None,
+            min=1 if f.get("required") else 0,
+            max=None if f.get("multivalued") else 1,
+            has_value=None,
+            bounds=bounds,
+            absent=False,
+        )
+
+    def _co_effective(self, c) -> dict[URIRef, Constraint]:
+        """What a CO class gives each of its slots that UCO names, as
+        lmodel/collections states it: the slot, then each slot_usage from the
+        top of the class's is_a chain down."""
+        names = self._co_names(self.class_name[c])
+        by_name = {name: p for p, name in self.slot_name.items()}
+        out: dict[URIRef, Constraint] = {}
+        for slot in dict.fromkeys(
+            s
+            for n in reversed(names)
+            for s in self.co_doc["classes"][n].get("slots", [])
+        ):
+            if slot not in by_name:
+                continue
+            f = dict(self.co_doc["slots"][slot])
+            narrowed = False
+            for n in reversed(names):
+                usage = (self.co_doc["classes"][n].get("slot_usage") or {}).get(slot)
+                if usage:
+                    narrowed = narrowed or "range" in usage
+                    f.update(usage)
+            out[by_name[slot]] = self._co_constraint(f, narrowed)
+        return out
+
+    def _co_usage(self, c) -> dict[URIRef, dict]:
+        """The slot_usage lmodel/collections gives a CO class, by property,
+        in the keys the converter reads."""
+        by_name = {name: p for p, name in self.slot_name.items()}
+        usage = self.co_doc["classes"][self.class_name[c]].get("slot_usage") or {}
+        return {
+            by_name[slot]: {k: f[k] for k in CO_KEYS if k in f}
+            for slot, f in usage.items()
+            if slot in by_name
+        }
 
     # -- what the files declare ---------------------------------------------------
 
@@ -630,19 +672,16 @@ class Converter:
     def _name(self) -> None:
         position = {m: i for i, m in enumerate(self.order)}
         self.class_name: dict[URIRef, str] = {}
-        uco_class_names = {self.local(c) for c in self.classes if self.ns_of(c) != CO}
-        enum_names = {self.local(e) for e in self.enums}
-        type_names = {self.local(t) for t in self.datatypes}
         for c in sorted(self.classes, key=str):
             name = self.local(c)
-            if (
-                self.ns_of(c) == CO
-                and name in uco_class_names | enum_names | type_names
-            ):
-                name = "Co" + name
-                self.report.append(
-                    f"renamed, {self.curie(c)}: {name}, since UCO also has a {self.local(c)}"
-                )
+            if self.ns_of(c) == CO:
+                if c not in self.co_classes:
+                    raise SystemExit(f"lmodel/collections has no class {self.curie(c)}")
+                name = self.co_classes[c]
+                if name != self.local(c):
+                    self.report.append(
+                        f"{self.curie(c)} is {name}, lmodel/collections' name for it"
+                    )
             self.class_name[c] = name
         by_local: dict[str, list[URIRef]] = defaultdict(list)
         for p in self.properties:
@@ -662,15 +701,18 @@ class Converter:
                         f"renamed, {self.curie(p)}: {self.slot_name[p]}, since uco-{self.ns_of(uco[0])} also has a {local}"
                     )
             for p in (p for p in props if self.ns_of(p) == CO):
-                self.slot_name[p] = f"co_{local}" if uco else local
-                if uco:
+                if p not in self.co_slots:
+                    raise SystemExit(f"lmodel/collections has no slot {self.curie(p)}")
+                self.slot_name[p] = self.co_slots[p]
+                if self.slot_name[p] != local:
                     self.report.append(
-                        f"renamed, {self.curie(p)}: co_{local}, since UCO also has a {local}"
+                        f"{self.curie(p)} is {self.slot_name[p]}, lmodel/collections' name for it"
                     )
         self.enum_name = {e: self.local(e) for e in self.enums}
         self.type_name = {t: self.local(t) for t in self.datatypes}
+        # Every name lmodel/collections declares shares the namespace too.
         elements = (
-            list(self.class_name.values())
+            list(set(self.class_name.values()) | set(self.co_classes.values()))
             + list(self.enum_name.values())
             + list(self.type_name.values())
             + [name for name, _ in XSD_TYPES.values()]
@@ -679,7 +721,11 @@ class Converter:
         clashes = {n for n in elements if elements.count(n) > 1}
         if clashes:
             raise SystemExit(f"two elements share a name: {sorted(clashes)}")
-        slots = list(self.slot_name.values()) + [ID_SLOT, TYPE_SLOT, GRAPH_SLOT]
+        slots = list(set(self.slot_name.values()) | set(self.co_slots.values())) + [
+            ID_SLOT,
+            TYPE_SLOT,
+            GRAPH_SLOT,
+        ]
         clashes = {n for n in slots if slots.count(n) > 1}
         if clashes:
             raise SystemExit(f"two slots share a name: {sorted(clashes)}")
@@ -691,10 +737,17 @@ class Converter:
 
     def _raw_parents(self, c) -> list[URIRef]:
         parents = [p for p in self.g.objects(c, RDFS.subClassOf) if p in self.classes]
-        if self.ns_of(c) == CO and self.local(c) in CO_PARENTS:
-            parent = URIRef(CO_NS + CO_PARENTS[self.local(c)])
-            if parent in self.classes and parent not in parents:
-                parents.append(parent)
+        if self.ns_of(c) == CO:
+            # lmodel/collections places the CO classes, as CO 2.0 does: a
+            # list is a bag. UCO's co.ttl may say no more.
+            placed = [
+                p for p in self._co_chain(self.class_name[c])[1:] if p in self.classes
+            ][:1]
+            if set(parents) - set(placed):
+                raise SystemExit(
+                    f"UCO places {self.curie(c)} where lmodel/collections does not"
+                )
+            return placed
         return parents
 
     def _raw_ancestors(self, c) -> set[URIRef]:
@@ -913,17 +966,28 @@ class Converter:
                             merged.get(read[0], {}), read[1], owner
                         )
             self.own[c] = merged
-        # A CO property is a slot of its CO domain; a property no class shape
-        # names joins its rdfs:domain's class.
-        for p in sorted(self.properties, key=str):
-            if self.ns_of(p) == CO and self.local(p) in CO_DOMAINS:
-                cls = URIRef(CO_NS + CO_DOMAINS[self.local(p)])
-                if p not in self.own[cls]:
-                    self.own[cls][p] = {}
-                    self.report.append(
-                        f"{self.curie(p)} is a slot of {self.class_name[cls]}, CO's domain for it"
-                    )
+        # What UCO's own shapes require of each CO class, kept for the UCO
+        # classes under it.
+        self.co_required = {
+            c: {p for p, raw in self.own[c].items() if raw.get("min", 0) >= 1}
+            for c in self.classes
+            if self.ns_of(c) == CO
+        }
+        # A CO class's slots are lmodel/collections'. UCO's co.ttl shapes on
+        # CO's terms are left out: the schema states each as strictly, or
+        # more so.
+        by_name = {name: p for p, name in self.slot_name.items()}
+        for c in sorted(self.classes, key=str):
+            if self.ns_of(c) == CO:
+                cls = self.co_doc["classes"][self.class_name[c]]
+                self.own[c] = {
+                    by_name[s]: {} for s in cls.get("slots", []) if s in by_name
+                }
+        self.report.append(
+            "left out, UCO's co.ttl shapes on CO's terms: lmodel/collections states each"
+        )
         used = {p for fields in self.own.values() for p in fields}
+        used |= {p for p in self.properties if self.ns_of(p) == CO}
         for p in sorted(self.properties - used, key=str):
             domain = self._domain(p)
             if domain is not None:
@@ -965,8 +1029,6 @@ class Converter:
         """A datatype IRI as a LinkML range and any bounds it adds."""
         if dt in BUILTIN:
             return (BUILTIN[dt],), ()
-        if dt in CO_BOUNDS and not self.visible(module, CORE):
-            return ("integer",), (("minimum_value", CO_BOUNDS[dt]),)
         if dt in XSD_TYPES:
             return (XSD_TYPES[dt][0],), ()
         if dt in self.enums:
@@ -1016,8 +1078,9 @@ class Converter:
     def _declared_range(self, p, module: str) -> tuple[tuple[str, ...] | None, tuple]:
         """The property's rdfs:range as a LinkML range and bounds."""
         g = self.g
-        if self.ns_of(p) == CO and self.local(p) in CO_RANGES:
-            return (CO_RANGES[self.local(p)],), ()
+        if self.ns_of(p) == CO:
+            f = self.co_doc["slots"][self.slot_name[p]]
+            return (f["range"],), self._co_constraint(f, False).bounds
         r = g.value(p, RDFS.range)
         if r is None:
             return None, ()
@@ -1120,6 +1183,11 @@ class Converter:
         self.base: dict[URIRef, Constraint] = {}
         for p in self.properties:
             module = self.ns_of(p)
+            if module == CO:
+                self.base[p] = self._co_constraint(
+                    self.co_doc["slots"][self.slot_name[p]], False
+                )
+                continue
             self.base[p] = self.constraint(
                 p, self.wide.get(p, {}), module, f"the subjects of {self.curie(p)}"
             )
@@ -1131,6 +1199,11 @@ class Converter:
             for c in list(remaining):
                 parents = [q for q in [self.is_a[c], *self.mixins[c]] if q is not None]
                 if any(q in remaining for q in parents):
+                    continue
+                if self.ns_of(c) == CO:
+                    self.eff[c] = self._co_effective(c)
+                    self.class_order.append(c)
+                    remaining.remove(c)
                     continue
                 own = {
                     p: self.conj(
@@ -1147,7 +1220,7 @@ class Converter:
                 }
                 result: dict[URIRef, Constraint] = {}
                 for q in parents:
-                    for p, k in self.eff[q].items():
+                    for p, k in self._eff_for_uco(q).items():
                         result[p] = (
                             self.conj(
                                 result[p],
@@ -1169,11 +1242,27 @@ class Converter:
                 self.class_order.append(c)
                 remaining.remove(c)
 
+    def _eff_for_uco(self, q) -> dict[URIRef, Constraint]:
+        """What a parent gives a UCO class under it. A CO class gives what
+        lmodel/collections states, except that a slot UCO's files do not
+        require stays optional: collections requires co_index on ListItem and
+        itemContent on CoItem, and UCO's thread items need not wrap
+        anything."""
+        if self.ns_of(q) != CO:
+            return self.eff[q]
+        out = {}
+        for p, k in self.eff[q].items():
+            required = (
+                p in self.co_required[q] or self.wide.get(p, {}).get("min", 0) >= 1
+            )
+            if k.min >= 1 and not required:
+                k = replace(k, min=0)
+            out[p] = k
+        return out
+
     # -- rendering ----------------------------------------------------------------
 
     def description(self, iri, kind: str) -> str:
-        if self.ns_of(iri) == CO:
-            return CO_DESCRIPTIONS[self.local(iri)]
         if iri in self.undeclared:
             return f"UCO {self.version} names the property {self.curie(iri)} in a shape without declaring it."
         comment = self.g.value(iri, RDFS.comment)
@@ -1386,6 +1475,10 @@ class Converter:
                 )
         self.written: dict[URIRef, dict] = {}
         for p in self.slot_order():
+            if self.ns_of(p) == CO:
+                f = self.co_doc["slots"][self.slot_name[p]]
+                self.written[p] = {k: f[k] for k in CO_KEYS if k in f}
+                continue
             agreed = self._agreed(p, self.fields.get(p, {}))
             parent = self.g.value(p, RDFS.subPropertyOf)
             inherited = self._induced_def(parent) if parent in self.properties else {}
@@ -1403,6 +1496,10 @@ class Converter:
             ):
                 self.written[p]["inlined_as_list"] = True
         for p in sorted(self.properties, key=str):
+            if self.ns_of(p) == CO:
+                # lmodel/collections declares it; nothing is written here.
+                add("slot", self.slot_name[p], p, {})
+                continue
             data = {
                 **self.title(p, self.slot_name[p]),
                 "description": self.description(p, "property"),
@@ -1429,12 +1526,18 @@ class Converter:
         # inheritance would give it another value than its own conjunction.
         emitted: dict[URIRef, dict[URIRef, dict]] = defaultdict(dict)
         for c in self.class_order:
+            if self.ns_of(c) == CO:
+                emitted[c] = self._co_usage(c)
+                continue
             for p in sorted(self.eff[c], key=lambda p: self.slot_name[p]):
                 usage = self._usage(c, p, emitted)
                 if usage:
                     emitted[c][p] = usage
         for c in sorted(self.classes, key=str):
             name = self.class_name[c]
+            if self.ns_of(c) == CO:
+                add("class", name, c, {})
+                continue
             data: dict = {}
             if self.is_a[c] is not None:
                 data["is_a"] = self.class_name[self.is_a[c]]
@@ -1502,14 +1605,29 @@ class Converter:
                     sources = [induced.get(k, self._default(k))]
             if all(s == want for s in sources):
                 continue
+            if want is False and k in ("required", "inlined") and any(sources):
+                # SchemaView honours a false here over an inherited true, so
+                # the validator and the JSON Schema and Pydantic models hold
+                # it. A slot inlined_as_list is inlined whatever inlined says,
+                # so a false inlined turns that off too.
+                usage[k] = False
+                if k == "inlined" and any(
+                    s is True
+                    for s in self._inherited(c, p, "inlined_as_list", emitted, induced)
+                ):
+                    usage["inlined_as_list"] = False
+                    self.uninlined.append(f"{self.class_name[c]}.{self.slot_name[p]}")
+                continue
+            if k == "inlined_as_list" and usage.get("inlined") is False:
+                continue
             if (
                 want is False
                 and k in DEFAULTS | {"inlined": None, "inlined_as_list": None}
                 and any(sources)
             ):
-                # SchemaView reads a false here as unset, so an inherited true
-                # stands. A slot that holds one value here keeps its list
-                # form and holds at most one item.
+                # LinkML's Python generator reads a false here as unset, so
+                # an inherited true stands there. A slot that holds one value
+                # here keeps its list form and holds at most one item.
                 if k == "multivalued":
                     usage["maximum_cardinality"] = 1
                     if mine.get("inlined") is True and not any(
@@ -1591,7 +1709,7 @@ class Converter:
             dt
             for p in self.properties
             for dt in self._datatypes_named(p)
-            if dt in XSD_TYPES and not (dt in CO_BOUNDS and self.ns_of(p) == CO)
+            if dt in XSD_TYPES and self.ns_of(p) != CO
         }
         for dt in self.used_xsd:
             self.home[("type", XSD_TYPES[dt][0])] = CORE
@@ -1604,6 +1722,7 @@ class Converter:
         self.narrowed: list[str] = []
         while True:
             self.narrowed = []
+            self.uninlined: list[str] = []
             elements = self._elements()
             if not self._hoist(elements):
                 break
@@ -1614,6 +1733,11 @@ class Converter:
         for name in self.narrowed:
             self.report.append(
                 f"{name} holds a list of at most one: its parent's slot is multivalued"
+            )
+        for name in self.uninlined:
+            self.report.append(
+                f"{name} names its items by IRI, where its lmodel/collections slot inlines "
+                "them; gen-python's dataclasses read the slot_usage's false as unset"
             )
         return self._files(elements)
 
@@ -1643,6 +1767,8 @@ class Converter:
         """The (kind, name) of each element an element names."""
         out: list[tuple[str, str]] = []
         d = el.data
+        if el.module == CO:
+            return out
 
         def ranges(f: dict) -> None:
             if "range" in f:
@@ -1694,6 +1820,10 @@ class Converter:
                 home = self.home[ref]
                 if self.visible(el.module, home):
                     continue
+                if home == CO:
+                    raise SystemExit(
+                        f"uco_{el.module} needs {target.name} but does not import lmodel/collections"
+                    )
                 if any(h.startswith(f"{target.name} (") for h in self.hoisted):
                     raise SystemExit(f"{ref} is needed in both {home} and {el.module}")
                 self.report.append(
@@ -1746,34 +1876,26 @@ class Converter:
 
     def _files(self, elements: dict[tuple[str, str], Element]) -> dict[str, dict]:
         module_names = {m: f"uco_{m}" for m in self.files}
+        # A module whose UCO file imports co.ttl imports lmodel/collections.
+        module_names[CO] = COLLECTIONS_MODULE
         files: dict[str, dict] = {}
         for m in self.order:
+            if m == CO:
+                continue
             name = module_names[m]
             imports = ["linkml:types"] + [
                 f"./{module_names[d]}" for d in self.order if d in self.imports[m]
             ]
-            if m == CO:
-                title = "Collections Ontology terms that UCO uses"
-                description = (
-                    "The classes and properties of the Collections Ontology (CO), http://purl.org/co/, "
-                    f"that UCO {self.version}'s files use, with CO's IRIs and the constraints UCO's co.ttl adds."
-                )
-                comments = [
-                    "CO states no licence, so the descriptions here are this project's own; none is CO's text.",
-                    "CO's index and size are integers with CO's bounds, since this module imports no module "
-                    "that declares UCO's XSD types.",
-                ]
-            else:
-                onto = next(self.files[m].subjects(RDF.type, OWL.Ontology))
-                comment = self.g.value(onto, RDFS.comment)
-                title = f"UCO {m.capitalize()}"
-                description = (
-                    text(comment)
-                    if comment is not None
-                    else f"The classes, properties and vocabularies of UCO {self.version}'s {m} namespace, "
-                    f"{UCO_NS}{m}/."
-                )
-                comments = None
+            onto = next(self.files[m].subjects(RDF.type, OWL.Ontology))
+            comment = self.g.value(onto, RDFS.comment)
+            title = f"UCO {m.capitalize()}"
+            description = (
+                text(comment)
+                if comment is not None
+                else f"The classes, properties and vocabularies of UCO {self.version}'s {m} namespace, "
+                f"{UCO_NS}{m}/."
+            )
+            comments = None
             schema = self.header(name, title, description, imports, comments)
             mine = [e for e in elements.values() if e.module == m]
             if m == CORE:
@@ -1817,14 +1939,17 @@ class Converter:
             UMBRELLA,
             "Unified Cyber Ontology (UCO)",
             f"A LinkML rendering of the Unified Cyber Ontology (UCO) {self.version}: one module per UCO "
-            "namespace and one for the Collections Ontology terms UCO uses, with every class, property and "
-            "vocabulary keeping its UCO IRI.",
+            "namespace, with every class, property and vocabulary keeping its UCO IRI, and lmodel/collections' "
+            "schema for the Collections Ontology terms UCO uses.",
             ["linkml:types"] + [f"./{module_names[m]}" for m in self.order],
             comments=[
                 "scripts/uco_to_linkml.py writes every YAML file in this folder from UCO's files in upstream/. "
                 "Change the script or the copy, never the files.",
                 "Each module imports the modules its UCO file imports, and this file imports them in that "
                 "order, so an importer can import one module alone.",
+                "collections/collections.yaml is lmodel/collections' schema at its v0.1.0 release, copied "
+                "unchanged. It renders the Collections Ontology (CO) 2.0 with CO's names and IRIs, and UCO's "
+                "threads build on its Bag and CoItem.",
                 "The descriptions are UCO's rdfs:comment texts, which the UCO Community publishes under the "
                 "Apache License 2.0.",
                 "Where UCO defines one local name in more than one namespace, the namespace that comes first "
