@@ -29,11 +29,11 @@ status: draft
 
 # lmodel/collections module
 
-`src/uco/schema/collections/collections.yaml` is the one schema module of lmodel/collections at release v0.1.0, copied unchanged. `tests/test_collections_import.py` pins that release's commit, a55334d, and the file's git object hash, and fails when another file sits beside it. NOTICE says the module is under the Apache License 2.0, and its descriptions are lmodel/collections' own words.[^test_collections_import.py][^notice]
+`src/uco/schema/collections/collections.yaml` is lmodel/collections' only schema module at release v0.1.0, copied unchanged. `tests/test_collections_import.py` pins that release's commit, a55334d, and the file's git object hash, and fails when another file sits beside it. NOTICE puts the module under the Apache License 2.0 and says its descriptions are lmodel/collections' own words.[^test_collections_import.py][^notice]
 
 The module renders CO 2.0 with CO's names and IRIs under the prefix `coll`. CO's `Item`, `size` and `index` are named `CoItem`, `co_size` and `co_index`. The same test checks that each CO class and slot the schema held before the import keeps its IRI, and that the vendored module declares it.[^test_collections_import.py]
 
-`uco_types` and the umbrella import it. A thread is a CO bag and a thread item a CO item. `Thread` names its items by IRI, where the module holds a bag's items inside the bag, and `ThreadItem` keeps `itemContent` optional, where the module requires it.[^uco_types.yaml]
+`uco_types` and the umbrella import it. A thread is a CO bag and a thread item a CO item. Two rules differ from the module. `Thread` names its items by IRI, where the module holds a bag's items inside the bag, and `ThreadItem` keeps `itemContent` optional, where the module requires it.[^uco_types.yaml]
 
 The adapt copy holds every class and key of collections' own released copy, `schema-v0.1.0-collections.yaml`, under the same IRIs, and `tests/test_schema_rules.py` checks it against that asset's SHA-256. A later collections release replaces the file whole, and the pins move with it.[^test_schema_rules.py]
 

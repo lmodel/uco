@@ -24,7 +24,7 @@ status: draft
 
 The schema renders the Unified Cyber Ontology at release 1.5.0: its fifteen namespaces, as one module each. It imports lmodel/collections' schema for the Collections Ontology terms UCO's files use. It replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand.[^readme.md][^changelog.md]
 
-Its influences beyond UCO are lmodel/collections, whose schema it imports. Its converter follows lmodel/spdx's, and the release asset and governance files follow lmodel/slsa. It names no term of another vocabulary, so it has no mappings.
+Beyond UCO, it imports lmodel/collections' schema. Its converter follows lmodel/spdx's, and the release asset and governance files follow lmodel/slsa. It names no term of another vocabulary, so it has no mappings.
 
 It leaves out what LinkML cannot state: SHACL shapes of severity Info or Warning, SPARQL constraints, `sh:not` and `sh:xone`, shapes over a path of more than one property, and UCO's rule that a UcoThing is never a blank node. It does not render UCO's `owl.ttl`, which holds shapes over OWL itself.
 

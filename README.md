@@ -39,7 +39,7 @@ The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontolo
 
 Data in the schema's form keeps UCO's keys, gives each object its IRI as `id` and its class as `type`, and holds facets inside the object they describe. `scripts/uco_examples.py` writes UCO's own examples that way into [tests/data/valid/](tests/data/valid).
 
-The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. Each UCO module keeps its old repository's identifier, such as `https://w3id.org/lmodel/uco-core`, and the umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place. The CO terms of uco-co are lmodel/collections' now.
+The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. Each UCO module keeps its old repository's identifier, such as `https://w3id.org/lmodel/uco-core`, and the umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place. lmodel/collections now holds the CO terms that uco-co held.
 
 ## Influences
 
@@ -97,7 +97,7 @@ The copy holds lmodel/collections' module, so it holds every class and key of co
 
 The schema and the code are under the Apache License 2.0 ([LICENSE](LICENSE)).
 
-UCO's files in [src/uco/schema/upstream/](src/uco/schema/upstream) are the UCO Community's, under the Apache License 2.0, and the descriptions of UCO's terms are its texts. The copy of lmodel/collections' schema in [src/uco/schema/collections/](src/uco/schema/collections) is under the Apache License 2.0, and its descriptions of CO's terms are lmodel/collections' own words: see [NOTICE](NOTICE). The knowledge bundle in [.lokf/knowledge/](.lokf/knowledge) is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as its `index.md` declares.
+UCO's files in [src/uco/schema/upstream/](src/uco/schema/upstream) are the UCO Community's, under the Apache License 2.0, and the descriptions of UCO's terms are its texts. The copy of lmodel/collections' schema in [src/uco/schema/collections/](src/uco/schema/collections) is under the Apache License 2.0, and its descriptions of CO's terms are lmodel/collections' own words. [NOTICE](NOTICE) gives the details. The knowledge bundle in [.lokf/knowledge/](.lokf/knowledge) is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), as its `index.md` declares.
 
 This is not an official UCO release, and its use implies no endorsement by the UCO Community.
 

@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-11-01
+
+* **Prose**: reworded 5 concept bodies in plain English. No fact, link, number or frontmatter changed.
+
 ## 2026-10-31
 
 * **Changed**: Element names now cites lmodel/collections' module for CO's names.

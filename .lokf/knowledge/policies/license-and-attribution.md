@@ -26,7 +26,7 @@ status: draft
 The schema and the code are under the Apache License 2.0.[^license] `NOTICE` lists the third-party work the repository carries:[^notice]
 
 - **UCO.** The copy of UCO 1.5.0's files and the description of each UCO term in the schema are the UCO Community's, under the Apache License 2.0. UCO's LICENSE carries no copyright line.
-- **lmodel/collections and the Collections Ontology.** The copy of lmodel/collections' module is under the Apache License 2.0, and its descriptions of CO's terms are its own words. CO's repository states no licence; the Google Code archive gives Apache 2.0 for CO's code and CC BY 3.0 for its other content.
+- **lmodel/collections and the Collections Ontology.** The copy of lmodel/collections' module is under the Apache License 2.0, and its descriptions of CO's terms are its own words. CO's repository states no licence. The Google Code archive gives Apache 2.0 for CO's code and CC BY 3.0 for its other content.
 - **linkml-project-copier**, under the MIT License, for the justfile, configuration and documentation scaffolding.
 - **The KTL templates**, under the Apache License 2.0, for the sidecar's scripts, its workflows and the website.
 
