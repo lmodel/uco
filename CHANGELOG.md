@@ -6,6 +6,10 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+### Changed
+
+- **Each module's id moves under the umbrella's, from `https://w3id.org/lmodel/uco-core` to `https://w3id.org/lmodel/uco/uco_core` and so on.** The old uco-* repositories are being deleted, so their ids would no longer resolve. A schema that imports a module by its old id must use the new one.
+
 ## [0.2.0] - 2026-11-01
 
 ### Changed

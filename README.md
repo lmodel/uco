@@ -39,7 +39,7 @@ The schema renders the [Unified Cyber Ontology (UCO)](https://unifiedcyberontolo
 
 Data in the schema's form keeps UCO's keys, gives each object its IRI as `id` and its class as `type`, and holds facets inside the object they describe. `scripts/uco_examples.py` writes UCO's own examples that way into [tests/data/valid/](tests/data/valid).
 
-The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. Each UCO module keeps its old repository's identifier, such as `https://w3id.org/lmodel/uco-core`, and the umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place. lmodel/collections now holds the CO terms that uco-co held.
+The schema replaces the sixteen uco-* repositories, which modelled UCO 1.1.0 by hand. The umbrella's identifier, `https://w3id.org/lmodel/uco`, takes uco-master's place, and each module's identifier sits under it, such as `https://w3id.org/lmodel/uco/uco_core`. lmodel/collections now holds the CO terms that uco-co held.
 
 ## Influences
 

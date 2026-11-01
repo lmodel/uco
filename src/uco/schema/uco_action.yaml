@@ -1,5 +1,5 @@
 ---
-id: https://w3id.org/lmodel/uco-action
+id: https://w3id.org/lmodel/uco/uco_action
 name: uco_action
 title: UCO Action
 description: This ontology defines classes and properties for characterizing actions.

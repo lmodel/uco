@@ -1851,7 +1851,7 @@ class Converter:
         ident = (
             SCHEMA_ID
             if name == UMBRELLA
-            else f"{SCHEMA_ID}-{name.removeprefix('uco_')}"
+            else f"{OWN_NS}{name}"
         )
         h: dict = {
             "id": ident,
