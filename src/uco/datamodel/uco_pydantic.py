@@ -1504,7 +1504,7 @@ class UcoThing(ConfiguredBaseModel):
     UcoThing is the top-level class for individuals within UCO.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:UcoThing',
-         'from_schema': 'https://w3id.org/lmodel/uco-core',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core',
          'see_also': ['uco-core:UcoThing-identifier-regex-shape']})
 
     type: Literal["https://w3id.org/lmodel/uco/UcoThing","https://ontology.unifiedcyberontology.org/uco/core/UcoThing","uco_linkml:UcoThing","uco-core:UcoThing"] = Field(default="uco-core:UcoThing", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -1520,7 +1520,7 @@ class UcoInherentCharacterizationThing(UcoThing):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:UcoInherentCharacterizationThing',
          'disjoint_with': ['UcoObject'],
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     type: Literal["https://w3id.org/lmodel/uco/UcoInherentCharacterizationThing","https://ontology.unifiedcyberontology.org/uco/core/UcoInherentCharacterizationThing","uco_linkml:UcoInherentCharacterizationThing","uco-core:UcoInherentCharacterizationThing"] = Field(default="uco-core:UcoInherentCharacterizationThing", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -1534,7 +1534,7 @@ class Dictionary(UcoInherentCharacterizationThing):
     A dictionary is list of (term/key, value) pairs with each term/key having an expectation to exist no more than once. types:Dictionary alone does not validate this expectation, but validation is available. For use cases where this expectation must be validated, the subclass types:ProperDictionary should be used instead of types:Dictionary. For instances where this expectation has been found to be violated, the subclass types:ImproperDictionary should be used instead of types:Dictionary.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:Dictionary',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     entry: Optional[list[Union[DictionaryEntry,ControlledDictionaryEntry]]] = Field(default=None, description="""A dictionary entry.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Dictionary', 'ControlledDictionary'],
          'slot_uri': 'uco-types:entry'} })
@@ -1550,7 +1550,7 @@ class DictionaryEntry(UcoInherentCharacterizationThing):
     A dictionary entry is a single (term/key, value) pair.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:DictionaryEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     key: str = Field(default=..., description="""A key property of a single dictionary entry.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DictionaryEntry'], 'slot_uri': 'uco-types:key'} })
     types_value: str = Field(default=..., description="""A specific property value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DictionaryEntry'], 'slot_uri': 'uco-types:value'} })
@@ -1566,7 +1566,7 @@ class ExternalReference(UcoInherentCharacterizationThing):
     Characteristics of a reference to a resource outside of the UCO.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:ExternalReference',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     definingContext: Optional[str] = Field(default=None, description="""A description of the context relevant to the definition of a particular external reference identifier.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExternalReference'], 'slot_uri': 'uco-core:definingContext'} })
     externalIdentifier: Optional[str] = Field(default=None, description="""An identifier for some information defined external to the UCO context.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExternalReference'], 'slot_uri': 'uco-core:externalIdentifier'} })
@@ -1583,7 +1583,7 @@ class Facet(UcoInherentCharacterizationThing):
     A facet is a grouping of characteristics singularly unique to a particular inherent aspect of a UCO domain object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Facet',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     type: Literal["https://w3id.org/lmodel/uco/Facet","https://ontology.unifiedcyberontology.org/uco/core/Facet","uco_linkml:Facet","uco-core:Facet"] = Field(default="uco-core:Facet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -1597,7 +1597,7 @@ class ConfidenceFacet(Facet):
     A confidence is a grouping of characteristics unique to an asserted level of certainty in the accuracy of some information.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:ConfidenceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     confidence: int = Field(default=..., description="""An asserted level of certainty in the accuracy of some information.""", le=100, json_schema_extra = { "linkml_meta": {'domain_of': ['ConfidenceFacet'], 'slot_uri': 'uco-core:confidence'} })
     type: Literal["https://w3id.org/lmodel/uco/ConfidenceFacet","https://ontology.unifiedcyberontology.org/uco/core/ConfidenceFacet","uco_linkml:ConfidenceFacet","uco-core:ConfidenceFacet"] = Field(default="uco-core:ConfidenceFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -1613,7 +1613,7 @@ class UcoObject(UcoThing):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:UcoObject',
          'disjoint_with': ['UcoInherentCharacterizationThing'],
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -1649,7 +1649,7 @@ class Assertion(UcoObject):
     An assertion is a statement declared to be true.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Assertion',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     statement: Optional[list[str]] = Field(default=None, description="""A textual statement of an assertion.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Assertion'], 'slot_uri': 'uco-core:statement'} })
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
@@ -1686,7 +1686,7 @@ class Annotation(Assertion):
     An annotation is an assertion made in relation to one or more objects.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Annotation',
-         'from_schema': 'https://w3id.org/lmodel/uco-core',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core',
          'slot_usage': {'object': {'name': 'object', 'required': True}}})
 
     object: list[str] = Field(default=..., description="""Specifies one or more UcoObjects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'ContextualCompilation', 'EnclosingCompilation'],
@@ -1726,7 +1726,7 @@ class AttributedName(UcoObject):
     An attributed name is a name of an entity issued by some attributed naming authority.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:AttributedName',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     namingAuthority: Optional[str] = Field(default=None, description="""Specifies the naming authority that issued the name of the entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AttributedName'], 'slot_uri': 'uco-core:namingAuthority'} })
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
@@ -1763,7 +1763,7 @@ class Compilation(UcoObject):
     A compilation is a grouping of things.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Compilation',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -1799,7 +1799,7 @@ class ContextualCompilation(Compilation):
     A contextual compilation is a grouping of things sharing some context (e.g., a set of network connections observed on a given day, all accounts associated with a given person).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:ContextualCompilation',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     object: Optional[list[str]] = Field(default=None, description="""Specifies one or more UcoObjects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'ContextualCompilation', 'EnclosingCompilation'],
          'slot_uri': 'uco-core:object'} })
@@ -1837,7 +1837,7 @@ class ControlledVocabulary(UcoObject):
     A controlled vocabulary is an explicitly constrained set of string values.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:ControlledVocabulary',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     constrainingVocabularyName: Optional[str] = Field(default=None, description="""The name of an explicitly constrained set of string values.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ControlledVocabulary'],
          'slot_uri': 'uco-core:constrainingVocabularyName'} })
@@ -1878,7 +1878,7 @@ class EnclosingCompilation(Compilation):
     An enclosing compilation is a container for a grouping of things.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:EnclosingCompilation',
-         'from_schema': 'https://w3id.org/lmodel/uco-core',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core',
          'slot_usage': {'object': {'name': 'object', 'required': True}}})
 
     object: list[str] = Field(default=..., description="""Specifies one or more UcoObjects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'ContextualCompilation', 'EnclosingCompilation'],
@@ -1917,7 +1917,7 @@ class Bundle(EnclosingCompilation):
     A bundle is a container for a grouping of UCO content with no presumption of shared context.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Bundle',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     object: list[str] = Field(default=..., description="""Specifies one or more UcoObjects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'ContextualCompilation', 'EnclosingCompilation'],
          'slot_uri': 'uco-core:object'} })
@@ -1955,7 +1955,7 @@ class Event(UcoObject):
     An Event is a noteworthy occurrence (something that happens or might happen).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Event',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     endTime: Optional[list[datetime ]] = Field(default=None, description="""The ending time of a time range.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Event', 'Relationship'], 'slot_uri': 'uco-core:endTime'} })
     eventAttribute: Optional[list[Union[Dictionary,ControlledDictionary,ImproperDictionary,ProperDictionary]]] = Field(default=None, title="Event Attribute", description="""An event attribute specifies an ad-hoc attribute/value for an event.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Event'], 'slot_uri': 'uco-core:eventAttribute'} })
@@ -1998,7 +1998,7 @@ class Grouping(ContextualCompilation):
     A grouping is a compilation of referenced UCO content with a shared context.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Grouping',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     context: Optional[list[str]] = Field(default=None, description="""A description of particular contextual affinity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Grouping'], 'slot_uri': 'uco-core:context'} })
     object: Optional[list[str]] = Field(default=None, description="""Specifies one or more UcoObjects.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Annotation', 'ContextualCompilation', 'EnclosingCompilation'],
@@ -2037,7 +2037,7 @@ class IdentityAbstraction(UcoObject):
     An identity abstraction is a grouping of identifying characteristics unique to an individual or organization. This class is an ontological structural abstraction for this concept. Implementations of this concept should utilize the identity:Identity class.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:IdentityAbstraction',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2073,7 +2073,7 @@ class Item(UcoObject):
     An item is a distinct article or unit.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Item',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2109,7 +2109,7 @@ class MarkingDefinitionAbstraction(UcoObject):
     A marking definition abstraction is a grouping of characteristics unique to the expression of a specific data marking conveying restrictions, permissions, and other guidance for how marked data can be used and shared. This class is an ontological structural abstraction for this concept. Implementations of this concept should utilize the marking:MarkingDefinition class.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:MarkingDefinitionAbstraction',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2145,7 +2145,7 @@ class ModusOperandi(UcoObject):
     A modus operandi is a particular method of operation (how a particular entity behaves or the resources they use).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:ModusOperandi',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2181,7 +2181,7 @@ class Relationship(UcoObject):
     A relationship is a grouping of characteristics unique to an assertion that one or more objects are related to another object in some way.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:Relationship',
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     endTime: Optional[list[datetime ]] = Field(default=None, description="""The ending time of a time range.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Event', 'Relationship'], 'slot_uri': 'uco-core:endTime'} })
     isDirectional: bool = Field(default=..., description="""A specification whether or not a relationship assertion is limited to the context FROM a source object(s) TO a target object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Relationship'], 'slot_uri': 'uco-core:isDirectional'} })
@@ -2224,7 +2224,7 @@ class UcoType(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-core:UcoType',
          'disjoint_with': ['UcoThing'],
-         'from_schema': 'https://w3id.org/lmodel/uco-core'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_core'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2241,7 +2241,7 @@ class Configuration(UcoObject):
     A configuration is a grouping of characteristics unique to a set of parameters or initial settings for the use of a tool, application, software, or other cyber object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-configuration:Configuration',
-         'from_schema': 'https://w3id.org/lmodel/uco-configuration',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_configuration',
          'see_also': ['https://github.com/ucoProject/UCO/issues/432']})
 
     configurationEntry: Optional[list[ConfigurationEntry]] = Field(default=None, description="""A single configuration setting entry item for a tool or other software.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Configuration'],
@@ -2284,7 +2284,7 @@ class ConfigurationEntry(UcoInherentCharacterizationThing):
     A configuration entry is a grouping of characteristics unique to a particular parameter or initial setting for the use of a tool, application, software, or other cyber object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-configuration:ConfigurationEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-configuration'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_configuration'})
 
     itemDescription: Optional[str] = Field(default=None, description="""A description of a configuration setting entry item.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ConfigurationEntry'],
          'slot_uri': 'uco-configuration:itemDescription'} })
@@ -2308,7 +2308,7 @@ class Dependency(UcoInherentCharacterizationThing):
     A dependency is a grouping of characteristics unique to something that a tool or other software relies on to function as intended.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-configuration:Dependency',
-         'from_schema': 'https://w3id.org/lmodel/uco-configuration'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_configuration'})
 
     dependencyDescription: Optional[str] = Field(default=None, description="""A description of a tool or other software dependency.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Dependency'],
          'slot_uri': 'uco-configuration:dependencyDescription'} })
@@ -2327,7 +2327,7 @@ class GPSCoordinatesFacet(Facet):
     A GPS coordinates facet is a grouping of characteristics unique to the expression of quantified dilution of precision (DOP) for an asserted set of geolocation coordinates typically associated with satellite navigation such as the Global Positioning System (GPS).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-location:GPSCoordinatesFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-location'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_location'})
 
     hdop: Optional[Decimal] = Field(default=None, description="""The horizontal dilution of precision of the GPS location.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GPSCoordinatesFacet'], 'slot_uri': 'uco-location:hdop'} })
     pdop: Optional[Decimal] = Field(default=None, description="""The positional (3D) dilution of precision of the GPS location.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GPSCoordinatesFacet'], 'slot_uri': 'uco-location:pdop'} })
@@ -2345,7 +2345,7 @@ class LatLongCoordinatesFacet(Facet):
     A lat long coordinates facet is a grouping of characteristics unique to the expression of a geolocation as the intersection of specific latitude, longitude, and altitude values.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-location:LatLongCoordinatesFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-location'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_location'})
 
     altitude: Optional[Decimal] = Field(default=None, description="""The altitude coordinate of a geolocation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LatLongCoordinatesFacet'], 'slot_uri': 'uco-location:altitude'} })
     latitude: Optional[Decimal] = Field(default=None, description="""The latitude coordinate of a geolocation.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LatLongCoordinatesFacet'], 'slot_uri': 'uco-location:latitude'} })
@@ -2362,7 +2362,7 @@ class Location(UcoObject):
     A location is a geospatial place, site, or position.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-location:Location',
-         'from_schema': 'https://w3id.org/lmodel/uco-location'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_location'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2398,7 +2398,7 @@ class SimpleAddressFacet(Facet):
     A simple address facet is a grouping of characteristics unique to a geolocation expressed as an administrative address.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-location:SimpleAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-location'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_location'})
 
     addressType: Optional[str] = Field(default=None, description="""The type of the address, for instance home or work.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SimpleAddressFacet'],
          'is_a': 'informalType',
@@ -2420,7 +2420,7 @@ class Identity(IdentityAbstraction):
     An identity is a grouping of identifying characteristics unique to an individual or organization.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:Identity',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2456,7 +2456,7 @@ class IdentityFacet(Facet):
     An identity facet is a grouping of characteristics unique to a particular aspect of an identity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:IdentityFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/IdentityFacet","https://ontology.unifiedcyberontology.org/uco/identity/IdentityFacet","uco_linkml:IdentityFacet","uco-identity:IdentityFacet"] = Field(default="uco-identity:IdentityFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2470,7 +2470,7 @@ class AddressFacet(IdentityFacet):
     An address facet is a grouping of characteristics unique to an administrative identifier for a geolocation associated with a specific identity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:AddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     address: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-identity:address without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AddressFacet'], 'slot_uri': 'uco-identity:address'} })
     type: Literal["https://w3id.org/lmodel/uco/AddressFacet","https://ontology.unifiedcyberontology.org/uco/identity/AddressFacet","uco_linkml:AddressFacet","uco-identity:AddressFacet"] = Field(default="uco-identity:AddressFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -2485,7 +2485,7 @@ class AffiliationFacet(IdentityFacet):
     An affiliation is a grouping of characteristics unique to the established affiliations of an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:AffiliationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/AffiliationFacet","https://ontology.unifiedcyberontology.org/uco/identity/AffiliationFacet","uco_linkml:AffiliationFacet","uco-identity:AffiliationFacet"] = Field(default="uco-identity:AffiliationFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2499,7 +2499,7 @@ class BirthInformationFacet(IdentityFacet):
     Birth information is a grouping of characteristics unique to information pertaining to the birth of an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:BirthInformationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     birthdate: Optional[datetime ] = Field(default=None, description="""UCO 1.5.0 declares the property uco-identity:birthdate without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BirthInformationFacet', 'ContactFacet'],
          'slot_uri': 'uco-identity:birthdate'} })
@@ -2515,7 +2515,7 @@ class CountryOfResidenceFacet(IdentityFacet):
     Country of residence is a grouping of characteristics unique to information related to the country, or countries, where an entity resides.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:CountryOfResidenceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/CountryOfResidenceFacet","https://ontology.unifiedcyberontology.org/uco/identity/CountryOfResidenceFacet","uco_linkml:CountryOfResidenceFacet","uco-identity:CountryOfResidenceFacet"] = Field(default="uco-identity:CountryOfResidenceFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2529,7 +2529,7 @@ class EventsFacet(IdentityFacet):
     Events is a grouping of characteristics unique to information related to specific relevant things that happen in the lifetime of an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:EventsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/EventsFacet","https://ontology.unifiedcyberontology.org/uco/identity/EventsFacet","uco_linkml:EventsFacet","uco-identity:EventsFacet"] = Field(default="uco-identity:EventsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2543,7 +2543,7 @@ class IdentifierFacet(IdentityFacet):
     Identifier is a grouping of characteristics unique to information that uniquely and specifically identities an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:IdentifierFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/IdentifierFacet","https://ontology.unifiedcyberontology.org/uco/identity/IdentifierFacet","uco_linkml:IdentifierFacet","uco-identity:IdentifierFacet"] = Field(default="uco-identity:IdentifierFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2557,7 +2557,7 @@ class LanguagesFacet(IdentityFacet):
     Languages is a grouping of characteristics unique to specific syntactically and grammatically standardized forms of communication (human or computer) in which an entity has proficiency (comprehends, speaks, reads, or writes).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:LanguagesFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/LanguagesFacet","https://ontology.unifiedcyberontology.org/uco/identity/LanguagesFacet","uco_linkml:LanguagesFacet","uco-identity:LanguagesFacet"] = Field(default="uco-identity:LanguagesFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2571,7 +2571,7 @@ class NationalityFacet(IdentityFacet):
     Nationality is a grouping of characteristics unique to the condition of an entity belonging to a particular nation.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:NationalityFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/NationalityFacet","https://ontology.unifiedcyberontology.org/uco/identity/NationalityFacet","uco_linkml:NationalityFacet","uco-identity:NationalityFacet"] = Field(default="uco-identity:NationalityFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2585,7 +2585,7 @@ class OccupationFacet(IdentityFacet):
     Occupation is a grouping of characteristics unique to the job or profession of an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:OccupationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/OccupationFacet","https://ontology.unifiedcyberontology.org/uco/identity/OccupationFacet","uco_linkml:OccupationFacet","uco-identity:OccupationFacet"] = Field(default="uco-identity:OccupationFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2599,7 +2599,7 @@ class Organization(Identity):
     An organization is a grouping of identifying characteristics unique to a group of people who work together in an organized way for a shared purpose. [based on https://dictionary.cambridge.org/us/dictionary/english/organization]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:Organization',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2635,7 +2635,7 @@ class OrganizationDetailsFacet(IdentityFacet):
     Organization details is a grouping of characteristics unique to an identity representing an administrative and functional structure.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:OrganizationDetailsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/OrganizationDetailsFacet","https://ontology.unifiedcyberontology.org/uco/identity/OrganizationDetailsFacet","uco_linkml:OrganizationDetailsFacet","uco-identity:OrganizationDetailsFacet"] = Field(default="uco-identity:OrganizationDetailsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2649,7 +2649,7 @@ class Person(Identity):
     A person is a grouping of identifying characteristics unique to a human being regarded as an individual. [based on https://www.lexico.com/en/definition/person]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:Person',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2685,7 +2685,7 @@ class PersonalDetailsFacet(IdentityFacet):
     Personal details is a grouping of characteristics unique to an identity representing an individual person.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:PersonalDetailsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/PersonalDetailsFacet","https://ontology.unifiedcyberontology.org/uco/identity/PersonalDetailsFacet","uco_linkml:PersonalDetailsFacet","uco-identity:PersonalDetailsFacet"] = Field(default="uco-identity:PersonalDetailsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2699,7 +2699,7 @@ class PhysicalInfoFacet(IdentityFacet):
     Physical info is a grouping of characteristics unique to the outwardly observable nature of an individual person.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:PhysicalInfoFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/PhysicalInfoFacet","https://ontology.unifiedcyberontology.org/uco/identity/PhysicalInfoFacet","uco_linkml:PhysicalInfoFacet","uco-identity:PhysicalInfoFacet"] = Field(default="uco-identity:PhysicalInfoFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2713,7 +2713,7 @@ class QualificationFacet(IdentityFacet):
     Qualification is a grouping of characteristics unique to particular skills, capabilities or their related achievements (educational, professional, etc.) of an entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:QualificationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/QualificationFacet","https://ontology.unifiedcyberontology.org/uco/identity/QualificationFacet","uco_linkml:QualificationFacet","uco-identity:QualificationFacet"] = Field(default="uco-identity:QualificationFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2727,7 +2727,7 @@ class RelatedIdentityFacet(IdentityFacet):
     <Needs fleshed out from CIQ>
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:RelatedIdentityFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/RelatedIdentityFacet","https://ontology.unifiedcyberontology.org/uco/identity/RelatedIdentityFacet","uco_linkml:RelatedIdentityFacet","uco-identity:RelatedIdentityFacet"] = Field(default="uco-identity:RelatedIdentityFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2741,7 +2741,7 @@ class SimpleNameFacet(IdentityFacet):
     A simple name facet is a grouping of characteristics unique to the personal name (e.g., Dr. John Smith Jr.) held by an identity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:SimpleNameFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     familyName: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-identity:familyName without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SimpleNameFacet'], 'slot_uri': 'uco-identity:familyName'} })
     givenName: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-identity:givenName without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SimpleNameFacet'], 'slot_uri': 'uco-identity:givenName'} })
@@ -2759,7 +2759,7 @@ class VisaFacet(IdentityFacet):
     Visa is a grouping of characteristics unique to information related to a person's ability to enter, leave, or stay for a specified period of time in a country.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-identity:VisaFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-identity'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_identity'})
 
     type: Literal["https://w3id.org/lmodel/uco/VisaFacet","https://ontology.unifiedcyberontology.org/uco/identity/VisaFacet","uco_linkml:VisaFacet","uco-identity:VisaFacet"] = Field(default="uco-identity:VisaFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2773,7 +2773,7 @@ class GranularMarking(UcoInherentCharacterizationThing):
     A granular marking is a grouping of characteristics unique to specification of marking definitions (restrictions, permissions, and other guidance for how data can be used and shared) that apply to particular portions of a particular UCO object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:GranularMarking',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking'})
 
     contentSelectors: Optional[list[str]] = Field(default=None, description="""Explicit specification of exactly which portions of a UCO object to apply marking definitions to. Specific syntax for how to specify the UCO object portions is dependent on the particular syntactic serialization implementation (XML, JSON, etc.) of UCO and MUST be explicitly specified in a separate binding specification for that syntactic serialization implementation (e.g. a UCO XML Binding Specification).""", json_schema_extra = { "linkml_meta": {'domain_of': ['GranularMarking'], 'slot_uri': 'uco-marking:contentSelectors'} })
     marking: Optional[list[str]] = Field(default=None, description="""Represents specific marking definitions to be applied to UCO data.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GranularMarking'], 'slot_uri': 'uco-marking:marking'} })
@@ -2789,7 +2789,7 @@ class MarkingDefinition(MarkingDefinitionAbstraction):
     A marking definition is a grouping of characteristics unique to the expression of a specific data marking conveying restrictions, permissions, and other guidance for how marked data can be used and shared.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:MarkingDefinition',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking',
          'slot_usage': {'definitionType': {'name': 'definitionType', 'required': True}}})
 
     definition: Optional[list[Union[MarkingModel,LicenseMarking,ReleaseToMarking,StatementMarking,TermsOfUseMarking]]] = Field(default=None, description="""Explicit specification of a data marking instance.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MarkingDefinition'], 'slot_uri': 'uco-marking:definition'} })
@@ -2834,7 +2834,7 @@ class MarkingModel(UcoInherentCharacterizationThing):
     A marking model is a grouping of characteristics unique to the expression of a particular form of data marking definitions (restrictions, permissions, and other guidance for how data can be used and shared).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:MarkingModel',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking'})
 
     type: Literal["https://w3id.org/lmodel/uco/MarkingModel","https://ontology.unifiedcyberontology.org/uco/marking/MarkingModel","uco_linkml:MarkingModel","uco-marking:MarkingModel"] = Field(default="uco-marking:MarkingModel", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -2848,7 +2848,7 @@ class LicenseMarking(MarkingModel):
     A license marking is a grouping of characteristics unique to the expression of data marking definitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of license restrictions that apply to the data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:LicenseMarking',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking',
          'slot_usage': {'definitionType': {'has_member': {'equals_string': 'license'},
                                            'multivalued': True,
                                            'name': 'definitionType'}},
@@ -2875,7 +2875,7 @@ class ReleaseToMarking(MarkingModel):
     A release-to marking is a grouping of characteristics unique to the expression of data marking definitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of authorized persons and/or organizations to which to the associated content may be released. The existence of the Release-To marking restricts access to ONLY those identities explicitly listed, regardless of whether another data marking exists that allows sharing with other members of the community.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:ReleaseToMarking',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking',
          'slot_usage': {'definitionType': {'has_member': {'equals_string': 'release-to'},
                                            'multivalued': True,
                                            'name': 'definitionType'}},
@@ -2903,7 +2903,7 @@ class StatementMarking(MarkingModel):
     A statement marking is a grouping of characteristics unique to the expression of data marking definitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of a textual marking statement, (e.g., copyright) whose semantic meaning should apply to the associated content. Statement markings are generally not machine-readable. An example of this would be a simple marking to apply copyright information, such as 'Copyright 2014 Acme Inc.'.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:StatementMarking',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking',
          'slot_usage': {'definitionType': {'has_member': {'equals_string': 'statement'},
                                            'multivalued': True,
                                            'name': 'definitionType'}},
@@ -2930,7 +2930,7 @@ class TermsOfUseMarking(MarkingModel):
     A terms of use marking is a grouping of characteristics unique to the expression of data marking definitions (restrictions, permissions, and other guidance for how data can be used and shared) to convey details of a textual statement specifying the Terms of Use (that is, the conditions under which the content may be shared, applied, or otherwise used) of the marked content. An example of this would be used to communicate a simple statement, such as 'Acme Inc. is not responsible for the content of this file'.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-marking:TermsOfUseMarking',
-         'from_schema': 'https://w3id.org/lmodel/uco-marking',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_marking',
          'slot_usage': {'definitionType': {'has_member': {'equals_string': 'terms-of-use'},
                                            'multivalued': True,
                                            'name': 'definitionType'}},
@@ -2957,7 +2957,7 @@ class Pattern(UcoObject):
     A pattern is a combination of properties, acts, tendencies, etc., forming a consistent or characteristic arrangement.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-pattern:Pattern',
-         'from_schema': 'https://w3id.org/lmodel/uco-pattern'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_pattern'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -2993,7 +2993,7 @@ class LogicalPattern(Pattern):
     A logical pattern is a grouping of characteristics unique to an informational pattern expressed via a structured pattern expression following the rules of logic.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-pattern:LogicalPattern',
-         'from_schema': 'https://w3id.org/lmodel/uco-pattern'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_pattern'})
 
     patternExpression: Optional[str] = Field(default=None, description="""An explicit logical pattern expression.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LogicalPattern'], 'slot_uri': 'uco-pattern:patternExpression'} })
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
@@ -3030,7 +3030,7 @@ class PatternExpression(UcoInherentCharacterizationThing):
     A pattern expression is a grouping of characteristics unique to an explicit logical expression defining a pattern (e.g., regular expression, SQL Select expression, etc.).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-pattern:PatternExpression',
-         'from_schema': 'https://w3id.org/lmodel/uco-pattern'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_pattern'})
 
     type: Literal["https://w3id.org/lmodel/uco/PatternExpression","https://ontology.unifiedcyberontology.org/uco/pattern/PatternExpression","uco_linkml:PatternExpression","uco-pattern:PatternExpression"] = Field(default="uco-pattern:PatternExpression", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -3044,7 +3044,7 @@ class Role(UcoObject):
     A role is a usual or customary function based on contextual perspective.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-role:Role',
-         'from_schema': 'https://w3id.org/lmodel/uco-role'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_role'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3080,7 +3080,7 @@ class BenevolentRole(Role):
     A benevolent role is a role with positive and/or beneficial intent.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-role:BenevolentRole',
-         'from_schema': 'https://w3id.org/lmodel/uco-role'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_role'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3116,7 +3116,7 @@ class MaliciousRole(Role):
     A malicious role is a role with malevolent intent.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-role:MaliciousRole',
-         'from_schema': 'https://w3id.org/lmodel/uco-role'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_role'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3152,7 +3152,7 @@ class NeutralRole(Role):
     A neutral role is a role with impartial intent.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-role:NeutralRole',
-         'from_schema': 'https://w3id.org/lmodel/uco-role'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_role'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3188,7 +3188,7 @@ class BuildFacet(Facet):
     A build facet is a grouping of characteristics unique to a particular version of a software.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:BuildFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     buildInformation: Optional[BuildInformationType] = Field(default=None, description="""Describes how a particular tool was built.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BuildFacet'], 'slot_uri': 'uco-tool:buildInformation'} })
     type: Literal["https://w3id.org/lmodel/uco/BuildFacet","https://ontology.unifiedcyberontology.org/uco/tool/BuildFacet","uco_linkml:BuildFacet","uco-tool:BuildFacet"] = Field(default="uco-tool:BuildFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -3203,7 +3203,7 @@ class BuildInformationType(UcoInherentCharacterizationThing):
     A build information type is a grouping of characteristics that describe how a particular version of software was converted from source code to executable code.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:BuildInformationType',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     buildConfiguration: Optional[str] = Field(default=None, description="""How the build utility was configured for a particular build of a particular software.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BuildInformationType'],
          'slot_uri': 'uco-tool:buildConfiguration'} })
@@ -3229,7 +3229,7 @@ class BuildUtilityType(UcoInherentCharacterizationThing):
     A build utility type characterizes the tool used to convert from source code to executable code for a particular version of software.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:BuildUtilityType',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     buildUtilityName: Optional[str] = Field(default=None, description="""The informally defined name of the utility used to build a particular software.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BuildUtilityType'], 'slot_uri': 'uco-tool:buildUtilityName'} })
     cpeid: Optional[str] = Field(default=None, description="""Specifies the Common Platform Enumeration identifier for the software.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BuildUtilityType', 'CompilerType'],
@@ -3247,7 +3247,7 @@ class CompilerType(UcoInherentCharacterizationThing):
     A compiler type is a grouping of characteristics unique to a specific program that translates computer code written in one programming language (the source language) into another language (the target language). Typically a program that translates source code from a high-level programming language to a lower-level language (e.g., assembly language, object code, or machine code) to create an executable program. [based on https://en.wikipedia.org/wiki/Compiler]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:CompilerType',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     compilerInformalDescription: Optional[str] = Field(default=None, description="""An informal description of a compiler.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CompilerType'],
          'slot_uri': 'uco-tool:compilerInformalDescription'} })
@@ -3266,7 +3266,7 @@ class LibraryType(UcoInherentCharacterizationThing):
     A library type is a grouping of characteristics unique to a collection of resources incorporated into the build of a software.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:LibraryType',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     libraryName: Optional[str] = Field(default=None, description="""The name of the library.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LibraryType'], 'slot_uri': 'uco-tool:libraryName'} })
     libraryVersion: Optional[str] = Field(default=None, description="""The version of the library.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LibraryType'], 'slot_uri': 'uco-tool:libraryVersion'} })
@@ -3282,7 +3282,7 @@ class Tool(UcoObject):
     A tool is an element of hardware and/or software utilized to carry out a particular function.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:Tool',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     creator: Optional[str] = Field(default=None, description="""The creator organization for a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:creator'} })
     references: Optional[list[str]] = Field(default=None, description="""References to information describing a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:references'} })
@@ -3323,7 +3323,7 @@ class AnalyticTool(Tool):
     An analytic tool is an artifact of hardware and/or software utilized to accomplish a task or purpose of explanation, interpretation or logical reasoning.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:AnalyticTool',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     creator: Optional[str] = Field(default=None, description="""The creator organization for a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:creator'} })
     references: Optional[list[str]] = Field(default=None, description="""References to information describing a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:references'} })
@@ -3364,7 +3364,7 @@ class ConfiguredTool(Tool):
     A ConfiguredTool is a Tool that is known to be configured to run in a more specified manner than some unconfigured or less-configured Tool.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:ConfiguredTool',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool',
          'slot_usage': {'isConfigurationOf': {'name': 'isConfigurationOf',
                                               'range': 'Tool'}}})
 
@@ -3412,7 +3412,7 @@ class DefensiveTool(Tool):
     A defensive tool is an artifact of hardware and/or software utilized to accomplish a task or purpose of guarding.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:DefensiveTool',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     creator: Optional[str] = Field(default=None, description="""The creator organization for a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:creator'} })
     references: Optional[list[str]] = Field(default=None, description="""References to information describing a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:references'} })
@@ -3453,7 +3453,7 @@ class MaliciousTool(Tool):
     A malicious tool is an artifact of hardware and/or software utilized to accomplish a malevolent task or purpose.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-tool:MaliciousTool',
-         'from_schema': 'https://w3id.org/lmodel/uco-tool'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_tool'})
 
     creator: Optional[str] = Field(default=None, description="""The creator organization for a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:creator'} })
     references: Optional[list[str]] = Field(default=None, description="""References to information describing a particular tool.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Tool'], 'slot_uri': 'uco-tool:references'} })
@@ -3494,7 +3494,7 @@ class Victim(NeutralRole):
     A victim is a role played by a person or organization that is/was the target of some malicious action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-victim:Victim',
-         'from_schema': 'https://w3id.org/lmodel/uco-victim'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_victim'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3530,7 +3530,7 @@ class VictimTargeting(Victim):
     A victim targeting is a grouping of characteristics unique to people or organizations that are the target of some malicious activity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-victim:VictimTargeting',
-         'from_schema': 'https://w3id.org/lmodel/uco-victim'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_victim'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -3566,7 +3566,7 @@ class ControlledDictionary(Dictionary):
     A controlled dictionary is a list of (term/key, value) pairs where each term/key exists no more than once and is constrained to an explicitly defined set of values.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:ControlledDictionary',
-         'from_schema': 'https://w3id.org/lmodel/uco-types',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types',
          'slot_usage': {'entry': {'name': 'entry',
                                   'range': 'ControlledDictionaryEntry'}}})
 
@@ -3584,7 +3584,7 @@ class ControlledDictionaryEntry(DictionaryEntry):
     A controlled dictionary entry is a single (term/key, value) pair where the term/key is constrained to an explicitly defined set of values.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:ControlledDictionaryEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-types'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types'})
 
     key: str = Field(default=..., description="""A key property of a single dictionary entry.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DictionaryEntry'], 'slot_uri': 'uco-types:key'} })
     types_value: str = Field(default=..., description="""A specific property value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DictionaryEntry'], 'slot_uri': 'uco-types:value'} })
@@ -3600,7 +3600,7 @@ class Hash(UcoInherentCharacterizationThing):
     A hash is a grouping of characteristics unique to the result of applying a mathematical algorithm that maps data of arbitrary size to a bit string (the 'hash') and is a one-way function, that is, a function which is practically infeasible to invert. This is commonly used for integrity checking of data. [based on https://en.wikipedia.org/wiki/Cryptographic_hash_function]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:Hash',
-         'from_schema': 'https://w3id.org/lmodel/uco-types'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types'})
 
     hashMethod: Union[HashNameVocab, str] = Field(default=..., description="""A particular cryptographic hashing method (e.g., MD5).""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'HashNameVocab'}, {'range': 'string'}],
          'domain_of': ['Hash'],
@@ -3619,7 +3619,7 @@ class ImproperDictionary(Dictionary):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:ImproperDictionary',
          'disjoint_with': ['ProperDictionary'],
-         'from_schema': 'https://w3id.org/lmodel/uco-types'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types'})
 
     repeatsKey: Optional[list[str]] = Field(default=None, description="""A key found to be repeated in multiple dictionary entries within one dictionary.""", json_schema_extra = { "linkml_meta": {'domain': 'ImproperDictionary',
          'domain_of': ['ImproperDictionary'],
@@ -3639,7 +3639,7 @@ class ProperDictionary(Dictionary):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:ProperDictionary',
          'disjoint_with': ['ImproperDictionary'],
-         'from_schema': 'https://w3id.org/lmodel/uco-types'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types'})
 
     entry: Optional[list[Union[DictionaryEntry,ControlledDictionaryEntry]]] = Field(default=None, description="""A dictionary entry.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Dictionary', 'ControlledDictionary'],
          'slot_uri': 'uco-types:entry'} })
@@ -3656,7 +3656,7 @@ class Thread(UcoThing, Bag):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:Thread',
          'disjoint_with': ['List'],
-         'from_schema': 'https://w3id.org/lmodel/uco-types',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types',
          'mixins': ['Bag'],
          'slot_usage': {'item': {'inlined': False,
                                  'inlined_as_list': False,
@@ -3705,7 +3705,7 @@ class ThreadItem(UcoThing, CoItem):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-types:ThreadItem',
          'disjoint_with': ['ListItem'],
-         'from_schema': 'https://w3id.org/lmodel/uco-types',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_types',
          'mixins': ['CoItem'],
          'slot_usage': {'itemContent': {'inlined': False,
                                         'name': 'itemContent',
@@ -3757,7 +3757,7 @@ class Action(UcoObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:Action',
          'disjoint_with': ['Event'],
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     actionCount: Optional[int] = Field(default=None, description="""The number of times that the action was performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Action', 'ActionLifecycle'],
          'slot_uri': 'uco-action:actionCount'} })
@@ -3809,7 +3809,7 @@ class ActionArgumentFacet(Facet):
     An action argument facet is a grouping of characteristics unique to a single parameter of an action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ActionArgumentFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     action_value: str = Field(default=..., description="""The value of an action parameter.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionArgumentFacet'], 'slot_uri': 'uco-action:value'} })
     argumentName: str = Field(default=..., description="""The identifying label of an argument.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionArgumentFacet'], 'slot_uri': 'uco-action:argumentName'} })
@@ -3825,7 +3825,7 @@ class ActionEstimationFacet(Facet):
     An action estimation facet is a grouping of characteristics unique to decision-focused approximation aspects for an action that may potentially be performed.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ActionEstimationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     estimatedCost: Optional[str] = Field(default=None, description="""An estimation of the cost if the action is performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionEstimationFacet'], 'slot_uri': 'uco-action:estimatedCost'} })
     estimatedEfficacy: Optional[str] = Field(default=None, description="""An estimation of the effectiveness of the action at achieving its objective if the action is performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionEstimationFacet'],
@@ -3845,7 +3845,7 @@ class ActionFrequencyFacet(Facet):
     An action frequency facet is a grouping of characteristics unique to the frequency of occurrence for an action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ActionFrequencyFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     rate: Decimal = Field(default=..., description="""The frequency rate for the occurence of an action.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionFrequencyFacet'], 'slot_uri': 'uco-action:rate'} })
     scale: str = Field(default=..., description="""The time scale utilized for the frequency rate count for the occurence of an action.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ActionFrequencyFacet'], 'slot_uri': 'uco-action:scale'} })
@@ -3865,7 +3865,7 @@ class ActionLifecycle(Action):
     An action lifecycle is an action pattern consisting of an ordered set of multiple actions or subordinate action lifecycles.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ActionLifecycle',
-         'from_schema': 'https://w3id.org/lmodel/uco-action',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action',
          'none_of': [{'slot_conditions': {'actionCount': {'name': 'actionCount',
                                                           'value_presence': 'PRESENT'}}},
                      {'slot_conditions': {'actionStatus': {'name': 'actionStatus',
@@ -3931,7 +3931,7 @@ class ActionPattern(Action, Pattern):
     An action pattern is a grouping of characteristics unique to a combination of actions forming a consistent or characteristic arrangement.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ActionPattern',
-         'from_schema': 'https://w3id.org/lmodel/uco-action',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action',
          'mixins': ['Pattern']})
 
     actionCount: Optional[int] = Field(default=None, description="""The number of times that the action was performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Action', 'ActionLifecycle'],
@@ -3984,7 +3984,7 @@ class ArrayOfAction(UcoInherentCharacterizationThing):
     An array of action is an ordered list of references to things that may be done or performed.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:ArrayOfAction',
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     action: list[str] = Field(default=..., description="""A characterization of a single action.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ArrayOfAction'], 'slot_uri': 'uco-action:action'} })
     type: Literal["https://w3id.org/lmodel/uco/ArrayOfAction","https://ontology.unifiedcyberontology.org/uco/action/ArrayOfAction","uco_linkml:ArrayOfAction","uco-action:ArrayOfAction"] = Field(default="uco-action:ArrayOfAction", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -3999,7 +3999,7 @@ class Technique(UcoType):
     A technique is a class of actions joined by some common characteristics. The class uco-action:Technique is a metaclass. A Technique instance is an owl:Class that is a subclass of uco-action:Action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-action:Technique',
-         'from_schema': 'https://w3id.org/lmodel/uco-action'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_action'})
 
     techniqueID: Optional[list[str]] = Field(default=None, description="""An identifier for a technique within some cataloguing system. At the general level of UCO, techniqueID is left optional and minimally-described aside from needing to be Literal-valued. Specializations of Technique should also consider specializing a corresponding subproperty of techniqueID to enable support of global review of technique identifiers.""", json_schema_extra = { "linkml_meta": {'domain': 'Technique',
          'domain_of': ['Technique'],
@@ -4019,7 +4019,7 @@ class Analysis(Action):
     An analysis is an action of detailed examination of something in order to understand its nature, context or essential features.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-analysis:Analysis',
-         'from_schema': 'https://w3id.org/lmodel/uco-analysis'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_analysis'})
 
     actionCount: Optional[int] = Field(default=None, description="""The number of times that the action was performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Action', 'ActionLifecycle'],
          'slot_uri': 'uco-action:actionCount'} })
@@ -4071,7 +4071,7 @@ class AnalyticResult(Assertion):
     An analytic result is a characterization of the understanding resulting from an analysis action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-analysis:AnalyticResult',
-         'from_schema': 'https://w3id.org/lmodel/uco-analysis'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_analysis'})
 
     originatingAnalysis: Optional[str] = Field(default=None, description="""The analysis action that resulted in an analytic result.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AnalyticResult'],
          'slot_uri': 'uco-analysis:originatingAnalysis'} })
@@ -4111,7 +4111,7 @@ class AnalyticResultFacet(Facet):
     An analytic result facet is a grouping of characteristics unique to the results of an analysis action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-analysis:AnalyticResultFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-analysis'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_analysis'})
 
     type: Literal["https://w3id.org/lmodel/uco/AnalyticResultFacet","https://ontology.unifiedcyberontology.org/uco/analysis/AnalyticResultFacet","uco_linkml:AnalyticResultFacet","uco-analysis:AnalyticResultFacet"] = Field(default="uco-analysis:AnalyticResultFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -4125,7 +4125,7 @@ class ArtifactClassification(UcoInherentCharacterizationThing):
     An artifact classification is a single specific assertion that a particular class of a classification taxonomy applies to something.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-analysis:ArtifactClassification',
-         'from_schema': 'https://w3id.org/lmodel/uco-analysis'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_analysis'})
 
     class_: list[str] = Field(default=..., alias="class", description="""A specific classification class.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ArtifactClassification'], 'slot_uri': 'uco-analysis:class'} })
     classificationConfidence: Optional[Decimal] = Field(default=None, description="""The level of confidence that a classification assertion is correct.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ArtifactClassification'],
@@ -4142,7 +4142,7 @@ class ArtifactClassificationResultFacet(AnalyticResultFacet):
     An artifact classification result facet is a grouping of characteristics unique to the results of an artifact classification analysis action.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-analysis:ArtifactClassificationResultFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-analysis'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_analysis'})
 
     classification: Optional[list[ArtifactClassification]] = Field(default=None, description="""An asserted classification of an analyzed artifact resulting from the analysis.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ArtifactClassificationResultFacet'],
          'slot_uri': 'uco-analysis:classification'} })
@@ -4158,7 +4158,7 @@ class AccountAuthenticationFacet(Facet):
     An account authentication facet is a grouping of characteristics unique to the mechanism of accessing an account.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AccountAuthenticationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     password: Optional[str] = Field(default=None, description="""Specifies an authentication password.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AccountAuthenticationFacet',
                        'URLFacet',
@@ -4181,7 +4181,7 @@ class AccountFacet(Facet):
     An account facet is a grouping of characteristics unique to an arrangement with an entity to enable and control the provision of some capability or service.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accountIdentifier: Optional[str] = Field(default=None, description="""The unique identifier for the account.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AccountFacet'], 'slot_uri': 'uco-observable:accountIdentifier'} })
     accountIssuer: Optional[str] = Field(default=None, description="""The issuer of this account.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AccountFacet'], 'slot_uri': 'uco-observable:accountIssuer'} })
@@ -4232,7 +4232,7 @@ class AlternateDataStreamFacet(Facet):
     An alternate data stream facet is a grouping of characteristics unique to data content stored within an NTFS file that is independent of the standard content stream of the file and is hidden from access by default NTFS file viewing mechanisms.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AlternateDataStreamFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hashes: Optional[Hash] = Field(default=None, description="""Specifies any hashes computed over the section.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AlternateDataStreamFacet', 'WindowsPESection'],
          'slot_uri': 'uco-observable:hashes'} })
@@ -4259,7 +4259,7 @@ class AndroidDeviceFacet(Facet):
     An Android device facet is a grouping of characteristics unique to an Android device. [based on https://en.wikipedia.org/wiki/Android_(operating_system)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AndroidDeviceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     androidFingerprint: Optional[str] = Field(default=None, description="""A string that uniquely identifies a build of the Android operating system. [based on https://developer.android.com/reference/android/os/Build#FINGERPRINT]""", json_schema_extra = { "linkml_meta": {'domain_of': ['AndroidDeviceFacet'],
          'slot_uri': 'uco-observable:androidFingerprint'} })
@@ -4282,7 +4282,7 @@ class AntennaFacet(Facet):
     An antenna alignment facet contains the metadata surrounding the cell tower's antenna position.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AntennaFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     antennaHeight: Optional[Decimal] = Field(default=None, description="""The height (in meters) of the antenna from the ground.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AntennaFacet'], 'slot_uri': 'uco-observable:antennaHeight'} })
     azimuth: Optional[Decimal] = Field(default=None, description="""The median rotation in degrees around a vertical axis of the cell antenna sector accessed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AntennaFacet'], 'slot_uri': 'uco-observable:azimuth'} })
@@ -4303,7 +4303,7 @@ class ApplicationAccountFacet(Facet):
     An application account facet is a grouping of characteristics unique to an account within a particular software program designed for end users.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ApplicationAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -4332,7 +4332,7 @@ class ApplicationFacet(Facet):
     An application facet is a grouping of characteristics unique to a particular software program designed for end users.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ApplicationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     applicationIdentifier: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:applicationIdentifier without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationFacet'],
          'slot_uri': 'uco-observable:applicationIdentifier'} })
@@ -4362,7 +4362,7 @@ class ApplicationVersion(UcoInherentCharacterizationThing):
     An application version is a grouping of characteristics unique to a particular software program version.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ApplicationVersion',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     installDate: Optional[datetime ] = Field(default=None, description="""Specifies the date the operating system or application was installed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationVersion', 'OperatingSystemFacet'],
          'slot_uri': 'uco-observable:installDate'} })
@@ -4388,7 +4388,7 @@ class ArchiveFileFacet(Facet):
     An archive file facet is a grouping of characteristics unique to a file that is composed of one or more computer files along with metadata.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ArchiveFileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     archiveType: Optional[str] = Field(default=None, description="""The type of a file archive, e.g. ZIP, GZIP or RAR.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ArchiveFileFacet'],
          'is_a': 'informalType',
@@ -4414,7 +4414,7 @@ class AudioFacet(Facet):
     An audio facet is a grouping of characteristics unique to a digital representation of sound.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AudioFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     audioType: Optional[str] = Field(default=None, description="""The type of a audio. For example: music or speech.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AudioFacet'],
          'is_a': 'informalType',
@@ -4435,7 +4435,7 @@ class AutonomousSystemFacet(Facet):
     An autonomous system facet is a grouping of characteristics unique to a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet. [based on https://en.wikipedia.org/wiki/Autonomous_system_(Internet)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AutonomousSystemFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     asHandle: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:asHandle without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AutonomousSystemFacet'], 'slot_uri': 'uco-observable:asHandle'} })
     number: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:number without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AutonomousSystemFacet'], 'slot_uri': 'uco-observable:number'} })
@@ -4454,7 +4454,7 @@ class BrowserBookmarkFacet(Facet):
     A browser bookmark facet is a grouping of characteristics unique to a saved shortcut that directs a WWW (World Wide Web) browser software program to a particular WWW accessible resource. [based on https://techterms.com/definition/bookmark]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BrowserBookmarkFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accessedTime: Optional[datetime ] = Field(default=None, description="""The date and time at which the Object was accessed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BrowserBookmarkFacet', 'BrowserCookieFacet', 'FileFacet'],
          'slot_uri': 'uco-observable:accessedTime'} })
@@ -4513,7 +4513,7 @@ class BrowserCookieFacet(Facet):
     A browser cookie facet is a grouping of characteristics unique to a piece of data sent from a website and stored on the user's computer by the user's web browser while the user is browsing. [based on https://en.wikipedia.org/wiki/HTTP_cookie]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BrowserCookieFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accessedTime: Optional[datetime ] = Field(default=None, description="""The date and time at which the Object was accessed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BrowserBookmarkFacet', 'BrowserCookieFacet', 'FileFacet'],
          'slot_uri': 'uco-observable:accessedTime'} })
@@ -4564,7 +4564,7 @@ class CalendarEntryFacet(Facet):
     A calendar entry facet is a grouping of characteristics unique to an appointment, meeting, or event within a collection of appointments, meetings, and events.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CalendarEntryFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -4652,7 +4652,7 @@ class CalendarFacet(Facet):
     A calendar facet is a grouping of characteristics unique to a collection of appointments, meetings, and events.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CalendarFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -4686,7 +4686,7 @@ class CallFacet(Facet):
     A call facet is a grouping of characteristics unique to a connection as part of a realtime cyber communication between one or more parties.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CallFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -4740,7 +4740,7 @@ class CapturedTelecommunicationsInformationFacet(Facet):
     A captured telecommunications information facet represents certain information within captured or intercepted telecommunications data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CapturedTelecommunicationsInformationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     captureCellSite: str = Field(default=..., description="""Specifies the cell site accessed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CapturedTelecommunicationsInformationFacet'],
          'slot_uri': 'uco-observable:captureCellSite'} })
@@ -4772,7 +4772,7 @@ class CellSiteFacet(Facet):
     A cell site facet contains the metadata surrounding the cell site.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CellSiteFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     cellSiteCountryCode: Optional[str] = Field(default=None, description="""The country code represents the country of the cell site. For GSM, this is the Mobile Country Code (MCC).""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellSiteFacet'],
          'slot_uri': 'uco-observable:cellSiteCountryCode'} })
@@ -4797,7 +4797,7 @@ class CompressedStreamFacet(Facet):
     A compressed stream facet is a grouping of characteristics unique to the application of a size-reduction process to a body of data content.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CompressedStreamFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     compressionMethod: Optional[str] = Field(default=None, description="""The algorithm used to compress the data.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CompressedStreamFacet'],
          'slot_uri': 'uco-observable:compressionMethod'} })
@@ -4815,7 +4815,7 @@ class ComputerSpecificationFacet(Facet):
     A computer specificaiton facet is a grouping of characteristics unique to the hardware and software of a programmable electronic device that can store, retrieve, and process data. [based on merriam-webster.com/dictionary/computer]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ComputerSpecificationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     availableRam: Optional[int] = Field(default=None, description="""Specifies the amount of physical memory available on the system, in bytes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ComputerSpecificationFacet'],
          'slot_uri': 'uco-observable:availableRam'} })
@@ -4867,7 +4867,7 @@ class ContactAddress(UcoInherentCharacterizationThing):
     A contact address is a grouping of characteristics unique to a geolocation address of a contact entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactAddressScope: Optional[Union[ContactAddressScopeVocab, str]] = Field(default=None, description="""Contact address scope specifies the relevant scope (home, work, school, etc) for a geolocation address of a contact entity.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'ContactAddressScopeVocab'}, {'range': 'string'}],
          'domain_of': ['ContactAddress'],
@@ -4886,7 +4886,7 @@ class ContactAffiliation(UcoInherentCharacterizationThing):
     A contact affiliation is a grouping of characteristics unique to details of an organizational affiliation for a single contact entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactAffiliation',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'contactEmail': {'inlined_as_list': True,
                                          'multivalued': True,
                                          'name': 'contactEmail'},
@@ -4931,7 +4931,7 @@ class ContactEmail(UcoInherentCharacterizationThing):
     A contact email is a grouping of characteristics unique to details for contacting a contact entity by email.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactEmail',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactEmailScope: Optional[Union[ContactEmailScopeVocab, str]] = Field(default=None, description="""Contact email scope specifies the relevant scope (home, work, school, etc) of details for contacting a contact entity by email.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'ContactEmailScopeVocab'}, {'range': 'string'}],
          'domain_of': ['ContactEmail'],
@@ -4950,7 +4950,7 @@ class ContactFacet(Facet):
     A contact facet is a grouping of characteristics unique to a set of identification and communication related details for a single entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'contactAddress': {'inlined_as_list': True,
                                            'multivalued': True,
                                            'name': 'contactAddress'},
@@ -5016,7 +5016,7 @@ class ContactListFacet(Facet):
     A contact list facet is a grouping of characteristics unique to a set of multiple individual contacts such as that found in a digital address book.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactListFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contact: Optional[list[str]] = Field(default=None, description="""Contact specifies information characterizing contact details for a single entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactListFacet'], 'slot_uri': 'uco-observable:contact'} })
     sourceApplication: Optional[str] = Field(default=None, description="""Source application specifies the software application that a particular contact or contact list is associated with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactFacet', 'ContactListFacet'],
@@ -5033,7 +5033,7 @@ class ContactMessaging(UcoInherentCharacterizationThing):
     A contact messaging is a grouping of characteristics unique to details for contacting a contact entity by digital messaging.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactMessaging',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactMessagingPlatform: Optional[str] = Field(default=None, description="""A contact messaging platform specifies a digital messaging platform associated with a contact.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactMessaging'],
          'slot_uri': 'uco-observable:contactMessagingPlatform'} })
@@ -5051,7 +5051,7 @@ class ContactPhone(UcoInherentCharacterizationThing):
     A contact phone is a grouping of characteristics unique to details for contacting a contact entity by telephone.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactPhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactPhoneNumber: Optional[str] = Field(default=None, description="""Contact phone number specifies a telephone service account number for contacting a contact entity by telephone.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactPhone', 'WhoisRegistrarInfoType'],
          'slot_uri': 'uco-observable:contactPhoneNumber'} })
@@ -5070,7 +5070,7 @@ class ContactProfile(UcoInherentCharacterizationThing):
     A contact profile is a grouping of characteristics unique to details for contacting a contact entity by online service.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactProfile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactProfilePlatform: Optional[str] = Field(default=None, description="""A contact profile platform specifies an online service platform associated with a contact.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactProfile'],
          'slot_uri': 'uco-observable:contactProfilePlatform'} })
@@ -5087,7 +5087,7 @@ class ContactSIP(UcoInherentCharacterizationThing):
     A contact SIP is a grouping of characteristics unique to details for contacting a contact entity by Session Initiation Protocol (SIP).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactSIP',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactSIPScope: Optional[Union[ContactSIPScopeVocab, str]] = Field(default=None, description="""Contact SIP scope specifies the relevant scope (home, work, school, etc) of details for contacting a contact entity by Session Initiation Protocol (SIP).""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'ContactSIPScopeVocab'}, {'range': 'string'}],
          'domain_of': ['ContactSIP'],
@@ -5105,7 +5105,7 @@ class ContactURL(UcoInherentCharacterizationThing):
     A contact URL is a grouping of characteristics unique to details for contacting a contact entity by Uniform Resource Locator (URL).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactURL',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactURLScope: Optional[Union[ContactURLScopeVocab, str]] = Field(default=None, description="""Contact url scope specifies the relevant scope (homepage, home, work, school, etc) of details for contacting a contact entity by Uniform Resource Locator (URL).""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'ContactURLScopeVocab'}, {'range': 'string'}],
          'domain_of': ['ContactURL'],
@@ -5124,7 +5124,7 @@ class ContentDataFacet(Facet):
     A content data facet is a grouping of characteristics unique to a block of digital data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContentDataFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     byteOrder: Optional[Union[EndiannessTypeVocab, str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:byteOrder without a definition.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'EndiannessTypeVocab'}, {'range': 'string'}],
          'domain_of': ['ContentDataFacet'],
@@ -5155,7 +5155,7 @@ class DataRangeFacet(Facet):
     A data range facet is a grouping of characteristics unique to a particular contiguous scope within a block of digital data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DataRangeFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     rangeOffset: Optional[int] = Field(default=None, description="""The offset at which the start of data can be found, relative to the rangeOffsetType defined.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DataRangeFacet'], 'slot_uri': 'uco-observable:rangeOffset'} })
     rangeOffsetType: Optional[str] = Field(default=None, description="""The type of offset defined for the range (e.g., image, file, address).""", json_schema_extra = { "linkml_meta": {'domain_of': ['DataRangeFacet'],
@@ -5174,7 +5174,7 @@ class DefinedEffectFacet(Facet):
     A defined effect facet is a grouping of characteristics unique to the effect of an observable action in relation to one or more observable objects.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DefinedEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     type: Literal["https://w3id.org/lmodel/uco/DefinedEffectFacet","https://ontology.unifiedcyberontology.org/uco/observable/DefinedEffectFacet","uco_linkml:DefinedEffectFacet","uco-observable:DefinedEffectFacet"] = Field(default="uco-observable:DefinedEffectFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -5188,7 +5188,7 @@ class DeviceFacet(Facet):
     A device facet is a grouping of characteristics unique to a piece of equipment or a mechanism designed to serve a special purpose or perform a special function. [based on https://www.merriam-webster.com/dictionary/device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DeviceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     deviceType: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:deviceType without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DeviceFacet'],
          'is_a': 'informalType',
@@ -5212,7 +5212,7 @@ class DigitalAccountFacet(Facet):
     A digital account facet is a grouping of characteristics unique to an arrangement with an entity to enable and control the provision of some capability or service within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accountLogin: Optional[list[str]] = Field(default=None, description="""The login identifier for the digital account.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAccountFacet'],
          'slot_uri': 'uco-observable:accountLogin'} })
@@ -5239,7 +5239,7 @@ class DigitalAddressFacet(Facet):
     A digital address facet is a grouping of characteristics unique to an identifier assigned to enable routing and management of digital communication.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -5261,7 +5261,7 @@ class DigitalSignatureInfoFacet(Facet):
     A digital signature info facet is a grouping of characteristics unique to a value calculated via a mathematical scheme for demonstrating the authenticity of an electronic message or document.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalSignatureInfoFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     certificateIssuer: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:certificateIssuer without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalSignatureInfoFacet'],
          'slot_uri': 'uco-observable:certificateIssuer'} })
@@ -5285,7 +5285,7 @@ class DiskFacet(Facet):
     A disk facet is a grouping of characteristics unique to a storage mechanism where data is recorded by various electronic, magnetic, optical, or mechanical changes to a surface layer of one or more rotating disks.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DiskFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     diskSize: Optional[int] = Field(default=None, description="""The size of the disk, in bytes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiskFacet'], 'slot_uri': 'uco-observable:diskSize'} })
     diskType: Optional[str] = Field(default=None, description="""The type of disk being characterized, e.g., removable.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiskFacet'],
@@ -5305,7 +5305,7 @@ class DiskPartitionFacet(Facet):
     A disk partition facet is a grouping of characteristics unique to a particular managed region on a storage mechanism.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DiskPartitionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     diskPartitionType: Optional[str] = Field(default=None, description="""Specifies the type of partition being characterized.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiskPartitionFacet'],
          'is_a': 'informalType',
@@ -5346,7 +5346,7 @@ class DomainNameFacet(Facet):
     A domain name facet is a grouping of characteristics unique to an identification string that defines a realm of administrative autonomy, authority or control within the Internet. [based on https://en.wikipedia.org/wiki/Domain_name]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DomainNameFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     isTLD: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:isTLD without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DomainNameFacet'], 'slot_uri': 'uco-observable:isTLD'} })
     observable_value: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:value without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DomainNameFacet',
@@ -5365,7 +5365,7 @@ class EXIFFacet(Facet):
     An EXIF (exchangeable image file format) facet is a grouping of characteristics unique to the formats for images, sound, and ancillary tags used by digital cameras (including smartphones), scanners and other systems handling image and sound files recorded by digital cameras conformant to JEIDA/JEITA/CIPA specifications. [based on https://en.wikipedia.org/wiki/Exif]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EXIFFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     exifData: Optional[list[ControlledDictionary]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:exifData without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EXIFFacet'], 'slot_uri': 'uco-observable:exifData'} })
     type: Literal["https://w3id.org/lmodel/uco/EXIFFacet","https://ontology.unifiedcyberontology.org/uco/observable/EXIFFacet","uco_linkml:EXIFFacet","uco-observable:EXIFFacet"] = Field(default="uco-observable:EXIFFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -5380,7 +5380,7 @@ class EmailAccountFacet(Facet):
     An email account facet is a grouping of characteristics unique to an arrangement with an entity to enable and control the provision of electronic mail (email) capabilities or services.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     emailAddress: Optional[str] = Field(default=None, description="""An email address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactEmail', 'EmailAccountFacet', 'WhoisRegistrarInfoType'],
          'slot_uri': 'uco-observable:emailAddress'} })
@@ -5396,7 +5396,7 @@ class EmailAddressFacet(DigitalAddressFacet):
     An email address facet is a grouping of characteristics unique to an identifier for an electronic mailbox to which electronic mail messages (conformant to the Simple Mail Transfer Protocol (SMTP)) are sent from and delivered to.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -5418,7 +5418,7 @@ class EmailMessageFacet(Facet):
     An email message facet is a grouping of characteristics unique to a message that is an instance of an electronic mail correspondence conformant to the internet message format described in RFC 5322 and related RFCs.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailMessageFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -5500,7 +5500,7 @@ class EncodedStreamFacet(Facet):
     An encoded stream facet is a grouping of characteristics unique to the conversion of a body of data content from one form to another form.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EncodedStreamFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     encodingMethod: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:encodingMethod without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EncodedStreamFacet'],
          'slot_uri': 'uco-observable:encodingMethod'} })
@@ -5516,7 +5516,7 @@ class EncryptedStreamFacet(Facet):
     An encrypted stream facet is a grouping of characteristics unique to the conversion of a body of data content from one form to another obfuscated form in such a way that reversing the conversion to obtain the original data form can only be accomplished through possession and use of a specific key.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EncryptedStreamFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     encryptionIV: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:encryptionIV without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EncryptedStreamFacet'],
          'slot_uri': 'uco-observable:encryptionIV'} })
@@ -5538,7 +5538,7 @@ class EnvironmentVariable(UcoInherentCharacterizationThing):
     An environment variable is a grouping of characteristics unique to a dynamic-named value that can affect the way running processes will behave on a computer. [based on https://en.wikipedia.org/wiki/Environment_variable]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EnvironmentVariable',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     name: Optional[str] = Field(default=None, description="""The name of a particular concept characterization.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UcoObject',
                        'AlternateDataStreamFacet',
@@ -5565,7 +5565,7 @@ class EventRecordFacet(Facet):
     An event record facet is a grouping of characteristics unique to something that happens in a digital context (e.g., operating system events).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EventRecordFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     account: Optional[str] = Field(default=None, description="""Specifies the account referenced in an event log entry or used to run the scheduled task. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa381228(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EventRecordFacet', 'WindowsTaskFacet'],
          'slot_uri': 'uco-observable:account'} })
@@ -5637,7 +5637,7 @@ class ExtInodeFacet(Facet):
     An extInode facet is a grouping of characteristics unique to a file system object (file, directory, etc.) conformant to the extended file system (EXT or related derivations) specification.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ExtInodeFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     extDeletionTime: Optional[datetime ] = Field(default=None, description="""Specifies the time at which the file represented by an Inode was 'deleted'.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtInodeFacet'], 'slot_uri': 'uco-observable:extDeletionTime'} })
     extFileType: Optional[int] = Field(default=None, description="""Specifies the EXT file type (FIFO, Directory, Regular file, Symbolic link, etc) for the Inode.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtInodeFacet'],
@@ -5663,7 +5663,7 @@ class ExtractedString(UcoInherentCharacterizationThing):
     An extracted string is a grouping of characteristics unique to a series of characters pulled from an observable object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ExtractedString',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     byteStringValue: Optional[str] = Field(default=None, description="""Specifies the raw, byte-string representation of the extracted string.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtractedString'], 'slot_uri': 'uco-observable:byteStringValue'} })
     encoding: Optional[str] = Field(default=None, title="Encoding", description="""The encoding method used for the extracted string.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtractedString'], 'slot_uri': 'uco-observable:encoding'} })
@@ -5685,7 +5685,7 @@ class ExtractedStringsFacet(Facet):
     An extracted strings facet is a grouping of characteristics unique to one or more sequences of characters pulled from an observable object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ExtractedStringsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     strings: Optional[list[ExtractedString]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:strings without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtractedStringsFacet'], 'slot_uri': 'uco-observable:strings'} })
     type: Literal["https://w3id.org/lmodel/uco/ExtractedStringsFacet","https://ontology.unifiedcyberontology.org/uco/observable/ExtractedStringsFacet","uco_linkml:ExtractedStringsFacet","uco-observable:ExtractedStringsFacet"] = Field(default="uco-observable:ExtractedStringsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -5700,7 +5700,7 @@ class FileFacet(Facet):
     A file facet is a grouping of characteristics unique to the storage of a file (computer resource for recording data discretely in a computer storage device) on a file system (process that manages how and where data on a storage device is stored, accessed and managed). [based on https://en.wikipedia.org/Computer_file and https://www.techopedia.com/definition/5510/file-system]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accessedTime: Optional[datetime ] = Field(default=None, description="""The date and time at which the Object was accessed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['BrowserBookmarkFacet', 'BrowserCookieFacet', 'FileFacet'],
          'slot_uri': 'uco-observable:accessedTime'} })
@@ -5746,7 +5746,7 @@ class FilePermissionsFacet(Facet):
     A file permissions facet is a grouping of characteristics unique to the access rights (e.g., view, change, navigate, execute) of a file on a file system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FilePermissionsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     owner: Optional[str] = Field(default=None, description="""Specifies the owner of an Observable Object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['AccountFacet',
                        'CalendarEntryFacet',
@@ -5765,7 +5765,7 @@ class FileSystemFacet(Facet):
     A file system facet is a grouping of characteristics unique to the process that manages how and where data on a storage medium is stored, accessed and managed. [based on https://www.techopedia.com/definition/5510/file-system]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FileSystemFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     clusterSize: Optional[int] = Field(default=None, description="""The size of cluster allocation units in a file system.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FileSystemFacet'], 'slot_uri': 'uco-observable:clusterSize'} })
     fileSystemType: Optional[str] = Field(default=None, description="""The specific type of a file system.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FileSystemFacet'],
@@ -5783,7 +5783,7 @@ class FragmentFacet(Facet):
     A fragment facet is a grouping of characteristics unique to an individual piece of the content of a file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FragmentFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     fragmentIndex: Optional[list[int]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:fragmentIndex without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FragmentFacet'], 'slot_uri': 'uco-observable:fragmentIndex'} })
     totalFragments: Optional[list[int]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:totalFragments without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['FragmentFacet'], 'slot_uri': 'uco-observable:totalFragments'} })
@@ -5799,7 +5799,7 @@ class GeoLocationEntryFacet(Facet):
     A geolocation entry facet is a grouping of characteristics unique to a single application-specific geolocation entry.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationEntryFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -5846,7 +5846,7 @@ class GeoLocationLogFacet(Facet):
     A geolocation log facet is a grouping of characteristics unique to a record containing geolocation tracks and/or geolocation entries.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationLogFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -5889,7 +5889,7 @@ class GeoLocationTrackFacet(Facet):
     A geolocation track facet is a grouping of characteristics unique to a set of contiguous geolocation entries representing a path/track taken.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationTrackFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -5934,7 +5934,7 @@ class GlobalFlagType(UcoInherentCharacterizationThing):
     A global flag type is a grouping of characteristics unique to the Windows systemwide global variable named NtGlobalFlag that enables various internal debugging, tracing, and validation support in the operating system. [based on \"Windows Global Flags, Chapter 3: System Mechanisms of Windows Internals by Solomon, Russinovich, and Ionescu]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GlobalFlagType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     abbreviation: Optional[str] = Field(default=None, description="""The abbreviation of a global flag. See also: http://msdn.microsoft.com/en-us/library/windows/hardware/ff549646(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GlobalFlagType'], 'slot_uri': 'uco-observable:abbreviation'} })
     destination: Optional[str] = Field(default=None, description="""The destination of a global flag. See also: http://msdn.microsoft.com/en-us/library/windows/hardware/ff549646(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['GlobalFlagType'], 'slot_uri': 'uco-observable:destination'} })
@@ -5952,7 +5952,7 @@ class HTTPConnectionFacet(Facet):
     An HTTP connection facet is a grouping of characteristics unique to portions of a network connection that are conformant to the Hypertext Transfer Protocol (HTTP) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:HTTPConnectionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     httpMesageBodyLength: Optional[int] = Field(default=None, description="""Specifies the length of an HTTP message body in bytes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['HTTPConnectionFacet'],
          'slot_uri': 'uco-observable:httpMesageBodyLength'} })
@@ -5978,7 +5978,7 @@ class ICMPConnectionFacet(Facet):
     An ICMP connection facet is a grouping of characteristics unique to portions of a network connection that are conformant to the Internet Control Message Protocol (ICMP) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ICMPConnectionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     icmpCode: Optional[list[str]] = Field(default=None, description="""Specifies the ICMP code byte.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ICMPConnectionFacet'], 'slot_uri': 'uco-observable:icmpCode'} })
     icmpType: Optional[list[str]] = Field(default=None, description="""Specifies the ICMP type byte.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ICMPConnectionFacet'],
@@ -5996,7 +5996,7 @@ class IComHandlerActionType(UcoInherentCharacterizationThing):
     An IComHandler action type is a grouping of characteristics unique to a Windows Task-related action that fires a Windows COM handler (smart code in the client address space that can optimize calls between a client and server). [based on https://docs.microsoft.com/en-us/windows/win32/taskschd/comhandleraction]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IComHandlerActionType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     comClassID: Optional[str] = Field(default=None, description="""Specifies the ID of the COM action. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa380613(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['IComHandlerActionType'],
          'slot_uri': 'uco-observable:comClassID'} })
@@ -6013,7 +6013,7 @@ class IExecActionType(UcoInherentCharacterizationThing):
     An IExec action type is a grouping of characteristics unique to an action that executes a command-line operation on a Windows operating system. [based on https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nn-taskschd-iexecaction?redirectedfrom=MSDN]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IExecActionType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     execArguments: Optional[str] = Field(default=None, description="""Specifies the arguments associated with the command-line operation launched by the action. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa380715(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['IExecActionType'], 'slot_uri': 'uco-observable:execArguments'} })
     execProgramHashes: Optional[list[Hash]] = Field(default=None, description="""Specifies the hashes of the executable file launched by the action.""", json_schema_extra = { "linkml_meta": {'domain_of': ['IExecActionType'],
@@ -6033,7 +6033,7 @@ class IPAddressFacet(DigitalAddressFacet):
     An IP address facet is a grouping of characteristics unique to an Internet Protocol (IP) standards conformant identifier assigned to a device to enable routing and management of IP standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6055,7 +6055,7 @@ class IPv4AddressFacet(IPAddressFacet):
     An IPv4 (Internet Protocol version 4) address facet is a grouping of characteristics unique to an IPv4 standards conformant identifier assigned to a device to enable routing and management of IPv4 standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPv4AddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6077,7 +6077,7 @@ class IPv6AddressFacet(IPAddressFacet):
     An IPv6 (Internet Protocol version 6) address facet is a grouping of characteristics unique to an IPv6 standards conformant identifier assigned to a device to enable routing and management of IPv6 standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPv6AddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6099,7 +6099,7 @@ class IShowMessageActionType(UcoInherentCharacterizationThing):
     An IShow message action type is a grouping of characteristics unique to an action that shows a message box when a task is activate. [based on https://docs.microsoft.com/en-us/windows/win32/api/taskschd/nn-taskschd-ishowmessageaction?redirectedfrom=MSDN]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IShowMessageActionType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     showMessageBody: Optional[str] = Field(default=None, description="""Specifies the message text that is displayed in the body of the message box by the action. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa381302(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['IShowMessageActionType'],
          'slot_uri': 'uco-observable:showMessageBody'} })
@@ -6117,7 +6117,7 @@ class ImageFacet(Facet):
     An image facet is a grouping of characteristics unique to a complete copy of a hard disk, memory, or other digital media.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ImageFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     imageType: Optional[str] = Field(default=None, description="""The type of the image, e.g. EnCase, RAW or LocalFolder.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ImageFacet'],
          'is_a': 'informalType',
@@ -6134,7 +6134,7 @@ class InstantMessagingAddressFacet(DigitalAddressFacet):
     An instant messaging address facet is a grouping of characteristics unique to an identifier assigned to enable routing and management of instant messaging digital communication.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:InstantMessagingAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6156,7 +6156,7 @@ class LibraryFacet(Facet):
     A library facet is a grouping of characteristics unique to a suite of data and programming code that is used to develop software programs and applications. [based on https://www.techopedia.com/definition/3828/software-library]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:LibraryFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     libraryType: Optional[str] = Field(default=None, description="""Specifies the type of library being characterized.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LibraryFacet'],
          'is_a': 'informalType',
@@ -6173,7 +6173,7 @@ class MACAddressFacet(DigitalAddressFacet):
     A MAC address facet is a grouping of characteristics unique to a media access control standards conformant identifier assigned to a network interface to enable routing and management of communications at the data link layer of a network segment.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MACAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6195,7 +6195,7 @@ class BluetoothAddressFacet(MACAddressFacet):
     A Bluetooth address facet is a grouping of characteristics unique to a Bluetooth standard conformant identifier assigned to a Bluetooth device to enable routing and management of Bluetooth standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BluetoothAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -6217,7 +6217,7 @@ class MemoryFacet(Facet):
     A memory facet is a grouping of characteristics unique to a particular region of temporary information storage (e.g., RAM (random access memory), ROM (read only memory)) on a digital device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MemoryFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     blockType: Optional[Union[MemoryBlockTypeVocab, str]] = Field(default=None, description="""The blockType property specifies the block type of a particular memory object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'MemoryBlockTypeVocab'}, {'range': 'string'}],
          'domain_of': ['MemoryFacet'],
@@ -6242,7 +6242,7 @@ class MessageFacet(Facet):
     A message facet is a grouping of characteristics unique to a discrete unit of electronic communication intended by the source for consumption by some recipient or group of recipients. [based on https://en.wikipedia.org/wiki/Message]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MessageFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -6284,7 +6284,7 @@ class MessageThreadFacet(Facet):
     A message thread facet is a grouping of characteristics unique to a running commentary of electronic messages pertaining to one topic or question.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MessageThreadFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     messageThread: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:messageThread without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MessageThreadFacet'],
          'slot_uri': 'uco-observable:messageThread'} })
@@ -6303,7 +6303,7 @@ class MftRecordFacet(Facet):
     An MFT record facet is a grouping of characteristics unique to the details of a single file as managed in an NTFS (new technology filesystem) master file table (which is a collection of information about all files on an NTFS filesystem). [based on https://docs.microsoft.com/en-us/windows/win32/devnotes/master-file-table]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MftRecordFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     mftFileID: Optional[int] = Field(default=None, description="""Specifies the record number for the file within an NTFS Master File Table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MftRecordFacet'], 'slot_uri': 'uco-observable:mftFileID'} })
     mftFileNameAccessedTime: Optional[datetime ] = Field(default=None, description="""The access date and time recorded in an MFT entry $File_Name attribute.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MftRecordFacet'],
@@ -6336,7 +6336,7 @@ class MimePartType(UcoInherentCharacterizationThing):
     A mime part type is a grouping of characteristics unique to a component of a multi-part email body.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MimePartType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     body: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:body without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EmailMessageFacet', 'MimePartType'],
          'slot_uri': 'uco-observable:body'} })
@@ -6359,7 +6359,7 @@ class MobileAccountFacet(Facet):
     A mobile account facet is a grouping of characteristics unique to an arrangement with an entity to enable and control the provision of some capability or service on a portable computing device. [based on https://www.lexico.com/definition/mobile_device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MobileAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     IMSI: Optional[str] = Field(default=None, description="""An International Mobile Subscriber Identity (IMSI) is a unique identification associated with all GSM and UMTS network mobile phone users. It is stored as a 64-bit field in the SIM inside the phone and is sent by the phone to the network.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MobileAccountFacet', 'SIMCardFacet'],
          'slot_uri': 'uco-observable:IMSI'} })
@@ -6379,7 +6379,7 @@ class MobileDeviceFacet(Facet):
     A mobile device facet is a grouping of characteristics unique to a portable computing device. [based on https://www.lexico.com/definition/mobile_device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MobileDeviceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     ESN: Optional[str] = Field(default=None, description="""Electronic Serial Number .""", json_schema_extra = { "linkml_meta": {'domain_of': ['MobileDeviceFacet'], 'slot_uri': 'uco-observable:ESN'} })
     IMEI: Optional[list[str]] = Field(default=None, description="""International Mobile Equipment Identity (IMEI).""", json_schema_extra = { "linkml_meta": {'domain_of': ['MobileDeviceFacet'], 'slot_uri': 'uco-observable:IMEI'} })
@@ -6407,7 +6407,7 @@ class MutexFacet(Facet):
     A mutex facet is a grouping of characteristics unique to a mechanism that enforces limits on access to a resource when there are many threads of execution. A mutex is designed to enforce a mutual exclusion concurrency control policy, and with a variety of possible methods there exists multiple unique implementations for different applications. [based on https://en.wikipedia.org/wiki/Lock_(computer_science)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MutexFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     isNamed: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:isNamed without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MutexFacet'], 'slot_uri': 'uco-observable:isNamed'} })
     mutexName: Optional[str] = Field(default=None, description="""Specifies the name identifier for a specific instance of a mechanism that enforces limits on access to a resource when there are many threads of execution .""", json_schema_extra = { "linkml_meta": {'domain_of': ['MutexFacet'], 'slot_uri': 'uco-observable:mutexName'} })
@@ -6423,7 +6423,7 @@ class NTFSFileFacet(Facet):
     An NTFS file facet is a grouping of characteristics unique to a file on an NTFS (new technology filesystem) file system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NTFSFileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     alternateDataStreams: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:alternateDataStreams without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['NTFSFileFacet'],
          'slot_uri': 'uco-observable:alternateDataStreams'} })
@@ -6441,7 +6441,7 @@ class NTFSFilePermissionsFacet(Facet):
     An NTFS file permissions facet is a grouping of characteristics unique to the access rights (e.g., view, change, navigate, execute) of a file on an NTFS (new technology filesystem) file system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NTFSFilePermissionsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     type: Literal["https://w3id.org/lmodel/uco/NTFSFilePermissionsFacet","https://ontology.unifiedcyberontology.org/uco/observable/NTFSFilePermissionsFacet","uco_linkml:NTFSFilePermissionsFacet","uco-observable:NTFSFilePermissionsFacet"] = Field(default="uco-observable:NTFSFilePermissionsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -6455,7 +6455,7 @@ class NetworkConnectionFacet(Facet):
     A network connection facet is a grouping of characteristics unique to a connection (complete or attempted) accross a digital network (a group of two or more computer systems linked together). [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkConnectionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     destinationPort: Optional[int] = Field(default=None, description="""Specifies the destination port used in the connection, as an integer in the range of 0 - 65535.""", json_schema_extra = { "linkml_meta": {'domain_of': ['NetworkConnectionFacet'],
          'slot_uri': 'uco-observable:destinationPort'} })
@@ -6493,7 +6493,7 @@ class NetworkFlowFacet(Facet):
     A network flow facet is a grouping of characteristics unique to a sequence of data transiting one or more digital network (a group of two or more computer systems linked together) connections. [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkFlowFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     dstBytes: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:dstBytes without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['NetworkFlowFacet'], 'slot_uri': 'uco-observable:dstBytes'} })
     dstPackets: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:dstPackets without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['NetworkFlowFacet'], 'slot_uri': 'uco-observable:dstPackets'} })
@@ -6514,7 +6514,7 @@ class NetworkInterfaceFacet(Facet):
     A network interface facet is a grouping of characteristics unique to a software or hardware interface between two pieces of equipment or protocol layers in a computer network.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkInterfaceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     adapterName: Optional[str] = Field(default=None, description="""Specifies the name of the network adapter used by the network interface.""", json_schema_extra = { "linkml_meta": {'domain_of': ['NetworkInterfaceFacet'],
          'slot_uri': 'uco-observable:adapterName'} })
@@ -6540,7 +6540,7 @@ class NoteFacet(Facet):
     A note facet is a grouping of characteristics unique to a brief textual record.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NoteFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     application: Optional[str] = Field(default=None, description="""The application associated with this object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ApplicationAccountFacet',
                        'BrowserBookmarkFacet',
@@ -6592,7 +6592,7 @@ class Observable(UcoObject):
     An observable is a characterizable item or action within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Observable',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -6628,7 +6628,7 @@ class ObservableAction(Observable, Action):
     An observable action is a grouping of characteristics unique to something that may be done or performed within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ObservableAction',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['Action']})
 
     actionCount: Optional[int] = Field(default=None, description="""The number of times that the action was performed.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Action', 'ActionLifecycle'],
@@ -6681,7 +6681,7 @@ class ObservableObject(Observable, Item):
     An observable object is a grouping of characteristics unique to a distinct article or unit within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ObservableObject',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['Item']})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
@@ -6720,7 +6720,7 @@ class API(ObservableObject):
     An API (application programming interface) is a computing interface that defines interactions between multiple software or mixed hardware-software intermediaries. It defines the kinds of calls or requests that can be made, how to make them, the data formats that should be used, the conventions to follow, etc. [based on https://en.wikipedia.org/wiki/API]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:API',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6758,7 +6758,7 @@ class ARPCache(ObservableObject):
     An ARP cache is a collection of Address Resolution Protocol (ARP) entries (mostly dynamic) that are created when an IP address is resolved to a MAC address (so the computer can effectively communicate with the IP address). [based on https://en.wikipedia.org/wiki/ARP_cache]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ARPCache',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6796,7 +6796,7 @@ class ARPCacheEntry(ObservableObject):
     An ARP cache entry is a single Address Resolution Protocol (ARP) response record that is created when an IP address is resolved to a MAC address (so the computer can effectively communicate with the IP address). [based on https://en.wikipedia.org/wiki/ARP_cache]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ARPCacheEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6834,7 +6834,7 @@ class Account(ObservableObject):
     An account is an arrangement with an entity to enable and control the provision of some capability or service.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Account',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6872,7 +6872,7 @@ class Address(ObservableObject):
     An address is an identifier assigned to enable routing and management of information.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Address',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6910,7 +6910,7 @@ class AlternateDataStream(ObservableObject):
     An alternate data stream is data content stored within an NTFS file that is independent of the standard content stream of the file and is hidden from access by default NTFS file viewing mechanisms.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AlternateDataStream',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6948,7 +6948,7 @@ class Application(ObservableObject):
     An application is a particular software program designed for end users.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Application',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -6986,7 +6986,7 @@ class Audio(ObservableObject):
     Audio is a digital representation of sound.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Audio',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7024,7 +7024,7 @@ class AutonomousSystem(ObservableObject):
     An autonomous system is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet. [based on https://en.wikipedia.org/wiki/Autonomous_system_(Internet)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AutonomousSystem',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7062,7 +7062,7 @@ class BotConfiguration(ObservableObject):
     A bot configuration is a set of contextual settings for a software application that runs automated tasks (scripts) over the Internet at a much higher rate than would be possible for a human alone.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BotConfiguration',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7100,7 +7100,7 @@ class BrowserBookmark(ObservableObject):
     A browser bookmark is a saved shortcut that directs a WWW (World Wide Web) browser software program to a particular WWW accessible resource. [based on https://techterms.com/definition/bookmark]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BrowserBookmark',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7138,7 +7138,7 @@ class BrowserCookie(ObservableObject):
     A browser cookie is a piece of of data sent from a website and stored on the user's computer by the user's web browser while the user is browsing. [based on https://en.wikipedia.org/wiki/HTTP_cookie]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BrowserCookie',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7176,7 +7176,7 @@ class Calendar(ObservableObject):
     A calendar is a collection of appointments, meetings, and events.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Calendar',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7214,7 +7214,7 @@ class CalendarEntry(ObservableObject):
     A calendar entry is an appointment, meeting or event within a collection of appointments, meetings and events.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CalendarEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7252,7 +7252,7 @@ class Call(ObservableObject):
     A call is a connection as part of a realtime cyber communication between one or more parties.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Call',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7290,7 +7290,7 @@ class CapturedTelecommunicationsInformation(ObservableObject):
     UCO 1.5.0 declares the class uco-observable:CapturedTelecommunicationsInformation without a definition.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CapturedTelecommunicationsInformation',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7328,7 +7328,7 @@ class CellSite(ObservableObject):
     UCO 1.5.0 declares the class uco-observable:CellSite without a definition.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CellSite',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7366,7 +7366,7 @@ class Code(ObservableObject):
     Code is a direct representation (source, byte or binary) of a collection of computer instructions that form software which tell a computer how to work. [based on https://en.wikipedia.org/wiki/Software]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Code',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7404,7 +7404,7 @@ class ComputerSpecification(ObservableObject):
     A computer specification is the hardware and software of a programmable electronic device that can store, retrieve, and process data. {based on merriam-webster.com/dictionary/computer]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ComputerSpecification',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7442,7 +7442,7 @@ class Contact(ObservableObject):
     A contact is a set of identification and communication related details for a single entity.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Contact',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7480,7 +7480,7 @@ class ContactList(ObservableObject):
     A contact list is a set of multiple individual contacts such as that found in a digital address book.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContactList',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7518,7 +7518,7 @@ class ContentData(ObservableObject):
     Content data is a block of digital data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ContentData',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7556,7 +7556,7 @@ class CookieHistory(ObservableObject):
     A cookie history is the stored web cookie history for a particular web browser.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CookieHistory',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7594,7 +7594,7 @@ class Credential(ObservableObject):
     A credential is a single specific login and password combination for authorization of access to a digital account or system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Credential',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7632,7 +7632,7 @@ class CredentialDump(ObservableObject):
     A credential dump is a collection (typically forcibly extracted from a system) of specific login and password combinations for authorization of access to a digital account or system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CredentialDump',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7670,7 +7670,7 @@ class DNSCache(ObservableObject):
     An DNS cache is a temporary locally stored collection of previous Domain Name System (DNS) query results (created when an domain name is resolved to a IP address) for a particular computer.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DNSCache',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7708,7 +7708,7 @@ class DNSRecord(ObservableObject):
     A DNS record is a single Domain Name System (DNS) artifact specifying information of a particular type (routing, authority, responsibility, security, etc.) for a specific Internet domain name.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DNSRecord',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7746,7 +7746,7 @@ class Device(ObservableObject):
     A device is a piece of equipment or a mechanism designed to serve a special purpose or perform a special function. [based on https://www.merriam-webster.com/dictionary/device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Device',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7784,7 +7784,7 @@ class Adaptor(Device):
     An adaptor is a device that physically converts the pin outputs but does not alter the underlying protocol (e.g. uSD to SD, CF to ATA, etc.)
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Adaptor',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7822,7 +7822,7 @@ class AndroidDevice(Device):
     An Android device is a device running the Android operating system. [based on https://en.wikipedia.org/wiki/Android_(operating_system)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AndroidDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7860,7 +7860,7 @@ class AppleDevice(Device):
     An apple device is a smart device that applies either the MacOS or iOS operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AppleDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7898,7 +7898,7 @@ class Appliance(Device):
     An appliance is a purpose-built computer with software or firmware that is designed to provide a specific computing capability or resource. [based on https://en.wikipedia.org/wiki/Computer_appliance]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Appliance',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7936,7 +7936,7 @@ class Computer(Device):
     A computer is an electronic device for storing and processing data, typically in binary, according to instructions given to it in a variable program. [based on 'Computer.' Oxford English Dictionary, Oxford University Press, 2022.]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Computer',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -7974,7 +7974,7 @@ class DigitalAccount(Account):
     A digital account is an arrangement with an entity to enable and control the provision of some capability or service within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8012,7 +8012,7 @@ class ApplicationAccount(DigitalAccount):
     An application account is an account within a particular software program designed for end users.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ApplicationAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8050,7 +8050,7 @@ class DigitalAddress(Address):
     A digital address is an identifier assigned to enable routing and management of digital communication.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8088,7 +8088,7 @@ class DigitalCamera(Device):
     A digital camera is a camera that captures photographs in digital memory as opposed to capturing images on photographic film.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalCamera',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8126,7 +8126,7 @@ class DigitalSignatureInfo(ObservableObject):
     A digital signature info is a value calculated via a mathematical scheme for demonstrating the authenticity of an electronic message or document.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DigitalSignatureInfo',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8164,7 +8164,7 @@ class Disk(ObservableObject):
     A disk is a storage mechanism where data is recorded by various electronic, magnetic, optical, or mechanical changes to a surface layer of one or more rotating disks.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Disk',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8202,7 +8202,7 @@ class DiskPartition(ObservableObject):
     A disk partition is a particular managed region on a storage mechanism where data is recorded by various electronic, magnetic, optical, or mechanical changes to a surface layer of one or more rotating disks. [based on https://en.wikipedia.org/wiki/Disk_storage]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DiskPartition',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8240,7 +8240,7 @@ class DomainName(ObservableObject):
     A domain name is an identification string that defines a realm of administrative autonomy, authority or control within the Internet. [based on https://en.wikipedia.org/wiki/Domain_name]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:DomainName',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8278,7 +8278,7 @@ class EmailAccount(DigitalAccount):
     An email account is an arrangement with an entity to enable and control the provision of electronic mail (email) capabilities or services.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8316,7 +8316,7 @@ class EmailAddress(DigitalAddress):
     An email address is an identifier for an electronic mailbox to which electronic mail messages (conformant to the Simple Mail Transfer Protocol (SMTP)) are sent from and delivered to.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8354,7 +8354,7 @@ class EmbeddedDevice(Device):
     An embedded device is a highly specialized microprocessor device meant for one or very few specific purposes and is usually embedded or included within another object or as part of a larger system. Examples include answer machine, door access logger, card scanner, etc.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmbeddedDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8392,7 +8392,7 @@ class EventLog(ObservableObject):
     An event log is a collection of event records.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EventLog',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8430,7 +8430,7 @@ class EventRecord(ObservableObject):
     An event record is something that happens in a digital context (e.g., operating system events).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EventRecord',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8468,7 +8468,7 @@ class FileSystem(ObservableObject):
     A file system is the process that manages how and where data on a storage medium is stored, accessed and managed. [based on https://www.techopedia.com/definition/5510/file-system]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FileSystem',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8506,7 +8506,7 @@ class FileSystemObject(ObservableObject):
     A file system object is an informational object represented and managed within a file system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:FileSystemObject',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8544,7 +8544,7 @@ class BlockDeviceNode(FileSystemObject):
     A block device node is a UNIX filesystem special file that serves as a conduit to communicate with devices, providing buffered randomly accesible input and output. Block device nodes are used to apply access rights to the devices and to direct operations on the files to the appropriate device drivers. [based on https://en.wikipedia.org/wiki/Unix_file_types]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BlockDeviceNode',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8582,7 +8582,7 @@ class CharacterDeviceNode(FileSystemObject):
     A character device node is a UNIX filesystem special file that serves as a conduit to communicate with devices, providing only a serial stream of input or accepting a serial stream of output. Character device nodes are used to apply access rights to the devices and to direct operations on the files to the appropriate device drivers. [based on https://en.wikipedia.org/wiki/Unix_file_types]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:CharacterDeviceNode',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8620,7 +8620,7 @@ class Directory(FileSystemObject):
     A directory is a file system cataloging structure which contains references to other computer files, and possibly other directories. On many computers, directories are known as folders, or drawers, analogous to a workbench or the traditional office filing cabinet. In UNIX a directory is implemented as a special file. [based on https://en.wikipedia.org/wiki/Directory_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Directory',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8659,7 +8659,7 @@ class File(FileSystemObject):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:File',
          'disjoint_with': ['URL'],
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8697,7 +8697,7 @@ class ArchiveFile(File):
     An archive file is a file that is composed of one or more computer files along with metadata.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ArchiveFile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8735,7 +8735,7 @@ class GUI(ObservableObject):
     A GUI is a graphical user interface that allows users to interact with electronic devices through graphical icons and audio indicators such as primary notation, instead of text-based user interfaces, typed command labels or text navigation. [based on https://en.wikipedia.org/wiki/Graphical_user_interface]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GUI',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8773,7 +8773,7 @@ class GamingConsole(Device):
     A gaming console (video game console or game console) is an electronic system that connects to a display, typically a TV or computer monitor, for the primary purpose of playing video games.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GamingConsole',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8811,7 +8811,7 @@ class GenericObservableObject(ObservableObject):
     A generic observable object is an article or unit within the digital domain.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GenericObservableObject',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8849,7 +8849,7 @@ class GeoLocationEntry(ObservableObject):
     A geolocation entry is a single application-specific geolocation entry.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8887,7 +8887,7 @@ class GeoLocationLog(ObservableObject):
     A geolocation log is a record containing geolocation tracks and/or geolocation entries.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationLog',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8925,7 +8925,7 @@ class GeoLocationTrack(ObservableObject):
     A geolocation track is a set of contiguous geolocation entries representing a path/track taken.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:GeoLocationTrack',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -8963,7 +8963,7 @@ class Hostname(ObservableObject):
     A hostname is a label that is assigned to a device connected to a computer network and that is used to identify the device in various forms of electronic communication, such as the World Wide Web. A hostname may be a domain name, if it is properly organized into the domain name system. A domain name may be a hostname if it has been assigned to an Internet host and associated with the host's IP address. [based on https://en.wikipedia.org/wiki/Hostname]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Hostname',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9001,7 +9001,7 @@ class IPAddress(DigitalAddress):
     An IP address is an Internet Protocol (IP) standards conformant identifier assigned to a device to enable routing and management of IP standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9039,7 +9039,7 @@ class IPNetmask(ObservableObject):
     An IP netmask is a 32-bit 'mask' used to divide an IP address into subnets and specify the network's available hosts.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPNetmask',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9077,7 +9077,7 @@ class IPv4Address(IPAddress):
     An IPv4 (Internet Protocol version 4) address is an IPv4 standards conformant identifier assigned to a device to enable routing and management of IPv4 standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPv4Address',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9115,7 +9115,7 @@ class IPv6Address(IPAddress):
     An IPv6 (Internet Protocol version 6) address is an IPv6 standards conformant identifier assigned to a device to enable routing and management of IPv6 standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPv6Address',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9153,7 +9153,7 @@ class Image(ObservableObject):
     An image is a complete copy of a hard disk, memory, or other digital media.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Image',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9191,7 +9191,7 @@ class InstantMessagingAddress(DigitalAddress):
     UCO 1.5.0 declares the class uco-observable:InstantMessagingAddress without a definition.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:InstantMessagingAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9229,7 +9229,7 @@ class Junction(FileSystemObject):
     A junction is a specific NTFS (New Technology File System) reparse point to redirect a directory access to another directory which can be on the same volume or another volume. A junction is similar to a directory symbolic link but may differ on whether they are processed on the local system or on the remote file server. [based on https://jp-andre.pagesperso-orange.fr/junctions.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Junction',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9267,7 +9267,7 @@ class Laptop(Computer):
     A laptop, laptop computer, or notebook computer is a small, portable personal computer with a screen and alphanumeric keyboard. These typically have a clam shell form factor with the screen mounted on the inside of the upper lid and the keyboard on the inside of the lower lid, although 2-in-1 PCs with a detachable keyboard are often marketed as laptops or as having a laptop mode. (Devices categorized by their manufacturer as a Laptop)
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Laptop',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9305,7 +9305,7 @@ class Library(ObservableObject):
     A library is a suite of data and programming code that is used to develop software programs and applications. [based on https://www.techopedia.com/definition/3828/software-library]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Library',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9343,7 +9343,7 @@ class MACAddress(DigitalAddress):
     A MAC address is a media access control standards conformant identifier assigned to a network interface to enable routing and management of communications at the data link layer of a network segment.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MACAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9381,7 +9381,7 @@ class BluetoothAddress(MACAddress):
     A Bluetooth address is a Bluetooth standard conformant identifier assigned to a Bluetooth device to enable routing and management of Bluetooth standards conformant communication to or from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BluetoothAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9419,7 +9419,7 @@ class Memory(ObservableObject):
     Memory is a particular region of temporary information storage (e.g., RAM (random access memory), ROM (read only memory)) on a digital device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Memory',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9457,7 +9457,7 @@ class Message(ObservableObject):
     A message is a discrete unit of electronic communication intended by the source for consumption by some recipient or group of recipients. [based on https://en.wikipedia.org/wiki/Message]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Message',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9495,7 +9495,7 @@ class EmailMessage(Message):
     An email message is a message that is an instance of an electronic mail correspondence conformant to the internet message format described in RFC 5322 and related RFCs.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:EmailMessage',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9533,7 +9533,7 @@ class ForumPost(Message):
     A forum post is message submitted by a user account to an online forum where the message content (and typically metadata including who posted it and when) is viewable by any party with viewing permissions on the forum.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ForumPost',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9571,7 +9571,7 @@ class ForumPrivateMessage(Message):
     A forum private message (aka PM or DM (direct message)) is a one-to-one message from one specific user account to another specific user account on an online form where transmission is managed by the online forum platform and the message is only viewable by the parties directly involved.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ForumPrivateMessage',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9609,7 +9609,7 @@ class MessageThread(ObservableObject):
     A message thread is a running commentary of electronic messages pertaining to one topic or question.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MessageThread',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9647,7 +9647,7 @@ class MobileAccount(DigitalAccount):
     A mobile account is an arrangement with an entity to enable and control the provision of some capability or service on a portable computing device. [based on https://www.lexico.com/definition/mobile_device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MobileAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9685,7 +9685,7 @@ class MobileDevice(Device):
     A mobile device is a portable computing device. [based on https://www.lexico.com.definition/mobile_device]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MobileDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9723,7 +9723,7 @@ class Drone(MobileDevice):
     A drone, unmanned aerial vehicle (UAV), is an aircraft without a human pilot, crew, or passengers that typically involve a ground-based controller and a system for communications with the UAV.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Drone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9761,7 +9761,7 @@ class MobilePhone(MobileDevice):
     A mobile phone is a portable telephone that at least can make and receive calls over a radio frequency link while the user is moving within a telephone service area. This category encompasses all types of mobiles, simple and smart and satellite ones all together.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:MobilePhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9799,7 +9799,7 @@ class Mutex(ObservableObject):
     A mutex is a mechanism that enforces limits on access to a resource when there are many threads of execution. A mutex is designed to enforce a mutual exclusion concurrency control policy, and with a variety of possible methods there exists multiple unique implementations for different applications. [based on https://en.wikipedia.org/wiki/Lock_(computer_science)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Mutex',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9837,7 +9837,7 @@ class NTFSFile(File):
     An NTFS file is a New Technology File System (NTFS) file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NTFSFile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9875,7 +9875,7 @@ class NamedPipe(FileSystemObject):
     A named pipe is a mechanism for FIFO (first-in-first-out) inter-process communication. It is persisted as a filesystem object (that can be deleted like any other file), can be written to or read from by any process and exists beyond the lifespan of any process interacting with it (unlike simple anonymous pipes). [based on https://en.wikipedia.org/wiki/Named_pipe]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NamedPipe',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9913,7 +9913,7 @@ class NetworkAppliance(Appliance):
     A network appliance is a purpose-built computer with software or firmware that is designed to provide a specific network management function.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkAppliance',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9951,7 +9951,7 @@ class NetworkConnection(ObservableObject):
     A network connection is a connection (completed or attempted) across a digital network (a group of two or more computer systems linked together). [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkConnection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -9989,7 +9989,7 @@ class HTTPConnection(NetworkConnection):
     An HTTP connection is network connection that is conformant to the Hypertext Transfer Protocol (HTTP) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:HTTPConnection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10027,7 +10027,7 @@ class ICMPConnection(NetworkConnection):
     An ICMP connection is a network connection that is conformant to the Internet Control Message Protocol (ICMP) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ICMPConnection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10065,7 +10065,7 @@ class NetworkFlow(ObservableObject):
     A network flow is a sequence of data transiting one or more digital network (a group or two or more computer systems linked together) connections. [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkFlow',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10103,7 +10103,7 @@ class NetworkInterface(ObservableObject):
     A network interface is a software or hardware interface between two pieces of equipment or protocol layers in a computer network.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkInterface',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10141,7 +10141,7 @@ class NetworkProtocol(ObservableObject):
     A network protocol is an established set of structured rules that determine how data is transmitted between different devices in the same network. Essentially, it allows connected devices to communicate with each other, regardless of any differences in their internal processes, structure or design. [based on https://www.comptia.org/content/guides/what-is-a-network-protocol]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkProtocol',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10179,7 +10179,7 @@ class NetworkRoute(ObservableObject):
     A network route is a specific path (of specific network nodes, connections and protocols) for traffic in a network or between or across multiple networks.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkRoute',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10217,7 +10217,7 @@ class NetworkSubnet(ObservableObject):
     A network subnet is a logical subdivision of an IP network. [based on https://en.wikipedia.org/wiki/Subnetwork]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:NetworkSubnet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10255,7 +10255,7 @@ class Note(ObservableObject):
     A note is a brief textual record.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Note',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10293,7 +10293,7 @@ class ObservablePattern(Observable):
     An observable pattern is a grouping of characteristics unique to a logical pattern composed of observable object and observable action properties.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ObservablePattern',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     id: str = Field(default=..., description="""The IRI of the thing, written as a CURIE or in full. A reference to it from any slot is this IRI.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the IRI as @id; UCO has no property for "
                       "it, so the key lives in this schema's own namespace."],
@@ -10329,7 +10329,7 @@ class ObservableRelationship(Observable, Relationship):
     An observable relationship is a grouping of characteristics unique to an assertion of an association between two observable objects.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ObservableRelationship',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['Relationship']})
 
     endTime: Optional[list[datetime ]] = Field(default=None, description="""The ending time of a time range.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Event', 'Relationship'], 'slot_uri': 'uco-core:endTime'} })
@@ -10372,7 +10372,7 @@ class Observation(Action):
     An observation is a temporal perception of an observable.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Observation',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'name': {'equals_string': 'observe',
                                  'name': 'name',
                                  'required': True}}})
@@ -10428,7 +10428,7 @@ class OnlineService(ObservableObject):
     An online service is a particular provision mechanism of information access, distribution or manipulation over the Internet.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:OnlineService',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10466,7 +10466,7 @@ class OnlineServiceFacet(Facet):
     An online service facet is a grouping of characteristics unique to a particular provision mechanism of information access, distribution or manipulation over the Internet.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:OnlineServiceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'observable_location': {'multivalued': True,
                                                 'name': 'observable_location'}}})
 
@@ -10496,7 +10496,7 @@ class OperatingSystem(ObservableObject):
     An operating system is the software that manages computer hardware, software resources, and provides common services for computer programs. [based on https://en.wikipedia.org/wiki/Operating_system]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:OperatingSystem',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10534,7 +10534,7 @@ class OperatingSystemFacet(Facet):
     An operating system facet is a grouping of characteristics unique to the software that manages computer hardware, software resources, and provides common services for computer programs. [based on https://en.wikipedia.org/wiki/Operating_system]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:OperatingSystemFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     advertisingID: Optional[list[str]] = Field(default=None, description="""Advertising ID as a UUID. [based on https://developer.android.com/reference/androidx/ads/identifier/AdvertisingIdInfo]""", json_schema_extra = { "linkml_meta": {'domain_of': ['OperatingSystemFacet'],
          'slot_uri': 'uco-observable:advertisingID'} })
@@ -10567,7 +10567,7 @@ class PDFFile(File):
     A PDF file is a Portable Document Format (PDF) file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PDFFile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10605,7 +10605,7 @@ class PDFFileFacet(Facet):
     A PDF file facet is a grouping of characteristics unique to a PDF (Portable Document Format) file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PDFFileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     documentInformationDictionary: Optional[ControlledDictionary] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:documentInformationDictionary without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PDFFileFacet'],
          'slot_uri': 'uco-observable:documentInformationDictionary'} })
@@ -10634,7 +10634,7 @@ class PathRelationFacet(Facet):
     A path relation facet is a grouping of characteristics unique to the location of one object within another containing object.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PathRelationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'path': {'multivalued': True, 'name': 'path'}}})
 
     path: Optional[list[str]] = Field(default=None, description="""Specifies the location of one object within another containing object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PathRelationFacet', 'URLFacet'],
@@ -10651,7 +10651,7 @@ class PaymentCard(ObservableObject):
     A payment card is a physical token that is part of a payment system issued by financial institutions, such as a bank, to a customer that enables its owner (the cardholder) to access the funds in the customer's designated bank accounts, or through a credit account and make payments by electronic funds transfer and access automated teller machines (ATMs). [based on https://en.wikipedia.org/wiki/Payment_card]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PaymentCard',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10689,7 +10689,7 @@ class PhoneAccount(DigitalAccount):
     A phone account is an arrangement with an entity to enable and control the provision of a telephony capability or service.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PhoneAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10727,7 +10727,7 @@ class PhoneAccountFacet(Facet):
     A phone account facet is a grouping of characteristics unique to an arrangement with an entity to enable and control the provision of a telephony capability or service.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PhoneAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     phoneNumber: Optional[str] = Field(default=None, description="""A phone number(account).""", json_schema_extra = { "linkml_meta": {'domain_of': ['PhoneAccountFacet'], 'slot_uri': 'uco-observable:phoneNumber'} })
     type: Literal["https://w3id.org/lmodel/uco/PhoneAccountFacet","https://ontology.unifiedcyberontology.org/uco/observable/PhoneAccountFacet","uco_linkml:PhoneAccountFacet","uco-observable:PhoneAccountFacet"] = Field(default="uco-observable:PhoneAccountFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -10742,7 +10742,7 @@ class Pipe(ObservableObject):
     A pipe is a mechanism for one-way inter-process communication using message passing where data written by one process is buffered by the operating system until it is read by the next process, and this uni-directional channel disappears when the processes are completed. [based on https://en.wikipedia.org/wiki/Pipeline_(Unix) ; https://en.wikipedia.org/wiki/Anonymous_pipe]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Pipe',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10780,7 +10780,7 @@ class Post(Message):
     A post is message submitted to an online discussion/publishing site (forum, blog, etc.).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Post',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10818,7 +10818,7 @@ class Process(ObservableObject):
     A process is an instance of a computer program executed on an operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Process',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10856,7 +10856,7 @@ class ProcessFacet(Facet):
     A process facet is a grouping of characteristics unique to an instance of a computer program executed on an operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ProcessFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     arguments: Optional[list[str]] = Field(default=None, description="""A list of arguments utilized in initiating the process.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProcessFacet'], 'slot_uri': 'uco-observable:arguments'} })
     binary: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:binary without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ProcessFacet'], 'slot_uri': 'uco-observable:binary'} })
@@ -10898,7 +10898,7 @@ class ProcessThread(ObservableObject):
     A process thread is the smallest sequence of programmed instructions that can be managed independently by a scheduler on a computer, which is typically a part of the operating system. It is a component of a process. Multiple threads can exist within one process, executing concurrently and sharing resources such as memory, while different processes do not share these resources. In particular, the threads of a process share its executable code and the values of its dynamically allocated variables and non-thread-local global variables at any given time. [based on https://en.wikipedia.org/wiki/Thread_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ProcessThread',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10936,7 +10936,7 @@ class Profile(ObservableObject):
     A profile is an explicit digital representation of identity and characteristics of the owner of a single user account associated with an online service or application. [based on https://en.wikipedia.org/wiki/User_profile]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Profile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -10974,7 +10974,7 @@ class ProfileFacet(Facet):
     A profile facet is a grouping of characteristics unique to an explicit digital representation of identity and characteristics of the owner of a single user account associated with an online service or application. [based on https://en.wikipedia.org/wiki/User_profile]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ProfileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactAddress: Optional[ContactAddress] = Field(default=None, description="""Contact address specifies information characterizing a geolocation address of a contact entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactFacet', 'ProfileFacet'],
          'slot_uri': 'uco-observable:contactAddress'} })
@@ -11019,7 +11019,7 @@ class PropertiesEnumeratedEffectFacet(DefinedEffectFacet):
     A properties enumerated effect facet is a grouping of characteristics unique to the effects of actions upon observable objects where a characteristic of the observable object is enumerated. An example of this would be startup parameters for a process.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PropertiesEnumeratedEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     properties: Optional[str] = Field(default=None, description="""Specifies the properties that were enumerated as a result of the action on the observable object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['PropertiesEnumeratedEffectFacet'],
          'slot_uri': 'uco-observable:properties'} })
@@ -11035,7 +11035,7 @@ class PropertyReadEffectFacet(DefinedEffectFacet):
     A properties read effect facet is a grouping of characteristics unique to the effects of actions upon observable objects where a characteristic is read from an observable object. An example of this would be the current running state of a process.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:PropertyReadEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     observable_value: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:value without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DomainNameFacet',
                        'EnvironmentVariable',
@@ -11055,7 +11055,7 @@ class ProtocolConverter(Device):
     A protocol converter is a device that converts from one protocol to another (e.g. SD to USB, SATA to USB, etc.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ProtocolConverter',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11093,7 +11093,7 @@ class RasterPicture(File):
     A raster picture is a raster (or bitmap) image.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:RasterPicture',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11131,7 +11131,7 @@ class RasterPictureFacet(Facet):
     A raster picture facet is a grouping of characteristics unique to a raster (or bitmap) image.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:RasterPictureFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     bitsPerPixel: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:bitsPerPixel without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RasterPictureFacet'], 'slot_uri': 'uco-observable:bitsPerPixel'} })
     camera: Optional[str] = Field(default=None, description="""The name/make of the camera that was used for taking the picture.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RasterPictureFacet'], 'slot_uri': 'uco-observable:camera'} })
@@ -11155,7 +11155,7 @@ class RecoveredObject(ObservableObject):
     An observable object that was the result of a recovery operation.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:RecoveredObject',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11193,7 +11193,7 @@ class RecoveredObjectFacet(Facet):
     Recoverability status of name, metadata, and content.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:RecoveredObjectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contentRecoveredStatus: Optional[Union[RecoveredObjectStatusVocab, str]] = Field(default=None, description="""Specifies the recoverability status of the content of an object.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'RecoveredObjectStatusVocab'}, {'range': 'string'}],
          'domain_of': ['RecoveredObjectFacet'],
@@ -11216,7 +11216,7 @@ class ReparsePoint(FileSystemObject):
     A reparse point is a type of NTFS (New Technology File System) object which is an optional attribute of files and directories meant to define some sort of preprocessing before accessing the said file or directory. For instance reparse points can be used to redirect access to files which have been moved to long term storage so that some application would retrieve them and make them directly accessible. A reparse point contains a reparse tag and data that are interpreted by a filesystem filter identified by the tag. [based on https://jp-andre.pagesperso-orange.fr/junctions.html ; https://en.wikipedia.org/wiki/NTFS_reparse_point]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ReparsePoint',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11254,7 +11254,7 @@ class SIMCard(Device):
     A SIM card is a subscriber identification module card intended to securely store the international mobile subscriber identity (IMSI) number and its related key, which are used to identify and authenticate subscribers on mobile telephony. [based on https://en.wikipedia.org/wiki/SIM_card]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SIMCard',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11292,7 +11292,7 @@ class SIMCardFacet(Facet):
     A SIM card facet is a grouping of characteristics unique to a subscriber identification module card intended to securely store the international mobile subscriber identity (IMSI) number and its related key, which are used to identify and authenticate subscribers on mobile telephony devices (such as mobile phones and computers). [based on https://en.wikipedia.org/wiki/SIM_card]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SIMCardFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     ICCID: Optional[str] = Field(default=None, description="""Integrated circuit card identifier (http://www.itu.int/).""", json_schema_extra = { "linkml_meta": {'domain_of': ['SIMCardFacet'], 'slot_uri': 'uco-observable:ICCID'} })
     IMSI: Optional[str] = Field(default=None, description="""An International Mobile Subscriber Identity (IMSI) is a unique identification associated with all GSM and UMTS network mobile phone users. It is stored as a 64-bit field in the SIM inside the phone and is sent by the phone to the network.""", json_schema_extra = { "linkml_meta": {'domain_of': ['MobileAccountFacet', 'SIMCardFacet'],
@@ -11316,7 +11316,7 @@ class SIPAddress(DigitalAddress):
     A SIP address is an identifier for Session Initiation Protocol (SIP) communication.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SIPAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11354,7 +11354,7 @@ class SIPAddressFacet(DigitalAddressFacet):
     A SIP address facet is a grouping of characteristics unique to a Session Initiation Protocol (SIP) standards conformant identifier assigned to a user to enable routing and management of SIP standards conformant communication to or from that user loosely coupled from any particular devices.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SIPAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -11376,7 +11376,7 @@ class SMSMessage(Message):
     An SMS message is a message conformant to the short message service (SMS) communication protocol standards.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SMSMessage',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11414,7 +11414,7 @@ class SMSMessageFacet(Facet):
     A SMS message facet is a grouping of characteristics unique to a message conformant to the short message service (SMS) communication protocol standards.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SMSMessageFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     isRead: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:isRead without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['EmailMessageFacet', 'SMSMessageFacet'],
          'slot_uri': 'uco-observable:isRead'} })
@@ -11430,7 +11430,7 @@ class SQLiteBlob(ObservableObject):
     An SQLite blob is a blob (binary large object) of data within an SQLite database. [based on https://en.wikipedia.org/wiki/SQLite]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SQLiteBlob',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11468,7 +11468,7 @@ class SQLiteBlobFacet(Facet):
     An SQLite blob facet is a grouping of characteristics unique to a blob (binary large object) of data within an SQLite database. [based on https://en.wikipedia.org/wiki/SQLite]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SQLiteBlobFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     columnName: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:columnName without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SQLiteBlobFacet'], 'slot_uri': 'uco-observable:columnName'} })
     rowCondition: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:rowCondition without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SQLiteBlobFacet'], 'slot_uri': 'uco-observable:rowCondition'} })
@@ -11487,7 +11487,7 @@ class SecurityAppliance(Appliance):
     A security appliance is a purpose-built computer with software or firmware that is designed to provide a specific security function to protect computer networks.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SecurityAppliance',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11525,7 +11525,7 @@ class Semaphore(ObservableObject):
     A semaphore is a variable or abstract data type used to control access to a common resource by multiple processes and avoid critical section problems in a concurrent system such as a multitasking operating system. [based on https://en.wikipedia.org/wiki/Semaphore_(programming)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Semaphore',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11563,7 +11563,7 @@ class SendControlCodeEffectFacet(DefinedEffectFacet):
     A send control code effect facet is a grouping of characteristics unique to the effects of actions upon observable objects where a control code, or other control-oriented communication signal, is sent to the observable object. An example of this would be an action sending a control code changing the running state of a process.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SendControlCodeEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     controlCode: Optional[str] = Field(default=None, description="""Specifies the actual control code that was sent to the observable object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SendControlCodeEffectFacet'],
          'slot_uri': 'uco-observable:controlCode'} })
@@ -11579,7 +11579,7 @@ class Server(Computer):
     A server is a server rack-mount based computer, minicomputer, supercomputer, etc.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Server',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11617,7 +11617,7 @@ class ShopListing(ObservableObject):
     A shop listing is a listing of offered products on an online marketplace/shop.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ShopListing',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11655,7 +11655,7 @@ class SmartDevice(Device):
     A smart device is a microprocessor IoT device that is expected to be connected directly to cloud-based networks or via smartphone
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SmartDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11693,7 +11693,7 @@ class SmartPhone(SmartDevice, MobilePhone, Computer):
     A smartphone is a portable device that combines mobile telephone and computing functions into one unit. Examples include iPhone, Samsung Galaxy, Huawei, Blackberry. (Inferred by model and OperatingSystemFacet)
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SmartPhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['Computer', 'SmartDevice']})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
@@ -11732,7 +11732,7 @@ class AndroidPhone(SmartPhone, AndroidDevice):
     An android phone is a smart phone that applies the Android mobile operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:AndroidPhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['AndroidDevice']})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
@@ -11771,7 +11771,7 @@ class BlackberryPhone(SmartPhone):
     A blackberry phone is a smart phone that applies the Blackberry OS mobile operating system. (Blackberry 10 re-introduces Blackberry OS, prior to that the OS was Android.)
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:BlackberryPhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11809,7 +11809,7 @@ class IPhone(SmartPhone, AppleDevice):
     An iPhone is a smart phone that applies the iOS mobile operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:IPhone',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['AppleDevice']})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
@@ -11848,7 +11848,7 @@ class Snapshot(FileSystemObject):
     A snapshot is a file system object representing a snapshot of the contents of a part of a file system at a point in time.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Snapshot',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11886,7 +11886,7 @@ class Socket(FileSystemObject):
     A socket is a special file used for inter-process communication, which enables communication between two processes. In addition to sending data, processes can send file descriptors across a Unix domain socket connection using the sendmsg() and recvmsg() system calls. Unlike named pipes which allow only unidirectional data flow, sockets are fully duplex-capable. [based on https://en.wikipedia.org/wiki/Unix_file_types]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Socket',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11924,7 +11924,7 @@ class SocketAddress(Address):
     A socket address (combining and IP address and a port number) is a composite identifier for a network socket endpoint supporting internet protocol communications.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SocketAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -11962,7 +11962,7 @@ class Software(ObservableObject):
     Software is a definitely scoped instance of a collection of data or computer instructions that tell the computer how to work. [based on https://en.wikipedia.org/wiki/Software]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Software',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12000,7 +12000,7 @@ class ConfiguredSoftware(Software):
     A ConfiguredSoftware is a Software that is known to be configured to run in a more specified manner than some unconfigured or less-configured Software.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ConfiguredSoftware',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'isConfigurationOf': {'name': 'isConfigurationOf',
                                               'range': 'Software'}}})
 
@@ -12045,7 +12045,7 @@ class SoftwareFacet(Facet):
     A software facet is a grouping of characteristics unique to a software program (a definitively scoped instance of a collection of data or computer instructions that tell the computer how to work). [based on https://en.wikipedia.org/wiki/Software]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SoftwareFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     language: Optional[str] = Field(default=None, description="""Specifies the language the string is written in, e.g. English. For consistency, it is strongly recommended to use the ISO 639-2 language code, if available. Please see http://www.loc.gov/standards/iso639-2/php/code_list.php for a list of ISO 639-2 codes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExtractedString', 'SoftwareFacet'],
          'slot_uri': 'uco-observable:language'} })
@@ -12074,7 +12074,7 @@ class StateChangeEffectFacet(DefinedEffectFacet):
     A state change effect facet is a grouping of characteristics unique to the effects of actions upon observable objects where a state of the observable object is changed.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:StateChangeEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     newObject: Optional[str] = Field(default=None, description="""Specifies the observable object and its properties as they are after the state change effect occurred.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StateChangeEffectFacet'],
          'slot_uri': 'uco-observable:newObject'} })
@@ -12092,7 +12092,7 @@ class StorageMedium(Device):
     A storage medium is any digital storage device that applies electromagnetic or optical surfaces, or depends solely on electronic circuits as solid state storage, for storing digital data. Examples include HDD (PATA), SATA, SSD, Optical, Memory_Card, Tape, etc
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:StorageMedium',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12130,7 +12130,7 @@ class StorageMediumFacet(Facet):
     A storage medium facet is a grouping of characteristics unique to a the storage capabilities of a piece of equipment or a mechanism designed to serve a special purpose or perform a special function.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:StorageMediumFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     totalStorageCapacityInBytes: Optional[int] = Field(default=None, description="""The maximum number of bytes that can be stored on a storage device.""", json_schema_extra = { "linkml_meta": {'domain_of': ['StorageMediumFacet'],
          'slot_uri': 'uco-observable:totalStorageCapacityInBytes'} })
@@ -12146,7 +12146,7 @@ class SymbolicLink(FileSystemObject):
     A symbolic link is a file that contains a reference to another file or directory in the form of an absolute or relative path and that affects pathname resolution. [based on https://en.wikipedia.org/wiki/Symbolic_link]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SymbolicLink',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12184,7 +12184,7 @@ class SymbolicLinkFacet(Facet):
     A symbolic link facet is a grouping of characteristics unique to a file that contains a reference to another file or directory in the form of an absolute or relative path and that affects pathname resolution. [based on https://en.wikipedia.org/wiki/Symbolic_link]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:SymbolicLinkFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     targetFile: Optional[str] = Field(default=None, description="""Specifies the file targeted by a symbolic link.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SymbolicLinkFacet'], 'slot_uri': 'uco-observable:targetFile'} })
     type: Literal["https://w3id.org/lmodel/uco/SymbolicLinkFacet","https://ontology.unifiedcyberontology.org/uco/observable/SymbolicLinkFacet","uco_linkml:SymbolicLinkFacet","uco-observable:SymbolicLinkFacet"] = Field(default="uco-observable:SymbolicLinkFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -12199,7 +12199,7 @@ class TCPConnection(NetworkConnection):
     A TCP connection is a network connection that is conformant to the Transfer
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TCPConnection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12237,7 +12237,7 @@ class TCPConnectionFacet(Facet):
     A TCP connection facet is a grouping of characteristics unique to portions of a network connection that are conformant to the Transmission Control Protocl (TCP) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TCPConnectionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     destinationFlags: Optional[list[str]] = Field(default=None, description="""Specifies the destination TCP flags.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TCPConnectionFacet'],
          'slot_uri': 'uco-observable:destinationFlags'} })
@@ -12254,7 +12254,7 @@ class TableField(ObservableObject):
     A database table field and its associated value contained within a relational database.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TableField',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12292,7 +12292,7 @@ class TableFieldFacet(Facet):
     A database record facet contains properties associated with a specific table record value from a database.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TableFieldFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     recordFieldIsNull: Optional[bool] = Field(default=None, description="""Whether the specified database record field is null.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TableFieldFacet'],
          'slot_uri': 'uco-observable:recordFieldIsNull'} })
@@ -12321,7 +12321,7 @@ class Tablet(SmartDevice, MobileDevice, Computer):
     A tablet is a mobile computer that is primarily operated by touching the screen. (Devices categorized by their manufacturer as a Tablet)
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Tablet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'mixins': ['MobileDevice', 'SmartDevice']})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
@@ -12360,7 +12360,7 @@ class TaskActionType(UcoInherentCharacterizationThing):
     A task action type is a grouping of characteristics for a scheduled action to be completed.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TaskActionType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     actionID: Optional[str] = Field(default=None, description="""Specifies the user-defined identifier for the action. This identifier is used by the Task Scheduler for logging purposes. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa380590(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TaskActionType'], 'slot_uri': 'uco-observable:actionID'} })
     actionType: Optional[Union[TaskActionTypeVocab, str]] = Field(default=None, description="""Specifies the type of the action. See also: http://msdn.microsoft.com/en-us/library/windows/desktop/aa380596(v=vs.85).aspx.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'TaskActionTypeVocab'}, {'range': 'string'}],
@@ -12385,7 +12385,7 @@ class TriggerType(UcoInherentCharacterizationThing):
     A trigger type is a grouping of characterizes unique to a set of criteria that, when met, starts the execution of a task within a Windows operating system. [based on https://docs.microsoft.com/en-us/windows/win32/taskschd/task-triggers]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TriggerType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     isEnabled: Optional[bool] = Field(default=None, description="""Specifies whether the trigger is enabled.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TriggerType'], 'slot_uri': 'uco-observable:isEnabled'} })
     triggerBeginTime: Optional[datetime ] = Field(default=None, description="""Specifies the date/time that the trigger is activated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TriggerType'], 'slot_uri': 'uco-observable:triggerBeginTime'} })
@@ -12414,7 +12414,7 @@ class Tweet(Message):
     A tweet is message submitted by a Twitter user account to the Twitter microblogging platform.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Tweet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12452,7 +12452,7 @@ class TwitterProfileFacet(Facet):
     A twitter profile facet is a grouping of characteristics unique to an explicit digital representation of identity and characteristics of the owner of a single Twitter user account. [based on https://en.wikipedia.org/wiki/User_profile]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:TwitterProfileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     favoritesCount: Optional[int] = Field(default=None, title="Favorites Count", description="""Specifies the number of times that this profile has favorited a tweet.""", json_schema_extra = { "linkml_meta": {'domain_of': ['TwitterProfileFacet'],
          'slot_uri': 'uco-observable:favoritesCount'} })
@@ -12496,7 +12496,7 @@ class UNIXAccount(DigitalAccount):
     A UNIX account is an account on a UNIX operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12534,7 +12534,7 @@ class UNIXAccountFacet(Facet):
     A UNIX account facet is a grouping of characteristics unique to an account on a UNIX operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     gid: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:gid without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UNIXAccountFacet'], 'slot_uri': 'uco-observable:gid'} })
     shell: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:shell without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UNIXAccountFacet'], 'slot_uri': 'uco-observable:shell'} })
@@ -12550,7 +12550,7 @@ class UNIXFile(File):
     A UNIX file is a file pertaining to the UNIX operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXFile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12588,7 +12588,7 @@ class UNIXFilePermissionsFacet(Facet):
     A UNIX file permissions facet is a grouping of characteristics unique to the access rights (e.g., view, change, navigate, execute) of a file on a UNIX file system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXFilePermissionsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     type: Literal["https://w3id.org/lmodel/uco/UNIXFilePermissionsFacet","https://ontology.unifiedcyberontology.org/uco/observable/UNIXFilePermissionsFacet","uco_linkml:UNIXFilePermissionsFacet","uco-observable:UNIXFilePermissionsFacet"] = Field(default="uco-observable:UNIXFilePermissionsFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
                       "class; a class's ancestors follow from the schema."],
@@ -12602,7 +12602,7 @@ class UNIXProcess(Process):
     A UNIX process is an instance of a computer program executed on a UNIX operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXProcess',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12640,7 +12640,7 @@ class UNIXProcessFacet(Facet):
     A UNIX process facet is a grouping of characteristics unique to an instance of a computer program executed on a UNIX operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXProcessFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     openFileDescriptor: Optional[list[int]] = Field(default=None, description="""Specifies a listing of the current file descriptors used by the Unix process.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UNIXProcessFacet'],
          'slot_uri': 'uco-observable:openFileDescriptor'} })
@@ -12657,7 +12657,7 @@ class UNIXVolumeFacet(Facet):
     A UNIX volume facet is a grouping of characteristics unique to a single accessible storage area (volume) with a single UNIX file system. [based on https://en.wikipedia.org/wiki/Volume_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UNIXVolumeFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     mountPoint: Optional[str] = Field(default=None, description="""Specifies the mount point of the partition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DiskPartitionFacet', 'UNIXVolumeFacet'],
          'slot_uri': 'uco-observable:mountPoint'} })
@@ -12674,7 +12674,7 @@ class URL(ObservableObject):
     A URL is a uniform resource locator (URL) acting as a resolvable address to a particular WWW (World Wide Web) accessible resource.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URL',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12712,7 +12712,7 @@ class URLFacet(Facet):
     A URL facet is a grouping of characteristics unique to a uniform resource locator (URL) acting as a resolvable address to a particular WWW (World Wide Web) accessible resource.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     fragment: Optional[str] = Field(default=None, description="""Fragment pointing to a specific part in the resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['URLFacet'], 'slot_uri': 'uco-observable:fragment'} })
     fullValue: Optional[str] = Field(default=None, description="""The full string value of the URL.""", json_schema_extra = { "linkml_meta": {'domain_of': ['URLFacet'], 'slot_uri': 'uco-observable:fullValue'} })
@@ -12739,7 +12739,7 @@ class URLHistory(ObservableObject):
     A URL history characterizes the stored URL history for a particular web browser
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLHistory',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12777,7 +12777,7 @@ class URLHistoryEntry(UcoInherentCharacterizationThing):
     A URL history entry is a grouping of characteristics unique to the properties of a single URL history entry for a particular browser.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLHistoryEntry',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'title': 'URL History Entry'})
 
     browserUserProfile: Optional[str] = Field(default=None, title="Browser User Profile", description="""Specifies the web browser user profile for which the URL history entry was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['URLHistoryEntry'],
@@ -12810,7 +12810,7 @@ class URLHistoryFacet(Facet):
     A URL history facet is a grouping of characteristics unique to the stored URL history for a particular web browser
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLHistoryFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     browserInformation: Optional[str] = Field(default=None, title="Browser Information", description="""Specifies information about the particular Web Browser.""", json_schema_extra = { "linkml_meta": {'domain_of': ['URLHistoryFacet', 'URLVisitFacet'],
          'slot_uri': 'uco-observable:browserInformation'} })
@@ -12827,7 +12827,7 @@ class URLVisit(ObservableObject):
     A URL visit characterizes the properties of a visit of a URL within a particular browser.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLVisit',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12865,7 +12865,7 @@ class URLVisitFacet(Facet):
     A URL visit facet is a grouping of characteristics unique to the properties of a visit of a URL within a particular browser.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:URLVisitFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     browserInformation: Optional[str] = Field(default=None, title="Browser Information", description="""Specifies information about the particular Web Browser.""", json_schema_extra = { "linkml_meta": {'domain_of': ['URLHistoryFacet', 'URLVisitFacet'],
          'slot_uri': 'uco-observable:browserInformation'} })
@@ -12890,7 +12890,7 @@ class UserAccount(DigitalAccount):
     A user account is an account controlling a user's access to a network, system or platform.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UserAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12928,7 +12928,7 @@ class UserAccountFacet(Facet):
     A user account facet is a grouping of characteristics unique to an account controlling a user's access to a network, system, or platform.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UserAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     canEscalatePrivs: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:canEscalatePrivs without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UserAccountFacet'],
          'slot_uri': 'uco-observable:canEscalatePrivs'} })
@@ -12948,7 +12948,7 @@ class UserSession(ObservableObject):
     A user session is a temporary and interactive information interchange between two or more communicating devices within the managed scope of a single user. [based on https://en.wikipedia.org/wiki/Session_(computer_science)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UserSession',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -12986,7 +12986,7 @@ class UserSessionFacet(Facet):
     A user session facet is a grouping of characteristics unique to a temporary and interactive information interchange between two or more communicating devices within the managed scope of a single user. [based on https://en.wikipedia.org/wiki/Session_(computer_science)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:UserSessionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     effectiveGroup: Optional[str] = Field(default=None, description="""Specifies the name of the effective group used in the user session.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UserSessionFacet'], 'slot_uri': 'uco-observable:effectiveGroup'} })
     effectiveGroupID: Optional[str] = Field(default=None, description="""Specifies the effective group ID of the group used in the user session.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UserSessionFacet'],
@@ -13006,7 +13006,7 @@ class ValuesEnumeratedEffectFacet(DefinedEffectFacet):
     A values enumerated effect facet is a grouping of characteristics unique to the effects of actions upon observable objects where a value of the observable object is enumerated. An example of this would be the values of a registry key.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:ValuesEnumeratedEffectFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     values: Optional[str] = Field(default=None, description="""The values that were enumerated as a result of the action on the object.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ValuesEnumeratedEffectFacet'],
          'slot_uri': 'uco-observable:values'} })
@@ -13022,7 +13022,7 @@ class Volume(ObservableObject):
     A volume is a single accessible storage area (volume) with a single file system. [based on https://en.wikipedia.org/wiki/Volume_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Volume',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13060,7 +13060,7 @@ class VolumeFacet(Facet):
     A volume facet is a grouping of characteristics unique to a single accessible storage area (volume) with a single file system. [based on https://en.wikipedia.org/wiki/Volume_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:VolumeFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     sectorSize: Optional[int] = Field(default=None, description="""The sector size of the volume in bytes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VolumeFacet'], 'slot_uri': 'uco-observable:sectorSize'} })
     volumeID: Optional[str] = Field(default=None, description="""The unique identifier of the volume.""", json_schema_extra = { "linkml_meta": {'domain_of': ['VolumeFacet'], 'slot_uri': 'uco-observable:volumeID'} })
@@ -13076,7 +13076,7 @@ class WearableDevice(SmartDevice):
     A wearable device is an electronic device that is designed to be worn on a person's body.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WearableDevice',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13114,7 +13114,7 @@ class WebPage(ObservableObject):
     A web page is a specific collection of information provided by a website and displayed to a user in a web browser. A website typically consists of many web pages linked together in a coherent fashion. [based on https://en.wikipedia.org/wiki/Web_page]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WebPage',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13152,7 +13152,7 @@ class WhoIs(ObservableObject):
     WhoIs is a response record conformant to the WHOIS protocol standard (RFC 3912). [based on https://en.wikipedia.org/wiki/WHOIS]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WhoIs',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13190,7 +13190,7 @@ class WhoIsFacet(Facet):
     A whois facet is a grouping of characteristics unique to a response record conformant to the WHOIS protocol standard (RFC 3912). [based on https://en.wikipedia.org/wiki/WHOIS]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WhoIsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'status': {'any_of': [{'range': 'TaskStatusVocab'},
                                               {'range': 'WhoisStatusTypeVocab'},
                                               {'range': 'string'}],
@@ -13232,7 +13232,7 @@ class WhoisContactFacet(ContactFacet):
     A Whois contact type is a grouping of characteristics unique to contact-related information present in a response record conformant to the WHOIS protocol standard (RFC 3912). [based on https://en.wikipedia.org/wiki/WHOIS]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WhoisContactFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'title': 'WhoIsContactFacet'})
 
     whoisContactType: Optional[Union[WhoisContactTypeVocab, str]] = Field(default=None, description="""Specifies what type of WHOIS contact this is.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'WhoisContactTypeVocab'}, {'range': 'string'}],
@@ -13288,7 +13288,7 @@ class WhoisRegistrarInfoType(UcoInherentCharacterizationThing):
     A Whois registrar info type is a grouping of characteristics unique to registrar-related information present in a response record conformant to the WHOIS protocol standard (RFC 3912). [based on https://en.wikipedia.org/wiki/WHOIS]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WhoisRegistrarInfoType',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     contactPhoneNumber: Optional[str] = Field(default=None, description="""Contact phone number specifies a telephone service account number for contacting a contact entity by telephone.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ContactPhone', 'WhoisRegistrarInfoType'],
          'slot_uri': 'uco-observable:contactPhoneNumber'} })
@@ -13318,7 +13318,7 @@ class WifiAddress(MACAddress):
     A Wi-Fi address is a media access control (MAC) standards-conformant identifier assigned to a device network interface to enable routing and management of IEEE 802.11 standards-conformant communications to and from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WifiAddress',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13356,7 +13356,7 @@ class WifiAddressFacet(MACAddressFacet):
     A Wi-Fi address facet is a grouping of characteristics unique to a media access control (MAC) standards conformant identifier assigned to a device network interface to enable routing and management of IEEE 802.11 standards-conformant communications to and from that device.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WifiAddressFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressValue: Optional[str] = Field(default=None, description="""The value of an address.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DigitalAddressFacet'],
          'slot_uri': 'uco-observable:addressValue'} })
@@ -13378,7 +13378,7 @@ class Wiki(ObservableObject):
     A wiki is an online hypertext publication collaboratively edited and managed by its own audience directly using a web browser. A typical wiki contains multiple pages/articles for the subjects or scope of the project and could be either open to the public or limited to use within an organization for maintaining its internal knowledge base. [based on https://en.wikipedia.org/wiki/Wiki]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:Wiki',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13416,7 +13416,7 @@ class WikiArticle(ObservableObject):
     A wiki article is one or more pages in a wiki focused on characterizing a particular topic.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WikiArticle',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13454,7 +13454,7 @@ class WindowsAccount(DigitalAccount):
     A Windows account is a user account on a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13492,7 +13492,7 @@ class WindowsAccountFacet(Facet):
     A Windows account facet is a grouping of characteristics unique to a user account on a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     groups: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:groups without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsAccountFacet'], 'slot_uri': 'uco-observable:groups'} })
     type: Literal["https://w3id.org/lmodel/uco/WindowsAccountFacet","https://ontology.unifiedcyberontology.org/uco/observable/WindowsAccountFacet","uco_linkml:WindowsAccountFacet","uco-observable:WindowsAccountFacet"] = Field(default="uco-observable:WindowsAccountFacet", description="""The class the thing is an instance of, as the class's CURIE, such as uco-observable:File.""", json_schema_extra = { "linkml_meta": {'comments': ["UCO's JSON-LD writes the same key as @type. The value names one "
@@ -13507,7 +13507,7 @@ class WindowsActiveDirectoryAccount(DigitalAccount):
     A Windows Active Directory account is an account managed by directory-based identity-related services of a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsActiveDirectoryAccount',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13545,7 +13545,7 @@ class WindowsActiveDirectoryAccountFacet(Facet):
     A Windows Active Directory account facet is a grouping of characteristics unique to an account managed by directory-based identity-related services of a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsActiveDirectoryAccountFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     activeDirectoryGroups: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:activeDirectoryGroups without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsActiveDirectoryAccountFacet'],
          'slot_uri': 'uco-observable:activeDirectoryGroups'} })
@@ -13563,7 +13563,7 @@ class WindowsComputerSpecification(ObservableObject):
     A Windows computer specification is the hardware ans software of a programmable electronic device that can store, retrieve, and process data running a Microsoft Windows operating system. [based on merriam-webster.com/dictionary/computer]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsComputerSpecification',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13601,7 +13601,7 @@ class WindowsComputerSpecificationFacet(Facet):
     A Windows computer specification facet is a grouping of characteristics unique to the hardware and software of a programmable electronic device that can store, retrieve, and process data running a Microsoft Windows operating system. [based on merriam-webster.com/dictionary/computer]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsComputerSpecificationFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     domain: Optional[list[str]] = Field(default=None, description="""The domain(s) that the system belongs to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsComputerSpecificationFacet'],
          'slot_uri': 'uco-observable:domain'} })
@@ -13641,7 +13641,7 @@ class WindowsCriticalSection(ObservableObject):
     A Windows critical section is a Windows object that provides synchronization similar to that provided by a mutex object, except that a critical section can be used only by the threads of a single process. Critical section objects cannot be shared across processes. Event, mutex, and semaphore objects can also be used in a single-process application, but critical section objects provide a slightly faster, more efficient mechanism for mutual-exclusion synchronization (a processor-specific test and set instruction). Like a mutex object, a critical section object can be owned by only one thread at a time, which makes it useful for protecting a shared resource from simultaneous access. Unlike a mutex object, there is no way to tell whether a critical section has been abandoned. [based on https://docs.microsoft.com/en-us/windows/win32/sync/critical-section-objects]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsCriticalSection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13679,7 +13679,7 @@ class WindowsEvent(ObservableObject):
     A Windows event is a notification record of an occurance of interest (system, security, application, etc.) on a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsEvent',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13717,7 +13717,7 @@ class WindowsFilemapping(ObservableObject):
     A Windows file mapping is the association of a file's contents with a portion of the virtual address space of a process within a Windows operating system. The system creates a file mapping object (also known as a section object) to maintain this association. A file view is the portion of virtual address space that a process uses to access the file's contents. File mapping allows the process to use both random input and output (I/O) and sequential I/O. It also allows the process to work efficiently with a large data file, such as a database, without having to map the whole file into memory. Multiple processes can also use memory-mapped files to share data. Processes read from and write to the file view using pointers, just as they would with dynamically allocated memory. The use of file mapping improves efficiency because the file resides on disk, but the file view resides in memory.[based on https://docs.microsoft.com/en-us/windows/win32/memory/file-mapping]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsFilemapping',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13755,7 +13755,7 @@ class WindowsHandle(ObservableObject):
     A Windows handle is an abstract reference to a resource within the Windows operating system, such as a window, memory, an open file or a pipe. It is the mechanism by which applications interact with such resources in the Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsHandle',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13793,7 +13793,7 @@ class WindowsHook(ObservableObject):
     A Windows hook is a mechanism by which an application can intercept events, such as messages, mouse actions, and keystrokes within the Windows operating system. A function that intercepts a particular type of event is known as a hook procedure. A hook procedure can act on each event it receives, and then modify or discard the event. [based on https://docs.microsoft.com/en-us/windows/win32/winmsg/about-hooks]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsHook',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13831,7 +13831,7 @@ class WindowsMailslot(ObservableObject):
     A Windows mailslot is is a pseudofile that resides in memory, and may be accessed using standard file functions. The data in a mailslot message can be in any form, but cannot be larger than 424 bytes when sent between computers. Unlike disk files, mailslots are temporary. When all handles to a mailslot are closed, the mailslot and all the data it contains are deleted. [based on https://docs.microsoft.com/en-us/windows/win32/ipc/about-mailslots]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsMailslot',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13869,7 +13869,7 @@ class WindowsNetworkShare(ObservableObject):
     A Windows network share is a Windows computer resource made available from one host to other hosts on a computer network. It is a device or piece of information on a computer that can be remotely accessed from another computer transparently as if it were a resource in the local machine. Network sharing is made possible by inter-process communication over the network. [based on https://en.wikipedia.org/wiki/Shared_resource]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsNetworkShare',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13907,7 +13907,7 @@ class WindowsPEBinaryFile(File):
     A Windows PE binary file is a Windows portable executable (PE) file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPEBinaryFile',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -13945,7 +13945,7 @@ class WindowsPEBinaryFileFacet(Facet):
     A Windows PE binary file facet is a grouping of characteristics unique to a Windows portable executable (PE) file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPEBinaryFileFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     characteristics: Optional[list[int]] = Field(default=None, description="""Specifies the flags that indicate the file’s characteristics.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet'],
          'slot_uri': 'uco-observable:characteristics'} })
@@ -13984,7 +13984,7 @@ class WindowsPEFileHeader(UcoInherentCharacterizationThing):
     A Windows PE file header is a grouping of characteristics unique to the 'header' of a Windows PE (Portable Executable) file, consisting of a collection of metadata about the overall nature and structure of the file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPEFileHeader',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     timeDateStamp: Optional[datetime ] = Field(default=None, description="""Specifies the time when the PE binary was created.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEBinaryFileFacet', 'WindowsPEFileHeader'],
          'slot_uri': 'uco-observable:timeDateStamp'} })
@@ -14000,7 +14000,7 @@ class WindowsPEOptionalHeader(UcoInherentCharacterizationThing):
     A Windows PE optional header is a grouping of characteristics unique to the 'optional header' of a Windows PE (Portable Executable) file, consisting of a collection of metadata about the executable code structure of the file.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPEOptionalHeader',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     addressOfEntryPoint: Optional[list[int]] = Field(default=None, description="""Specifies the address of the entry point relative to the image base when the executable is loaded into memory.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPEOptionalHeader'],
          'slot_uri': 'uco-observable:addressOfEntryPoint'} })
@@ -14071,7 +14071,7 @@ class WindowsPESection(UcoInherentCharacterizationThing):
     A Windows PE section is a grouping of characteristics unique to a specific default or custom-defined region of a Windows PE (Portable Executable) file, consisting of an individual portion of the actual executable content of the file delineated according to unique purpose and memory protection requirements.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPESection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'hashes': {'inlined_as_list': True,
                                    'multivalued': True,
                                    'name': 'hashes'}}})
@@ -14103,7 +14103,7 @@ class WindowsPrefetch(ObservableObject):
     The Windows prefetch contains entries in a Windows prefetch file (used to speed up application startup starting with Windows XP).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPrefetch',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14141,7 +14141,7 @@ class WindowsPrefetchFacet(Facet):
     A Windows prefetch facet is a grouping of characteristics unique to entries in the Windows prefetch file (used to speed up application startup starting with Windows XP).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsPrefetchFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     accessedDirectory: Optional[list[str]] = Field(default=None, description="""Directories accessed by the prefetch application during startup.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsPrefetchFacet'],
          'slot_uri': 'uco-observable:accessedDirectory'} })
@@ -14168,7 +14168,7 @@ class WindowsProcess(Process):
     A Windows process is a program running on a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsProcess',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14206,7 +14206,7 @@ class WindowsProcessFacet(Facet):
     A Windows process facet is a grouping of characteristics unique to a program running on a Windows operating system.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsProcessFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     aslrEnabled: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:aslrEnabled without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsProcessFacet'], 'slot_uri': 'uco-observable:aslrEnabled'} })
     depEnabled: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:depEnabled without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsProcessFacet'], 'slot_uri': 'uco-observable:depEnabled'} })
@@ -14230,7 +14230,7 @@ class WindowsRegistryHive(ObservableObject):
     The Windows registry hive is a particular logical group of keys, subkeys, and values in a Windows registry (a hierarchical database that stores low-level settings for the Microsoft Windows operating system and for applications that opt to use the registry). [based on https://en.wikipedia.org/wiki/Windows_Registry]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsRegistryHive',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14268,7 +14268,7 @@ class WindowsRegistryHiveFacet(Facet):
     A Windows registry hive facet is a grouping of characteristics unique to a particular logical group of keys, subkeys, and values in a Windows registry (a hierarchical database that stores low-level settings for the Microsoft Windows operating system and for applications that opt to use the registry). [based on https://en.wikipedia.org/wiki/Windows_Registry]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsRegistryHiveFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hiveType: Optional[str] = Field(default=None, description="""The type of a registry hive.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsRegistryHiveFacet'],
          'is_a': 'informalType',
@@ -14285,7 +14285,7 @@ class WindowsRegistryKey(ObservableObject):
     A Windows registry key is a particular key within a Windows registry (a hierarchical database that stores low-level settings for the Microsoft Windows operating system and for applications that opt to use the registry). [based on https://en.wikipedia.org/wiki/Windows_Registry]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsRegistryKey',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14323,7 +14323,7 @@ class WindowsRegistryKeyFacet(Facet):
     A Windows registry key facet is a grouping of characteristics unique to a particular key within a Windows registry (A hierarchical database that stores low-level settings for the Microsoft Windows operating system and for applications that opt to use the registry). [based on https://en.wikipedia.org/wiki/Windows_Registry]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsRegistryKeyFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     numberOfSubkeys: Optional[int] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:numberOfSubkeys without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsRegistryKeyFacet'],
          'slot_uri': 'uco-observable:numberOfSubkeys'} })
@@ -14351,7 +14351,7 @@ class WindowsRegistryValue(UcoInherentCharacterizationThing):
     A Windows registry value is a grouping of characteristics unique to a particular value within a Windows registry (a hierarchical database that stores low-level settings for the Microsoft Windows operating system and for applications that opt to use the registry. [based on https://en.wikipedia.org/wiki/Windows_Registry]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsRegistryValue',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     data: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:data without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsRegistryValue'], 'slot_uri': 'uco-observable:data'} })
     dataType: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:dataType without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsRegistryValue'],
@@ -14378,7 +14378,7 @@ class WindowsService(ObservableObject):
     A Windows service is a specific Windows service (a computer program that operates in the background of a Windows operating system, similar to the way a UNIX daemon runs on UNIX). [based on https://en.wikipedia.org/wiki/Windows_service]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsService',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14416,7 +14416,7 @@ class WindowsServiceFacet(Facet):
     A Windows service facet is a grouping of characteristics unique to a specific Windows service (a computer program that operates in the background of a Windows operating system, similar to the way a UNIX daemon runs on UNIX). [based on https://en.wikipedia.org/wiki/Windows_service]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsServiceFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     descriptions: Optional[list[str]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:descriptions without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsServiceFacet'],
          'slot_uri': 'uco-observable:descriptions'} })
@@ -14450,7 +14450,7 @@ class WindowsSystemRestore(ObservableObject):
     A Windows system restore is a capture of a Windows computer's state (including system files, installed applications, Windows Registry, and system settings) at a particular point in time such that the computer can be reverted to that state in the event of system malfunctions or other problems. [based on https://en.wikipedia.org/wiki/System_Restore]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsSystemRestore',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14488,7 +14488,7 @@ class WindowsTask(ObservableObject):
     A Windows task is a process that is scheduled to execute on a Windows operating system by the Windows Task Scheduler. [based on http://msdn.microsoft.com/en-us/library/windows/desktop/aa381311(v=vs.85).aspx]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsTask',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14526,7 +14526,7 @@ class WindowsTaskFacet(Facet):
     A Windows Task facet is a grouping of characteristics unique to a Windows Task (a process that is scheduled to execute on a Windows operating system by the Windows Task Scheduler). [based on http://msdn.microsoft.com/en-us/library/windows/desktop/aa381311(v=vs.85).aspx]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsTaskFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'priority': {'any_of': [{'range': 'TaskPriorityVocab'},
                                                 {'range': 'integer'},
                                                 {'range': 'string'}],
@@ -14608,7 +14608,7 @@ class WindowsThread(ProcessThread):
     A Windows thread is a single thread of execution within a Windows process.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsThread',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14646,7 +14646,7 @@ class WindowsThreadFacet(Facet):
     A Windows thread facet is a grouping os characteristics unique to a single thread of execution within a Windows process.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsThreadFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable',
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable',
          'slot_usage': {'priority': {'name': 'priority', 'range': 'integer'}}})
 
     creationFlags: Optional[list[int]] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:creationFlags without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsThreadFacet'],
@@ -14697,7 +14697,7 @@ class WindowsVolumeFacet(Facet):
     A Windows volume facet is a grouping of characteristics unique to a single accessible storage area (volume) with a single Windows file system. [based on https://en.wikipedia.org/wiki/Volume_(computing)]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsVolumeFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     driveLetter: Optional[str] = Field(default=None, description="""Specifies the drive letter of a windows volume.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WindowsVolumeFacet'], 'slot_uri': 'uco-observable:driveLetter'} })
     driveType: Optional[Union[WindowsDriveTypeVocab, str]] = Field(default=None, description="""Specifies the drive type of a windows volume.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'WindowsDriveTypeVocab'}, {'range': 'string'}],
@@ -14718,7 +14718,7 @@ class WindowsWaitableTime(ObservableObject):
     A Windows waitable timer is a synchronization object within the Windows operating system whose state is set to signaled when a specified due time arrives. There are two types of waitable timers that can be created: manual-reset and synchronization. A timer of either type can also be a periodic timer. [based on https://docs.microsoft.com/en-us/windows/win32/sync/waitable-timer-objects]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WindowsWaitableTime',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14756,7 +14756,7 @@ class WirelessNetworkConnection(NetworkConnection):
     A wireless network connection is a connection (completed or attempted) across an IEEE 802.11 standards-confromant digital network (a group of two or more computer systems linked together). [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WirelessNetworkConnection',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14794,7 +14794,7 @@ class WirelessNetworkConnectionFacet(Facet):
     A wireless network connection facet is a grouping of characteristics unique to a connection (completed or attempted) across an IEEE 802.11 standards-conformant digital network (a group of two or more computer systems linked together). [based on https://www.webopedia.com/TERM/N/network.html]
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WirelessNetworkConnectionFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     baseStation: Optional[str] = Field(default=None, description="""The base station.""", json_schema_extra = { "linkml_meta": {'domain_of': ['WirelessNetworkConnectionFacet'],
          'slot_uri': 'uco-observable:baseStation'} })
@@ -14819,7 +14819,7 @@ class WriteBlocker(Device):
     A write blocker is a device that allows read-only access to storage mediums in order to preserve the integrity of the data being analyzed. Examples include Tableau, Cellibrite, Talon, etc.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:WriteBlocker',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14857,7 +14857,7 @@ class X509Certificate(ObservableObject):
     A X.509 certificate is a public key digital identity certificate conformant to the X.509 PKI (Public Key Infrastructure) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:X509Certificate',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14895,7 +14895,7 @@ class X509CertificateFacet(Facet):
     A X.509 certificate facet is a grouping of characteristics unique to a public key digital identity certificate conformant to the X.509 PKI (Public Key Infrastructure) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:X509CertificateFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     isSelfSigned: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:isSelfSigned without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['X509CertificateFacet'],
          'slot_uri': 'uco-observable:isSelfSigned'} })
@@ -14946,7 +14946,7 @@ class X509V3Certificate(ObservableObject):
     An X.509 v3 certificate is a public key digital identity certificate conformant to the X.509 v3 PKI (Public Key Infrastructure) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:X509V3Certificate',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     hasChanged: Optional[bool] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:hasChanged without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:hasChanged'} })
     state: Optional[str] = Field(default=None, title="State", description="""UCO 1.5.0 declares the property uco-observable:state without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ObservableObject'], 'slot_uri': 'uco-observable:state'} })
@@ -14984,7 +14984,7 @@ class X509V3ExtensionsFacet(Facet):
     An X.509 v3 certificate extensions facet is a grouping of characteristics unique to a public key digital identity certificate conformant to the X.509 v3 PKI (Public Key Infrastructure) standard.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'uco-observable:X509V3ExtensionsFacet',
-         'from_schema': 'https://w3id.org/lmodel/uco-observable'})
+         'from_schema': 'https://w3id.org/lmodel/uco/uco_observable'})
 
     authorityKeyIdentifier: Optional[str] = Field(default=None, description="""UCO 1.5.0 declares the property uco-observable:authorityKeyIdentifier without a definition.""", json_schema_extra = { "linkml_meta": {'domain_of': ['X509V3ExtensionsFacet'],
          'slot_uri': 'uco-observable:authorityKeyIdentifier'} })

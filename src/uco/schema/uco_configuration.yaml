@@ -1,5 +1,5 @@
 ---
-id: https://w3id.org/lmodel/uco-configuration
+id: https://w3id.org/lmodel/uco/uco_configuration
 name: uco_configuration
 title: UCO Configuration
 description: This ontology defines classes and properties for characterizing configurations.
