@@ -14,8 +14,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).parent.parent
-COPY = ROOT / ".lokf" / "uco.yaml"
-LOKF = ROOT / ".lokf" / "lokf.yaml"
+COPY = ROOT / ".lokf" / "schema" / "uco.yaml"
+LOKF = ROOT / ".lokf" / "schema" / "lokf.yaml"
 NEIGHBOUR_DIR = ROOT / "tests" / "neighbours"
 
 # What a host may import beside this copy: LOKF's schema, pinned by the
