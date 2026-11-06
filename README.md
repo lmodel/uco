@@ -54,7 +54,7 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 ## Knowledge Trust Ladder (KTL)
 
-`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/uco.yaml`, is the copy `just lokf-adapt` writes from `src/uco/schema/uco.yaml`, and `just lokf-adapt-check` says when it is stale. Change the converter, never the copy. A release carries the copy as `schema-<tag>-uco.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
+`.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/schema/uco.yaml`, is the copy `just lokf-adapt` writes from `src/uco/schema/uco.yaml`, and `just lokf-adapt-check` says when it is stale. Change the converter, never the copy. A release carries the copy as `schema-<tag>-uco.yaml`, on the terms [CONTRIBUTING.md](CONTRIBUTING.md#releasing-maintainers) gives.
 
 The copy roots the four classes with an IRI on `Concept`: UcoObject, UcoType, Thread and ThreadItem. A concept may name any of the 221 classes at or under them as its `type`, and [tests/data/valid/](tests/data/valid) holds an example of each. In Obsidian, add the ones a bundle uses to the *Known LOKF types* setting of the KTL Registrar and KTL Curator plugins, for example:
 
