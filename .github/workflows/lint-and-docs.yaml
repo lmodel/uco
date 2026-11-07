@@ -114,7 +114,31 @@ jobs:
       # --remap replaces lychee.toml's remap rather than adding to it, so its
       # raw.githubusercontent.com remap follows; the first match wins. The
       # action evals its args, so each remap is single-quoted to keep its `$1`.
+      #
+      # lychee retries a timeout or a 429, never a failed or reset
+      # connection, so one dropped connection fails the job ("Connection
+      # reset by peer" from just.systems on 2026-11-07, which answered the
+      # next request). A failed first pass waits a minute and checks every
+      # link again; only the second pass fails the job, so a dead link
+      # still does.
       - name: Check links
+        id: links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: >-
+            --no-progress
+            --remap 'https://github.com/lmodel/uco/(?:blob|tree)/main/(.*) file://${{ github.workspace }}/$1'
+            --remap '^https://github\.com/([^/]+/[^/]+)/blob/([^?#]+)([?#].*)?$ https://raw.githubusercontent.com/$1/$2'
+            "**/*.md"
+          fail: false
+          jobSummary: false
+
+      - name: Wait before checking the links again
+        if: steps.links.outputs.exit_code != '0'
+        run: sleep 60
+
+      - name: Check links again
+        if: steps.links.outputs.exit_code != '0'
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: >-

@@ -4,7 +4,8 @@ hidden = true
 
 # A failed request is retried with a wait that grows each time, so a host
 # that answers a burst with 503 (github.com, below) has time to recover
-# before the link is declared dead.
+# before the link is declared dead. A failed connection is not retried
+# here; lint-and-docs.yaml checks the links a second time instead.
 max_retries = 3
 retry_wait_time = 5
 
