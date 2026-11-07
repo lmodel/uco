@@ -3,7 +3,7 @@ type: Service
 id: https://w3id.org/lmodel/uco/knowledge/workflows/main
 genre: reference
 title: Build and test (main.yaml)
-description: "The Build and test workflow, `.github/workflows/main.yaml`: on a push to main and on every pull request, its test job runs `just test` on Python 3.10 to 3.14, and on 3.13 also `just lint` and `just lokf-adapt-check`, the check that `.lokf/uco.yaml` is current."
+description: "The Build and test workflow, `.github/workflows/main.yaml`: on a push to main and on every pull request, its test job runs `just test` on Python 3.10 to 3.14, and on 3.13 also `just lint` and `just lokf-adapt-check`, the check that `.lokf/schema/uco.yaml` is current."
 resource: .github/workflows/main.yaml
 sources:
   - id: main.yaml
@@ -11,7 +11,7 @@ sources:
     title: the header comment, the on key and the jobs
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-11-06T21:25:24Z"
 status: draft
 ---
 

@@ -1,6 +1,6 @@
 """Checks that the adapt copy can sit beside LOKF and the neighbours' copies.
 
-`.lokf/uco.yaml` is the copy `lokf adapt` writes from the schema, and a host
+`.lokf/schema/uco.yaml` is the copy `lokf adapt` writes from the schema, and a host
 imports it beside `lokf.yaml` and the copies other lmodel repositories
 release. LinkML merges a host's imports into one namespace, where the last
 definition of a name wins, and the JSON-LD context gives each key one IRI. So
@@ -14,8 +14,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).parent.parent
-COPY = ROOT / ".lokf" / "uco.yaml"
-LOKF = ROOT / ".lokf" / "lokf.yaml"
+COPY = ROOT / ".lokf" / "schema" / "uco.yaml"
+LOKF = ROOT / ".lokf" / "schema" / "lokf.yaml"
 NEIGHBOUR_DIR = ROOT / "tests" / "neighbours"
 
 # What a host may import beside this copy: LOKF's schema, pinned by the

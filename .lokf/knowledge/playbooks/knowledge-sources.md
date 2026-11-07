@@ -16,7 +16,7 @@ sources:
   - resource: scripts/check_upstream_release.py
   - resource: src/uco/datamodel
   - resource: project.justfile
-  - resource: .lokf/uco.yaml
+  - resource: .lokf/schema/uco.yaml
   - resource: .lokf/justfile
   - resource: .lokf/pyproject.toml
   - resource: NOTICE
@@ -85,7 +85,7 @@ exclusions:
     reason: The sidecar's link to the bundle.
   - resource: .github/PULL_REQUEST_TEMPLATE
     reason: The sidecar sync's pull request template.
-  - resource: .lokf/lokf.yaml
+  - resource: .lokf/schema/lokf.yaml
     reason: LOKF's schema, pinned by the sidecar.
   - resource: .lokf/scripts
     reason: The sidecar's scripts, which the weekly sync replaces.
@@ -105,7 +105,7 @@ exclusions:
     reason: The sidecar's git settings.
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T23:09:51Z"
+  at: "2026-11-06T21:25:24Z"
 status: draft
 ---
 
@@ -116,7 +116,7 @@ Each refresh run after the first re-verifies these sources instead of discoverin
 | Source | Yields | Re-check by |
 | --- | --- | --- |
 | `src/uco/schema/uco*.yaml`, `scripts/uco_to_linkml.py` | `datasets/uco-linkml-schema`, `tools/uco-to-linkml`, the `glossary/` terms | rerun the converter with `--check`; re-read the umbrella's comments and the counts it prints |
-| `project.justfile`, `.lokf/uco.yaml`, `.lokf/justfile`, `.lokf/pyproject.toml`, the README's Knowledge Trust Ladder (KTL) section | the domain-schema section of `datasets/uco-linkml-schema`, `explanations/element-names` | re-read the `--root` list, the copy's notes, the `schema :=` line and the `[tool.lokf]` table |
+| `project.justfile`, `.lokf/schema/uco.yaml`, `.lokf/justfile`, `.lokf/pyproject.toml`, the README's Knowledge Trust Ladder (KTL) section | the domain-schema section of `datasets/uco-linkml-schema`, `explanations/element-names` | re-read the `--root` list, the copy's notes, the `schema :=` line and the `[tool.lokf]` table |
 | `src/uco/schema/upstream/`, the UCO section of `NOTICE` | `datasets/uco-copy`, `references/unified-cyber-ontology`, `references/collections-ontology` | the upstream watch compares the blobs weekly; re-read the pins |
 | `src/uco/schema/collections/`, `tests/test_collections_import.py`, the lmodel/collections section of `NOTICE` | `datasets/collections-module`, `references/collections-ontology` | re-read the pinned commit and hash, and compare the file with lmodel/collections' release |
 | `scripts/check_upstream_release.py`, `.github/scripts/` | `tools/check-upstream-release`, `playbooks/update-upstream-pins`, `workflows/upstream-watch` | re-read the pins, the docstring and the left-out pattern |
