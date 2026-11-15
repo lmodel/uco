@@ -11,12 +11,21 @@ sources:
     title: the header comment, the on key and the jobs
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-11-15T03:10:24Z"
 status: draft
 ---
 
 # Knowledge website (knowledge-website.yaml)
 
-`.github/workflows/knowledge-website.yaml` is the workflow named "Knowledge website", a copy of the ktl-website template. It runs on a push or a pull request that touches one of its inputs: `website/`, `.lokf/`, the README, `docs/`, the changelog, `llms.txt`, `.linkml/`, a justfile, a `pyproject.toml` or a `uv.lock`. It also runs every Monday at 05:23 UTC and by hand.[^knowledge-website.yaml] Its `build` job, read-only, runs `npm ci --ignore-scripts` and `npm run build`, which syncs the pages, builds the site and checks every link, and uploads `website/dist`. Its `deploy` job holds `pages: write` and `id-token: write` in the `github-pages` Environment, and runs only once the repository variable `KNOWLEDGE_WEBSITE_ENABLED` is `true`.
+`.github/workflows/knowledge-website.yaml` is the workflow named "Knowledge website", which the ktl-website skill installed. It runs on a push to the default branch and on a pull request, each when it touches one of its inputs: `website/`, `.lokf/`, `knowledge_bundle/`, the README, `docs/`, `.assets/`, the changelog, `.linkml/`, `src/*/schema/`, this workflow and `knowledge-federation.yaml`. It also runs every Monday at 05:23 UTC and by hand.[^knowledge-website.yaml] Its `build` job runs under a read-only token. It:
+
+- checks the repository out with its full history, since the health page's "a source moved" lines come from git;
+- sets up uv;
+- finds the site's folder: `website/`, or `ktl-website/` when that folder holds a `site.toml`;
+- installs `just` when `site.toml` builds its data with it;
+- runs `scripts/build.sh` in that folder, which runs `lokf export` and LinkML's `gen-doc` from the toolkit `.lokf/uv.lock` pins, then Hugo and Pagefind from the site's own `uv.lock`, cleans the raw HTML and checks the links;
+- uploads the folder's `dist/` as the Pages artifact.
+
+Its `deploy` job holds `pages: write` and `id-token: write` in the `github-pages` Environment, and runs only from the default branch once the repository variable `KNOWLEDGE_WEBSITE_ENABLED` is `true`. It warns when the repository is private and its Pages site is public or of unknown visibility.
 
 [^knowledge-website.yaml]: .github/workflows/knowledge-website.yaml, the header comment, the on key and the jobs

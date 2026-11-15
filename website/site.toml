@@ -1,0 +1,532 @@
+# This repository's own values for the knowledge website. hugo.toml beside
+# this file holds everything that is the same on every site. The ktl-website
+# skill wrote this file once and never replaces it.
+
+# The site's address: the owner's GitHub Pages domain and the repository's
+# name under it. A user site (the <owner>.github.io repository) or a custom
+# domain has no name after the domain: "https://docs.example.org/".
+baseURL = "https://lmodel.github.io/uco/"
+
+# The site's title, in the header and on every social card.
+title = "uco"
+
+[params]
+# One sentence, for search engines and link previews.
+description = "Unified Cyber Ontology (UCO) 1.5.0 (LinkML)"
+# The repository. Links to files that are not pages go here.
+repo = "https://github.com/lmodel/uco"
+
+# Everything below is optional. The site finds the README, the docs, the
+# figures, the changelog, a LinkML schema and a workspace by itself.
+
+# The default branch, when it is not main, and the tag a release carries,
+# when it is not v<version>.
+# branch = "master"
+# releaseTag = "{version}"
+
+# A logo of the repository's own, as files under .assets/. Left out, the
+# site shows the Knowledge Trust Ladder logo.
+# logo = ".assets/logo.svg"
+# logoDark = ".assets/logo-dark.svg"
+
+# The data: a folder of SQLite databases and their Datasette metadata, from
+# the repository's root, served under browse/ with a page that opens each in
+# Datasette Lite, and the command that writes the folder when it holds no
+# database. The databases go on the public site, so none is served until
+# this is set.
+# browse = "my-project/browse"
+# browseBuild = "just build-browse"
+
+# More folders under docs/ that are not pages.
+# docsExclude = ["templates-linkml", "elements", "drafts"]
+
+# The docs pages in groups of your choosing, each page by its path under
+# docs/ without .md. Left out, the pages at the top of docs/ are one group
+# and each folder is a group of its own. With groups, the build stops when
+# one names a missing page or a page is in no group.
+# [[params.docsGroups]]
+# label = "Start here"
+# pages = ["install", "usage"]
+
+# Old addresses, each sent on to the page built from a repository file. One
+# ending in /* stands for every page of the schema. Hugo lowercases a
+# table's keys, so an address with capitals takes the list form below.
+# [params.redirects]
+# "about" = "docs/about.md"
+# "elements/*" = "schema/*"
+#
+# [[params.redirects]]
+# from = "elements/OldName"
+# to = "website/generated/schema/classes/NewName.md"
+
+[[params.redirects]]
+from = "about"
+to = "docs/about.md"
+
+[[params.redirects]]
+from = "elements/AccountTypeEnum"
+to = "website/generated/schema/enums/AccountTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/ActionArgumentNameEnum"
+to = "website/generated/schema/enums/ActionArgumentNameVocab.md"
+
+[[params.redirects]]
+from = "elements/ActionNameEnum"
+to = "website/generated/schema/enums/ActionNameVocab.md"
+
+[[params.redirects]]
+from = "elements/ActionRelationshipTypeEnum"
+to = "website/generated/schema/enums/ActionRelationshipTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/ActionStatusTypeEnum"
+to = "website/generated/schema/enums/ActionStatusTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/ActionTypeEnum"
+to = "website/generated/schema/enums/ActionTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/Android"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/Base64BinaryType"
+to = "website/generated/schema/types/UcoBase64Binary.md"
+
+[[params.redirects]]
+from = "elements/BitnessEnum"
+to = "website/generated/schema/enums/BitnessVocab.md"
+
+[[params.redirects]]
+from = "elements/BlackBerryPhone"
+to = "website/generated/schema/classes/BlackberryPhone.md"
+
+[[params.redirects]]
+from = "elements/BooleanType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ByteType"
+to = "website/generated/schema/types/UcoByte.md"
+
+[[params.redirects]]
+from = "elements/CharacterEncodingEnum"
+to = "website/generated/schema/enums/CharacterEncodingVocab.md"
+
+[[params.redirects]]
+from = "elements/ContactAddressScopeEnum"
+to = "website/generated/schema/enums/ContactAddressScopeVocab.md"
+
+[[params.redirects]]
+from = "elements/ContactEmailScopeEnum"
+to = "website/generated/schema/enums/ContactEmailScopeVocab.md"
+
+[[params.redirects]]
+from = "elements/ContactPhoneEnum"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ContactPhoneScopeEnum"
+to = "website/generated/schema/enums/ContactPhoneScopeVocab.md"
+
+[[params.redirects]]
+from = "elements/ContactSIPScopeEnum"
+to = "website/generated/schema/enums/ContactSIPScopeVocab.md"
+
+[[params.redirects]]
+from = "elements/ContactURLScopeEnum"
+to = "website/generated/schema/enums/ContactURLScopeVocab.md"
+
+[[params.redirects]]
+from = "elements/DecimalType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/DiskTypeEnum"
+to = "website/generated/schema/enums/DiskTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/DurationType"
+to = "website/generated/schema/types/UcoDuration.md"
+
+[[params.redirects]]
+from = "elements/EndiannessTypeEnum"
+to = "website/generated/schema/enums/EndiannessTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/HashNameEnum"
+to = "website/generated/schema/enums/HashNameVocab.md"
+
+[[params.redirects]]
+from = "elements/HexBinaryType"
+to = "website/generated/schema/types/UcoHexBinary.md"
+
+[[params.redirects]]
+from = "elements/IriType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/LibraryTypeEnum"
+to = "website/generated/schema/enums/LibraryTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/Linux"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/LiteralType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/MemoryBlockTypeEnum"
+to = "website/generated/schema/enums/MemoryBlockTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/Microsoft"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/NetworkSocketAddressFamilyEnum"
+to = "website/generated/schema/enums/NetworkSocketAddressFamily.md"
+
+[[params.redirects]]
+from = "elements/NetworkSocketProtocolFamilyEnum"
+to = "website/generated/schema/enums/NetworkSocketProtocolFamily.md"
+
+[[params.redirects]]
+from = "elements/NetworkSocketTypeEnum"
+to = "website/generated/schema/enums/NetworkSocketType.md"
+
+[[params.redirects]]
+from = "elements/NonNegativeIntegerType"
+to = "website/generated/schema/types/UcoNonNegativeInteger.md"
+
+[[params.redirects]]
+from = "elements/ObservableObjectRelationshipEnum"
+to = "website/generated/schema/enums/ObservableObjectRelationshipVocab.md"
+
+[[params.redirects]]
+from = "elements/ObservableObjectStateEnum"
+to = "website/generated/schema/enums/ObservableObjectStateVocab.md"
+
+[[params.redirects]]
+from = "elements/PartitionTypeEnum"
+to = "website/generated/schema/enums/PartitionTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/PositiveInteger"
+to = "website/generated/schema/types/UcoPositiveInteger.md"
+
+[[params.redirects]]
+from = "elements/PositiveIntegerType"
+to = "website/generated/schema/types/UcoPositiveInteger.md"
+
+[[params.redirects]]
+from = "elements/ProcessorArchEnum"
+to = "website/generated/schema/enums/ProcessorArchVocab.md"
+
+[[params.redirects]]
+from = "elements/RecoveredObjectStatusEnum"
+to = "website/generated/schema/enums/RecoveredObjectStatusVocab.md"
+
+[[params.redirects]]
+from = "elements/RegionalRegistryTypeEnum"
+to = "website/generated/schema/enums/RegionalRegistryTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/RegionalRegistry_typeVocab"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/RegistryDatatypeEnum"
+to = "website/generated/schema/enums/RegistryDatatypeVocab.md"
+
+[[params.redirects]]
+from = "elements/SIMFormEnum"
+to = "website/generated/schema/enums/SIMFormVocab.md"
+
+[[params.redirects]]
+from = "elements/SIMTypeEnum"
+to = "website/generated/schema/enums/SIMTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/SIPAaddress"
+to = "website/generated/schema/classes/SIPAddress.md"
+
+[[params.redirects]]
+from = "elements/StatementType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/StringType"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/TaskActionTypeEnum"
+to = "website/generated/schema/enums/TaskActionTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/TaskFlagEnum"
+to = "website/generated/schema/enums/TaskFlagVocab.md"
+
+[[params.redirects]]
+from = "elements/TaskPriorityEnum"
+to = "website/generated/schema/enums/TaskPriorityVocab.md"
+
+[[params.redirects]]
+from = "elements/TaskStatusEnum"
+to = "website/generated/schema/enums/TaskStatusVocab.md"
+
+[[params.redirects]]
+from = "elements/Thing"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ThreadRunningStatusEnum"
+to = "website/generated/schema/enums/ThreadRunningStatusVocab.md"
+
+[[params.redirects]]
+from = "elements/TimeStamp"
+to = "website/generated/schema/types/Timestamp.md"
+
+[[params.redirects]]
+from = "elements/TimestampPrecisionEnum"
+to = "website/generated/schema/enums/TimestampPrecisionVocab.md"
+
+[[params.redirects]]
+from = "elements/TrendEnum"
+to = "website/generated/schema/enums/TrendVocab.md"
+
+[[params.redirects]]
+from = "elements/TriggerFrequencyEnum"
+to = "website/generated/schema/enums/TriggerFrequencyVocab.md"
+
+[[params.redirects]]
+from = "elements/TriggerFrequencyEunum"
+to = "website/generated/schema/enums/TriggerFrequencyVocab.md"
+
+[[params.redirects]]
+from = "elements/TriggerTypeEnum"
+to = "website/generated/schema/enums/TriggerTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/URLTransitionTypeEnum"
+to = "website/generated/schema/enums/URLTransitionTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/UnixProcessStateEnum"
+to = "website/generated/schema/enums/UnixProcessStateVocab.md"
+
+[[params.redirects]]
+from = "elements/UnsignedIntegerType"
+to = "website/generated/schema/types/UcoUnsignedInt.md"
+
+[[params.redirects]]
+from = "elements/UnsignedShortType"
+to = "website/generated/schema/types/UcoUnsignedShort.md"
+
+[[params.redirects]]
+from = "elements/Whois"
+to = "website/generated/schema/classes/WhoIs.md"
+
+[[params.redirects]]
+from = "elements/WhoisContactTypeEnum"
+to = "website/generated/schema/enums/WhoisContactTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/WhoisDNSSECTypeEnum"
+to = "website/generated/schema/enums/WhoisDNSSECTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/WhoisFacet"
+to = "website/generated/schema/classes/WhoIsFacet.md"
+
+[[params.redirects]]
+from = "elements/WhoisStatusTypeEnum"
+to = "website/generated/schema/enums/WhoisStatusTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/WindowsDriveTypeEnum"
+to = "website/generated/schema/enums/WindowsDriveTypeVocab.md"
+
+[[params.redirects]]
+from = "elements/WindowsFileMapping"
+to = "website/generated/schema/classes/WindowsFilemapping.md"
+
+[[params.redirects]]
+from = "elements/WindowsMailSlot"
+to = "website/generated/schema/classes/WindowsMailslot.md"
+
+[[params.redirects]]
+from = "elements/WindowsNetworkSecurityModeEnum"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/WindowsPEBinaryTypeEnum"
+to = "website/generated/schema/enums/WindowsPEBinaryType.md"
+
+[[params.redirects]]
+from = "elements/WindowsPEFileHheader"
+to = "website/generated/schema/classes/WindowsPEFileHeader.md"
+
+[[params.redirects]]
+from = "elements/WindowsRegistrykeyFacet"
+to = "website/generated/schema/classes/WindowsRegistryKeyFacet.md"
+
+[[params.redirects]]
+from = "elements/WindowsServiceStartTypeEnum"
+to = "website/generated/schema/enums/WindowsServiceStartType.md"
+
+[[params.redirects]]
+from = "elements/WindowsServiceStatusEnum"
+to = "website/generated/schema/enums/WindowsServiceStatus.md"
+
+[[params.redirects]]
+from = "elements/WindowsServiceTypeEnum"
+to = "website/generated/schema/enums/WindowsServiceType.md"
+
+[[params.redirects]]
+from = "elements/WindowsVolumeAttributeEnum"
+to = "website/generated/schema/enums/WindowsVolumeAttributeVocab.md"
+
+[[params.redirects]]
+from = "elements/WirelessNetworkSecurityModeEnum"
+to = "website/generated/schema/enums/WirelessNetworkSecurityModeVocab.md"
+
+[[params.redirects]]
+from = "elements/collections"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/geoLocationAddress"
+to = "website/generated/schema/slots/geolocationAddress.md"
+
+[[params.redirects]]
+from = "elements/httpMessageBodyLength"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/identifier"
+to = "website/generated/schema/types/Identifier.md"
+
+[[params.redirects]]
+from = "elements/list"
+to = "website/generated/schema/classes/List.md"
+
+[[params.redirects]]
+from = "elements/listItem"
+to = "website/generated/schema/classes/ListItem.md"
+
+[[params.redirects]]
+from = "elements/messageThreadOrderedItems"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/messageThreadOriginItems"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/messageThreadTerminalItems"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/messageThreadUnorderedItems"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/mftFileNameRecordChangeTme"
+to = "website/generated/schema/slots/mftFileNameRecordChangeTime.md"
+
+[[params.redirects]]
+from = "elements/nativeFormatString"
+to = "website/generated/schema/types/NativeFormatString.md"
+
+[[params.redirects]]
+from = "elements/obSize"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/referrerURL"
+to = "website/generated/schema/slots/referrerUrl.md"
+
+[[params.redirects]]
+from = "elements/servicStatus"
+to = "website/generated/schema/slots/serviceStatus.md"
+
+[[params.redirects]]
+from = "elements/structuredText"
+to = "website/generated/schema/types/StructuredText.md"
+
+[[params.redirects]]
+from = "elements/types"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-action"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-analysis"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-configuration"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-core"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-identity"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-marking"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-master"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-observable"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-role"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-time"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-tool"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-types"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/uco-victim"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ucolink-location"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ucolink-pattern"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "elements/ucolink-vocabulary"
+to = "website/generated/schema/_index.md"
+
+[[params.redirects]]
+from = "schema/*"
+to = "schema/*"

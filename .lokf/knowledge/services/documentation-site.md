@@ -3,26 +3,38 @@ type: Service
 id: https://w3id.org/lmodel/uco/knowledge/services/documentation-site
 genre: reference
 title: Documentation site
-description: "The Astro Starlight site in `website/`, for <https://lmodel.github.io/uco>: the README as its home page, the pages of `docs/`, a page per schema element, a page per concept of this bundle with its trust label, the bundle's exports, and redirects from the retired sites' element pages, built and published by Knowledge website."
+description: "The Hugo site in `website/`, for <https://lmodel.github.io/uco>: the README as its home page, the pages of `docs/`, a page per schema element, a page per concept of this bundle with its trust label, the bundle's exports, and redirects from the retired sites' element pages, built and published by Knowledge website."
 resource: website
 sources:
-  - id: site.config.mjs
-    resource: website/site.config.mjs
-    title: REPO, SITE, BASE, DOCS and REDIRECTS
+  - id: site.toml
+    resource: website/site.toml
+    title: the site's address, title and redirects
   - id: website-readme.md
     resource: website/README.md
     title: the build
+  - id: prepare.sh
+    resource: website/scripts/prepare.sh
+    title: the schema's pages
+  - id: content.gotmpl
+    resource: website/content/_content.gotmpl
+    title: the redirects
+  - id: readme.md
+    resource: README.md
+    title: the uco-* repositories the schema replaces
 generated:
   by: process:ktl-librarian
-  at: "2026-10-31T02:14:11Z"
+  at: "2026-11-15T03:10:24Z"
 status: draft
 ---
 
 # Documentation site
 
-`website/` is an Astro Starlight site from the ktl-website template, for `https://lmodel.github.io/uco`. `npm run build` syncs the README, the pages of `docs/`, the schema's element pages and the bundle into it, builds it and checks every link.[^website-readme.md]
+`website/` is a Hugo site from the ktl-website template, for `https://lmodel.github.io/uco/`. `website/scripts/build.sh` builds it into `dist/` with Hugo and Pagefind, which come from PyPI through uv, adds the search index and checks every link between its pages.[^website-readme.md] Before Hugo runs, `website/scripts/prepare.sh` runs `lokf export` on the bundle and LinkML's `gen-doc` on `src/uco/schema/uco.yaml`, and writes the output into `website/generated/`, which is never committed.[^prepare.sh]
 
-Its `REDIRECTS` keep old addresses working. `/elements/` and each element page of the retired mkdocs site go to the schema pages, and `/about` to the docs' about page. The element pages of the sixteen retired uco-* sites whose names changed go to their successors, and the rest to the schema index.[^site.config.mjs] The `Knowledge website` workflow publishes it.
+The redirects in `website/site.toml` keep old addresses working. `/about` goes to the docs' about page, and each `/schema/<name>/` address to that element's page.[^site.toml] `/elements/` and each element page whose name the schema keeps go to the schema pages with no setting.[^content.gotmpl] The schema replaces the sixteen uco-* repositories.[^readme.md] Their element pages whose names changed go to their successors, and the rest to the schema index.[^site.toml] The `Knowledge website` workflow publishes it.
 
-[^site.config.mjs]: website/site.config.mjs, REPO, SITE, BASE, DOCS and REDIRECTS
+[^site.toml]: website/site.toml, the site's address, title and redirects
 [^website-readme.md]: website/README.md, the build
+[^prepare.sh]: website/scripts/prepare.sh, the schema's pages
+[^content.gotmpl]: website/content/_content.gotmpl, the redirects
+[^readme.md]: README.md, the uco-* repositories the schema replaces

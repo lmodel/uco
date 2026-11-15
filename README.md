@@ -2,6 +2,11 @@
 
 # uco
 
+[![Build and test](https://github.com/lmodel/uco/actions/workflows/main.yaml/badge.svg)](https://github.com/lmodel/uco/actions/workflows/main.yaml)
+[![Licence](https://img.shields.io/github/license/lmodel/uco?label=licence)](LICENSE)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/lmodel/uco/badge)](https://scorecard.dev/viewer/?uri=github.com/lmodel/uco)
+[![KTL scorecard](https://img.shields.io/endpoint?url=https://lmodel.github.io/uco/badge.json)](https://lmodel.github.io/uco/health/)
+
 Unified Cyber Ontology (UCO) 1.5.0 (LinkML)
 
 > **Only want to ask?** Install `ktl-docent` into any agent you use, by a route from [the install page](https://w3id.org/ktl/docs/install/), and ask it about this project. It answers from the bundle and says how far each answer has been checked.
@@ -46,7 +51,7 @@ UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/tes
 * [src/uco/schema/](src/uco/schema): the LinkML modules, as the converter writes them (do not edit them), and UCO's files in [upstream/](src/uco/schema/upstream)
 * [src/uco/datamodel/](src/uco/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example data in [data/](tests/data)
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 

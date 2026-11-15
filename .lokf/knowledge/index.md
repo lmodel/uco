@@ -18,7 +18,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for uco. Every Markdown 
 
 # Services
 
-* [Documentation site](services/documentation-site.md) - The Astro Starlight site in `website/`, for <https://lmodel.github.io/uco>: the README as its home page, the pages of `docs/`, a page per schema element, a page per concept of this bundle with its trust label, the bundle's exports, and redirects from the retired sites' element pages, built and published by Knowledge website.
+* [Documentation site](services/documentation-site.md) - The Hugo site in `website/`, for <https://lmodel.github.io/uco>: the README as its home page, the pages of `docs/`, a page per schema element, a page per concept of this bundle with its trust label, the bundle's exports, and redirects from the retired sites' element pages, built and published by Knowledge website.
 
 # Playbooks
 
@@ -69,7 +69,7 @@ A [LOKF](https://lokf.nolan-nichols.com) knowledge base for uco. Every Markdown 
 
 # Workflows
 
-* [Build and test (main.yaml)](workflows/main.md) - The Build and test workflow, `.github/workflows/main.yaml`: on a push to main and on every pull request, its test job runs `just test` on Python 3.10 to 3.14, and on 3.13 also `just lint` and `just lokf-adapt-check`, the check that `.lokf/schema/uco.yaml` is current.
+* [Build and test (main.yaml)](workflows/main.md) - The Build and test workflow, `.github/workflows/main.yaml`: on a push to main and on every pull request, its test job runs `just test` on Python 3.11 to 3.14, and on 3.13 also `just lint` and `just lokf-adapt-check`, the check that `.lokf/schema/uco.yaml` is current.
 * [Lint & docs (lint-and-docs.yaml)](workflows/lint-and-docs.md) - The Lint & docs workflow, `.github/workflows/lint-and-docs.yaml`: on a push to main, every pull request, a Monday 06:00 UTC schedule and by hand, four jobs run ShellCheck, actionlint, the word budgets of CONTRIBUTING.md (1000) and SECURITY.md (900), and markdownlint, lychee and codespell over the Markdown.
 * [Semantic release (semantic-release.yml)](workflows/semantic-release.md) - The Semantic release workflow, `.github/workflows/semantic-release.yml`: on a pull request into main, its plan job checks that the commits, the changelog and the title would release; on a push to main, its release job in the release Environment tags vX.Y.Z, publishes the GitHub release and dispatches Knowledge Release.
 * [Upstream watch (upstream-watch.yaml)](workflows/upstream-watch.md) - The Upstream watch workflow, `.github/workflows/upstream-watch.yaml`: every Monday at 07:00 UTC and by hand, its uco-copy job runs `scripts/check_upstream_release.py` against ucoProject/UCO, and on a finding opens or updates the issue titled Upstream watch: the Unified Cyber Ontology has changed.
