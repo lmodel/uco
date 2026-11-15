@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.11"
 # dependencies = ["linkml-runtime>=1.12", "pyyaml>=6", "rdflib>=7"]
 # ///
 """Write a valid example for each class a concept may name as its type.

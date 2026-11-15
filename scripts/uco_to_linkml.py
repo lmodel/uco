@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6", "rdflib>=7"]
 # ///
 """Render the Unified Cyber Ontology's OWL and SHACL in Turtle as LinkML modules.
