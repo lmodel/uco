@@ -46,7 +46,7 @@ UCO's `owl.ttl`, which holds shapes over OWL itself, is not rendered. `tests/tes
 * [src/uco/schema/](src/uco/schema): the LinkML modules, as the converter writes them (do not edit them), and UCO's files in [upstream/](src/uco/schema/upstream)
 * [src/uco/datamodel/](src/uco/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example data in [data/](tests/data)
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 
