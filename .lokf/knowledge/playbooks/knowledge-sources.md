@@ -24,7 +24,7 @@ sources:
   - resource: .github/scripts
   - resource: .github/workflows
   - resource: .github/dependabot.yml
-  - resource: .github/release
+  - resource: .release
   - resource: justfile
   - resource: .linkml/generators.yaml
   - resource: .linkmllint.yaml
@@ -105,7 +105,7 @@ exclusions:
     reason: The sidecar's git settings.
 generated:
   by: process:ktl-librarian
-  at: "2026-11-15T02:53:12Z"
+  at: "2026-11-15T21:00:41Z"
 status: draft
 ---
 
@@ -124,7 +124,7 @@ Each refresh run after the first re-verifies these sources instead of discoverin
 | `README.md`, `docs/about.md`, `docs/index.md`, `.linkmllint.yaml`, `CHANGELOG.md` | `explanations/scope-and-influences`, `explanations/data-form`, `playbooks/validate-data` | re-read each section and the lint comment |
 | `justfile`, `.linkml/generators.yaml`, `project/`, `src/uco/datamodel/`, `docs/schema/`, `.pre-commit-config.yaml` | `datasets/generated-artefacts`, `playbooks/regenerate-and-test` | re-read the recipes and the generators' settings; re-list `project/*/` |
 | `CONTRIBUTING.md` | `playbooks/regenerate-and-test` | confirm the setup and the checklist |
-| `.releaserc.json`, `.github/release/`, `CHANGELOG.md` | `playbooks/release`, `workflows/semantic-release` | re-read the release rules and the baseline paragraph |
+| `.releaserc.json`, `.release/`, `CHANGELOG.md` | `playbooks/release`, `workflows/semantic-release` | re-read the release rules and the baseline paragraph |
 | the nine files in `.github/workflows/` | the nine `workflows/` concepts | re-read each file's `on` keys, its jobs' permissions and environments, and the variables and secrets it reads |
 | `website/` | `services/documentation-site` | re-read `site.toml` and `website/README.md` |
 | `NOTICE`, `LICENSE`, the License section of `README.md` | `policies/license-and-attribution` | re-read each third-party entry |
