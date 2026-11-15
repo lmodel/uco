@@ -12,17 +12,29 @@ sources:
   - id: website-readme.md
     resource: website/README.md
     title: the build
+  - id: prepare.sh
+    resource: website/scripts/prepare.sh
+    title: the schema's pages
+  - id: content.gotmpl
+    resource: website/content/_content.gotmpl
+    title: the redirects
+  - id: readme.md
+    resource: README.md
+    title: the uco-* repositories the schema replaces
 generated:
   by: process:ktl-librarian
-  at: "2026-11-15T02:53:12Z"
+  at: "2026-11-15T03:10:24Z"
 status: draft
 ---
 
 # Documentation site
 
-`website/` is a Hugo site from the ktl-website template, for `https://lmodel.github.io/uco`. `npm run build` syncs the README, the pages of `docs/`, the schema's element pages and the bundle into it, builds it and checks every link.[^website-readme.md]
+`website/` is a Hugo site from the ktl-website template, for `https://lmodel.github.io/uco/`. `website/scripts/build.sh` builds it into `dist/` with Hugo and Pagefind, which come from PyPI through uv, adds the search index and checks every link between its pages.[^website-readme.md] Before Hugo runs, `website/scripts/prepare.sh` runs `lokf export` on the bundle and LinkML's `gen-doc` on `src/uco/schema/uco.yaml`, and writes the output into `website/generated/`, which is never committed.[^prepare.sh]
 
-Its `REDIRECTS` keep old addresses working. `/elements/` and each element page of the retired mkdocs site go to the schema pages, and `/about` to the docs' about page. The element pages of the sixteen retired uco-* sites whose names changed go to their successors, and the rest to the schema index.[^site.toml] The `Knowledge website` workflow publishes it.
+The redirects in `website/site.toml` keep old addresses working. `/about` goes to the docs' about page, and each `/schema/<name>/` address to that element's page.[^site.toml] `/elements/` and each element page whose name the schema keeps go to the schema pages with no setting.[^content.gotmpl] The schema replaces the sixteen uco-* repositories.[^readme.md] Their element pages whose names changed go to their successors, and the rest to the schema index.[^site.toml] The `Knowledge website` workflow publishes it.
 
 [^site.toml]: website/site.toml, the site's address, title and redirects
 [^website-readme.md]: website/README.md, the build
+[^prepare.sh]: website/scripts/prepare.sh, the schema's pages
+[^content.gotmpl]: website/content/_content.gotmpl, the redirects
+[^readme.md]: README.md, the uco-* repositories the schema replaces
